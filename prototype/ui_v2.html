@@ -1,0 +1,64 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PokéDock V2 UI</title>
+<style>
+:root{--bg:#f7f2e8;--card:rgba(255,255,255,.84);--ink:#24232a;--muted:#76717a;--accent:#94bfd9;--glow:rgba(148,191,217,.28)}
+*{box-sizing:border-box}body{margin:0;background:#151519;color:white;font-family:Inter,Pretendard,"Noto Sans KR",sans-serif}
+.wrap{padding:24px;display:grid;gap:14px;justify-content:center}.tools{width:800px;max-width:100%;display:flex;gap:8px;flex-wrap:wrap}
+.tools button{background:#2b2b31;color:white;border:0;border-radius:999px;padding:9px 13px;cursor:pointer}
+.device{width:800px;height:480px;max-width:100%;position:relative;background:var(--bg);color:var(--ink);border-radius:26px;overflow:hidden;box-shadow:0 30px 80px #0008;transition:.3s}
+.top{height:58px;padding:16px 22px 0;display:flex;justify-content:space-between;font-size:12px}.brand{font-weight:800;letter-spacing:.12em}.status{color:var(--muted);display:flex;gap:10px}
+.page{height:358px;padding:8px 22px 14px;display:none}.page.active{display:grid}.home{grid-template-columns:1.55fr 1fr;gap:16px}.panel{background:var(--card);border-radius:24px;box-shadow:0 12px 30px #00000010;border:1px solid #ffffff88}
+.hero{position:relative;padding:22px;overflow:hidden}.hero:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 68%);right:-45px;top:35px}
+.clock{font-size:62px;font-weight:850;letter-spacing:-.065em;line-height:.95}.date{color:var(--muted);font-size:13px;margin-top:8px}
+.poke{position:absolute;right:32px;bottom:35px;width:248px;height:248px;object-fit:contain;z-index:1;filter:drop-shadow(0 16px 15px #0002);animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-7px)}} .msg{position:absolute;left:22px;bottom:24px;width:290px;z-index:2;font-size:17px;font-weight:800;line-height:1.3}.msg small{display:block;color:var(--muted);font-size:11px;font-weight:500;margin-top:6px}
+.chips{padding:15px;display:grid;gap:10px}.chip{background:#ffffffa6;border-radius:17px;padding:13px}.chip b{display:block;font-size:13px}.chip span{font-size:11px;color:var(--muted)}
+.nav{height:64px;display:flex;justify-content:center;gap:8px;align-items:center;background:#ffffff55;border-top:1px solid #0000000b}.nav button{width:100px;border:0;border-radius:14px;padding:9px;background:transparent;color:var(--muted)}.nav button.sel{background:white;color:var(--ink);font-weight:800;box-shadow:0 5px 18px #0001}
+.focus{grid-template-columns:1fr 1fr;gap:16px}.focus .left{padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center}.timer{font-size:86px;font-weight:900;letter-spacing:-.06em}.preset{display:flex;gap:7px;margin-top:12px}.preset span{background:#fff;padding:7px 11px;border-radius:999px;font-size:12px}.focus .right{padding:20px;position:relative;overflow:hidden}.focus .right img{width:260px;height:260px;object-fit:contain;position:absolute;right:5px;bottom:0}.focus .right h2{font-size:24px;margin:5px 0}.focus .right p{color:var(--muted)}
+.dex{grid-template-columns:repeat(6,1fr);gap:10px;align-content:start}.dex .mon{height:102px;padding:8px;background:var(--card);border-radius:18px;text-align:center;font-size:10px;color:var(--muted)}.dex img{width:68px;height:68px;object-fit:contain;display:block;margin:auto}
+.light{grid-template-columns:repeat(2,1fr);gap:16px}.theme{padding:22px;display:flex;align-items:end;font-size:19px;font-weight:800;min-height:155px;position:relative;overflow:hidden}.theme:after{content:"";position:absolute;inset:18px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 65%);opacity:.7}
+.settings{grid-template-columns:1fr 1fr;gap:14px}.setcol{padding:18px}.row{padding:13px 0;border-bottom:1px solid #0000000b;display:flex;justify-content:space-between;font-size:13px}.toggle{width:36px;height:20px;background:var(--accent);border-radius:999px}
+.bday{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,#26345f,#0e1527 65%);z-index:8;color:white;display:none;place-items:center;text-align:center}.bday.show{display:grid}.bday img{width:220px;height:220px;object-fit:contain;filter:drop-shadow(0 0 24px #f1d96a88)}.bday h1{margin:5px 0;font-size:30px}.bday p{opacity:.76}.bday button{border:0;border-radius:999px;padding:10px 18px;margin-top:8px}
+.note{width:800px;max-width:100%;font-size:12px;color:#aaa;line-height:1.5}
+</style></head><body><div class="wrap">
+<div class="tools">
+<button onclick="mode('togepi')">Morning</button><button onclick="mode('pachirisu')">Docked</button>
+<button onclick="mode('lucario')">Focus Pokémon</button><button onclick="mode('gengar')">Night</button>
+<button onclick="mode('togekiss')">Calm</button><button onclick="birthday()">Birthday Event</button>
+</div>
+<div class="device" id="device">
+<div class="top"><div class="brand">POKÉDOCK · COMPANION</div><div class="status"><span>Wi‑Fi ●</span><span>23°C</span><span id="state">CALM</span></div></div>
+
+<div id="home" class="page home active">
+<section class="panel hero"><div><div class="clock" id="clock">21:37</div><div class="date">10월 4일 · 일요일</div></div>
+<img class="poke" id="poke" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/468.png">
+<div class="msg" id="message">오늘도 수고했어.<small id="sub">토게키스가 조용한 저녁을 함께합니다.</small></div></section>
+<section class="panel chips"><div class="chip"><b>FOCUS</b><span>25분 · 탭해서 시작</span></div><div class="chip"><b>PHONE DOCK</b><span id="dockstate">비어 있음</span></div><div class="chip"><b>NFC ENCOUNTER</b><span>왼쪽 패드에 카드/피규어</span></div><div class="chip"><b>ROOM</b><span>조도 기반 자동 Night Mode</span></div></section>
+</div>
+
+<div id="focus" class="page focus"><section class="panel left"><div class="timer">25:00</div><div>FOCUS SESSION</div><div class="preset"><span>15</span><span>25</span><span>45</span><span>60</span></div></section><section class="panel right"><h2>Lucario Focus</h2><p>랜덤 이벤트를 멈추고 화면·LED를 차분하게.</p><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png"></section></div>
+
+<div id="dex" class="page dex"></div>
+<div id="light" class="page light"><div class="panel theme">Warm · Togepi</div><div class="panel theme">Electric · Pachirisu</div><div class="panel theme">Calm · Togekiss</div><div class="panel theme">Night · Gengar</div></div>
+<div id="settings" class="page settings"><div class="panel setcol"><div class="row"><span>Auto brightness</span><span class="toggle"></span></div><div class="row"><span>Night brightness cap</span><b>18%</b></div><div class="row"><span>Volume</span><b>35%</b></div><div class="row"><span>Random encounters</span><span class="toggle"></span></div></div><div class="panel setcol"><div class="row"><span>Dock sensor</span><b>CALIBRATE</b></div><div class="row"><span>NFC tags</span><b>6 paired</b></div><div class="row"><span>RTC</span><b>SYNCED</b></div><div class="row"><span>Birthday test</span><b>HOLD 3s</b></div></div></div>
+
+<div class="nav"><button class="sel" onclick="page('home',this)">HOME</button><button onclick="page('focus',this)">FOCUS</button><button onclick="page('dex',this)">DEX</button><button onclick="page('light',this)">LIGHT</button><button onclick="page('settings',this)">SETTINGS</button></div>
+
+<div id="bday" class="bday"><div><div style="font-size:11px;letter-spacing:.22em;opacity:.65">SPECIAL EVENT</div><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/385.png"><h1>A SPECIAL EVENT HAS STARTED.</h1><p>오늘만 열리는 아주 희귀한 이벤트 ✦</p><button onclick="document.getElementById('bday').classList.remove('show')">포켓몬 센터 열기</button></div></div>
+</div>
+<div class="note">실제 기기에서는 이미지를 microSD에 저장해 오프라인으로 표시. 이 목업은 PokeAPI artwork URL을 사용해 인터넷 연결 시 미리보기만 제공.</div>
+</div>
+<script>
+const modes={
+togepi:[175,"MORNING","좋은 아침! 오늘도 좋은 일이 생길 것 같아.","토게피가 오늘 하루를 응원합니다.","#FFF3DF","#F0B8A3","rgba(240,184,163,.34)","비어 있음"],
+pachirisu:[417,"DOCKED","전기 모으는 중 ⚡","파치리스가 충전 구역을 지키는 중.","#EEF7FF","#79BCE8","rgba(121,188,232,.38)","휴대폰 감지됨"],
+lucario:[448,"FOCUS","집중 모드. 지금은 이것만.","25분이 끝날 때까지 방해 금지.","#EAF0F7","#52769B","rgba(82,118,155,.32)","Focus 중"],
+gengar:[94,"NIGHT","밤이 됐다. 화면은 조용하게.","팬텀이 어두운 방에서 나타났습니다.","#17151F","#765AA8","rgba(118,90,168,.42)","야간 모드"],
+togekiss:[468,"CALM","오늘도 수고했어.","토게키스가 조용한 저녁을 함께합니다.","#F7F3E9","#8CB9DC","rgba(140,185,220,.28)","비어 있음"]};
+function mode(k){let d=modes[k];let r=document.documentElement;r.style.setProperty('--bg',d[4]);r.style.setProperty('--accent',d[5]);r.style.setProperty('--glow',d[6]);document.getElementById('poke').src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"+d[0]+".png";document.getElementById('state').innerText=d[1];document.getElementById('message').childNodes[0].nodeValue=d[2];document.getElementById('sub').innerText=d[3];document.getElementById('dockstate').innerText=d[7];document.getElementById('device').style.color=(k==='gengar')?'#f8f5ff':'#24232a'}
+function birthday(){document.getElementById('bday').classList.add('show')}
+function page(id,el){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('sel'));el.classList.add('sel')}
+const mons=[94,175,417,448,468,385,25,133,197,196,492,778,700,702,447,570,280,39];
+document.getElementById('dex').innerHTML=mons.map(id=>'<div class="mon"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+id+'.png">#'+id+'</div>').join('');
+setInterval(()=>{let d=new Date();document.getElementById('clock').innerText=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')},1000)
+</script></body></html>
