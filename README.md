@@ -120,7 +120,7 @@ Study is connected to progression:
 - Light themes and contextual UI follow Pokémon roles rather than arbitrary RGB presets.
 
 Stable simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=3
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=6
 
 
 ## Fan-system V4
@@ -140,15 +140,50 @@ Persistent progression:
 - NFC partner/theme summon
 - Birthday Wish Ribbon
 
-Persistent main navigation:
-- CENTER
-- TRAIN
-- QUEST
+Persistent device navigation:
+- HOME
+- central Poké Ball MENU
 - DEX
-- TRAINER
+
+Poké Ball menu groups:
+- TRAIN — Focus / Timer / Stopwatch
+- JOURNEY — Quest / Trainer / Egg / Badges / Record
+- DESK — Weather / Alarm / Light
+- LINK — Phone / NFC / Settings
+
+Birthday is event-driven rather than permanently listed.
 
 The study loop is:
 `Quest -> Focus training -> EXP/Bond/Egg -> Encounter -> Dex/Badge -> Partner Center`.
 
 Stable interactive simulator:
 https://choiyhunn.github.io/pokedock-companion/simulator.html?v=4
+
+
+## UI V6 — simplified hierarchy
+
+The UI was simplified after reviewing current Pokémon product interaction patterns.
+
+Everyday persistent navigation is only:
+- HOME
+- central Poké Ball MENU
+- DEX
+
+HOME is intentionally task-oriented:
+- current time/date,
+- active Partner and Bond,
+- one large next-training CTA,
+- compact Daily Quest and Egg status.
+
+The Poké Ball menu exposes only four categories first:
+1. TRAIN
+2. JOURNEY
+3. DESK
+4. LINK
+
+The second layer contains the existing utility screens, so functionality is preserved without exposing 15+ choices at once.
+
+This follows the same general information-architecture principle used by Pokémon GO and Pokémon Sleep: keep the primary activity surface focused, and move inventory/settings/secondary systems behind a menu rather than keeping them permanently visible.
+
+Simulator:
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=6
