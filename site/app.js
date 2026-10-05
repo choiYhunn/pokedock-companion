@@ -115,7 +115,12 @@ function bindUiButtons(){
   if(a==='sw-reset'){state.stopwatch=0;state.stopwatchRunning=false;state.laps=[]}
   if(a==='birthday-close'){state.birthday=false;state.screen='home'}
   render();
- }};
+ });
+ document.querySelectorAll('.pk-tab').forEach(el=>el.onclick=()=>{
+  const m={HOME:'home',FOCUS:'focus',TOOLS:'timer',TODAY:'today',DEX:'dex'};
+  const next=m[el.textContent.trim()];
+  if(next){state.screen=next;render();}
+ });
 }
 function buildPicker(){
  const p=document.getElementById('screenPicker');
