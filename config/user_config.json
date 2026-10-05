@@ -1,0 +1,23 @@
+{
+  "trainer_name": "EDIT_ME",
+  "birthday": "MM-DD",
+  "anniversary": "MM-DD",
+  "timezone": "Asia/Seoul",
+  "focus_default_min": 25,
+  "night_start": "22:30",
+  "morning_start": "06:30",
+  "random_encounter": {
+    "enabled": true,
+    "cooldown_min": 90,
+    "idle_after_min": 18
+  },
+  "dock": {
+    "distance_on_mm": 90,
+    "distance_off_mm": 130
+  },
+  "lux": {
+    "night_below": 8,
+    "dim_below": 40
+  },
+  "nfc_timeout_s": 90
+}

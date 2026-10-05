@@ -1,0 +1,16 @@
+{
+  "favorites": [
+    {"name":"gengar","id":94,"role":"night","accent":"#7A5AA8"},
+    {"name":"togepi","id":175,"role":"morning","accent":"#F2C0A7"},
+    {"name":"pachirisu","id":417,"role":"docked","accent":"#7CBCE6"},
+    {"name":"lucario","id":448,"role":"focus","accent":"#53759A"},
+    {"name":"togekiss","id":468,"role":"calm","accent":"#9DC4DE"},
+    {"name":"jirachi","id":385,"role":"birthday","accent":"#E4C65E"}
+  ],
+  "extended": [
+    {"name":"pikachu","id":25},{"name":"vulpix","id":37},{"name":"jigglypuff","id":39},{"name":"psyduck","id":54},
+    {"name":"eevee","id":133},{"name":"snorlax","id":143},{"name":"espeon","id":196},{"name":"umbreon","id":197},
+    {"name":"mudkip","id":258},{"name":"ralts","id":280},{"name":"riolu","id":447},{"name":"shaymin","id":492},
+    {"name":"zorua","id":570},{"name":"sylveon","id":700},{"name":"dedenne","id":702},{"name":"mimikyu","id":778}
+  ]
+}
