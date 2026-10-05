@@ -9,13 +9,23 @@ Pokémon is the interaction model itself.
 
 `Quest -> Train -> EXP/Bond/Egg -> Encounter -> Dex/Badge -> Partner Center`
 
-## Persistent navigation
+## Persistent navigation — V6
 
-1. CENTER — active Partner, Bond, Level, Egg, next Quest
-2. TRAIN — Focus/Pomodoro as partner training
-3. QUEST — main/side/daily/bonus study tasks
-4. DEX — caught/locked entries, encounter rewards
-5. TRAINER — rank, badges, streak, records
+Only three controls remain persistent:
+
+1. HOME — time/date, Partner, next training, compact daily status
+2. central Poké Ball MENU — opens grouped secondary functions
+3. DEX — direct collection access
+
+Poké Ball menu groups:
+- TRAIN — Focus / Timer / Stopwatch
+- JOURNEY — Quest / Trainer / Egg / Badges / Record
+- DESK — Weather / Alarm / Light
+- LINK — Phone / NFC / Settings
+
+Birthday is not part of the everyday menu. It is event-driven.
+
+The goal is progressive disclosure: daily use should require very few decisions, while all secondary functions stay reachable in one or two taps.
 
 ## Partner roles
 
