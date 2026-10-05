@@ -3,309 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PokéDock Companion — V4 UI Lab</title>
-<style>:root{
---bg:#f2eee6;--paper:#fffdf8;--ink:#22242a;--muted:#71747d;--line:#ddd9d0;--navy:#25354d;--blue:#7eabc7;--sky:#dfeff8;--warm:#f1d36b;--green:#82ad85;--purple:#735991;--red:#db706b;--screen:#f7f3e9;--shadow:0 22px 60px rgba(40,42,50,.12)
-}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(#efebe3,#f9f7f2 34%,#f1ede6);color:var(--ink);font-family:Inter,Pretendard,"Noto Sans KR",system-ui,-apple-system,sans-serif}.wrap{max-width:1220px;margin:auto;padding-left:24px;padding-right:24px}
-.site-header{position:sticky;top:0;z-index:50;height:66px;padding:0 max(24px,calc((100vw - 1172px)/2));display:flex;justify-content:space-between;align-items:center;background:rgba(246,243,237,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(70,70,80,.08)}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:900}.brand-dot{width:24px;height:24px;border-radius:50%;background:linear-gradient(#d85b5d 0 45%,#292b31 45% 56%,#fff 56%);box-shadow:0 3px 7px #0002}.site-header nav{display:flex;gap:6px}.site-header nav a{text-decoration:none;color:#5b5d65;font-size:12px;padding:8px 11px;border-radius:999px}.site-header nav a:hover{background:#fff}.hero{min-height:720px;display:grid;grid-template-columns:.88fr 1.12fr;gap:40px;align-items:center;padding-top:48px;padding-bottom:56px}.hero-copy h1{font-size:74px;line-height:.92;letter-spacing:-.072em;margin:13px 0 22px}.hero-copy h1 em{font-style:normal;color:#638da8}.hero-copy p{font-size:16px;line-height:1.8;color:#555860;max-width:610px}.eyebrow{font-size:11px;font-weight:900;letter-spacing:.16em;color:#7a7d84}.hero-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}.hero-tags span,.device-meta span{font-size:10px;padding:7px 9px;background:#ffffffbc;border:1px solid #fff;border-radius:999px}.hero-actions{display:flex;gap:9px;margin-top:26px}.button{text-decoration:none;color:var(--ink);padding:11px 15px;border-radius:13px;background:#fff;border:1px solid #fff;font-size:12px}.button.primary{background:var(--navy);color:#fff;border-color:var(--navy)}.hero-visual{display:grid;place-items:center}.hero-visual img{width:100%;max-width:670px;filter:drop-shadow(0 30px 36px rgba(30,35,45,.13))}
-.section{padding-top:88px;padding-bottom:20px}.section-title{margin-bottom:26px}.section-title h2{font-size:42px;letter-spacing:-.05em;margin:8px 0 9px}.section-title p{color:#62656d;line-height:1.7;max-width:790px}.row-title{display:flex;justify-content:space-between;gap:24px;align-items:flex-end}.device-meta{display:flex;gap:6px;flex-wrap:wrap}.product-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:18px}.product-card,.spec-card,.arch-card{background:rgba(255,253,248,.88);border:1px solid #fff;border-radius:24px;box-shadow:0 10px 30px #00000008}.product-main{padding:26px;display:grid;place-items:center;min-height:540px}.product-main img{width:100%;max-width:760px}.poster-card{margin-top:18px;background:#fff;border:1px solid #fff;border-radius:24px;padding:12px;box-shadow:0 10px 30px #00000008}.poster-card img{width:100%;display:block;border-radius:16px}.device-shell,.mini-frame{container-type:inline-size}.spec-stack{display:grid;gap:12px}.spec-card{padding:20px}.spec-card b{display:block;margin-bottom:6px}.spec-card p{font-size:12px;line-height:1.65;color:var(--muted);margin:0}
-.ui-lab-wrap{background:#20242c;color:#f5f4f0;margin-top:78px;padding:78px 0}.ui-lab-wrap .section-title p,.ui-lab-wrap .eyebrow{color:#aeb3bc}.ui-lab-wrap .device-meta span{background:#ffffff12;border-color:#ffffff1a}.lab-grid{display:grid;grid-template-columns:190px minmax(560px,1fr) 180px;gap:18px;align-items:start}.screen-picker,.lab-controls{background:#ffffff08;border:1px solid #ffffff0e;border-radius:18px;padding:10px;max-height:610px;overflow:auto}.screen-picker button,.lab-controls button{width:100%;border:0;background:transparent;color:#c5c9d0;text-align:left;padding:9px 10px;border-radius:10px;font-size:11px;cursor:pointer}.screen-picker button:hover,.lab-controls button:hover{background:#ffffff0b}.screen-picker button.active{background:#f1f0eb;color:#252830;font-weight:800}.screen-picker small{display:block;color:#818893;margin-top:2px}.lab-controls h3{font-size:13px;margin:7px 8px 10px}.state-box{margin-top:12px;padding:10px;border-radius:12px;background:#12151a;color:#94a0ad;font-size:9px;line-height:1.55;white-space:pre-line}.device-stage{display:grid;justify-items:center}.device-shell{width:min(100%,850px);aspect-ratio:5/3;background:linear-gradient(145deg,#f5f5f4,#d9dad9);padding:16px;border-radius:28px;box-shadow:0 28px 75px #0006,inset 0 0 0 1px #fff}.device-screen{container-type:inline-size;width:100%;height:100%;border-radius:17px;overflow:hidden;background:var(--screen);position:relative;color:#25262b}.device-caption{margin-top:12px;text-align:center}.device-caption strong{display:block}.device-caption span{font-size:11px;color:#949ba6}.screen-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.gallery-card{background:#fffdf8;border:1px solid #fff;border-radius:20px;padding:14px;cursor:pointer;transition:.18s;box-shadow:0 8px 24px #00000008}.gallery-card:hover{transform:translateY(-3px);box-shadow:0 16px 32px #00000012}.gallery-card header{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.gallery-card header b{font-size:12px}.gallery-card header span{font-size:9px;color:var(--muted)}.mini-frame{aspect-ratio:5/3;border-radius:12px;overflow:hidden;border:1px solid #e5e1d8;background:var(--screen);position:relative}.mini-frame .pk-screen{transform:scale(.39);transform-origin:top left;width:256.4%;height:256.4%}.arch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.arch-card{padding:19px}.arch-card span{font-size:9px;font-weight:900;letter-spacing:.13em;color:#7c828a}.arch-card h3{font-size:16px;margin:9px 0 7px}.arch-card p{font-size:11px;line-height:1.6;color:var(--muted)}.site-footer{margin-top:90px;padding-top:22px;padding-bottom:40px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}.site-footer a{color:inherit}
-
-/* device UI */
-.pk-screen{width:100%;height:100%;background:var(--screen);position:relative;overflow:hidden}.pk-screen.dark{background:#181720;color:#f7f5fb}.pk-top{height:12%;display:flex;align-items:center;justify-content:space-between;padding:0 3%;font-size:2.1cqw}.pk-brand{font-weight:900;letter-spacing:.11em}.pk-status{display:flex;gap:1.2em;color:#7d7f86}.pk-body{height:76%;padding:1.5% 2.8% 2.2%}.pk-bottom{height:12%;border-top:1px solid rgba(40,40,50,.06);display:flex;align-items:center;justify-content:center;gap:1%;background:rgba(255,255,255,.38)}.pk-tab{font-size:2cqw;color:#777b83;padding:.7em 1.3em;border-radius:.9em}.pk-tab.on{background:#fff;color:#24262c;font-weight:900;box-shadow:0 .4em 1.2em #0001}.dark .pk-bottom{background:#ffffff09;border-top-color:#ffffff0f}.dark .pk-tab{color:#a5a0af}.dark .pk-tab.on{background:#ffffff14;color:#fff}.pk-grid{display:grid;gap:2%}.pk-card{background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.82);border-radius:1.7cqw;box-shadow:0 .8cqw 2.3cqw rgba(40,38,45,.05);position:relative;overflow:hidden}.dark .pk-card{background:rgba(255,255,255,.08);border-color:#ffffff0c;box-shadow:none}.pk-home{grid-template-columns:1.55fr .9fr;height:100%}.pk-hero{padding:4.2%;position:relative}.pk-time{font-size:8.7cqw;font-weight:950;letter-spacing:-.07em;line-height:.88}.pk-date{font-size:2cqw;color:#7b7d84;margin-top:1.4%}.pk-char{position:absolute;right:2%;bottom:6%;width:38%;height:68%;object-fit:contain;filter:drop-shadow(0 1.2cqw 1cqw #0002)}.pk-message{position:absolute;left:4%;bottom:7%;width:50%;font-size:2.7cqw;font-weight:850;line-height:1.2}.pk-message small{display:block;font-size:1.75cqw;color:#797b82;font-weight:500;margin-top:3%}.pk-stack{display:grid;grid-template-rows:repeat(4,1fr);gap:4%}.pk-mini{padding:7%}.pk-mini b{display:block;font-size:2.3cqw}.pk-mini span{font-size:1.75cqw;color:#7b7e85}.dark .pk-date,.dark .pk-message small,.dark .pk-mini span{color:#aaa6b1}.pk-focus{grid-template-columns:1.28fr .72fr;height:100%}.pk-timer-main{display:grid;place-items:center;text-align:center}.pk-mode-label{font-size:2.1cqw;letter-spacing:.16em;color:#737780;font-weight:800}.pk-big-time{font-size:12cqw;font-weight:950;letter-spacing:-.06em;line-height:1;margin-top:1%}.pk-progress{height:1.2cqw;width:64%;border-radius:99px;background:#dfe3e5;overflow:hidden;margin:3% auto}.pk-progress i{display:block;height:100%;background:#648aa3}.pk-actions{display:flex;justify-content:center;gap:1.2%}.pk-btn{border:0;border-radius:1.1cqw;padding:1.2% 2.2%;background:#eef1f2;font-size:2cqw}.dark .pk-btn{background:#ffffff12;color:#fff}.pk-buddy{padding:6%}.pk-buddy h3{font-size:3.2cqw;margin:0}.pk-buddy p{font-size:1.8cqw;line-height:1.5;color:#737780;max-width:70%}.pk-buddy img{position:absolute;width:73%;height:73%;object-fit:contain;right:-5%;bottom:-3%}.pk-two{grid-template-columns:1fr 1fr;height:100%}.pk-tool{padding:6%}.pk-tool h3{font-size:2.6cqw;margin:0 0 4%}.pk-tool .pk-big-time{font-size:9cqw}.pk-list{display:grid;gap:3%;margin-top:3%}.pk-row{background:rgba(255,255,255,.7);border-radius:1.1cqw;padding:2.7% 3.2%;display:flex;justify-content:space-between;align-items:center;font-size:2cqw}.dark .pk-row{background:#ffffff09}.pk-good{color:#5a8b65;font-weight:900}.pk-stat{font-size:8cqw;font-weight:950;letter-spacing:-.06em}.pk-substat{font-size:1.9cqw;color:#7a7d84}.pk-dex-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1.7%;height:100%;align-content:start}.pk-mon{background:rgba(255,255,255,.72);border-radius:1.2cqw;text-align:center;padding:5%;font-size:1.5cqw;color:#777b82}.pk-mon img{width:100%;height:72%;object-fit:contain;display:block}.pk-weather{grid-template-columns:1.05fr .95fr;height:100%}.pk-weather-now{padding:6%}.pk-temp{font-size:11cqw;font-weight:950;letter-spacing:-.07em}.pk-forecast{display:grid;grid-template-columns:repeat(4,1fr);gap:2%;margin-top:7%}.pk-day{text-align:center;background:rgba(255,255,255,.7);border-radius:1cqw;padding:8% 2%;font-size:1.7cqw}.pk-weather-char{display:grid;place-items:center}.pk-weather-char img{width:72%;height:72%;object-fit:contain}.pk-alarm-list{display:grid;gap:3%;height:100%;align-content:start}.pk-alarm{display:grid;grid-template-columns:1fr auto;align-items:center;padding:3.2% 4%;background:rgba(255,255,255,.75);border-radius:1.4cqw}.pk-alarm strong{font-size:5cqw}.pk-alarm small{font-size:1.8cqw;color:#777b82}.pk-switch{width:5.5cqw;height:3cqw;border-radius:99px;background:#82ad85;position:relative}.pk-switch:after{content:"";position:absolute;width:2.4cqw;height:2.4cqw;right:.3cqw;top:.3cqw;background:white;border-radius:50%}.pk-nfc{grid-template-columns:1.1fr .9fr;height:100%}.pk-nfc-pad{display:grid;place-items:center;text-align:center}.pk-nfc-ring{width:19cqw;height:19cqw;border-radius:50%;border:.5cqw dashed #9aa1a8;display:grid;place-items:center;font-size:5cqw}.pk-phone{grid-template-columns:.85fr 1.15fr;height:100%}.pk-phone-icon{display:grid;place-items:center}.pk-phone-shape{width:15cqw;height:26cqw;background:#222731;border-radius:2.4cqw;border:.5cqw solid #5e6570;position:relative}.pk-phone-shape:after{content:"";position:absolute;inset:1.2cqw;border-radius:1.5cqw;background:radial-gradient(circle at 50% 45%,#4ba96c 0 8%,transparent 9%),linear-gradient(#303844,#15191f)}.pk-notices{padding:5%}.pk-notice{margin-top:4%;padding:4%;border-radius:1.2cqw;background:rgba(255,255,255,.76)}.pk-notice b{font-size:2.2cqw}.pk-notice p{font-size:1.8cqw;color:#777b82;margin:1% 0 0}.pk-light{grid-template-columns:repeat(2,1fr);height:100%}.pk-theme{padding:5%;display:flex;align-items:end;font-size:3cqw;font-weight:900;min-height:0}.pk-theme:after{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,var(--theme,#dcecf5),transparent 68%)}.pk-theme span{z-index:1}.pk-settings{grid-template-columns:1fr 1fr;height:100%}.pk-settings-col{padding:4%}.pk-setting{display:flex;justify-content:space-between;gap:4%;padding:4% 0;border-bottom:1px solid rgba(50,50,60,.07);font-size:2cqw}.pk-setting b{font-size:1.9cqw}.pk-birthday{height:100%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 50% 45%,#2d3d6c,#111827 70%);color:#fff}.pk-birthday img{width:27%;height:44%;object-fit:contain;filter:drop-shadow(0 0 2cqw #ead26788)}.pk-birthday h2{font-size:4.4cqw;margin:1% 0}.pk-birthday p{font-size:2cqw;color:#d4d7e2}.pk-overlay{position:absolute;right:3%;top:13%;z-index:30;background:#20242ddd;color:white;border-radius:1.2cqw;padding:1.5% 2%;min-width:26%;box-shadow:0 .7cqw 2cqw #0003}.pk-overlay b{font-size:2cqw}.pk-overlay span{display:block;font-size:1.55cqw;color:#c8cbd1;margin-top:1%}
-
-@media(max-width:1000px){.hero,.product-grid{grid-template-columns:1fr}.hero{padding-top:30px;min-height:0}.hero-copy{text-align:center}.hero-copy p{margin-inline:auto}.hero-tags,.hero-actions{justify-content:center}.lab-grid{grid-template-columns:1fr}.screen-picker{display:grid;grid-template-columns:repeat(4,1fr);max-height:none}.lab-controls{display:grid;grid-template-columns:repeat(3,1fr)}.lab-controls h3,.state-box{grid-column:1/-1}.screen-gallery{grid-template-columns:repeat(2,1fr)}.arch-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.site-header nav{display:none}.wrap{padding-left:14px;padding-right:14px}.hero-copy h1{font-size:48px}.section-title h2{font-size:32px}.row-title{display:block}.device-shell{padding:8px;border-radius:18px}.screen-picker{grid-template-columns:repeat(2,1fr)}.lab-controls{grid-template-columns:1fr 1fr}.screen-gallery,.arch-grid{grid-template-columns:1fr}.site-footer{display:block}.site-footer a{display:block;margin-top:8px}}
+<title>PokéDock Companion</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(#efebe3,#faf8f3 45%,#f1ede6);color:#23252a;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+.wrap{max-width:1180px;margin:auto;padding-left:20px;padding-right:20px}.top{position:sticky;top:0;z-index:20;height:62px;display:flex;align-items:center;justify-content:space-between;background:#f7f4eeeb;backdrop-filter:blur(15px);border-bottom:1px solid #0000000a;padding:0 max(20px,calc((100vw - 1140px)/2))}
+.brand{font-weight:900}.top nav{display:flex;gap:8px}.top a{text-decoration:none;color:#50535b;font-size:12px}.hero{display:grid;grid-template-columns:.85fr 1.15fr;gap:32px;align-items:center;padding-top:58px;padding-bottom:58px}.hero h1{font-size:68px;letter-spacing:-.065em;line-height:.94;margin:12px 0}.hero h1 span{color:#628ca8}.hero p{line-height:1.75;color:#595c64}.hero img{width:100%;filter:drop-shadow(0 25px 35px #0002)}
+.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px}.badges span{background:#fff;border:1px solid #fff;border-radius:999px;padding:7px 9px;font-size:10px}
+.section{padding:70px 0}.section h2{font-size:38px;letter-spacing:-.045em;margin:0 0 10px}.section p{color:#64676f;line-height:1.7}.sim-card{background:#20242c;border-radius:24px;padding:12px;box-shadow:0 25px 60px #0002}.sim-head{display:flex;justify-content:space-between;align-items:center;color:#fff;padding:8px 7px 14px}.sim-head strong{font-size:18px}.sim-head a{color:#dbe9f3;text-decoration:none;font-size:12px}.sim-card iframe{width:100%;height:900px;border:0;border-radius:16px;background:#1f232b}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.card{background:#fffdf8;border:1px solid #fff;border-radius:20px;padding:18px}.card b{display:block;margin-bottom:6px}.card p{font-size:12px;margin:0}.poster{margin-top:20px;background:white;border-radius:22px;padding:10px}.poster img{width:100%;display:block;border-radius:15px}.foot{border-top:1px solid #d9d5cc;padding:24px 0 40px;color:#777;font-size:11px}
+@media(max-width:850px){.hero{grid-template-columns:1fr}.hero h1{font-size:48px}.top nav{display:none}.grid{grid-template-columns:1fr}.sim-card iframe{height:1180px}}
 </style>
-<style>.lab-controls{position:relative!important;z-index:50!important;pointer-events:auto!important}.lab-controls button{position:relative!important;z-index:51!important;pointer-events:auto!important;cursor:pointer!important;touch-action:manipulation!important}.lab-controls button:active{transform:translateY(1px);background:#ffffff22!important;color:#fff!important}</style></head>
+</head>
 <body>
-<header class="site-header">
-  <a class="brand" href="#top"><span class="brand-dot"></span>PokéDock Companion</a>
-  <nav>
-    <a href="#product">제품 구조</a>
-    <a href="#ui-lab">UI Lab</a>
-    <a href="#gallery">전체 화면</a>
-    <a href="#system">기능 구조</a>
-  </nav>
-</header>
-
-<main id="top">
-<section class="hero wrap">
-  <div class="hero-copy">
-    <span class="eyebrow">V4 · COMPACT STUDY COMPANION</span>
-    <h1>앞은 비우고,<br><em>공부에 집중.</em></h1>
-    <p>4.3인치 화면이 제품의 중심이다. 휴대폰은 화면 뒤 경사 지지대에서 충전하고 시야에서 빠지며, NFC/피규어는 측면으로 이동한다. UI는 시계·집중·타이머·스톱워치·공부기록·D-day·날씨·알람·Dex까지 전부 실제 화면 단위로 설계한다.</p>
-    <div class="hero-tags">
-      <span>ESP32-S3</span><span>800×480 Touch</span><span>Wi‑Fi</span><span>BLE</span><span>RTC</span><span>microSD</span><span>NFC</span><span>Qi</span>
-    </div>
-    <div class="hero-actions">
-      <a class="button primary" href="#ui-lab">UI 직접 보기</a>
-      <a class="button" href="#product">실물 구조 보기</a>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <img src="/pokedock-companion/site/product-v4.svg" alt="PokéDock V4 compact physical concept">
-  </div>
+<header class="top"><div class="brand">PokéDock Companion</div><nav><a href="#structure">구조</a><a href="#sim">Simulator</a><a href="https://github.com/choiYhunn/pokedock-companion">GitHub</a></nav></header>
+<main>
+<section class="hero wrap" id="structure">
+<div>
+<div style="font-size:11px;font-weight:800;letter-spacing:.14em;color:#777">V4 · COMPACT STUDY COMPANION</div>
+<h1>앞은 비우고,<br><span>폰은 뒤로.</span></h1>
+<p>4.3인치 화면이 제품의 중심이고, 휴대폰은 뒤 경사 지지대에서 Qi 충전하며 시야에서 빠진다. NFC/피규어는 측면 포드로 이동하고, 전면에는 별도 충전 트레이가 없다.</p>
+<div class="badges"><span>800×480 Touch</span><span>Wi‑Fi</span><span>BLE</span><span>RTC</span><span>NFC</span><span>Qi</span><span>Study Log</span></div>
+</div>
+<div><img src="/pokedock-companion/site/product-v4.svg" alt="PokéDock V4 structure"></div>
 </section>
 
-<section class="section wrap" id="product">
-  <div class="section-title">
-    <span class="eyebrow">PHYSICAL DESIGN</span>
-    <h2>아까 확정한 실물 구조를 그대로 코드로 옮겼다.</h2>
-    <p>이미지 생성이 아니라 SVG/CSS 원본이라 이후 치수·NFC 위치·폰 각도까지 코드에서 바로 수정할 수 있다.</p>
-  </div>
-  <div class="product-grid">
-    <div class="product-card product-main">
-      <img src="/pokedock-companion/site/product-v4.svg" alt="PokéDock front concept">
-    </div>
-    <div class="spec-stack">
-      <article class="spec-card"><b>전면</b><p>앞쪽 트레이는 없다. 화면 하우징과 얇은 베이스가 거의 같은 전면선에서 끝난다.</p></article>
-      <article class="spec-card"><b>후면 폰 거치</b><p>깊은 홈 대신 단순 경사판. 폰은 뒤로 숨기고 Qi 패드는 경사판 쪽에 둔다.</p></article>
-      <article class="spec-card"><b>측면 NFC</b><p>기본 오른쪽. 작은 포드만 옆으로 나오며 전면보다 앞으로 튀어나오지 않는다.</p></article>
-      <article class="spec-card"><b>하부 LED</b><p>책상 면에만 은은하게 비추고 Focus/Night 모드에서는 자동으로 줄인다.</p></article>
-    </div>
-  </div>
-  <div class="poster-card"><img src="/pokedock-companion/site/product-poster-v4.svg" alt="PokéDock V4 structure concept poster"></div>
+<section class="section wrap" id="sim">
+<h2>UI Simulator</h2>
+<p>이제 시뮬레이터는 소개 페이지와 완전히 분리된 독립 페이지다. 아래 프레임 안에서 화면 전환, Night, NFC, Birthday, BLE 연결/전화/일정/중요 연락처 알림을 직접 눌러볼 수 있다.</p>
+<div class="sim-card">
+<div class="sim-head"><strong>PokéDock Simulator</strong><a href="/pokedock-companion/simulator.html">전체 화면으로 열기 ↗</a></div>
+<iframe src="/pokedock-companion/simulator.html" title="PokéDock UI Simulator"></iframe>
+</div>
 </section>
 
-<section class="section ui-lab-wrap" id="ui-lab">
-  <div class="wrap">
-    <div class="section-title row-title">
-      <div>
-        <span class="eyebrow">INTERACTIVE UI LAB</span>
-        <h2>800×480 화면을 실제로 눌러보는 검토판.</h2>
-        <p>왼쪽 기능 목록에서 화면을 바꾸고, 타이머/스톱워치/알림 상태까지 직접 테스트할 수 있다.</p>
-      </div>
-      <div class="device-meta"><span>800×480</span><span>Landscape</span><span>Touch</span></div>
-    </div>
-
-    <div class="lab-grid">
-      <aside class="screen-picker" id="screenPicker"></aside>
-      <div class="device-stage">
-        <div class="device-shell">
-          <div class="device-screen" id="deviceScreen"><div class="pk-screen"><div class="pk-top"><div class="pk-brand">POKÉDOCK</div><div class="pk-status"><span>UI fallback</span><span>BLE ○</span></div></div><div class="pk-body"><div class="pk-grid pk-home"><div class="pk-card pk-hero"><div class="pk-time">14:36</div><div class="pk-date">10월 5일 · 월요일</div><div class="pk-message">UI Lab 준비 중<small>스크립트가 정상 로드되면 전체 15개 화면이 활성화됩니다.</small></div></div><div class="pk-stack"><div class="pk-card pk-mini"><b>FOCUS</b><span>25:00</span></div><div class="pk-card pk-mini"><b>TIMER</b><span>10:00</span></div><div class="pk-card pk-mini"><b>TODAY</b><span>1h45m</span></div><div class="pk-card pk-mini"><b>BLE</b><span>priority only</span></div></div></div></div></div>
-        </div>
-        <div class="device-caption">
-          <strong id="screenTitle"></strong>
-          <span id="screenPurpose"></span>
-        </div>
-      </div>
-      <aside class="lab-controls">
-        <h3>State simulator</h3>
-        <button data-action="toggle-phone" onclick="action('toggle-phone')">폰 거치 토글</button><button data-action="ble-toggle" onclick="action('ble-toggle')">BLE 연결/해제</button><button data-action="ble-call" onclick="action('ble-call')">BLE · 전화 알림</button><button data-action="ble-calendar" onclick="action('ble-calendar')">BLE · 일정 알림</button><button data-action="ble-contact" onclick="action('ble-contact')">BLE · 중요 연락처</button>
-        <button data-action="priority-alert" onclick="action('priority-alert')">중요 알림 띄우기</button>
-        <button data-action="toggle-dark" onclick="action('toggle-dark')">Night 토글</button>
-        <button data-action="nfc-scan" onclick="action('nfc-scan')">NFC 스캔</button>
-        <button data-action="birthday" onclick="action('birthday')">Birthday 이벤트</button>
-        <button data-action="reset" onclick="action('reset')">상태 초기화</button>
-        <div class="state-box" id="stateBox"></div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<section class="section wrap" id="gallery">
-  <div class="section-title">
-    <span class="eyebrow">ALL SCREENS</span>
-    <h2>기능마다 화면을 따로 만들어 놨다.</h2>
-    <p>아래 카드들은 전부 같은 렌더러를 쓰기 때문에, 여기서 마음에 안 드는 화면을 집어서 말하면 실제 데모 화면과 함께 한 번에 바뀐다.</p>
-  </div>
-  <div class="screen-gallery" id="screenGallery"></div>
-</section>
-
-<section class="section wrap" id="system">
-  <div class="section-title">
-    <span class="eyebrow">PRODUCT ARCHITECTURE</span>
-    <h2>기능이 많아도 서로 발목 잡지 않게 계층을 나눴다.</h2>
-  </div>
-  <div class="arch-grid">
-    <article class="arch-card">
-      <span>LOCAL CORE</span>
-      <h3>인터넷 없어도 동작</h3>
-      <p>시계, 알람, Focus, Timer, Stopwatch, Study Log, D-day/To-do, NFC, Dex, Night mode.</p>
-    </article>
-    <article class="arch-card">
-      <span>WI‑FI</span>
-      <h3>있으면 더 편리</h3>
-      <p>NTP 시간보정, 날씨, 로컬 웹 설정, OTA. 네트워크 실패가 타이밍 기능을 막지 않는다.</p>
-    </article>
-    <article class="arch-card">
-      <span>PHONE BRIDGE</span>
-      <h3>선택형 알림 연동</h3>
-      <p>통화·캘린더·선택 연락처 같은 중요 알림만 요약. 메시지 본문은 저장하지 않는다.</p>
-    </article>
-    <article class="arch-card">
-      <span>DOCK NODE</span>
-      <h3>센서는 별도 ESP32-C3</h3>
-      <p>PN532, VL53L0X, BH1750, RGB LED를 분리해 HMI BSP와 충돌하지 않게 한다.</p>
-    </article>
-  </div>
+<section class="section wrap">
+<h2>현재 구현 범위</h2>
+<div class="grid">
+<div class="card"><b>Study Core</b><p>Focus, Timer, Stopwatch, Today, Study Log, D-day/To-do.</p></div>
+<div class="card"><b>BLE Phone Bridge</b><p>UI 시뮬레이션과 PhoneEvent/프레임 decoder까지. 실제 Android/iPhone adapter는 다음 단계.</p></div>
+<div class="card"><b>Wi‑Fi</b><p>NTP, 날씨, 로컬 웹 설정, OTA. 네트워크가 없어도 핵심 타이밍 기능은 유지.</p></div>
+<div class="card"><b>Dock</b><p>ESP32-C3 + NFC + 폰 감지 + 조도 + RGB. HMI와 ESP-NOW.</p></div>
+<div class="card"><b>Qi</b><p>완제품 보호회로 충전기를 후면 경사 지지대 쪽에 기구적으로 통합.</p></div>
+<div class="card"><b>Birthday</b><p>평소에는 실용 기기, 생일에만 별도 Secret Event가 가장 높은 우선순위로 동작.</p></div>
+</div>
+<div class="poster"><img src="/pokedock-companion/site/product-poster-v4.svg" alt="PokéDock V4 poster"></div>
 </section>
 </main>
-
-<footer class="site-footer wrap">
-  <span>PokéDock Companion · personal non-commercial fan project</span>
-  <a href="https://github.com/choiYhunn/pokedock-companion">GitHub source</a>
-</footer>
-<script>const POKE=id=>`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-
-const screens=[
-{id:'home',label:'HOME',purpose:'항상 켜두는 기본 화면'},
-{id:'focus',label:'FOCUS',purpose:'Pomodoro / 집중 세션'},
-{id:'timer',label:'TIMER',purpose:'일반 카운트다운'},
-{id:'stopwatch',label:'STOPWATCH',purpose:'Lap 스톱워치'},
-{id:'today',label:'TODAY',purpose:'할 일 / D-day / 오늘 기록'},
-{id:'stats',label:'STATS',purpose:'주간 공부 통계'},
-{id:'dex',label:'DEX',purpose:'공부 보상 / NFC 캐릭터'},
-{id:'nfc',label:'NFC',purpose:'측면 태그/피규어 인식'},
-{id:'weather',label:'WEATHER',purpose:'날씨 / 환경 정보'},
-{id:'alarm',label:'ALARM',purpose:'알람 관리'},
-{id:'phone',label:'PHONE',purpose:'후면 폰 / 중요 알림'},
-{id:'light',label:'LIGHT',purpose:'무드등 테마'},
-{id:'settings',label:'SETTINGS',purpose:'기기 설정'},
-{id:'birthday',label:'BIRTHDAY',purpose:'생일 Secret Event'},
-{id:'night',label:'NIGHT',purpose:'야간 저휘도 모드'}
-];
-
-const state={
-screen:'home',phoneParked:true,bleConnected:true,dark:false,priority:false,priorityType:'calendar',nfc:false,birthday:false,
-focusRemaining:1458,focusRunning:false,countdown:600,countdownRunning:false,
-stopwatch:1938.4,stopwatchRunning:false,laps:['32:18.4','21:04.8','10:12.1']
-};
-
-let tickTimer=null;
-
-function nav(active){
- const tabs=['HOME','FOCUS','TOOLS','TODAY','DEX'];
- return `<div class="pk-bottom">${tabs.map(t=>`<span class="pk-tab ${active===t?'on':''}">${t}</span>`).join('')}</div>`;
-}
-function top(status='Wi‑Fi ●'){
- return `<div class="pk-top"><div class="pk-brand">POKÉDOCK</div><div class="pk-status"><span>${status}</span><span>23°C</span><span>${state.phoneParked?'PHONE ●':'PHONE ○'}</span><span>${state.bleConnected?'BLE ●':'BLE ○'}</span></div></div>`;
-}
-function overlay(){
- if(!state.priority)return '';
- const map={call:['CALL · 엄마','수신 전화'],calendar:['CALENDAR · 중요 알림','15분 뒤 일정이 있어요'],contact:['PRIORITY · selected contact','새 중요 알림 · 본문 숨김']};
- const n=map[state.priorityType]||map.calendar;
- return `<div class="pk-overlay"><b>${n[0]}</b><span>${n[1]}</span></div>`;
-}
-function shell(body,active='HOME',dark=false,status){
- return `<div class="pk-screen ${dark?'dark':''}">${top(status)}<div class="pk-body">${body}</div>${nav(active)}${overlay()}</div>`;
-}
-function fmt(sec){
- sec=Math.max(0,Math.floor(sec)); const m=Math.floor(sec/60),s=sec%60;
- return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-}
-function renderHome(){
- return shell(`<div class="pk-grid pk-home"><div class="pk-card pk-hero"><div class="pk-time">14:36</div><div class="pk-date">10월 5일 · 월요일</div><img class="pk-char" src="${POKE(468)}"><div class="pk-message">오늘도 차근차근.<small>토게키스가 오늘 계획을 정리했습니다.</small></div></div><div class="pk-stack"><div class="pk-card pk-mini"><b>오늘 공부</b><span>1h 45m · 목표 3h</span></div><div class="pk-card pk-mini"><b>D‑DAY</b><span>확률 과제 · D‑4</span></div><div class="pk-card pk-mini"><b>날씨</b><span>18°C · 맑음</span></div><div class="pk-card pk-mini"><b>다음</b><span>전자회로 복습 25분</span></div></div></div>`,'HOME',state.dark);
-}
-function renderFocus(){
- return shell(`<div class="pk-grid pk-focus"><div class="pk-card pk-timer-main"><div><div class="pk-mode-label">FOCUS SESSION</div><div class="pk-big-time">${fmt(state.focusRemaining)}</div><div class="pk-progress"><i style="width:${Math.min(100,100*(1500-state.focusRemaining)/1500)}%"></i></div><div class="pk-actions"><button class="pk-btn" data-ui="focus-toggle">${state.focusRunning?'일시정지':'시작'}</button><button class="pk-btn" data-ui="focus-plus">+5분</button><button class="pk-btn" data-ui="focus-reset">리셋</button></div></div></div><div class="pk-card pk-buddy"><h3>Lucario Focus</h3><p>집중 중에는 랜덤 이벤트와 일반 알림을 막고 중요 알림만 작게 표시합니다.</p><img src="${POKE(448)}"></div></div>`,'FOCUS',state.dark);
-}
-function renderTimer(){
- return shell(`<div class="pk-grid pk-two"><div class="pk-card pk-tool"><h3>COUNTDOWN</h3><div class="pk-big-time">${fmt(state.countdown)}</div><div class="pk-actions"><button class="pk-btn" data-ui="countdown-toggle">${state.countdownRunning?'Pause':'Start'}</button><button class="pk-btn" data-ui="countdown-reset">10m</button></div></div><div class="pk-card pk-tool"><h3>PRESETS</h3><div class="pk-list"><div class="pk-row"><span>5분</span><b>QUICK</b></div><div class="pk-row"><span>10분</span><b>DEFAULT</b></div><div class="pk-row"><span>30분</span><b>LONG</b></div><div class="pk-row"><span>Custom</span><b>SET</b></div></div></div></div>`,'TOOLS',state.dark);
-}
-function renderStopwatch(){
- return shell(`<div class="pk-grid pk-two"><div class="pk-card pk-tool"><h3>STOPWATCH</h3><div class="pk-big-time">${fmt(state.stopwatch)}</div><div class="pk-actions"><button class="pk-btn" data-ui="sw-toggle">${state.stopwatchRunning?'Pause':'Start'}</button><button class="pk-btn" data-ui="sw-lap">Lap</button><button class="pk-btn" data-ui="sw-reset">Reset</button></div></div><div class="pk-card pk-tool"><h3>LAPS</h3><div class="pk-list">${state.laps.slice(0,4).map((l,i)=>`<div class="pk-row"><span>Lap ${state.laps.length-i}</span><b>${l}</b></div>`).join('')}</div></div></div>`,'TOOLS',state.dark);
-}
-function renderToday(){
- return shell(`<div class="pk-grid pk-two"><div class="pk-card pk-tool"><h3>TODAY</h3><div class="pk-list"><div class="pk-row"><span>신호 복습 25분</span><i class="pk-good">DONE</i></div><div class="pk-row"><span>확률 과제 1페이지</span><b>18:00</b></div><div class="pk-row"><span>영단어 20개</span><b>20:30</b></div><div class="pk-row"><span>전자회로 복습</span><b>NEXT</b></div></div></div><div class="pk-card pk-tool"><h3>DAILY</h3><div class="pk-stat">1h45m</div><div class="pk-substat">3 sessions · 목표 3h · 4-day streak</div><div class="pk-progress"><i style="width:58%"></i></div><div class="pk-list"><div class="pk-row"><span>가장 가까운 D-day</span><b>D‑4</b></div></div></div></div>`,'TODAY',state.dark);
-}
-function renderStats(){
- return shell(`<div class="pk-grid pk-two"><div class="pk-card pk-tool"><h3>THIS WEEK</h3><div class="pk-stat">8h20m</div><div class="pk-substat">12 sessions · +18% vs last week</div><div class="pk-list"><div class="pk-row"><span>월</span><b>1h10</b></div><div class="pk-row"><span>화</span><b>2h05</b></div><div class="pk-row"><span>수</span><b>0h45</b></div><div class="pk-row"><span>목</span><b>2h35</b></div></div></div><div class="pk-card pk-tool"><h3>STREAK</h3><div class="pk-stat">4 days</div><div class="pk-substat">다음 reward까지 1 session</div><img src="${POKE(175)}" style="position:absolute;width:46%;right:5%;bottom:0"></div></div>`,'TODAY',state.dark);
-}
-function renderDex(){
- const ids=[94,175,417,448,468,385,25,133,197,196,492,778,700,702,447,570,280,39];
- return shell(`<div class="pk-dex-grid">${ids.map((id,i)=>`<div class="pk-mon"><img src="${POKE(id)}">#${id}${i<11?' · FOUND':' · LOCKED'}</div>`).join('')}</div>`,'DEX',state.dark);
-}
-function renderNfc(){
- return shell(`<div class="pk-grid pk-nfc"><div class="pk-card pk-nfc-pad"><div><div class="pk-nfc-ring">${state.nfc?'✓':'NFC'}</div><h3 style="font-size:3cqw;margin:5% 0 0">${state.nfc?'Gengar detected':'측면 피규어/태그를 대주세요'}</h3><p style="font-size:1.8cqw;color:#777">오른쪽 side pod · Qi와 물리 분리</p></div></div><div class="pk-card pk-buddy"><h3>${state.nfc?'Gengar Theme':'NFC Mode'}</h3><p>${state.nfc?'Night buddy와 조명 테마를 불러왔습니다.':'태그로 companion, 조명, 집중 preset을 전환할 수 있습니다.'}</p><img src="${POKE(state.nfc?94:417)}"></div></div>`,'DEX',state.dark);
-}
-function renderWeather(){
- return shell(`<div class="pk-grid pk-weather"><div class="pk-card pk-weather-now"><div class="pk-mode-label">SUWON · NOW</div><div class="pk-temp">18°</div><div class="pk-substat">맑음 · 체감 17° · 습도 48%</div><div class="pk-forecast"><div class="pk-day">15시<br><b>18°</b></div><div class="pk-day">18시<br><b>16°</b></div><div class="pk-day">21시<br><b>13°</b></div><div class="pk-day">00시<br><b>11°</b></div></div></div><div class="pk-card pk-weather-char"><img src="${POKE(468)}"><span style="font-size:2cqw">산책하기 좋은 날씨</span></div></div>`,'HOME',state.dark);
-}
-function renderAlarm(){
- return shell(`<div class="pk-alarm-list"><div class="pk-alarm"><div><strong>07:30</strong><small> 평일 · Togepi Morning</small></div><span class="pk-switch"></span></div><div class="pk-alarm"><div><strong>08:10</strong><small> 화/목 · 수업 준비</small></div><span class="pk-switch"></span></div><div class="pk-alarm"><div><strong>22:20</strong><small> 매일 · 내일 준비</small></div><span class="pk-switch"></span></div><div class="pk-card pk-tool"><h3>BEDTIME</h3><div class="pk-substat">22:30 이후 자동 Night Mode · 알람은 항상 유지</div></div></div>`,'HOME',state.dark);
-}
-function renderPhone(){
- return shell(`<div class="pk-grid pk-phone"><div class="pk-card pk-phone-icon"><div><div class="pk-phone-shape"></div><p style="font-size:1.8cqw;text-align:center">${state.phoneParked?'후면 거치 · 충전 중':'폰 없음'}</p></div></div><div class="pk-card pk-notices"><h3 style="font-size:3cqw;margin:0">Phone Bridge · ${state.bleConnected?'BLE connected':'BLE disconnected'}</h3><div class="pk-notice"><b>CALL · 엄마</b><p>통화 수신 알림</p></div><div class="pk-notice"><b>CALENDAR · 15분 뒤</b><p>다음 일정 요약</p></div><div class="pk-notice"><b>PRIORITY · selected contact</b><p>본문은 표시/저장하지 않음</p></div></div></div>`,'HOME',state.dark);
-}
-function renderLight(){
- return shell(`<div class="pk-grid pk-light"><div class="pk-card pk-theme" style="--theme:#f4d9bf"><span>Warm · Togepi</span></div><div class="pk-card pk-theme" style="--theme:#d8eefa"><span>Electric · Pachirisu</span></div><div class="pk-card pk-theme" style="--theme:#d7e8ef"><span>Calm · Togekiss</span></div><div class="pk-card pk-theme" style="--theme:#4e3e69"><span>Night · Gengar</span></div></div>`,'HOME',state.dark);
-}
-function renderSettings(){
- return shell(`<div class="pk-grid pk-settings"><div class="pk-card pk-settings-col"><div class="pk-setting"><span>Auto brightness</span><b>ON</b></div><div class="pk-setting"><span>Night start</span><b>22:30</b></div><div class="pk-setting"><span>Volume</span><b>35%</b></div><div class="pk-setting"><span>Random encounter</span><b>ON</b></div></div><div class="pk-card pk-settings-col"><div class="pk-setting"><span>Wi‑Fi</span><b>CONNECTED</b></div><div class="pk-setting"><span>NFC side</span><b>RIGHT</b></div><div class="pk-setting"><span>Phone bridge</span><b>OPTIONAL</b></div><div class="pk-setting"><span>Web settings</span><b>OPEN</b></div></div></div>`,'HOME',state.dark);
-}
-function renderBirthday(){
- return `<div class="pk-screen"><div class="pk-birthday"><div><div class="pk-mode-label" style="color:#d4d7e2">SPECIAL EVENT</div><img src="${POKE(385)}"><h2>A SPECIAL EVENT HAS STARTED.</h2><p>오늘만 열리는 아주 희귀한 이벤트 ✦</p><button class="pk-btn" data-ui="birthday-close">오늘의 포켓몬 센터 열기</button></div></div></div>`;
-}
-function renderNight(){
- return shell(`<div class="pk-grid pk-home"><div class="pk-card pk-hero"><div class="pk-time">23:48</div><div class="pk-date">Night Mode · brightness 18%</div><img class="pk-char" src="${POKE(94)}"><div class="pk-message">밤이 됐다.<small>애니메이션과 밝기를 줄이고 알람은 유지합니다.</small></div></div><div class="pk-stack"><div class="pk-card pk-mini"><b>내일 첫 일정</b><span>09:00</span></div><div class="pk-card pk-mini"><b>오늘 공부</b><span>2h 35m</span></div><div class="pk-card pk-mini"><b>알람</b><span>07:30 ON</span></div><div class="pk-card pk-mini"><b>Phone</b><span>${state.phoneParked?'후면 충전 중':'없음'}</span></div></div></div>`,'HOME',true,'Night · Wi‑Fi ●');
-}
-
-const renderers={home:renderHome,focus:renderFocus,timer:renderTimer,stopwatch:renderStopwatch,today:renderToday,stats:renderStats,dex:renderDex,nfc:renderNfc,weather:renderWeather,alarm:renderAlarm,phone:renderPhone,light:renderLight,settings:renderSettings,birthday:renderBirthday,night:renderNight};
-
-function render(){
- const s=screens.find(x=>x.id===state.screen);
- document.getElementById('deviceScreen').innerHTML=renderers[state.screen]();
- document.getElementById('screenTitle').textContent=s.label;
- document.getElementById('screenPurpose').textContent=s.purpose;
- document.querySelectorAll('#screenPicker button').forEach(b=>b.classList.toggle('active',b.dataset.screen===state.screen));
- document.getElementById('stateBox').textContent=`screen: ${state.screen}\nphoneParked: ${state.phoneParked}\nbleConnected: ${state.bleConnected}\npriority: ${state.priority}\ndark: ${state.dark}\nnfc: ${state.nfc}\nfocus: ${fmt(state.focusRemaining)}`;
- bindUiButtons();
-}
-function bindUiButtons(){
- document.querySelectorAll('[data-ui]').forEach(el=>el.onclick=()=>{
-  const a=el.dataset.ui;
-  if(a==='focus-toggle')state.focusRunning=!state.focusRunning;
-  if(a==='focus-plus')state.focusRemaining+=300;
-  if(a==='focus-reset'){state.focusRemaining=1500;state.focusRunning=false}
-  if(a==='countdown-toggle')state.countdownRunning=!state.countdownRunning;
-  if(a==='countdown-reset'){state.countdown=600;state.countdownRunning=false}
-  if(a==='sw-toggle')state.stopwatchRunning=!state.stopwatchRunning;
-  if(a==='sw-lap')state.laps.unshift(fmt(state.stopwatch));
-  if(a==='sw-reset'){state.stopwatch=0;state.stopwatchRunning=false;state.laps=[]}
-  if(a==='birthday-close'){state.birthday=false;state.screen='home'}
-  render();
- });
- document.querySelectorAll('.pk-tab').forEach(el=>el.onclick=()=>{
-  const m={HOME:'home',FOCUS:'focus',TOOLS:'timer',TODAY:'today',DEX:'dex'};
-  const next=m[el.textContent.trim()];
-  if(next){state.screen=next;render();}
- });
-}
-function buildPicker(){
- const p=document.getElementById('screenPicker');
- p.innerHTML=screens.map(s=>`<button data-screen="${s.id}"><b>${s.label}</b><small>${s.purpose}</small></button>`).join('');
- p.querySelectorAll('button').forEach(b=>b.onclick=()=>{state.screen=b.dataset.screen;render()});
-}
-function buildGallery(){
- const g=document.getElementById('screenGallery');
- g.innerHTML=screens.map(s=>`<article class="gallery-card" data-open="${s.id}"><header><b>${s.label}</b><span>${s.purpose}</span></header><div class="mini-frame"><div class="pk-screen">${renderers[s.id]().replace(/^<div class="pk-screen[^>]*>|<\/div>$/g,'')}</div></div></article>`).join('');
- g.querySelectorAll('.gallery-card').forEach(c=>c.onclick=()=>{state.screen=c.dataset.open;location.hash='ui-lab';render()});
-}
-function action(a){
- if(a==='toggle-phone')state.phoneParked=!state.phoneParked;
- if(a==='ble-toggle')state.bleConnected=!state.bleConnected;
- if(a==='ble-call'){state.bleConnected=true;state.priority=true;state.priorityType='call';state.screen='phone'}
- if(a==='ble-calendar'){state.bleConnected=true;state.priority=true;state.priorityType='calendar';state.screen='phone'}
- if(a==='ble-contact'){state.bleConnected=true;state.priority=true;state.priorityType='contact';state.screen='phone'}
- if(a==='priority-alert')state.priority=!state.priority;
- if(a==='toggle-dark')state.dark=!state.dark;
- if(a==='nfc-scan'){state.nfc=!state.nfc;state.screen='nfc'}
- if(a==='birthday'){state.birthday=true;state.screen='birthday'}
- if(a==='reset')Object.assign(state,{screen:'home',phoneParked:true,bleConnected:true,dark:false,priority:false,priorityType:'calendar',nfc:false,birthday:false,focusRemaining:1458,focusRunning:false,countdown:600,countdownRunning:false,stopwatch:1938.4,stopwatchRunning:false,laps:['32:18.4','21:04.8','10:12.1']});
- render();
-}
-document.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>action(b.dataset.action));
-
-setInterval(()=>{
- let dirty=false;
- if(state.focusRunning&&state.focusRemaining>0){state.focusRemaining--;dirty=state.screen==='focus'}
- if(state.countdownRunning&&state.countdown>0){state.countdown--;dirty=dirty||state.screen==='timer'}
- if(state.stopwatchRunning){state.stopwatch+=1;dirty=dirty||state.screen==='stopwatch'}
- if(dirty)render();
-},1000);
-
-buildPicker();render();buildGallery();</script>
-<script>window.addEventListener("error",function(e){var b=document.getElementById("stateBox");if(b)b.textContent="UI runtime error: "+(e.message||"unknown");});</script></body>
+<footer class="foot wrap">PokéDock Companion · personal non-commercial fan project</footer>
+</body>
 </html>
