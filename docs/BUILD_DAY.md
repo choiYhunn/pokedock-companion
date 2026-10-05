@@ -1,82 +1,89 @@
-# Build Day — 실제 하루
+# Build Day — V4
 
-## 09:00–09:45 HMI factory check
-- display
+The build day is for assembly and hardware validation, not feature invention.
+
+## 0. Before build day
+Already complete:
+- V4 physical layout chosen.
+- HMI / Dock split chosen.
+- study core logic in repository.
+- phone bridge defined as optional.
+- local web configuration UX defined.
+
+Must be ready:
+- exact target phone + normal case.
+- Qi charger tested with that phone.
+- all cables cut/labelled.
+- Waveshare factory recovery image downloaded.
+- HMI and Dock toolchains installed.
+
+## 1. HMI bring-up
+Verify with factory firmware first:
+- LCD
 - touch
 - Wi-Fi
 - RTC
-- SD
+- microSD
 - speaker
-모두 공장 firmware에서 확인.
 
-## 09:45–10:30 Dock Node bench
-1. C3 flash test
-2. BH1750
-3. VL53L0X
-4. PN532
-5. LEDs
-개별 확인 후 모두 연결.
+Do not flash PokéDock until all pass.
 
-## 10:30–11:15 ESP-NOW
-- HMI MAC / Dock MAC 기록
-- heartbeat 확인
-- phone_docked boolean
-- lux
-- nfc pokemon id
-3개 값이 HMI serial에 찍히면 다음.
+## 2. Rear phone support test
+Before final mounting:
+- place the actual phone behind the HMI,
+- choose 65–75° support angle,
+- verify camera bump/case clearance,
+- align the Qi coil,
+- verify one-hand insertion/removal,
+- verify that the phone does not fall when desk is bumped.
 
-## 11:15–13:00 HMI app
-- official Waveshare LVGL example/BSP 기반
-- custom home screen
-- app_state resolver
-- local SD artwork
-- touch nav
-- NTP → RTC
-- audio cues
+The rear support is a slope, not a deep pocket.
 
-## 13:00–14:00 lunch + Qi thermal test
-대상 폰을 45분 이상 충전.
-- 비정상 발열
-- 충전 끊김
-- 폰 위치 민감도
-확인.
-문제 있으면 cradle을 닫지 말고 open-pad 방식 유지.
+## 3. Side NFC pod
+- mount on right by default,
+- keep front edge flush with main base,
+- validate NFC with the phone charging,
+- move farther from Qi if scan reliability degrades.
 
-## 14:00–15:30 mechanics
-- HMI stand/mount
-- Qi pad
-- NFC zone
-- ToF angle
-- C3/perfboard
-- cable channel
-- LED diffuser
+## 4. Dock node
+Validate separately:
+- BH1750
+- VL53L0X phone parked detection
+- PN532
+- RGB LED
+- ESP-NOW heartbeat
 
-3D printed base is optional. If using a commercial stand, spend this block on cable hiding and sensor placement instead.
+## 5. Study functions
+Acceptance order:
+1. clock / RTC
+2. focus 25 min
+3. pause/resume
+4. timer
+5. stopwatch / lap
+6. save one study session
+7. power-cycle and confirm recovery
+8. D-day / todo
+9. NTP
+10. weather
+11. local web settings
 
-## 15:30–17:30 behavior integration
-다음 순서로:
-1. phone placed → Pachirisu
-2. dark → Gengar
-3. focus → Lucario
-4. NFC → selected Pokémon
-5. birthday override → Jirachi
-6. random encounter
-7. Dex count
+## 6. Phone bridge
+Do not make this a blocker.
+If time remains, only test synthetic priority notifications.
+Real Android/iPhone forwarding is V1.1 unless the platform adapter is already stable.
 
-## 17:30–18:30 fail test
-- Wi-Fi off
-- SD remove
-- Dock C3 power off
-- repeated reboot
-- low light
-- NFC repeated scan
-- phone case attached
-- charging while NFC scanning
+## 7. 60-minute soak
+Run:
+- screen on,
+- Wi-Fi connected,
+- phone charging behind,
+- Dock sensors active,
+- periodic UI updates.
 
-## 18:30–19:00 finish
-- volume cap
-- night brightness cap
-- remove serial debug visual artifacts
-- cable sleeve
-- fingerprints clean
-- firmware binary/source backup
+Check:
+- charging stability,
+- heat around phone/Qi area,
+- ESP resets,
+- touch responsiveness,
+- false phone-presence transitions,
+- false NFC reads.

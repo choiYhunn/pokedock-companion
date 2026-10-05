@@ -1,48 +1,75 @@
-# UI Flow
+# UI flow — V4
+
+## Bottom navigation
+Recommended first build:
+- HOME
+- FOCUS
+- TOOLS
+- TODAY
+- DEX
+
+Settings is opened from a top-right gear, not a sixth persistent tab.
 
 ## HOME
-- large time
-- current Pokémon
-- one short line
-- 3 utility cards: focus / dock / room
-- bottom nav
+Always glanceable:
+- current time/date
+- companion character
+- today focus total / target
+- nearest D-day
+- next todo
+- weather status
+- phone parked/charging icon
+
+No social feed and no long notification text.
 
 ## FOCUS
-- Lucario
-- 25:00 default
-- presets 15 / 25 / 45 / 60
-- no random encounters
-- LED static low blue
-- completion cue + Dex XP animation
+- large remaining time
+- pause / +5 min / stop
+- subject label
+- Lucario or chosen focus buddy
+- progress bar
+- tiny priority-notification overlay only
+
+Random encounters are disabled while Focus is active.
+
+## TOOLS
+Two cards:
+- countdown timer
+- stopwatch
+
+Stopwatch:
+- Start / Lap / Pause / Reset
+- keep only recent laps on-screen; history does not need permanent storage by default.
+
+## TODAY
+- today's todos, max 5
+- focus minutes
+- session count
+- daily target progress
+- streak
+- nearest D-day
+
+Editing todos happens on phone web UI.
 
 ## DEX
-- 4×? compact grid
-- encountered Pokémon visible
-- locked silhouettes for unknowns
-- tap → full character card
-- counter e.g. `12 / 30`
+- encountered / unlocked characters
+- study EXP / streak rewards
+- NFC characters
+- birthday-only event state
 
-## LIGHT
-- warm / calm / night / off
-- Pokémon presets map to themes
-- physical room brightness can cap output
+## NIGHT
+Not a separate tab.
+It is a global display policy:
+- brightness cap
+- Gengar visual theme
+- reduced animation
+- alarm remains armed
 
-## SETTINGS
-- brightness
-- volume
-- alarm
-- Wi-Fi
-- birthday test toggle (hidden long-press)
-- NFC remap
-- Dock sensor calibration
+## Notification overlay
+Never replaces the entire Focus screen.
+Allowed forms:
+- CALL · alias
+- CALENDAR · next event
+- PRIORITY · selected contact/app
 
-## Birthday sequence (10–15 s)
-1. display dims
-2. star particles
-3. `A SPECIAL EVENT HAS STARTED.`
-4. Jirachi appears
-5. favorite Pokémon join one by one
-6. `생일 축하해, <name>`
-7. one personal sentence
-8. button: `오늘의 포켓몬 센터 열기`
-Then return to Home with birthday skin.
+Default TTL: 8–12 s.

@@ -1,20 +1,28 @@
-# Test Matrix
+# V4 acceptance matrix
 
-| Test | Expected | Pass criterion |
+| Area | Test | Pass |
 |---|---|---|
-| Cold boot no Wi-Fi | clock UI boots | <10 s usable |
-| RTC power cycle | time retained | no reset to epoch |
-| SD missing | fallback UI | no crash |
-| Dock node off | HMI still usable | no reboot loop |
-| Phone place | Pachirisu mode | <=2 s |
-| Phone remove | exit dock mode | <=3 s |
-| Low light | Gengar mode | stable after 3–5 s |
-| Bright again | exit night | no flicker |
-| NFC Gengar | Gengar override | <=1 s after read |
-| NFC remove | override times out | configurable |
-| Focus start | Lucario | timer accurate ±1 s/min |
-| Birthday test flag | Jirachi sequence | always wins over dock/night |
-| Random encounter | does not interrupt focus | pass |
-| Qi 45 min | stable charge | no excessive enclosure heat |
-| Qi + NFC | both usable | no repeated NFC false trigger |
-| 20 reboot cycles | returns to Home | 20/20 |
+| Mechanical | front edge has no tray projection | visually flush / no wasted desk depth |
+| Mechanical | phone can be inserted behind screen one-handed | 10/10 attempts |
+| Mechanical | phone remains stable during desk bump | no slip/fall |
+| Mechanical | side NFC pod does not project forward | pass |
+| Qi | target phone charges through normal case | stable |
+| Qi | 60 min charging soak | no abnormal heat / resets |
+| NFC | scan while Qi active | reliable 10/10 |
+| HMI | cold boot without Wi-Fi | usable offline |
+| HMI | missing SD | fallback UI, no crash |
+| RTC | power cycle | time retained |
+| Focus | 25 min session | completion accurate |
+| Focus | pause/resume | no time jump |
+| Timer | 10 min countdown | completion accurate |
+| Stopwatch | lap / pause / resume | stable |
+| Storage | focus session persisted | visible after reboot |
+| Study | daily total increments once | no double count |
+| Web | config read/write | local LAN only |
+| Wi-Fi | NTP unavailable | RTC continues |
+| Weather | API unavailable | stale badge, no blocking |
+| Dock | C3 powered off | HMI core still works |
+| ESP-NOW | Dock heartbeat restored | reconnects without reboot |
+| Phone | priority test alert in Focus | small overlay only |
+| Phone | non-priority synthetic alert | suppressed |
+| Privacy | notification body persistence | none |
