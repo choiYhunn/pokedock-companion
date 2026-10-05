@@ -1,35 +1,85 @@
 #pragma once
 #include <stdint.h>
 
-enum class UiMode : uint8_t {
-  HOME, MORNING, DOCKED, FOCUS, NIGHT, CALM, BIRTHDAY, NFC_OVERRIDE, ALARM
+enum class PrimaryMode : uint8_t {
+  HOME,
+  FOCUS,
+  COUNTDOWN,
+  STOPWATCH,
+  TODAY,
+  NIGHT,
+  BIRTHDAY,
+  NFC_OVERRIDE,
+  ALARM
 };
 
-struct Inputs {
-  bool alarm=false;
-  bool birthday=false;
-  bool nfc=false;
-  bool focus=false;
-  bool docked=false;
-  bool dark=false;
-  int hour=12;
-  uint16_t nfcPokemon=0;
+enum OverlayFlags : uint16_t {
+  OVERLAY_NONE              = 0,
+  OVERLAY_PHONE_PARKED      = 1u << 0,
+  OVERLAY_PRIORITY_NOTICE   = 1u << 1,
+  OVERLAY_WIFI_OFFLINE      = 1u << 2,
+  OVERLAY_DOCK_OFFLINE      = 1u << 3,
+  OVERLAY_WEATHER_STALE     = 1u << 4
 };
 
-struct View {
-  UiMode mode;
-  uint16_t pokemonId;
-  const char* message;
+struct AppInputs {
+  bool alarm = false;
+  bool birthday = false;
+  bool nfc_override = false;
+  bool focus_active = false;
+  bool countdown_active = false;
+  bool stopwatch_active = false;
+  bool night = false;
+
+  bool phone_parked = false;
+  bool priority_notice = false;
+  bool wifi_online = false;
+  bool dock_online = true;
+  bool weather_stale = false;
+
+  uint16_t nfc_pokemon_id = 0;
 };
 
-inline View resolveView(const Inputs& in){
-  if(in.alarm)    return {UiMode::ALARM,175,"일어날 시간!"};
-  if(in.birthday) return {UiMode::BIRTHDAY,385,"A SPECIAL EVENT HAS STARTED."};
-  if(in.nfc)      return {UiMode::NFC_OVERRIDE,in.nfcPokemon,"NFC Pokémon loaded."};
-  if(in.focus)    return {UiMode::FOCUS,448,"집중 모드. 지금은 이것만."};
-  if(in.docked)   return {UiMode::DOCKED,417,"전기 모으는 중 ⚡"};
-  if(in.dark || in.hour>=23 || in.hour<6) return {UiMode::NIGHT,94,"밤이 됐다. 화면은 조용하게."};
-  if(in.hour>=20) return {UiMode::CALM,468,"오늘도 수고했어."};
-  if(in.hour>=6 && in.hour<11) return {UiMode::MORNING,175,"좋은 아침!"};
-  return {UiMode::HOME,133,"작은 포켓몬 센터가 열려 있어."};
+struct UiDecision {
+  PrimaryMode mode = PrimaryMode::HOME;
+  uint16_t pokemon_id = 468; // calm default
+  uint16_t overlays = OVERLAY_NONE;
+};
+
+inline UiDecision resolve_ui(const AppInputs& in) {
+  UiDecision out{};
+
+  if (in.alarm) {
+    out.mode = PrimaryMode::ALARM;
+    out.pokemon_id = 175;
+  } else if (in.birthday) {
+    out.mode = PrimaryMode::BIRTHDAY;
+    out.pokemon_id = 385;
+  } else if (in.nfc_override) {
+    out.mode = PrimaryMode::NFC_OVERRIDE;
+    out.pokemon_id = in.nfc_pokemon_id;
+  } else if (in.focus_active) {
+    out.mode = PrimaryMode::FOCUS;
+    out.pokemon_id = 448;
+  } else if (in.countdown_active) {
+    out.mode = PrimaryMode::COUNTDOWN;
+    out.pokemon_id = 175;
+  } else if (in.stopwatch_active) {
+    out.mode = PrimaryMode::STOPWATCH;
+    out.pokemon_id = 448;
+  } else if (in.night) {
+    out.mode = PrimaryMode::NIGHT;
+    out.pokemon_id = 94;
+  } else {
+    out.mode = PrimaryMode::HOME;
+    out.pokemon_id = 468;
+  }
+
+  if (in.phone_parked) out.overlays |= OVERLAY_PHONE_PARKED;
+  if (in.priority_notice) out.overlays |= OVERLAY_PRIORITY_NOTICE;
+  if (!in.wifi_online) out.overlays |= OVERLAY_WIFI_OFFLINE;
+  if (!in.dock_online) out.overlays |= OVERLAY_DOCK_OFFLINE;
+  if (in.weather_stale) out.overlays |= OVERLAY_WEATHER_STALE;
+
+  return out;
 }

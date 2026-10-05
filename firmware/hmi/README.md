@@ -1,27 +1,51 @@
-# HMI implementation path
+# HMI firmware architecture
 
-Use the official Waveshare ESP32-S3-Touch-LCD-4.3C example / BSP as the hardware layer.
+## Platform
+Target:
+- Waveshare ESP32-S3-Touch-LCD-4.3C-BOX
+- ESP-IDF + official Waveshare BSP / examples
+- LVGL for UI
 
-Recommended:
-- ESP-IDF 5.5
-- Waveshare managed BSP `waveshare/esp32_s3_touch_lcd_4_3c`
-- LVGL 9.x per current BSP direction
+Do not rewrite display/touch/audio/RTC drivers unless required.
 
-Do NOT rewrite:
-- RGB panel init
-- GT911 touch
-- RTC driver
-- audio codec init
-- SD init
+## Layers
 
-Add:
-- ESP-NOW receiver task
-- `app_state.h`
-- UI screens corresponding to `prototype/ui_v2.html`
-- SD artwork loader
-- config JSON parser
-- birthday/date engine
+```text
+LVGL screens
+  ↓
+UI state / overlays
+  ↓
+StudyEngine ──────────────┐
+Todo / D-day              │
+Alarm                     │
+Weather                   │
+PhoneBridge abstraction   │
+  ↓                       │
+Persistence / NVS / SD ←──┘
+  ↓
+ESP-IDF services
 
-Important:
-The generated HMI code here is a product/application scaffold, not a hardware-validated binary.
-The exact BSP API should be locked to the board revision once the physical unit arrives.
+Dock ESP-NOW adapter
+  ↓
+ESP32-C3 sensors / NFC / LED
+```
+
+## Core rule
+Timer/study logic must not depend on LVGL frame rate or Wi-Fi.
+
+All engines receive monotonic `now_ms` and are testable without the Waveshare board.
+
+## Phone bridge
+`PhoneBridge` is optional and disabled by default.
+Android/iOS-specific adapters plug into the same interface later.
+
+## UI tabs
+- HOME
+- FOCUS
+- TIMER
+- STOPWATCH
+- TODAY
+- DEX
+- SETTINGS
+
+Text-heavy editing is done through the local web page rather than the HMI keyboard.

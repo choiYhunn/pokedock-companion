@@ -1,23 +1,46 @@
 {
-  "trainer_name": "EDIT_ME",
-  "birthday": "MM-DD",
-  "anniversary": "MM-DD",
-  "timezone": "Asia/Seoul",
-  "focus_default_min": 25,
-  "night_start": "22:30",
-  "morning_start": "06:30",
-  "random_encounter": {
-    "enabled": true,
-    "cooldown_min": 90,
-    "idle_after_min": 18
+  "identity": {
+    "trainer_name": "EDIT_ME",
+    "birthday": "MM-DD",
+    "timezone": "Asia/Seoul"
+  },
+  "study": {
+    "focus_default_min": 25,
+    "break_default_min": 5,
+    "presets_min": [15, 25, 45, 60],
+    "daily_target_min": 180,
+    "auto_break": false,
+    "reward_each_focus": true
+  },
+  "display": {
+    "night_start": "22:30",
+    "night_end": "06:30",
+    "night_brightness_pct": 18,
+    "auto_brightness": true
   },
   "dock": {
-    "distance_on_mm": 90,
-    "distance_off_mm": 130
+    "phone_distance_on_mm": 90,
+    "phone_distance_off_mm": 130,
+    "nfc_side": "right",
+    "rear_phone_mount": "sloped_support",
+    "front_projection_mm_target": 0
   },
-  "lux": {
-    "night_below": 8,
-    "dim_below": 40
+  "network": {
+    "ntp": true,
+    "weather": true,
+    "local_web": true,
+    "ota": true
+  },
+  "phone_bridge": {
+    "enabled": false,
+    "privacy": "priority_summary_only",
+    "show_message_body": false,
+    "allowed_categories": ["call", "calendar", "priority_contact"]
+  },
+  "random_encounter": {
+    "enabled": true,
+    "idle_after_min": 18,
+    "cooldown_min": 90
   },
   "nfc_timeout_s": 90
 }
