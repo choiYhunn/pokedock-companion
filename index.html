@@ -1,12 +1,139 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PokéDock V4</title>
-<style>
-body{margin:0;background:#f3efe7;color:#23252a;font-family:Inter,Pretendard,system-ui,sans-serif}.wrap{max-width:1120px;margin:auto;padding:26px 20px 80px}h1{font-size:58px;letter-spacing:-.06em;line-height:.95;margin:20px 0}.sub{color:#666a72;line-height:1.7}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}.card{background:#fffdf8;border-radius:24px;padding:22px;border:1px solid #fff}.product{min-height:430px;display:grid;place-items:center}.diagram{width:460px;max-width:100%;height:330px;position:relative}.screen{position:absolute;left:70px;top:80px;width:300px;height:180px;border:10px solid #eee;border-radius:18px;background:#f7f4ea;box-shadow:0 18px 35px #0002;z-index:3}.screen:before{content:'10:24   ·   FOCUS 25:00';position:absolute;left:18px;top:18px;font-weight:900;font-size:20px}.screen:after{content:'TODAY  1h 45m   ·   D-4';position:absolute;left:18px;bottom:18px;font-size:12px;color:#777}.base{position:absolute;left:78px;top:267px;width:284px;height:28px;border-radius:0 0 16px 16px;background:#e5e5e2;box-shadow:0 18px 25px #0002}.phone{position:absolute;left:185px;top:25px;width:82px;height:145px;background:#20242b;border-radius:16px;transform:rotate(4deg);z-index:1;box-shadow:0 12px 22px #0003}.ramp{position:absolute;left:166px;top:75px;width:120px;height:120px;background:#dedfdd;clip-path:polygon(15% 100%,100% 100%,80% 0);z-index:0}.nfc{position:absolute;left:362px;top:238px;width:70px;height:58px;border-radius:0 15px 15px 0;background:#e6e6e3;display:grid;place-items:center;font-size:11px;font-weight:800}.glow{position:absolute;left:85px;top:292px;width:338px;height:18px;background:radial-gradient(ellipse,#e0c35c,transparent 72%);filter:blur(7px)}.labels{display:grid;gap:12px}.labels b{font-size:14px}.labels p{margin:4px 0 0;color:#72757c;font-size:12px;line-height:1.55}.section{margin-top:70px}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.feature{background:#fffdf8;border-radius:18px;padding:18px}.feature b{display:block;margin-bottom:7px}.feature p{font-size:12px;color:#6e7178;line-height:1.6}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0}.tabs button{border:0;background:white;padding:9px 12px;border-radius:999px}.tabs button.on{background:#27364c;color:white}.demo{background:#fffdf8;border-radius:22px;padding:22px;min-height:160px}.demo h3{margin-top:0}.muted{color:#70737a}@media(max-width:800px){.grid,.features{grid-template-columns:1fr}.diagram{transform:scale(.9)}h1{font-size:44px}}
-</style></head><body><main class="wrap">
-<div class="muted">PokéDock Companion · V4</div><h1>앞은 비우고,<br>폰은 뒤로.</h1><p class="sub">메인 화면이 제품의 중심이고, 휴대폰은 뒤 경사 지지대에서 충전하며 시야에서 빠진다. NFC/피규어는 측면으로 옮겨 전면을 깨끗하게 유지한다.</p>
-<div class="grid"><section class="card product"><div class="diagram"><div class="phone"></div><div class="ramp"></div><div class="screen"></div><div class="base"></div><div class="nfc">NFC<br>SIDE</div><div class="glow"></div></div></section><section class="card labels"><div><b>메인 4.3” 화면</b><p>시계, 집중, 타이머, 스톱워치, 오늘 기록, D-day. 앞쪽에 별도 트레이 없음.</p></div><div><b>후면 경사 폰 거치</b><p>깊은 홈이 아니라 얇은 경사판. 뒤쪽 Qi 패드로 충전하면서 폰 화면은 최대한 숨김.</p></div><div><b>측면 NFC 포드</b><p>기본은 오른쪽. 앞보다 약간만 옆으로 확장하며 CAD에서 좌우 반전 가능.</p></div><div><b>하부 간접조명</b><p>책상 면만 은은하게 밝히고 공부 중에는 밝기를 낮춤.</p></div></section></div>
-<section class="section"><h2>Study tools</h2><div class="tabs"><button class="on" onclick="show('focus',this)">Focus</button><button onclick="show('timer',this)">Timer</button><button onclick="show('sw',this)">Stopwatch</button><button onclick="show('today',this)">Today</button><button onclick="show('phone',this)">Phone</button></div><div class="demo" id="demo"></div></section>
-<section class="section"><h2>V1 기능</h2><div class="features"><div class="feature"><b>Focus / Pomodoro</b><p>15·25·45·60분 preset, pause/resume, 완료 시 공부시간과 세션 기록.</p></div><div class="feature"><b>Timer / Stopwatch</b><p>일반 카운트다운과 lap 스톱워치를 공부 외 일상에도 사용.</p></div><div class="feature"><b>Study Log</b><p>오늘/주간 공부시간, 세션 수, streak를 microSD/NVS에 저장.</p></div><div class="feature"><b>Wi-Fi</b><p>NTP, 날씨, local web settings, OTA. 네트워크가 끊겨도 핵심 기능은 계속 동작.</p></div><div class="feature"><b>Phone Bridge</b><p>선택 기능. 통화·일정·선택 연락처 같은 중요 알림 요약만 표시하고 본문은 저장하지 않음.</p></div><div class="feature"><b>NFC / Dex</b><p>측면 피규어/태그로 테마·집중 buddy를 전환하고 공부 완료 보상과 연결.</p></div></div></section>
-</main><script>
-const data={focus:['Lucario Focus','25:00 · 집중 중에는 중요 알림 외 전부 숨김'],timer:['Countdown','10:00 · 5/10/30/custom preset'],sw:['Stopwatch','32:18.4 · Lap 03'],today:['Today','1h 45m · 3 sessions · 4-day streak · 과제 D-4'],phone:['Phone parked behind','Qi charging · priority summaries only · social notifications suppressed']};
-function show(k,b){document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');demo.innerHTML='<h3>'+data[k][0]+'</h3><p class="muted">'+data[k][1]+'</p>'}show('focus',document.querySelector('.tabs button'));
-</script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PokéDock Companion — V4 UI Lab</title>
+<link rel="stylesheet" href="/pokedock-companion/site/app.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="#top"><span class="brand-dot"></span>PokéDock Companion</a>
+  <nav>
+    <a href="#product">제품 구조</a>
+    <a href="#ui-lab">UI Lab</a>
+    <a href="#gallery">전체 화면</a>
+    <a href="#system">기능 구조</a>
+  </nav>
+</header>
+
+<main id="top">
+<section class="hero wrap">
+  <div class="hero-copy">
+    <span class="eyebrow">V4 · COMPACT STUDY COMPANION</span>
+    <h1>앞은 비우고,<br><em>공부에 집중.</em></h1>
+    <p>4.3인치 화면이 제품의 중심이다. 휴대폰은 화면 뒤 경사 지지대에서 충전하고 시야에서 빠지며, NFC/피규어는 측면으로 이동한다. UI는 시계·집중·타이머·스톱워치·공부기록·D-day·날씨·알람·Dex까지 전부 실제 화면 단위로 설계한다.</p>
+    <div class="hero-tags">
+      <span>ESP32-S3</span><span>800×480 Touch</span><span>Wi‑Fi</span><span>BLE</span><span>RTC</span><span>microSD</span><span>NFC</span><span>Qi</span>
+    </div>
+    <div class="hero-actions">
+      <a class="button primary" href="#ui-lab">UI 직접 보기</a>
+      <a class="button" href="#product">실물 구조 보기</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img src="/pokedock-companion/site/product-v4.svg" alt="PokéDock V4 compact physical concept">
+  </div>
+</section>
+
+<section class="section wrap" id="product">
+  <div class="section-title">
+    <span class="eyebrow">PHYSICAL DESIGN</span>
+    <h2>아까 확정한 실물 구조를 그대로 코드로 옮겼다.</h2>
+    <p>이미지 생성이 아니라 SVG/CSS 원본이라 이후 치수·NFC 위치·폰 각도까지 코드에서 바로 수정할 수 있다.</p>
+  </div>
+  <div class="product-grid">
+    <div class="product-card product-main">
+      <img src="/pokedock-companion/site/product-v4.svg" alt="PokéDock front concept">
+    </div>
+    <div class="spec-stack">
+      <article class="spec-card"><b>전면</b><p>앞쪽 트레이는 없다. 화면 하우징과 얇은 베이스가 거의 같은 전면선에서 끝난다.</p></article>
+      <article class="spec-card"><b>후면 폰 거치</b><p>깊은 홈 대신 단순 경사판. 폰은 뒤로 숨기고 Qi 패드는 경사판 쪽에 둔다.</p></article>
+      <article class="spec-card"><b>측면 NFC</b><p>기본 오른쪽. 작은 포드만 옆으로 나오며 전면보다 앞으로 튀어나오지 않는다.</p></article>
+      <article class="spec-card"><b>하부 LED</b><p>책상 면에만 은은하게 비추고 Focus/Night 모드에서는 자동으로 줄인다.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section ui-lab-wrap" id="ui-lab">
+  <div class="wrap">
+    <div class="section-title row-title">
+      <div>
+        <span class="eyebrow">INTERACTIVE UI LAB</span>
+        <h2>800×480 화면을 실제로 눌러보는 검토판.</h2>
+        <p>왼쪽 기능 목록에서 화면을 바꾸고, 타이머/스톱워치/알림 상태까지 직접 테스트할 수 있다.</p>
+      </div>
+      <div class="device-meta"><span>800×480</span><span>Landscape</span><span>Touch</span></div>
+    </div>
+
+    <div class="lab-grid">
+      <aside class="screen-picker" id="screenPicker"></aside>
+      <div class="device-stage">
+        <div class="device-shell">
+          <div class="device-screen" id="deviceScreen"></div>
+        </div>
+        <div class="device-caption">
+          <strong id="screenTitle"></strong>
+          <span id="screenPurpose"></span>
+        </div>
+      </div>
+      <aside class="lab-controls">
+        <h3>State simulator</h3>
+        <button data-action="toggle-phone">폰 거치 토글</button>
+        <button data-action="priority-alert">중요 알림 띄우기</button>
+        <button data-action="toggle-dark">Night 토글</button>
+        <button data-action="nfc-scan">NFC 스캔</button>
+        <button data-action="birthday">Birthday 이벤트</button>
+        <button data-action="reset">상태 초기화</button>
+        <div class="state-box" id="stateBox"></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="gallery">
+  <div class="section-title">
+    <span class="eyebrow">ALL SCREENS</span>
+    <h2>기능마다 화면을 따로 만들어 놨다.</h2>
+    <p>아래 카드들은 전부 같은 렌더러를 쓰기 때문에, 여기서 마음에 안 드는 화면을 집어서 말하면 실제 데모 화면과 함께 한 번에 바뀐다.</p>
+  </div>
+  <div class="screen-gallery" id="screenGallery"></div>
+</section>
+
+<section class="section wrap" id="system">
+  <div class="section-title">
+    <span class="eyebrow">PRODUCT ARCHITECTURE</span>
+    <h2>기능이 많아도 서로 발목 잡지 않게 계층을 나눴다.</h2>
+  </div>
+  <div class="arch-grid">
+    <article class="arch-card">
+      <span>LOCAL CORE</span>
+      <h3>인터넷 없어도 동작</h3>
+      <p>시계, 알람, Focus, Timer, Stopwatch, Study Log, D-day/To-do, NFC, Dex, Night mode.</p>
+    </article>
+    <article class="arch-card">
+      <span>WI‑FI</span>
+      <h3>있으면 더 편리</h3>
+      <p>NTP 시간보정, 날씨, 로컬 웹 설정, OTA. 네트워크 실패가 타이밍 기능을 막지 않는다.</p>
+    </article>
+    <article class="arch-card">
+      <span>PHONE BRIDGE</span>
+      <h3>선택형 알림 연동</h3>
+      <p>통화·캘린더·선택 연락처 같은 중요 알림만 요약. 메시지 본문은 저장하지 않는다.</p>
+    </article>
+    <article class="arch-card">
+      <span>DOCK NODE</span>
+      <h3>센서는 별도 ESP32-C3</h3>
+      <p>PN532, VL53L0X, BH1750, RGB LED를 분리해 HMI BSP와 충돌하지 않게 한다.</p>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer wrap">
+  <span>PokéDock Companion · personal non-commercial fan project</span>
+  <a href="https://github.com/choiYhunn/pokedock-companion">GitHub source</a>
+</footer>
+<script src="/pokedock-companion/site/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
+<defs>
+  <linearGradient id="body" x1="0" x2="1"><stop stop-color="#fbfaf7"/><stop offset="1" stop-color="#e5e5e2"/></linearGradient>
+  <linearGradient id="screenbg" y1="0" y2="1"><stop stop-color="#eaf4f8"/><stop offset="1" stop-color="#f9f1d8"/></linearGradient>
+  <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-opacity=".18"/></filter>
+  <filter id="glow"><feGaussianBlur stdDeviation="12"/></filter>
+</defs>
+<rect width="900" height="620" rx="36" fill="#f6f2ea"/>
+<ellipse cx="450" cy="530" rx="310" ry="42" fill="#e5c85d" opacity=".34" filter="url(#glow)"/>
+<!-- rear phone -->
+<g filter="url(#shadow)">
+  <rect x="372" y="74" width="160" height="292" rx="30" fill="#21252d" transform="rotate(5 452 220)"/>
+  <rect x="386" y="91" width="132" height="256" rx="21" fill="#111820" transform="rotate(5 452 220)"/>
+  <circle cx="454" cy="221" r="52" fill="none" stroke="#55b46e" stroke-width="13"/>
+  <path d="M464 174l-36 58h27l-10 38 38-62h-27z" fill="#55b46e"/>
+</g>
+<!-- rear slope -->
+<path d="M285 452 L350 150 L577 452 Z" fill="#dedfdd"/>
+<path d="M340 420 L377 186 L548 420 Z" fill="#cfd1cf" opacity=".6"/>
+<!-- main HMI -->
+<g filter="url(#shadow)">
+ <rect x="150" y="170" width="560" height="330" rx="32" fill="url(#body)"/>
+ <rect x="177" y="194" width="506" height="270" rx="20" fill="#191d22"/>
+ <rect x="190" y="207" width="480" height="244" rx="15" fill="url(#screenbg)"/>
+</g>
+<!-- screen UI -->
+<text x="216" y="246" font-family="sans-serif" font-size="18" fill="#5c6169">10월 5일 · 월요일</text>
+<text x="216" y="309" font-family="sans-serif" font-size="64" font-weight="800" fill="#272a31">10:24</text>
+<rect x="214" y="336" width="184" height="80" rx="18" fill="#fff" opacity=".86"/>
+<text x="232" y="366" font-family="sans-serif" font-size="17" font-weight="700" fill="#30333a">FOCUS 25:00</text>
+<text x="232" y="393" font-family="sans-serif" font-size="13" fill="#737881">오늘 1h 45m · 3 sessions</text>
+<circle cx="560" cy="322" r="86" fill="#dbeed9"/>
+<circle cx="560" cy="335" r="54" fill="#f1dfb5"/>
+<path d="M525 287q12-48 40-58q-3 40-18 66M594 287q-12-48-40-58q3 40 18 66" fill="#6da06b"/>
+<circle cx="544" cy="331" r="5" fill="#24272c"/><circle cx="576" cy="331" r="5" fill="#24272c"/>
+<path d="M552 350q8 9 16 0" fill="none" stroke="#24272c" stroke-width="3" stroke-linecap="round"/>
+<text x="167" y="488" font-family="sans-serif" font-size="18" font-weight="700" fill="#8b8b8f">PokéDock</text>
+<!-- flush base -->
+<path d="M158 488h544v26q0 22-22 22H180q-22 0-22-22z" fill="#e4e4e0"/>
+<!-- right NFC side pod -->
+<g filter="url(#shadow)">
+ <path d="M701 445h90q22 0 22 22v45q0 22-22 22h-90z" fill="#e7e7e3"/>
+ <circle cx="756" cy="489" r="27" fill="#f7f6f1" stroke="#bfc0be" stroke-width="2"/>
+ <path d="M747 496q15-23 31-20q-9 17-31 20z" fill="#7d9e79"/>
+ <text x="742" y="526" font-family="sans-serif" font-size="10" fill="#8b8c8f">NFC</text>
+</g>
+<!-- underglow -->
+<rect x="200" y="538" width="570" height="8" rx="4" fill="#e5c85d" opacity=".55"/>
+<!-- callouts -->
+<g font-family="sans-serif">
+ <path d="M686 216c76-30 112-18 146-58" fill="none" stroke="#6b7fa1" stroke-width="3"/>
+ <rect x="698" y="94" width="174" height="66" rx="15" fill="#fff" stroke="#bcc7d6"/>
+ <text x="715" y="120" font-size="16" font-weight="700" fill="#2e3440">후면 경사 폰 거치</text><text x="715" y="143" font-size="13" fill="#666d77">Qi 충전 · 시야에서 숨김</text>
+ <path d="M793 472c45-9 62-2 73 8" fill="none" stroke="#6b7fa1" stroke-width="3"/>
+ <rect x="692" y="550" width="180" height="48" rx="14" fill="#fff" stroke="#bcc7d6"/>
+ <text x="711" y="579" font-size="15" font-weight="700" fill="#2e3440">측면 NFC / 피규어</text>
+ <path d="M154 233C81 218 56 235 40 268" fill="none" stroke="#6b7fa1" stroke-width="3"/>
+ <rect x="20" y="272" width="144" height="64" rx="14" fill="#fff" stroke="#bcc7d6"/>
+ <text x="39" y="298" font-size="16" font-weight="700" fill="#2e3440">메인 4.3” 화면</text><text x="39" y="320" font-size="13" fill="#666d77">제품의 시각적 중심</text>
+</g>
+</svg>
