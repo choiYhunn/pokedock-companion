@@ -98,3 +98,26 @@ Portable core logic is kept separate from LVGL/BSP adapters. Focus/timer/stopwat
 ## IP note
 
 Personal, non-commercial fan project. Pokémon names/characters/artwork belong to their respective rights holders. Artwork is not committed as a redistributable asset pack; the browser prototype uses PokeAPI-hosted reference images for private design review.
+
+
+## Pokémon UX
+
+The stable simulator now restores the Pokémon-first identity:
+
+- HOME / Calm → Togekiss
+- FOCUS → Lucario
+- Phone parked / charging → Pachirisu
+- NIGHT → Gengar
+- Morning / Alarm → Togepi
+- BIRTHDAY → Jirachi
+- NFC → scanned character/theme
+- DEX → multi-character collection
+
+Study is connected to progression:
+- completing Focus grants Study EXP,
+- a completed session can trigger a Random Encounter,
+- the encounter can be registered into the Dex,
+- Light themes and contextual UI follow Pokémon roles rather than arbitrary RGB presets.
+
+Stable simulator:
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=3
