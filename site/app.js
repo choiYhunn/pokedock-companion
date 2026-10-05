@@ -145,7 +145,7 @@ function action(a){
  if(a==='nfc-scan'){state.nfc=!state.nfc;state.screen='nfc'}
  if(a==='birthday'){state.birthday=true;state.screen='birthday'}
  if(a==='reset')Object.assign(state,{screen:'home',phoneParked:true,bleConnected:true,dark:false,priority:false,priorityType:'calendar',nfc:false,birthday:false,focusRemaining:1458,focusRunning:false,countdown:600,countdownRunning:false,stopwatch:1938.4,stopwatchRunning:false,laps:['32:18.4','21:04.8','10:12.1']});
- render(); buildGallery();
+ render();
 }
 document.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>action(b.dataset.action));
 
