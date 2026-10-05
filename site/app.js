@@ -19,7 +19,7 @@ const screens=[
 ];
 
 const state={
-screen:'home',phoneParked:true,dark:false,priority:false,nfc:false,birthday:false,
+screen:'home',phoneParked:true,bleConnected:true,dark:false,priority:false,priorityType:'calendar',nfc:false,birthday:false,
 focusRemaining:1458,focusRunning:false,countdown:600,countdownRunning:false,
 stopwatch:1938.4,stopwatchRunning:false,laps:['32:18.4','21:04.8','10:12.1']
 };
@@ -31,11 +31,13 @@ function nav(active){
  return `<div class="pk-bottom">${tabs.map(t=>`<span class="pk-tab ${active===t?'on':''}">${t}</span>`).join('')}</div>`;
 }
 function top(status='Wi‑Fi ●'){
- return `<div class="pk-top"><div class="pk-brand">POKÉDOCK</div><div class="pk-status"><span>${status}</span><span>23°C</span><span>${state.phoneParked?'PHONE ●':'PHONE ○'}</span></div></div>`;
+ return `<div class="pk-top"><div class="pk-brand">POKÉDOCK</div><div class="pk-status"><span>${status}</span><span>23°C</span><span>${state.phoneParked?'PHONE ●':'PHONE ○'}</span><span>${state.bleConnected?'BLE ●':'BLE ○'}</span></div></div>`;
 }
 function overlay(){
  if(!state.priority)return '';
- return `<div class="pk-overlay"><b>CALENDAR · 중요 알림</b><span>15분 뒤 일정이 있어요</span></div>`;
+ const map={call:['CALL · 엄마','수신 전화'],calendar:['CALENDAR · 중요 알림','15분 뒤 일정이 있어요'],contact:['PRIORITY · selected contact','새 중요 알림 · 본문 숨김']};
+ const n=map[state.priorityType]||map.calendar;
+ return `<div class="pk-overlay"><b>${n[0]}</b><span>${n[1]}</span></div>`;
 }
 function shell(body,active='HOME',dark=false,status){
  return `<div class="pk-screen ${dark?'dark':''}">${top(status)}<div class="pk-body">${body}</div>${nav(active)}${overlay()}</div>`;
@@ -76,7 +78,7 @@ function renderAlarm(){
  return shell(`<div class="pk-alarm-list"><div class="pk-alarm"><div><strong>07:30</strong><small> 평일 · Togepi Morning</small></div><span class="pk-switch"></span></div><div class="pk-alarm"><div><strong>08:10</strong><small> 화/목 · 수업 준비</small></div><span class="pk-switch"></span></div><div class="pk-alarm"><div><strong>22:20</strong><small> 매일 · 내일 준비</small></div><span class="pk-switch"></span></div><div class="pk-card pk-tool"><h3>BEDTIME</h3><div class="pk-substat">22:30 이후 자동 Night Mode · 알람은 항상 유지</div></div></div>`,'HOME',state.dark);
 }
 function renderPhone(){
- return shell(`<div class="pk-grid pk-phone"><div class="pk-card pk-phone-icon"><div><div class="pk-phone-shape"></div><p style="font-size:1.8cqw;text-align:center">${state.phoneParked?'후면 거치 · 충전 중':'폰 없음'}</p></div></div><div class="pk-card pk-notices"><h3 style="font-size:3cqw;margin:0">Priority only</h3><div class="pk-notice"><b>CALL · 엄마</b><p>통화 수신 알림</p></div><div class="pk-notice"><b>CALENDAR · 15분 뒤</b><p>다음 일정 요약</p></div><div class="pk-notice"><b>PRIORITY · selected contact</b><p>본문은 표시/저장하지 않음</p></div></div></div>`,'HOME',state.dark);
+ return shell(`<div class="pk-grid pk-phone"><div class="pk-card pk-phone-icon"><div><div class="pk-phone-shape"></div><p style="font-size:1.8cqw;text-align:center">${state.phoneParked?'후면 거치 · 충전 중':'폰 없음'}</p></div></div><div class="pk-card pk-notices"><h3 style="font-size:3cqw;margin:0">Phone Bridge · ${state.bleConnected?'BLE connected':'BLE disconnected'}</h3><div class="pk-notice"><b>CALL · 엄마</b><p>통화 수신 알림</p></div><div class="pk-notice"><b>CALENDAR · 15분 뒤</b><p>다음 일정 요약</p></div><div class="pk-notice"><b>PRIORITY · selected contact</b><p>본문은 표시/저장하지 않음</p></div></div></div>`,'HOME',state.dark);
 }
 function renderLight(){
  return shell(`<div class="pk-grid pk-light"><div class="pk-card pk-theme" style="--theme:#f4d9bf"><span>Warm · Togepi</span></div><div class="pk-card pk-theme" style="--theme:#d8eefa"><span>Electric · Pachirisu</span></div><div class="pk-card pk-theme" style="--theme:#d7e8ef"><span>Calm · Togekiss</span></div><div class="pk-card pk-theme" style="--theme:#4e3e69"><span>Night · Gengar</span></div></div>`,'HOME',state.dark);
@@ -99,7 +101,7 @@ function render(){
  document.getElementById('screenTitle').textContent=s.label;
  document.getElementById('screenPurpose').textContent=s.purpose;
  document.querySelectorAll('#screenPicker button').forEach(b=>b.classList.toggle('active',b.dataset.screen===state.screen));
- document.getElementById('stateBox').textContent=`screen: ${state.screen}\nphoneParked: ${state.phoneParked}\npriority: ${state.priority}\ndark: ${state.dark}\nnfc: ${state.nfc}\nfocus: ${fmt(state.focusRemaining)}`;
+ document.getElementById('stateBox').textContent=`screen: ${state.screen}\nphoneParked: ${state.phoneParked}\nbleConnected: ${state.bleConnected}\npriority: ${state.priority}\ndark: ${state.dark}\nnfc: ${state.nfc}\nfocus: ${fmt(state.focusRemaining)}`;
  bindUiButtons();
 }
 function bindUiButtons(){
@@ -134,11 +136,15 @@ function buildGallery(){
 }
 function action(a){
  if(a==='toggle-phone')state.phoneParked=!state.phoneParked;
+ if(a==='ble-toggle')state.bleConnected=!state.bleConnected;
+ if(a==='ble-call'){state.bleConnected=true;state.priority=true;state.priorityType='call';state.screen='phone'}
+ if(a==='ble-calendar'){state.bleConnected=true;state.priority=true;state.priorityType='calendar';state.screen='phone'}
+ if(a==='ble-contact'){state.bleConnected=true;state.priority=true;state.priorityType='contact';state.screen='phone'}
  if(a==='priority-alert')state.priority=!state.priority;
  if(a==='toggle-dark')state.dark=!state.dark;
  if(a==='nfc-scan'){state.nfc=!state.nfc;state.screen='nfc'}
  if(a==='birthday'){state.birthday=true;state.screen='birthday'}
- if(a==='reset')Object.assign(state,{screen:'home',phoneParked:true,dark:false,priority:false,nfc:false,birthday:false,focusRemaining:1458,focusRunning:false,countdown:600,countdownRunning:false,stopwatch:1938.4,stopwatchRunning:false,laps:['32:18.4','21:04.8','10:12.1']});
+ if(a==='reset')Object.assign(state,{screen:'home',phoneParked:true,bleConnected:true,dark:false,priority:false,priorityType:'calendar',nfc:false,birthday:false,focusRemaining:1458,focusRunning:false,countdown:600,countdownRunning:false,stopwatch:1938.4,stopwatchRunning:false,laps:['32:18.4','21:04.8','10:12.1']});
  render(); buildGallery();
 }
 document.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>action(b.dataset.action));
