@@ -1,8 +1,8 @@
 # Host core tests
 
-The study/timer and notification-policy core is intentionally independent from ESP-IDF/LVGL.
+The portable core is intentionally independent from ESP-IDF/LVGL so timing, reward and progression logic can be validated before the physical board arrives.
 
-Run on any machine with g++:
+## Study engine
 
 ```bash
 cd firmware/hmi/core/tests
@@ -17,6 +17,42 @@ Expected:
 PokéDock core tests passed
 ```
 
-Verified once during V4 design on 2026-10-05.
+## Reward engine
 
-No GitHub Actions workflow is added for this test yet because this personal project does not need to consume recurring CI minutes for every Pages/design commit. Run it locally before firmware milestones.
+```bash
+g++ -std=c++17 -Wall -Wextra -Werror \
+  ../reward_engine.cpp reward_engine_test.cpp \
+  -o reward_engine_test
+./reward_engine_test
+```
+
+Expected:
+```
+PokéDock reward tests passed
+```
+
+## Trainer progression
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Werror \
+  ../reward_engine.cpp ../trainer_progress.cpp trainer_progress_test.cpp \
+  -o trainer_progress_test
+./trainer_progress_test
+```
+
+Expected:
+```
+PokéDock progression tests passed
+```
+
+## Verified
+
+On 2026-10-05 the reward and trainer-progression tests were also compiled manually with:
+
+```
+-std=c++17 -Wall -Wextra -Werror
+```
+
+and both executed successfully.
+
+No recurring GitHub Actions workflow is added for these host tests yet because Pages/design commits should not consume unnecessary Actions minutes. Run the tests locally before firmware milestones and before tagging a hardware build.
