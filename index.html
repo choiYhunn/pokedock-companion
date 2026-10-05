@@ -17,7 +17,7 @@
 
 @media(max-width:1000px){.hero,.product-grid{grid-template-columns:1fr}.hero{padding-top:30px;min-height:0}.hero-copy{text-align:center}.hero-copy p{margin-inline:auto}.hero-tags,.hero-actions{justify-content:center}.lab-grid{grid-template-columns:1fr}.screen-picker{display:grid;grid-template-columns:repeat(4,1fr);max-height:none}.lab-controls{display:grid;grid-template-columns:repeat(3,1fr)}.lab-controls h3,.state-box{grid-column:1/-1}.screen-gallery{grid-template-columns:repeat(2,1fr)}.arch-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.site-header nav{display:none}.wrap{padding-left:14px;padding-right:14px}.hero-copy h1{font-size:48px}.section-title h2{font-size:32px}.row-title{display:block}.device-shell{padding:8px;border-radius:18px}.screen-picker{grid-template-columns:repeat(2,1fr)}.lab-controls{grid-template-columns:1fr 1fr}.screen-gallery,.arch-grid{grid-template-columns:1fr}.site-footer{display:block}.site-footer a{display:block;margin-top:8px}}
 </style>
-</head>
+<style>.lab-controls{position:relative!important;z-index:50!important;pointer-events:auto!important}.lab-controls button{position:relative!important;z-index:51!important;pointer-events:auto!important;cursor:pointer!important;touch-action:manipulation!important}.lab-controls button:active{transform:translateY(1px);background:#ffffff22!important;color:#fff!important}</style></head>
 <body>
 <header class="site-header">
   <a class="brand" href="#top"><span class="brand-dot"></span>PokéDock Companion</a>
@@ -92,12 +92,12 @@
       </div>
       <aside class="lab-controls">
         <h3>State simulator</h3>
-        <button data-action="toggle-phone">폰 거치 토글</button><button data-action="ble-toggle">BLE 연결/해제</button><button data-action="ble-call">BLE · 전화 알림</button><button data-action="ble-calendar">BLE · 일정 알림</button><button data-action="ble-contact">BLE · 중요 연락처</button>
-        <button data-action="priority-alert">중요 알림 띄우기</button>
-        <button data-action="toggle-dark">Night 토글</button>
-        <button data-action="nfc-scan">NFC 스캔</button>
-        <button data-action="birthday">Birthday 이벤트</button>
-        <button data-action="reset">상태 초기화</button>
+        <button data-action="toggle-phone" onclick="action('toggle-phone')">폰 거치 토글</button><button data-action="ble-toggle" onclick="action('ble-toggle')">BLE 연결/해제</button><button data-action="ble-call" onclick="action('ble-call')">BLE · 전화 알림</button><button data-action="ble-calendar" onclick="action('ble-calendar')">BLE · 일정 알림</button><button data-action="ble-contact" onclick="action('ble-contact')">BLE · 중요 연락처</button>
+        <button data-action="priority-alert" onclick="action('priority-alert')">중요 알림 띄우기</button>
+        <button data-action="toggle-dark" onclick="action('toggle-dark')">Night 토글</button>
+        <button data-action="nfc-scan" onclick="action('nfc-scan')">NFC 스캔</button>
+        <button data-action="birthday" onclick="action('birthday')">Birthday 이벤트</button>
+        <button data-action="reset" onclick="action('reset')">상태 초기화</button>
         <div class="state-box" id="stateBox"></div>
       </aside>
     </div>
