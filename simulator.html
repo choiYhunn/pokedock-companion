@@ -163,6 +163,16 @@ function weather(){
 function alarm(){
  const m=MON.morning;applyTheme(m);
  return shell('<div class="card"><div class="partner-title">MORNING CENTER</div><div class="list" style="margin-top:8px"><div class="row"><span>07:30 · 평일</span><b>ON</b></div><div class="row"><span>08:10 · 화/목</span><b>ON</b></div><div class="row"><span>22:20 · Night prep</span><b>ON</b></div></div></div><div class="card trainer-art"><img src="'+P(175)+'"><div class="hero-copy"><span class="rank">TOGEPI MORNING</span><h3>Wake-up Buddy</h3><div class="speech">좋은 아침! 오늘 첫 퀘스트부터 가볍게 시작해보자.</div></div></div>',"home",S.dark)}
+function trainer(){
+ const p=partner();applyTheme(MON.calm);
+ return shell('<div class="trainer-grid" style="grid-column:1/-1"><div class="card trainer-card trainer-art"><img src="'+P(p.id)+'"><div class="hero-copy"><span class="rank">'+S.rank+'</span><div class="trainer-name">TRAINER PROFILE</div><div class="sub">PARTNER · '+p.name+' Lv.'+S.partnerLevel+'</div>'+typesHtml(p.types)+'<div style="margin-top:12px">'+bondHtml()+'</div></div></div><div class="card"><h3>Trainer Card</h3><div class="statline"><span>Study EXP</span><b>'+S.exp+'</b></div><div class="statline"><span>Sessions</span><b>'+S.sessions+'</b></div><div class="statline"><span>Streak</span><b>'+S.streak+' days</b></div><div class="statline"><span>Pokédex</span><b>'+S.caught.length+' caught</b></div><div class="statline"><span>Badges</span><b>'+S.badges.length+'</b></div><button data-action="partner" style="margin-top:9px">파트너 교체</button> <button data-screen="badges" style="margin-top:9px">BADGES</button></div></div>',"trainer",S.dark)}
+function badges(){
+ applyTheme(MON.morning);
+ const all=[["FOCUS","#6c8dac"],["STREAK","#e29b65"],["ROUTINE","#8eae7c"],["NIGHT","#725b96"],["DEX","#d889bd"],["WISH","#e0c255"]];
+ return shell('<div class="card" style="grid-column:1/-1"><div class="partner-title">TRAINER BADGES</div><p class="sub">PokéDock 전용 공부 업적 배지. 공부 루프가 실제 수집 요소로 남습니다.</p><div class="badge-grid">'+all.map(b=>'<div class="fan-badge" style="opacity:'+(S.badges.includes(b[0])?1:.28)+'"><div class="medal" style="--badge:'+b[1]+'"></div><b>'+b[0]+'</b></div>').join("")+'</div></div>',"trainer",S.dark)}
+function egg(){
+ applyTheme(MON.morning);
+ return shell('<div class="card egg-wrap"><div><div class="egg"></div><h3>Mystery Egg</h3><div class="meter"><i style="width:'+S.egg+'%"></i></div><p class="sub">Focus 완료 +8% · '+S.egg+'%</p><button data-action="egg">DEMO +20%</button></div></div><div class="card trainer-art"><img src="'+P(175)+'"><div class="hero-copy"><span class="rank">HATCH RESEARCH</span><h3>부화 조건</h3><div class="list"><div class="row"><span>Focus 25m</span><b>+8%</b></div><div class="row"><span>7-day streak</span><b>BONUS</b></div><div class="row"><span>NFC special</span><b>?</b></div></div></div></div>',"trainer",S.dark)}
 function light(){
  applyTheme(MON.calm);
  return shell('<div class="card" style="grid-column:1/-1"><h3>Pokémon Light Themes</h3><div class="theme-grid"><div class="theme-card" style="background:#fff0e9"><b>Warm · Togepi</b><span>아침 / 독서</span><img src="'+P(175)+'"></div><div class="theme-card" style="background:#e3f3fd"><b>Electric · Pachirisu</b><span>충전</span><img src="'+P(417)+'"></div><div class="theme-card" style="background:#e7f2f8"><b>Calm · Togekiss</b><span>평상시</span><img src="'+P(468)+'"></div><div class="theme-card" style="background:#e8e0f3"><b>Night · Gengar</b><span>야간</span><img src="'+P(94)+'"></div></div></div>',"home",S.dark)}
@@ -171,19 +181,19 @@ function settings(){
  return shell('<div class="card"><h3>Device</h3><div class="list"><div class="row"><span>Auto brightness</span><b>ON</b></div><div class="row"><span>Night start</span><b>22:30</b></div><div class="row"><span>NFC side</span><b>RIGHT</b></div></div></div><div class="card"><h3>Connectivity</h3><div class="list"><div class="row"><span>Wi-Fi</span><b>CONNECTED</b></div><div class="row"><span>BLE Bridge</span><b>'+(S.ble?"ON":"OFF")+'</b></div><div class="row"><span>Web Settings</span><b>READY</b></div></div></div>',"home",S.dark)}
 function birthday(){
  applyTheme(MON.birthday);
- return '<div class="birthday"><div><div class="chip">SPECIAL EVENT</div><img src="'+P(385)+'"><h2>A SPECIAL EVENT HAS STARTED.</h2><p>오늘만 열리는 아주 희귀한 이벤트 ✦</p><button data-ui="close-bday">오늘의 포켓몬 센터 열기</button></div></div>'}
+ return '<div class="birthday"><div><div class="chip">WISH EVENT · ONE DAY ONLY</div><img src="'+P(385)+'"><h2>Jirachi has appeared.</h2><p>오늘의 소원 리본이 해금되었습니다 ✦</p><div style="display:flex;gap:8px;justify-content:center"><button data-ui="birthday-ribbon">WISH RIBBON</button><button data-ui="close-bday">CENTER로 돌아가기</button></div></div></div>'}
 function night(){const o=S.dark;S.dark=true;const x=home();S.dark=o;return x}
-const F={home,focus,timer,stopwatch,today,stats,dex,nfc,phone,weather,alarm,light,settings,birthday,night};
+const F={home,focus,quests,timer,stopwatch,today,stats,trainer,badges,egg,dex,nfc,phone,weather,alarm,light,settings,birthday,night};
 function render(){
  applyTheme(role());
  $("screen").innerHTML=(F[S.screen]||home)();
  $("screen").classList.toggle("dark",S.dark||S.screen==="night");
- $("state").textContent="clicks: "+S.clicks+"\nscreen: "+S.screen+"\nphoneParked: "+S.phone+"\nBLE: "+S.ble+"\nnotice: "+(S.notice||"none")+"\nnight: "+S.dark+"\nnfc: "+S.nfc+"\nencounters: "+S.encounter;
+ $("state").textContent="clicks: "+S.clicks+"\nscreen: "+S.screen+"\nphoneParked: "+S.phone+"\nBLE: "+S.ble+"\nnotice: "+(S.notice||"none")+"\nnight: "+S.dark+"\nnfc: "+S.nfc+"\nencounters: "+S.encounter+"\npartner: "+partner().name+" Lv."+S.partnerLevel+"\nbond: "+S.bond+"\nexp: "+S.exp+"\negg: "+S.egg+"%\nbadges: "+S.badges.join(",");
  $("health").textContent="RUNNING";
  drawNav();
 }
 function drawNav(){$("nav").innerHTML=ids.map(x=>'<button data-screen="'+x+'" class="'+(S.screen===x?"active":"")+'">'+L[x]+'</button>').join("")}
-function encounter(){S.encounter++;S.reward=extended[S.encounter%extended.length]}
+function encounter(){S.encounter++;S.reward=extended[S.encounter%extended.length];S.rewardShiny=(S.encounter%8===0);if(!S.caught.includes(S.reward))S.caught.push(S.reward)}
 function act(a){
  S.clicks++;
  if(a==="phone")S.phone=!S.phone;
@@ -194,8 +204,11 @@ function act(a){
  else if(a==="dark")S.dark=!S.dark;
  else if(a==="nfc"){S.nfc=!S.nfc;S.screen="nfc"}
  else if(a==="encounter"){encounter()}
+ else if(a==="partner"){const seq=[468,448,94,417,175,385];S.partner=seq[(seq.indexOf(S.partner)+1)%seq.length]}
+ else if(a==="bond"){S.bond=Math.min(100,S.bond+5)}
+ else if(a==="egg"){S.egg=Math.min(100,S.egg+20);if(S.egg>=100){S.reward=280;S.rewardShiny=false;if(!S.caught.includes(280))S.caught.push(280);S.egg=0}}
  else if(a==="birthday")S.screen="birthday";
- else if(a==="reset")Object.assign(S,{screen:"home",phone:true,ble:true,dark:false,notice:null,nfc:false,focus:1500,focusRun:false,count:600,countRun:false,sw:1938,swRun:false,clicks:S.clicks,reward:null,encounter:0});
+ else if(a==="reset")Object.assign(S,{screen:"home",phone:true,ble:true,dark:false,notice:null,nfc:false,focus:1500,focusRun:false,count:600,countRun:false,sw:1938,swRun:false,clicks:S.clicks,reward:null,rewardShiny:false,encounter:0,partner:468,partnerLevel:12,bond:67,exp:285,egg:42,sessions:3,streak:4,rank:"ACE SCHOLAR",badges:["FOCUS","STREAK"],caught:[94,175,417,448,468,385,25,133,778]});
  render();
 }
 document.addEventListener("click",e=>{
@@ -203,16 +216,18 @@ document.addEventListener("click",e=>{
  if(b.dataset.action){act(b.dataset.action);return}
  if(b.dataset.screen){S.screen=b.dataset.screen;render();return}
  if(b.dataset.ui==="focus"){S.focusRun=!S.focusRun;render();return}
- if(b.dataset.ui==="focus-complete"){S.focus=0;S.focusRun=false;encounter();render();return}
+ if(b.dataset.ui==="focus-complete"){S.focus=0;S.focusRun=false;studyReward();render();return}
  if(b.dataset.ui==="timer"){S.countRun=!S.countRun;render();return}
  if(b.dataset.ui==="sw"){S.swRun=!S.swRun;render();return}
  if(b.dataset.ui==="lap"){render();return}
- if(b.dataset.ui==="reward-close"){S.reward=null;S.screen="dex";render();return}
+ if(b.dataset.ui==="reward-close"){S.reward=null;S.rewardShiny=false;S.screen="dex";render();return}
+ if(b.dataset.ui==="set-scanned-partner"){S.partner=94;S.bond=Math.min(100,S.bond+3);S.screen="home";render();return}
+ if(b.dataset.ui==="birthday-ribbon"){if(!S.badges.includes("WISH"))S.badges.push("WISH");S.bond=Math.min(100,S.bond+10);S.screen="trainer";render();return}
  if(b.dataset.ui==="close-bday"){S.screen="home";render();return}
 });
 setInterval(()=>{
  let d=false;
- if(S.focusRun&&S.focus>0){S.focus--;d=S.screen==="focus";if(S.focus===0){S.focusRun=false;encounter();d=true}}
+ if(S.focusRun&&S.focus>0){S.focus--;d=S.screen==="focus";if(S.focus===0){S.focusRun=false;studyReward();d=true}}
  if(S.countRun&&S.count>0){S.count--;d=d||S.screen==="timer"}
  if(S.swRun){S.sw++;d=d||S.screen==="stopwatch"}
  if(d)render();
