@@ -1,16 +1,224 @@
 {
+  "version": 4,
   "favorites": [
-    {"name":"gengar","id":94,"role":"night","accent":"#7A5AA8"},
-    {"name":"togepi","id":175,"role":"morning","accent":"#F2C0A7"},
-    {"name":"pachirisu","id":417,"role":"docked","accent":"#7CBCE6"},
-    {"name":"lucario","id":448,"role":"focus","accent":"#53759A"},
-    {"name":"togekiss","id":468,"role":"calm","accent":"#9DC4DE"},
-    {"name":"jirachi","id":385,"role":"birthday","accent":"#E4C65E"}
+    {
+      "name": "gengar",
+      "id": 94,
+      "role": "night",
+      "types": [
+        "ghost",
+        "poison"
+      ],
+      "accent": "#7A5AA8",
+      "quote": "밤에는 내가 지켜볼게.",
+      "nfc": true
+    },
+    {
+      "name": "togepi",
+      "id": 175,
+      "role": "morning",
+      "types": [
+        "fairy"
+      ],
+      "accent": "#F2C0A7",
+      "quote": "오늘의 첫 퀘스트부터 가볍게!",
+      "nfc": true
+    },
+    {
+      "name": "pachirisu",
+      "id": 417,
+      "role": "charging",
+      "types": [
+        "electric"
+      ],
+      "accent": "#7CBCE6",
+      "quote": "전기 모으는 중! 폰은 잠깐 잊자.",
+      "nfc": true
+    },
+    {
+      "name": "lucario",
+      "id": 448,
+      "role": "focus",
+      "types": [
+        "fighting",
+        "steel"
+      ],
+      "accent": "#53759A",
+      "quote": "마음을 가다듬고 한 세션만.",
+      "nfc": true
+    },
+    {
+      "name": "togekiss",
+      "id": 468,
+      "role": "calm",
+      "types": [
+        "fairy",
+        "flying"
+      ],
+      "accent": "#9DC4DE",
+      "quote": "오늘도 좋은 일이 생길 것 같아.",
+      "nfc": true
+    },
+    {
+      "name": "jirachi",
+      "id": 385,
+      "role": "birthday",
+      "types": [
+        "steel",
+        "psychic"
+      ],
+      "accent": "#E4C65E",
+      "quote": "한 번 더 해내면 소원에 가까워져.",
+      "nfc": true
+    }
   ],
   "extended": [
-    {"name":"pikachu","id":25},{"name":"vulpix","id":37},{"name":"jigglypuff","id":39},{"name":"psyduck","id":54},
-    {"name":"eevee","id":133},{"name":"snorlax","id":143},{"name":"espeon","id":196},{"name":"umbreon","id":197},
-    {"name":"mudkip","id":258},{"name":"ralts","id":280},{"name":"riolu","id":447},{"name":"shaymin","id":492},
-    {"name":"zorua","id":570},{"name":"sylveon","id":700},{"name":"dedenne","id":702},{"name":"mimikyu","id":778}
-  ]
+    {
+      "name": "pikachu",
+      "id": 25,
+      "types": [
+        "electric"
+      ],
+      "source": "encounter"
+    },
+    {
+      "name": "vulpix",
+      "id": 37,
+      "types": [
+        "fire"
+      ],
+      "source": "encounter"
+    },
+    {
+      "name": "jigglypuff",
+      "id": 39,
+      "types": [
+        "normal",
+        "fairy"
+      ],
+      "source": "encounter"
+    },
+    {
+      "name": "psyduck",
+      "id": 54,
+      "types": [
+        "water"
+      ],
+      "source": "encounter"
+    },
+    {
+      "name": "eevee",
+      "id": 133,
+      "types": [
+        "normal"
+      ],
+      "source": "encounter"
+    },
+    {
+      "name": "snorlax",
+      "id": 143,
+      "types": [
+        "normal"
+      ],
+      "source": "encounter"
+    },
+    {
+      "name": "espeon",
+      "id": 196,
+      "types": [
+        "psychic"
+      ],
+      "source": "encounter"
+    },
+    {
+      "name": "umbreon",
+      "id": 197,
+      "types": [
+        "dark"
+      ],
+      "source": "night"
+    },
+    {
+      "name": "mudkip",
+      "id": 258,
+      "types": [
+        "water"
+      ],
+      "source": "encounter"
+    },
+    {
+      "name": "ralts",
+      "id": 280,
+      "types": [
+        "psychic",
+        "fairy"
+      ],
+      "source": "egg"
+    },
+    {
+      "name": "riolu",
+      "id": 447,
+      "types": [
+        "fighting"
+      ],
+      "source": "focus"
+    },
+    {
+      "name": "shaymin",
+      "id": 492,
+      "types": [
+        "grass"
+      ],
+      "source": "streak"
+    },
+    {
+      "name": "zorua",
+      "id": 570,
+      "types": [
+        "dark"
+      ],
+      "source": "night"
+    },
+    {
+      "name": "sylveon",
+      "id": 700,
+      "types": [
+        "fairy"
+      ],
+      "source": "bond"
+    },
+    {
+      "name": "dedenne",
+      "id": 702,
+      "types": [
+        "electric",
+        "fairy"
+      ],
+      "source": "charging"
+    },
+    {
+      "name": "mimikyu",
+      "id": 778,
+      "types": [
+        "ghost",
+        "fairy"
+      ],
+      "source": "night"
+    }
+  ],
+  "progression": {
+    "focus_exp_per_25m": 25,
+    "bond_per_focus": 2,
+    "egg_progress_per_focus": 8,
+    "demo_shiny_every_n_encounters": 8,
+    "firmware_shiny_rate_denominator": 128,
+    "badges": [
+      "FOCUS",
+      "STREAK",
+      "ROUTINE",
+      "NIGHT",
+      "DEX",
+      "WISH"
+    ]
+  }
 }
