@@ -1,12 +1,39 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PokéDock Settings</title>
 <style>body{font-family:system-ui,sans-serif;margin:0;background:#f4f1ea;color:#24252b}.w{max-width:680px;margin:auto;padding:24px}.card{background:white;border-radius:18px;padding:18px;margin:12px 0}.row{display:grid;grid-template-columns:1fr 140px;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid #eee}.row:last-child{border:0}input,select{width:100%;padding:9px;border:1px solid #ddd;border-radius:10px}button{padding:11px 16px;border:0;border-radius:12px;background:#26354c;color:white}.muted{color:#757780;font-size:12px}</style></head>
 <body><main class="w"><h1>PokéDock Settings</h1><p class="muted">긴 설정은 폰에서, 즉시 쓰는 기능은 PokéDock 화면에서.</p>
-<section class="card"><h3>Study</h3><div class="row"><span>집중 기본값</span><input id="focus" type="number" min="1" max="180" value="25"></div><div class="row"><span>휴식 기본값</span><input id="break" type="number" min="1" max="60" value="5"></div><div class="row"><span>오늘 목표(분)</span><input id="target" type="number" min="1" max="1440" value="180"></div></section>
-<section class="card"><h3>Display</h3><div class="row"><span>Night 시작</span><input id="night" type="time" value="22:30"></div><div class="row"><span>야간 밝기</span><input id="brightness" type="number" min="1" max="100" value="18"></div></section>
-<section class="card"><h3>Phone bridge</h3><div class="row"><span>알림 연동</span><select id="bridge"><option value="off">끄기</option><option value="priority">중요 알림만</option></select></div><p class="muted">메시지 본문 저장은 기본적으로 금지. 통화/일정/선택 연락처 요약만 표시.</p></section>
-<section class="card"><h3>Hardware layout</h3><div class="row"><span>NFC 위치</span><select id="nfc"><option>right</option><option>left</option></select></div><div class="row"><span>폰 거치</span><input value="rear sloped support" disabled></div></section>
-<button onclick="save()">저장</button><span id="msg" class="muted"></span>
+<section class="card"><h3>Study</h3><div class="row"><span>집중 기본값</span><input id="focusMin" type="number" min="1" max="180" value="25"></div><div class="row"><span>휴식 기본값</span><input id="breakMin" type="number" min="1" max="60" value="5"></div><div class="row"><span>오늘 목표(분)</span><input id="targetMin" type="number" min="1" max="1440" value="180"></div></section>
+<section class="card"><h3>Display</h3><div class="row"><span>Night 시작</span><input id="nightStart" type="time" value="22:30"></div><div class="row"><span>야간 밝기</span><input id="nightBrightness" type="number" min="1" max="100" value="18"></div></section>
+<section class="card"><h3>Phone bridge</h3><div class="row"><span>알림 연동</span><select id="bridgeMode"><option value="off">끄기</option><option value="priority">중요 알림만</option></select></div><p class="muted">메시지 본문 저장은 기본적으로 금지. 통화/일정/선택 연락처 요약만 표시.</p></section>
+<section class="card"><h3>Hardware layout</h3><div class="row"><span>NFC 위치</span><select id="nfcSide"><option value="right">right</option><option value="left">left</option></select></div><div class="row"><span>폰 거치</span><input value="rear sloped support" disabled></div></section>
+<button id="saveBtn">저장</button><span id="statusMsg" class="muted"></span>
 <script>
-async function load(){try{const r=await fetch('/api/config');if(!r.ok)return;const c=await r.json();focus.value=c.study.focus_default_min;break.value=c.study.break_default_min;target.value=c.study.daily_target_min;night.value=c.display.night_start;brightness.value=c.display.night_brightness_pct;nfc.value=c.dock.nfc_side;bridge.value=c.phone_bridge.enabled?'priority':'off'}catch(e){}}
-async function save(){const body={study:{focus_default_min:+focus.value,break_default_min:+break.value,daily_target_min:+target.value},display:{night_start:night.value,night_brightness_pct:+brightness.value},dock:{nfc_side:nfc.value},phone_bridge:{enabled:bridge.value!=='off',privacy:'priority_summary_only',show_message_body:false}};try{const r=await fetch('/api/config',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify(body)});msg.textContent=r.ok?' 저장됨':' 저장 실패'}catch(e){msg.textContent=' 기기에 연결되지 않음'}}load();
+const $=id=>document.getElementById(id);
+async function loadConfig(){
+  try{
+    const r=await fetch('/api/config');
+    if(!r.ok)return;
+    const c=await r.json();
+    $('focusMin').value=c.study?.focus_default_min??25;
+    $('breakMin').value=c.study?.break_default_min??5;
+    $('targetMin').value=c.study?.daily_target_min??180;
+    $('nightStart').value=c.display?.night_start??'22:30';
+    $('nightBrightness').value=c.display?.night_brightness_pct??18;
+    $('nfcSide').value=c.dock?.nfc_side??'right';
+    $('bridgeMode').value=c.phone_bridge?.enabled?'priority':'off';
+  }catch(e){$('statusMsg').textContent=' 기기에 연결되지 않음';}
+}
+async function saveConfig(){
+  const body={
+    study:{focus_default_min:+$('focusMin').value,break_default_min:+$('breakMin').value,daily_target_min:+$('targetMin').value},
+    display:{night_start:$('nightStart').value,night_brightness_pct:+$('nightBrightness').value},
+    dock:{nfc_side:$('nfcSide').value},
+    phone_bridge:{enabled:$('bridgeMode').value!=='off',privacy:'priority_summary_only',show_message_body:false}
+  };
+  try{
+    const r=await fetch('/api/config',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+    $('statusMsg').textContent=r.ok?' 저장됨':' 저장 실패';
+  }catch(e){$('statusMsg').textContent=' 기기에 연결되지 않음';}
+}
+$('saveBtn').addEventListener('click',saveConfig);
+loadConfig();
 </script></main></body></html>
