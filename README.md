@@ -121,3 +121,34 @@ Study is connected to progression:
 
 Stable simulator:
 https://choiyhunn.github.io/pokedock-companion/simulator.html?v=3
+
+
+## Fan-system V4
+
+Pokémon is now part of the product logic rather than only artwork.
+
+Persistent progression:
+- active Partner Pokémon
+- Partner level / Bond
+- Study EXP
+- Daily/weekly Trainer Record
+- custom PokéDock study badges
+- Mystery Egg progress / hatch
+- Pokédex caught/locked state
+- Random Encounter
+- rare Shiny encounter
+- NFC partner/theme summon
+- Birthday Wish Ribbon
+
+Persistent main navigation:
+- CENTER
+- TRAIN
+- QUEST
+- DEX
+- TRAINER
+
+The study loop is:
+`Quest -> Focus training -> EXP/Bond/Egg -> Encounter -> Dex/Badge -> Partner Center`.
+
+Stable interactive simulator:
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=4
