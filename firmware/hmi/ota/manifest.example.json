@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "device_family": "pokedock-s3-lcd-4.3c-box",
+  "hardware_revision": "TBD",
+  "release_version": "0.0.0-example",
+  "app_api_version": 1,
+  "firmware": {
+    "url": "https://example.invalid/pokedock/firmware-v0.0.0.bin",
+    "sha256": "REPLACE_WITH_64_HEX_CHARACTERS",
+    "size_bytes": 0
+  },
+  "assets": {
+    "version": "example-only",
+    "updates_enabled": false
+  },
+  "requires_confirmation": true
+}
