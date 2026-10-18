@@ -16,9 +16,9 @@
 References checked 2026-10-19: [Waveshare 4.3C](https://www.waveshare.com/product/esp32-s3-touch-lcd-4.3c.htm); [SKU evidence](https://docs.waveshare.com/ESP32-S3-Touch-LCD-4.3C); [unrelated **case-less** Eleparts listing — DO NOT ORDER](https://eleparts.co.kr/goods/view?no=18220907); [Apple original MagSafe](https://www.apple.com/kr/shop/product/mgd74kh/a); [Samsung official EP-T2510](https://www.samsung.com/sec/mobile-accessories/25-w-pd-charger-power-saving-type/EP-T2510NBKGKR/); [Korean online price comparison](https://prod.danawa.com/info/?pcode=28885547). **No confirmed domestic ready-stock listing for exactly 33630 was found**; contact seller showing photographed part number before payment. A listed domestic '4.3B', '4.3' or '4.3C without case' is NOT interchangeable.
 
 ## Phase-dependent expected outlay (KRW)
-Computed from the CSV planning rows; assume all tools reusable and no returned/failed manufacturing:
-- Basic A (screen+DC+RTC+SD+USB+mock+soft pads+feet+structure+fasteners+clips): **~₩128k–233k**.
-- B charges: A + Apple original ₩65k + PD ~₩15k–25k + fitted holder ~₩4k–15k = **~₩212k–338k**.
+Computed from the 17-row CSV planning inputs (12 basic items + 3 B add-ons + 2 deferred/excluded), assume all tools reusable and no returned/failed manufacturing. All figures are **scenario estimates** not vendor quotations:
+- Basic A (screen+DC+RTC+SD+USB+mock+soft pads+feet+structure+fasteners+clips): **~₩129,000–243,500**.
+- B charges: A + Apple original ₩65k + PD ~₩15k–25k + fitted holder ~₩4k–15k = **~₩213,030–348,800**.
 - Reusing existing genuine puck & PD adapter can remove ~₩80k–90k of incremental spend. A small unplanned reprint is **not** included.
 - Final local order price must include freight, taxes, whether connector/pigtail is included and actual print-shop quote; avoid rounded false precision.
 
