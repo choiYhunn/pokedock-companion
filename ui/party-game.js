@@ -25,7 +25,7 @@
       desc:"지라치가 작은 별을 남겼다!", line:"작은 소원을 하나 골라볼까?", sky:"#fff0c5", glow:"#f8dd91" }
   ]);
   const key = "pokedock-partner-v9";
-  const state = { open:false, selected:94, entering:false, confirming:false, confirmTimer:null, petTapsSeen:0 };
+  const state = { open:false, selected:94, entering:false, confirming:false, confirmTimer:null, petTapsSeen:0, sound:false, audioCtx:null };
   const esc = value => String(value).replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
   const bridge = () => window.__pokedockPartyBridge;
   const byId = id => ROSTER.find(item => item.id === id) || ROSTER[0];
@@ -67,6 +67,7 @@
       '<div class="party-choices" role="listbox" aria-label="파트너 목록">'+rosterMarkup()+'</div>'+
       '<div class="party-footnote">↑ ↓ 선택 · ENTER 확정 · ESC 닫기</div></aside>'+
       '<div class="party-scene">'+
+      '<button class="party-sound" data-party="sound" aria-pressed="'+state.sound+'" aria-label="효과음 토글">♪ '+(state.sound?"ON":"OFF")+'</button>'+
       '<button class="party-close" data-party="close" aria-label="닫기">×</button>'+
       stageMarkup(p)+
       '<div class="party-dialog"><div class="party-details">'+
@@ -91,7 +92,8 @@
       if(!button)return;
       event.stopPropagation();
       const action=button.dataset.party;
-      if(action==="close")close();
+      if(action==="sound"){state.sound=!state.sound;button.setAttribute("aria-pressed",String(state.sound));button.textContent="♪ "+(state.sound?"ON":"OFF");sound(660,0.07);}
+      else if(action==="close")close();
       else if(action==="choose")select(Number(button.dataset.id));
       else if(action==="confirm")confirm();
     });
@@ -106,6 +108,21 @@
     });
   }
 
+  function sound(freq,duration=0.055,delay=0){
+    if(!state.sound)return;
+    try{
+      const Ctx=window.AudioContext||window.webkitAudioContext;
+      if(!Ctx)return;
+      const ctx=state.audioCtx||(state.audioCtx=new Ctx());
+      const oscillator=ctx.createOscillator(),gain=ctx.createGain(),start=ctx.currentTime+delay;
+      oscillator.type="sine";oscillator.frequency.setValueAtTime(freq,start);
+      gain.gain.setValueAtTime(0,start);
+      gain.gain.linearRampToValueAtTime(0.045,start+0.008);
+      gain.gain.exponentialRampToValueAtTime(0.001,start+duration);
+      oscillator.connect(gain);gain.connect(ctx.destination);
+      oscillator.start(start);oscillator.stop(start+duration+0.012);
+    }catch(e){/* audio is entirely optional */ }
+  }
   function open() {
     if(state.open)return;
     if(!bridge()?.getPartner)return;
@@ -122,12 +139,14 @@
   function select(id) {
     if(!ROSTER.some(p=>p.id===id)||state.confirming)return;
     state.selected=id;
+    sound(510,0.05);
     mount();
     element()?.querySelector(".party-choice[aria-selected='true']")?.scrollIntoView({block:"nearest",behavior:"smooth"});
   }
   function confirm() {
     if(state.confirming)return;
     state.confirming=true;
+    sound(640,0.09);sound(880,0.11,0.11);
     const overlay=element()?.querySelector("[data-party-root]");
     if(!overlay)return;
     overlay.classList.add("is-confirming");
