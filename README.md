@@ -120,7 +120,7 @@ Study is connected to progression:
 - Light themes and contextual UI follow Pokémon roles rather than arbitrary RGB presets.
 
 Stable simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=6
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=7
 
 
 ## Fan-system V4
@@ -157,7 +157,7 @@ The study loop is:
 `Quest -> Focus training -> EXP/Bond/Egg -> Encounter -> Dex/Badge -> Partner Center`.
 
 Stable interactive simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=4
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=7
 
 
 ## UI V6 — simplified hierarchy
@@ -186,4 +186,15 @@ The second layer contains the existing utility screens, so functionality is pres
 This follows the same general information-architecture principle used by Pokémon GO and Pokémon Sleep: keep the primary activity surface focused, and move inventory/settings/secondary systems behind a menu rather than keeping them permanently visible.
 
 Simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=6
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=7
+
+
+## V7 — Gengar's Hideout / real-life gift audit
+
+- Confirmed preference: **Gengar overwhelmingly first**, then **Piplup, Togekiss, Lucario and Quagsire tied/close**; strong Sinnoh/Generation IV and cute-goods preference.
+- Main menu restyled into **팬텀의 비밀기지**. The four menu groups now use Lucario, Piplup, Togekiss and Quagsire illustrations.
+- Main Partner defaults to Gengar; HOME has a direct one-tap Focus action; secret Gengar menu interaction is demo-only.
+- Audit separates **working browser demo / portable C++ core / pending hardware integration** and reprioritizes an actually useful birthday-gift MVP.
+- Read [V7 full audit](docs/V7_FULL_AUDIT.md) for detailed daily-use, mechanical, Qi, phone BLE, accessibility and acceptance criteria.
+
+Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=7
