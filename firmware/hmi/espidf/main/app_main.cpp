@@ -6,6 +6,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "study_engine.h"
+#include "pokedock_lvgl_demo.h"
 
 static const char *TAG = "PokéDock-M0";
 
@@ -15,6 +16,10 @@ extern "C" void app_main(void) {
     ESP_LOGI(TAG, "esp_timer time in milliseconds: %llu",
              static_cast<unsigned long long>(esp_timer_get_time()/1000));
     // No automatic study credit, and no timer started on boot.
+#if CONFIG_POKEDOCK_HMI_START
+    ESP_LOGW(TAG, "LVGL demo opt-in enabled; NOT verified on a physical 33630");
+    pokedock_lvgl_demo_start();
+#endif
     for (;;) {
         const uint64_t now_ms = static_cast<uint64_t>(esp_timer_get_time()/1000);
         (void)engine.tick(now_ms);
