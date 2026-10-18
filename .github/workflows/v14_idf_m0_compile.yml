@@ -1,0 +1,21 @@
+name: V14 ESP-IDF M0 compile probe (one-shot)
+on:
+  push:
+    branches: [engineering/v14-production-plan-20261019]
+    paths:
+      - '.github/workflows/v14_idf_m0_compile.yml'
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  idf-m0:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: ESP32-S3 console skeleton cross-build
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: release-v5.5
+          target: esp32s3
+          path: firmware/hmi/espidf
