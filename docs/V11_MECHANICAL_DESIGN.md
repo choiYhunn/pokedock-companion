@@ -1,5 +1,14 @@
 # PokéDock V11 — Dimensioned mechanical engineering process
 
+## Manufacturer CAD source — use, but do not assume the case geometry
+
+Waveshare first-party GitHub contains **`hardware/dimensions/ESP32-S3-Touch-LCD-4.3C-2D.dxf`** and **`ESP32-S3-Touch-LCD-4.3C-3D.stp`**, and `hardware/schematics/ESP32-S3-Touch-LCD-4.3C-Schematics.pdf`. Files verified in the current manufacturer repository listing. Download from:
+
+- https://github.com/waveshareteam/ESP32-S3-Touch-LCD-4.3C/tree/main/hardware/dimensions
+- https://github.com/waveshareteam/ESP32-S3-Touch-LCD-4.3C/tree/main/hardware/schematics
+
+This model may describe the **uncased board**, not all outside measurements/cutouts of the separately sold SKU **33630 C-BOX plastic case**. Thus final clamp/clip/stand location requires caliper checks on the delivered cased product.
+
 ## Critical contradiction to resolve before paying for printing
 Original V4 CAD hardcoded BASE_D=78mm and PHONE_SUPPORT_H=82mm, while even the bare regular iPhone 14 is **146.7mm tall / 71.5mm wide / 7.80mm thick** (Apple: https://support.apple.com/ko-kr/111850).
 An upright phone tilted **65° from horizontal** has projected height ~133mm, meaning it will visibly rise above a typical 4.3" display body. Tilting to 25–30° reduces height to ~62–73mm but extends phone depth rearwards ~127–133mm, *plus bottom offset, case and stand*. Thus "mostly hidden behind screen" and "base overall depth 78mm" cannot both be assumed true. Front tray still unnecessary; rear desk depth must be measured.

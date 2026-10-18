@@ -11,6 +11,10 @@ This index is the **single reading order** for building an actually usable gift,
 - Focus-to-Pokémon is cumulative minutes, no artificial reward for regular countdown or 5-minute breaks.
 - Pokémon cry/music alarm + OTA + iPhone BLE ANCS are future work, not promised ready features.
 
+## Official mechanical source
+
+Waveshare publishes **2D DXF / 3D STEP** for ESP32-S3-Touch-LCD-4.3C in [hardware/dimensions](https://github.com/waveshareteam/ESP32-S3-Touch-LCD-4.3C/tree/main/hardware/dimensions). These are a better reference for the actual board than freehand guessed screen geometry; they still may not represent the **plastic external C-BOX SKU 33630** exactly. Measure the physical case, port cutouts and screw sites before applying any model to it.
+
 ## Source-of-truth documents, recommended sequence
 1. [Mechanical dimension & geometry](V11_MECHANICAL_DESIGN.md) — why low-angle rear stand occupies desk depth, all physical measurement fields, 25/30/35-degree tests.
 2. [Electrical/power & later audio](V11_ELECTRICAL_WIRING.md) — exact 4.3C board power vs MagSafe, connector check and optional C3/LED wiring rules.

@@ -2,6 +2,8 @@
 // Coordinates: x = width, y = rear, z = height, millimeters.
 // IMPORTANT: replace all SAMPLE dimensions using actual 4.3C-BOX,
 // iPhone+case and protected MagSafe puck measurements before fabrication.
+// Manufacturer reference: hardware/dimensions/4.3C-2D.dxf and 4.3C-3D.stp
+// in waveshareteam/ESP32-S3-Touch-LCD-4.3C; cased 33630 still must be measured.
 // This preview deliberately does not model USB/power/RTC/antenna holes.
 // Do not glue, drill or encapsulate the charger using these sample values.
 $fn=48;

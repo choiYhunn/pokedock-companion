@@ -1,251 +1,72 @@
 # PokéDock Companion
 
-## Current V10 — utility-first product and staged hardware (2026-10-18)
+**Latest engineering baseline (2026-10-18): V10 interactive UI + V11 measured-fit / assembly design.**
 
-**[Direct 800×480 V10 simulator](https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10)**
+A practical 4.3-inch Pokémon-inspired desk companion for a personal non-commercial gift. A Gengar HOME clock and 15/25/45-minute Focus are the everyday product; the Poké Ball opens Pokémon play. Rear iPhone MagSafe docking and cute private notes are supporting features.
 
-PokéDock is now organized around two everyday actions rather than 15 equal menu choices:
-- HOME: clock, Gengar, D-day and todo status, one tap to start Focus.
-- 집중: 15/25/45-minute focus followed by a 5-minute reward-free break, clearly distinct from plain countdown.
-- Poké Ball: **매일 쓰는 도구** (tasks, D-day, plain timer, alarm, couple nook) or **포켓몬 놀이** (partner, Dex, egg, trainer), with extra settings hidden under a third compact row.
-- Explicit **← 뒤로** preserves menu depth; **도감에 기록 / 나중에** on reward is now a real state transition. Browser progress is stored in the local browser profile. Some settings/phone/weather views are demos.
+**[Open interactive 800×480 simulator — V10](https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10)** · [GitHub Pages landing](https://choiyhunn.github.io/pokedock-companion/?v=10)
 
-**Build status:** No 4.3C-BOX has been verified/flashed by this repo yet. Not a working physical unit. UI GIF/CSS does not run as LVGL on the MCU without porting. OTA is a proposal, not installed.
+## Start here: engineering documents
 
-**Build and purchase guides:**
-1. [V10 product/UX freeze](docs/V10_PRODUCT_FREEZE.md)
-2. [Staged purchase BOM](docs/V10_BOM_AND_PURCHASE.md) — Waveshare exact SKU **33630**, supply compatibility, iPhone MagSafe, phase B sensors held.
-3. [ESP-IDF / LVGL bring-up steps](docs/V10_HARDWARE_PORTING.md) — first validate manufacturer's factory 4.3C example and board power, then minimum HOME/Focus native port, then animation, OTA, Dock.
-4. [Bench/UI acceptance gates](docs/V10_TEST_ACCEPTANCE.md).
+1. **[V11 master execution index](docs/V11_EXECUTION_INDEX.md)** — single handoff and stage gates.
+2. **[V11 mechanical calculations + measurement worksheet](docs/V11_MECHANICAL_DESIGN.md)** — corrected rear phone geometry and fit options.
+3. **[V11 electrical/wiring](docs/V11_ELECTRICAL_WIRING.md)** — exact 4.3C board vs MagSafe separate supplies, future NFC/LED, audio path.
+4. **[V10 staged procurement BOM](docs/V10_BOM_AND_PURCHASE.md)** — what to buy first vs postpone.
+5. **[V11 assembly SOP](docs/V11_ASSEMBLY_SOP.md)** — inspection, power-up, temporary jig, MagSafe, LVGL, final tests.
+6. **[V10 ESP-IDF/LVGL port plan](docs/V10_HARDWARE_PORTING.md)** — vendor examples to actual HMI firmware.
+7. **[V11 cumulative study/Pokémon rules](docs/V11_STUDY_POKEMON_PROGRESS.md)** — 1h/2h/5h/10h milestones; prototype policy, not wired to real firmware.
+8. **[V10 test and readiness gates](docs/V10_TEST_ACCEPTANCE.md)**.
+9. **[Proposed HTTPS OTA / dual-app slots](firmware/hmi/ota/README.md)** — design only, not deployed.
 
+CAD:
+- [V11 parameterized fit mock](cad/pokedock_v11_fit_mock.scad) — **unmeasured samples; DO NOT PRINT AS PRODUCTION ENCLOSURE**.
+- [Old V4 sketch](cad/pokedock_v4_compact.scad) — historical conceptual sketch with incompatible assumptions, superseded for fit.
+- [Official Waveshare 4.3C 2D DXF and 3D STEP reference](https://github.com/waveshareteam/ESP32-S3-Touch-LCD-4.3C/tree/main/hardware/dimensions) — manufacturer PCB/display model; plastic **C-BOX** case must still be physically verified.
 
-A compact Pokémon-themed **study / desk companion** built around a 4.3-inch ESP32-S3 touch HMI.
+## Exact hardware scope
 
-## Live UI Lab
+| Domain | Baseline | Status |
+| --- | --- | --- |
+| HMI | Waveshare **ESP32-S3-Touch-LCD-4.3C-BOX**, **SKU 33630**; 800×480, 16MB flash/8MB PSRAM, RTC, microSD, audio codec | Chosen, **not physically purchased/flashed here** |
+| Phone | iPhone **14-family** (exact model/case not confirmed), finished MagSafe puck with separate certified compatible USB-C PD adapter | Geometry/charging unverified |
+| Power | 4.3C **7–36V DC terminal**; example regulated 12V supply *only after actual connector + polarity verification* | Unwired |
+| Dock v1.1 | Optional ESP32-C3 + PN532 NFC + lux/ToF + subtle LED, ESP-NOW | Deferred |
+| Music/alarms | Codec + matching speaker, user-imported audio via future microSD / local web workflow | Planned; not implemented |
+| OTA | ESP-IDF HTTPS firmware dual-partition + rollback, optional future atomic SD asset bundles | Proposed, **not flashed or tested** |
 
-**https://choiyhunn.github.io/pokedock-companion/**
+## Product experience
 
-The Pages site is not just a landing page. It is the current visual review environment:
-- coded V4 product visualization,
-- coded V4 structure poster,
-- interactive 800×480 device mock,
-- interactive screen concepts including private couple space and planner,
-- working Focus / Timer / Stopwatch simulation,
-- phone parked / priority alert / Night / NFC / Birthday state simulation.
+**HOME → Focus directly**, and a central Poké Ball menu with **매일 쓰는 도구 / 포켓몬 놀이** plus tucked-away settings.
 
-### Screen inventory
-HOME · FOCUS · TIMER · STOPWATCH · TODAY · STATS · DEX · NFC · WEATHER · ALARM · PHONE · LIGHT · SETTINGS · BIRTHDAY · NIGHT
+- Focus: 15/25/45 minutes, then 5-minute rest; completed study gets rewards; plain countdown does not.
+- To-do/D-day and personal note/anniversary are editable *in the browser simulator* and saved in same-profile localStorage (unencrypted and not synced to board).
+- Party select animates Gengar (clear favorite), Piplup, Togekiss, Lucario and Quagsire. Browser sprites load over network; an actual standalone device needs locally prepared appropriate artwork.
+- Browser reward: **도감에 기록** actually adds the encountered Pokémon; **나중에** defers.
+- A proposed nonintrusive progression policy counts *verified total completed Focus minutes*: 60min Gengar reaction/star, 120min Piplup postcard, 300min egg, 600min badge, 1200min room background. Host C++ policy exists but is **not integrated in V10 simulator or device**.
 
-## V4 physical direction
+## Repo layout
 
-- no front charging tray,
-- no unnecessary forward projection,
-- 4.3-inch HMI is the product's visual center,
-- phone parks behind the display on a simple sloped support,
-- protected Qi pad/puck mounts at that rear support,
-- NFC / figure interaction lives on a small side pod,
-- side pod defaults to the right but is mechanically mirrorable,
-- subtle underside ambient light,
-- 3D printing remains optional.
+\`\`\`text
+simulator.html                       clickable 800x480 web UI (V10)
+ui/party-game.js + party-game.css    game-like choice and animation (browser)
+docs/                               product, BOM, dimensions, electrical, build, QA
+cad/pokedock_v11_fit_mock.scad       parameterized reference geometry
+firmware/hmi/core/                   portable C++ study/reward/motion policy
+firmware/hmi/ui/                     LVGL porting screen IDs/view models (not complete native app)
+firmware/hmi/ota/                    proposed dual-slot OTA configuration
+firmware/dock_node/                  unverified ESP32-C3 scaffold (optional)
+firmware/shared/                     HMI/Dock protocol contract
+config/                              catalogs and features
+\`\`\`
 
-The screen is the product; charging and NFC are supporting interactions.
+## Honest readiness
 
-## Daily functions
+**Implemented:** browser simulator interaction and test scripts; C++ portable engine/policy source and host tests; detailed V11 design/measurement/assembly documents.
 
-### Offline core
-- clock / RTC
-- alarm
-- Pomodoro / Focus
-- countdown timer
-- stopwatch + lap
-- study-session log
-- daily / weekly totals and streak
-- D-day / small todo list
-- NFC / Dex
-- ambient / Night mode
+**Not yet implemented/proven:** assembled unit, verified 4.3C-BOX power wiring, actual iPhone fit/temperature, native LVGL HOME/Focus, on-device NVS, audio playback/import, NFC operation, iOS ANCS notification forwarding, device OTA / rollback. GitHub Pages deployment success is not a physical hardware test.
 
-### Wi-Fi enhancement
-- NTP
-- weather
-- local phone web settings
-- OTA
+## Sources and rights
 
-### Optional phone bridge
-- rear-phone parked/charging status
-- priority call / calendar / selected-contact summaries
-- message body hidden and never persisted by default
-- platform adapter keeps Android/iOS integration out of core V1
+[Official Waveshare documentation](https://docs.waveshare.com/ESP32-S3-Touch-LCD-4.3C) · [Waveshare manufacturer files](https://github.com/waveshareteam/ESP32-S3-Touch-LCD-4.3C) · [Apple iPhone 14 dimensions](https://support.apple.com/ko-kr/111850) · [Apple MagSafe support](https://support.apple.com/ko-kr/105047).
 
-## Hardware
-
-- **HMI:** Waveshare ESP32-S3-Touch-LCD-4.3C-BOX, SKU 33630
-- **Dock:** ESP32-C3
-- **NFC:** PN532 on Dock Node
-- **Phone presence:** VL53L0X
-- **Room light:** BH1750
-- **Ambient light:** WS2812B/SK6812
-- **Charging:** independent protected Qi/Qi2 charger
-- **HMI ↔ Dock:** ESP-NOW
-
-## Engineering structure
-
-```text
-site/                       GitHub Pages UI Lab
-docs/                       product / UI / build specifications
-firmware/hmi/core/          portable timing, study, policy models
-firmware/hmi/ui/            screen IDs, view-models, design tokens
-firmware/hmi/web/           phone browser settings UI
-firmware/shared/            HMI ↔ Dock protocol
-firmware/dock_node/         ESP32-C3 scaffold
-config/                     product/user configuration
-cad/                        optional compact enclosure source
-```
-
-Portable core logic is kept separate from LVGL/BSP adapters. Focus/timer/stopwatch logic is host-testable without the physical board.
-
-## Read first
-
-1. `docs/PRODUCT_V4.md`
-2. `docs/PHYSICAL_LAYOUT_V4.md`
-3. `docs/UI_SCREEN_SPEC.md`
-4. `firmware/hmi/ui/SCREEN_BUILD_PLAN.md`
-5. `docs/PHONE_LINK.md`
-6. `docs/PURCHASE_NOW.md`
-7. `docs/BUILD_DAY.md`
-8. `docs/TEST_MATRIX.md`
-
-## IP note
-
-Personal, non-commercial fan project. Pokémon names/characters/artwork belong to their respective rights holders. Artwork is not committed as a redistributable asset pack; the browser prototype uses PokeAPI-hosted reference images for private design review.
-
-
-## Pokémon UX
-
-The stable simulator now restores the Pokémon-first identity:
-
-- HOME / Calm → Togekiss
-- FOCUS → Lucario
-- Phone parked / charging → Pachirisu
-- NIGHT → Gengar
-- Morning / Alarm → Togepi
-- BIRTHDAY → Jirachi
-- NFC → scanned character/theme
-- DEX → multi-character collection
-
-Study is connected to progression:
-- completing Focus grants Study EXP,
-- a completed session can trigger a Random Encounter,
-- the encounter can be registered into the Dex,
-- Light themes and contextual UI follow Pokémon roles rather than arbitrary RGB presets.
-
-Stable simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
-
-
-## Fan-system V4
-
-Pokémon is now part of the product logic rather than only artwork.
-
-Persistent progression:
-- active Partner Pokémon
-- Partner level / Bond
-- Study EXP
-- Daily/weekly Trainer Record
-- custom PokéDock study badges
-- Mystery Egg progress / hatch
-- Pokédex caught/locked state
-- Random Encounter
-- rare Shiny encounter
-- NFC partner/theme summon
-- Birthday Wish Ribbon
-
-Persistent device navigation:
-- HOME
-- central Poké Ball MENU
-- DEX
-
-Poké Ball menu groups:
-- TRAIN — Focus / Timer / Stopwatch
-- JOURNEY — Quest / Trainer / Egg / Badges / Record
-- DESK — Weather / Alarm / Light
-- LINK — Phone / NFC / Settings
-
-Birthday is event-driven rather than permanently listed.
-
-The study loop is:
-`Quest -> Focus training -> EXP/Bond/Egg -> Encounter -> Dex/Badge -> Partner Center`.
-
-Stable interactive simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
-
-
-## UI V6 — simplified hierarchy
-
-The UI was simplified after reviewing current Pokémon product interaction patterns.
-
-Everyday persistent navigation is only:
-- HOME
-- central Poké Ball MENU
-- DEX
-
-HOME is intentionally task-oriented:
-- current time/date,
-- active Partner and Bond,
-- one large next-training CTA,
-- compact Daily Quest and Egg status.
-
-The Poké Ball menu exposes only four categories first:
-1. TRAIN
-2. JOURNEY
-3. DESK
-4. LINK
-
-The second layer contains the existing utility screens, so functionality is preserved without exposing 15+ choices at once.
-
-This follows the same general information-architecture principle used by Pokémon GO and Pokémon Sleep: keep the primary activity surface focused, and move inventory/settings/secondary systems behind a menu rather than keeping them permanently visible.
-
-Simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
-
-
-## V7 — Gengar's Hideout / real-life gift audit
-
-- Confirmed preference: **Gengar overwhelmingly first**, then **Piplup, Togekiss, Lucario and Quagsire tied/close**; strong Sinnoh/Generation IV and cute-goods preference.
-- Main menu restyled into **팬텀의 비밀기지**. The four menu groups now use Lucario, Piplup, Togekiss and Quagsire illustrations.
-- Main Partner defaults to Gengar; HOME has a direct one-tap Focus action; secret Gengar menu interaction is demo-only.
-- Audit separates **working browser demo / portable C++ core / pending hardware integration** and reprioritizes an actually useful birthday-gift MVP.
-- Read [V7 full audit](docs/V7_FULL_AUDIT.md) for detailed daily-use, mechanical, Qi, phone BLE, accessibility and acceptance criteria.
-
-Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
-
-## V8 — iPhone 14 family, living Gengar and private gift
-
-- Live interactive UI: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
-- Gengar gently floats on HOME; tap the character for different reactions. Five taps reveal the couple nook.
-- The Gengar Poké Ball menu contains the low-key **우리 서랍** shortcut under Desk.
-- Anniversary date and a custom private love letter are editable without hardcoding identifiable information in public source.
-- Real local To-do editor (up to 5 tasks, completion/removal) and D-day title/date; contents persist in the same browser profile.
-- Clock refreshes automatically as minutes change. Simulated timer accounts for delayed background callbacks by elapsed real time.
-- iPhone 14 family: protected MagSafe puck design, exact model/case and physical thermal testing pending.
-- iOS notifications via ANCS are optional and **not implemented on-device**; mere Bluetooth connection is not equivalent to notification access.
-- See [V8 couple & pet spec](docs/COUPLE_AND_PET_V8.md) and [iPhone 14 hardware plan](docs/IPHONE_14_INTEGRATION_V8.md).
-
-Note: the browser uses localStorage, which is neither encrypted nor shared across devices. The hardware LVGL, persistence, charging and Bluetooth integrations are separate unfinished milestones.
-
-## V9 — playable character selection + OTA foundation (2026-10-18)
-
-Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
-
-**Pokémon-game-inspired interaction**, rather than only a floating static image:
-- On HOME or Trainer, tap **파트너 선택** to open a real 800×480 PARTY SELECT screen.
-- Animated Gen-V pixel sprite stage, original colored game-style dialogue, list selection cursor, entrance / confirmation and subtle sparkle effects.
-- Eight party members (Gengar, Piplup, Togekiss, Lucario, Quagsire, Togepi, Pachirisu, Jirachi). Each of the five main favorites has distinct motion and dialogue.
-- Touch, keyboard arrows/Enter/Esc, optional softly generated SFX (**off by default**).
-- Selected partner updates HOME and persists in this browser's localStorage; respects `prefers-reduced-motion`.
-- HOME companion shows mini animated pixel sprite and distinct personality motion while the main artwork remains visually readable.
-- Animated GIFs and artwork currently load from online PokeAPI sprite repositories. They need an offline asset port and usage-rights review before hardware delivery.
-- Portable future LVGL state/motion policy in `firmware/hmi/core/partner_motion.h` with a host test.
-
-**OTA answer:** LVGL source/UI can update later via ESP-IDF HTTPS firmware OTA, provided the initial board firmware config includes two suitable OTA slots, health-gated rollback and a recovery plan. Animation assets stored outside the app may be updated separately in future, but the safe asset swapper is not yet built. See [firmware/hmi/ota/README.md](firmware/hmi/ota/README.md) and [V9 UI/motion spec](docs/PARTY_ANIMATION_V9.md).
-
-**Not yet completed:** physical LVGL/HMI integration, OTA flashed-and-tested on the device, sprite asset packaging, runtime font fit/animation frame profiling.
+This is a personal, noncommercial fan gift, not an official Pokémon product. Pokémon character artwork and cries remain rights-holder content; web art references do not authorize repackaging or distributing a device asset bundle.
