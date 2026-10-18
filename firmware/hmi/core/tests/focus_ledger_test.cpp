@@ -8,7 +8,9 @@ public:
   bool has[2]={false,false};
   bool fail_write=false,partial_write=false;
   bool read(uint8_t n,std::array<uint8_t,48>& b) override {
-    if(!has[n])return false;b=raw[n];return true;
+    if(!has[n]) return false;
+    b = raw[n];
+    return true;
   }
   bool write_durable(uint8_t n,const std::array<uint8_t,48>& b) override {
     if(fail_write)return false;
