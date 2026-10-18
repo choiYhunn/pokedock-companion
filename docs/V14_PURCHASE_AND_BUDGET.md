@@ -15,6 +15,12 @@
 
 References checked 2026-10-19: [Waveshare 4.3C](https://www.waveshare.com/product/esp32-s3-touch-lcd-4.3c.htm); [SKU evidence](https://docs.waveshare.com/ESP32-S3-Touch-LCD-4.3C); [unrelated **case-less** Eleparts listing — DO NOT ORDER](https://eleparts.co.kr/goods/view?no=18220907); [Apple original MagSafe](https://www.apple.com/kr/shop/product/mgd74kh/a); [Samsung official EP-T2510](https://www.samsung.com/sec/mobile-accessories/25-w-pd-charger-power-saving-type/EP-T2510NBKGKR/); [Korean online price comparison](https://prod.danawa.com/info/?pcode=28885547). **No confirmed domestic ready-stock listing for exactly 33630 was found**; contact seller showing photographed part number before payment. A listed domestic '4.3B', '4.3' or '4.3C without case' is NOT interchangeable.
 
+## Alternative fully finished Qi2 puck (do not double-buy)
+
+**Anker Zolo A25M2 Qi2 15W flat pad** has public seller listing **₩22,900** from Anker/price comparison and **60 × 60 × 10.5 mm / 70g** dimensional specification (manufacturer/model records). Sources: [Anker Korea](https://www.ankerkorea.co.kr/category/view/92/), [Danawa A25M2](https://prod.danawa.com/info/?pcode=104223722). This is a legitimate product *alternative*, not a second item to buy alongside Apple A3502. It can reduce puck-only expense by ~₩42,100 but the listed **10.5mm thickness** and actual captive cable exit may make our shallow 70° holder deeper. iPhone 14 Pro/case charging output, magnetic pull, thermal and holder retention **still require direct verification**. Do not select on price alone or assume the Apple puck dimensions from outdated 57×6 mm CAD placeholders. A25M2 is a separate puck design variant with its own bracket measurements; no guessed interchangeability.
+
+**Default gift option:** certified Apple A3502, because published iPhone 14 Pro compatibility is straightforward and 1m cable is integrated, **unless measured Anker pad demonstrably wins the depth/heat/cost comparison**. For a budget-constrained build, choose passive A over fabricating a poorly ventilated charger enclosure.
+
 ## Phase-dependent expected outlay (KRW)
 Computed from the 17-row CSV planning inputs (12 basic items + 3 B add-ons + 2 deferred/excluded), assume all tools reusable and no returned/failed manufacturing. All figures are **scenario estimates** not vendor quotations:
 - Basic A (screen+DC+RTC+SD+USB+mock+soft pads+feet+structure+fasteners+clips): **~₩129,000–243,500**.
