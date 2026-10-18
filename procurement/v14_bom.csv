@@ -1,0 +1,18 @@
+id,phase,item,spec,qty,unit_min_krw,unit_max_krw,required_for,decision,source_type,source_url,verification_gate,note
+HMI01,P1,Waveshare LCD,ESP32-S3-Touch-LCD-4.3C-BOX SKU 33630,1,80000,110000,A+B,BUY,estimate_USD_and_shipping,https://www.waveshare.com/product/esp32-s3-touch-lcd-4.3c.htm,Confirm exact CASED 33630 at checkout,USD 39.99-45.99 family; converted/landed cost only planning estimate
+PWR01,P1,Regulated DC adapter,KC approved insulated 12V 2A candidate,1,8800,15000,A+B,CONDITIONAL,retail_candidate,https://www.eduino.kr/,Verify actual terminal polarity and regulated supply rating,Barrel plug alone does not mate screw terminal; no AC wiring
+PWR02,P1,Insulated DC pigtail,Stranded insulated DC cable with ferrules to matching screw terminal,1,2000,6000,A+B,DEFER_UNTIL_TERMINAL,estimate,https://docs.waveshare.com/ESP32-S3-Touch-LCD-4.3C,Physical terminal pitch access rating/polarity,Avoid loose bare strands
+RTC01,P1,RTC coin cell,CR927 3V,1,1200,5500,A+B,CHECK_INCLUDED,retail,https://www.devicemart.co.kr/,Holder type and polarity,Use proper CR chemistry; not SR927SW
+STO01,P1,microSD,Brand genuine 32GB FAT32-tested microSD,1,10000,20000,A+B,REUSE_OR_BUY,budget,https://docs.waveshare.com/ESP32-S3-Touch-LCD-4.3C,Vendor SDMMC example mount/read/unmount 10x,16-32 GB avoids default exFAT
+USB01,P1,USB-C data cable,USB2.0 data-capable for programming,1,0,7000,A+B,REUSE_FIRST,budget,https://docs.waveshare.com/ESP32-S3-Touch-LCD-4.3C,PC enumerates and logs,Not charge-only
+MOCK01,P0,Foamboard mock kit,cardboard foamboard tape clamp 65/70/75 jig,1,3000,8000,A+B,BUY_SMALL,budget,,Phone case actual fit before any print,Paper calibration must be 100mm
+PAD01,P3,Protective contact pads,silicone/TPU replaceable small strips,1,3000,8000,A+B,AFTER_MEASURE,estimate,,Camera clearance and contact pressure,No glue to phone or MagSafe face
+FOOT01,P3,Rubber feet,4 high friction non-marking feet,4,500,1250,A+B,AFTER_MOCK,estimate,,Touch/docking stability test,4 pieces priced individually
+FAB01,P3,Structure prototype,PETG small adapter rails OR acrylic/PC processed plate,1,15000,45000,A+B,DEFER_QUOTE,fabrication_budget,,OEM holes and phone/puck size required,No full-shell premature purchase
+FAST01,P3,Screws inserts spacers,Serviceable fasteners TBD thread and engagement,1,2000,8000,A+B,AFTER_OEM_HOLES,estimate,,Measure mount count hole thread and safe depth,No guessed M4 bolt length
+CAB01,P3,Cable clips strain relief,Two low voltage exits clips sleeve,1,2000,6000,A+B,AFTER_FIT,estimate,,Never pinch charger cable,No electrical splicing
+CHG01,P2,Apple MagSafe charger,A3502 MGD74KH/A 1m,1,65000,65000,B only,OPTIONAL_LATE,official_KR,https://www.apple.com/kr/shop/product/mgd74kh/a,Real iPhone 14 Pro case and angle charge 60min,Original puck fully sealed
+PD01,P2,USB-C PD adapter,Samsung EP-T2510 25W cable-less example,1,15030,25300,B only,REUSE_OR_BUY,retail_and_official,https://www.samsung.com/sec/mobile-accessories/25-w-pd-charger-power-saving-type/EP-T2510NBKGKR/,Puck requires >=20W compatible PD 9V profile,Adapter separate from DC HMI
+HOLD01,P3,MagSafe open holder,Two-piece removable adjustable ring/clip actual puck-fit,1,4000,15000,B only,AFTER_PUCK_MEASURE,fabrication_budget,,Puck housing and cable bend measured,Should be omitted if charge not used
+AUD01,P4,Optional speaker,Factory compatible MX1.25 2p verified rated speaker,1,0,10000,Optional,DEFER,budget,https://docs.waveshare.com/ESP32-S3-Touch-LCD-4.3C,Check included speaker physical plug and impedance,Never tie speaker directly to GPIO
+C301,P4,Optional node sensors LED,ESP32-C3 PN532 lux ToF RGB parts,0,0,0,Neither MVP,NO_BUY,excluded,,MVP passes all gates,Deliberately excluded
