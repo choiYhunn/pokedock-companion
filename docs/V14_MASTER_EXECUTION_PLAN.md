@@ -33,7 +33,7 @@
 - V10 simulator: browser UI and Node smoke tests **implemented**.
 - C++ portable StudyEngine and milestone policies: **sources/tests exist**; hardware persistence **not yet bound**.
 - V14 geometry: parameterized sample **not production-ready**; phone case, C-BOX mount and puck unmeasured.
-- 4.3C vendor demos, LVGL, NVS, audio, OTA: actual **hardware build/flash not done**.
+- 4.3C vendor demos, native LVGL opt-in **source prototype created**, NVS backend, audio, OTA: **hardware flash, LCD touch operation and persistence not verified**. ESP-IDF 5.5 M0 cross-compile passed [run 39143977602](https://github.com/choiYhunn/pokedock-companion/actions/runs/39143977602) but defaulted to 2MB flash; 16MB board-config rebuild is a separate gate.
 - Don't mark any gate PASS based on a document, no-op CMake or static picture.
 
 ## Decisions without unnecessary iteration
