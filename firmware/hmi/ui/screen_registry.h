@@ -28,5 +28,6 @@ static constexpr ScreenDescriptor kScreenRegistry[] = {
   {ScreenId::LIGHT,     "LIGHT",     false, false, true},
   {ScreenId::SETTINGS,  "SETTINGS",  false, false, false},
   {ScreenId::BIRTHDAY,  "BIRTHDAY",  false, true,  false},
-  {ScreenId::NIGHT,     "NIGHT",     false, true,  true}
+  {ScreenId::NIGHT,     "NIGHT",     false, true,  true},
+  {ScreenId::OUR_SPACE,"OUR_SPACE", false, false, false}
 };
