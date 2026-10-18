@@ -1,0 +1,10 @@
+menu "PokéDock development features"
+config POKEDOCK_HMI_START
+    bool "Start EXPERIMENTAL BSP-backed LVGL demo (unverified physical panel)"
+    default n
+    help
+      Off: console-only M0; safe initial firmware skeleton.
+      On: initialize Waveshare managed BSP and LVGL and show a basic
+      HOME/FOCUS/COUNTDOWN demo. Factory flashing/recovery must be ready;
+      this is NOT the final gift UI and no Focus credit is stored to NVS.
+endmenu
