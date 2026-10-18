@@ -1,0 +1,21 @@
+const assert=require("node:assert/strict");
+const fs=require("node:fs");
+const path=require("node:path");
+const root=path.resolve(__dirname,"..");
+const read=(p)=>fs.readFileSync(path.join(root,p),"utf8");
+const bom=read("procurement/v14_bom.csv").trim().split(/\r?\n/);
+assert.equal(bom.length,18); // header + 17 slots, including deliberate excluded items
+assert.match(bom[1],/33630/);
+assert.match(bom.join("\n"),/MagSafe charger/);
+assert.match(read("README.md"),/V14 confirmed/);
+assert.match(read("docs/V14_MASTER_EXECUTION_PLAN.md"),/source-complete/);
+assert.match(read("docs/V14_TEST_PROTOCOL.md"),/BLOCKED/);
+const design=read("design.html");
+assert.match(design,/V14_MAGSAFE_READY_DESIGN\.md/);
+assert.doesNotMatch(design,/V14_INDUSTRIAL_DESIGN\.md/);
+assert.match(read("firmware/hmi/espidf/main/app_main.cpp"),/M0 skeleton only/);
+assert.match(read("firmware/hmi/core/focus_ledger.h"),/write_durable/);
+const scad=read("cad/pokedock_v14_magsafe_ready.scad");
+assert.match(scad,/SHOW_MOUNT_MARKERS = false/);
+assert.match(scad,/SHOW_PUCK = false/);
+console.log("V14 source tree/BOM/links/status contract PASS");
