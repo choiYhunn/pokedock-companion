@@ -36,5 +36,7 @@ int main() {
   assert(!commit_verified_focus(p,76,45,20261022).accepted);
   assert(!commit_verified_focus(p,77,45,0).accepted);
   assert(!commit_verified_focus(p,77,45,20999999).accepted);
+  assert(!commit_verified_focus(p,77,45,20260230).accepted);
+  assert(!commit_verified_focus(p,77,45,20261021).accepted);
   std::cout << "V11 deterministic Focus progression PASS\n";
 }

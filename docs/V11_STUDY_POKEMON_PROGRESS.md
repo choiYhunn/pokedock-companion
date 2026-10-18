@@ -36,7 +36,7 @@ Session-completion-based rewards overvalue repeated 15min starts and discourage 
 ## Engineering contract
 Portable future firmware policy: \`firmware/hmi/core/study_bond_policy.h\` and \`firmware/hmi/core/tests/study_bond_policy_test.cpp\`.
 - Input must come from a verified completed Focus timer only, not arbitrary UI "Demo Clear" callbacks.
-- Inputs: monotonically increasing durable session ID, chosen completed duration in {15,25,45}, local calendar key YYYYMMDD from a confirmed RTC/time-sync state.
+- Inputs: monotonically increasing durable session ID, chosen completed duration in {15,25,45}, validated nondecreasing calendar key YYYYMMDD (month/day/leap-year check) from a confirmed RTC/time-sync state.
 - Output: accepted, minutes credited, stars crossed, milestone bitmask, bond feedback.
 - Ensure NVS journal records the completion atomically before displaying unlock animation. If power loss happens during commit, recover/reconcile ID; no duplicate awarding.
 - Future versions may allow custom durations, but then threshold credit based on verified time and validation must be explicit.
@@ -54,3 +54,12 @@ Portable future firmware policy: \`firmware/hmi/core/study_bond_policy.h\` and \
 
 ## Current release reality
 **This V11 policy is compiled as portable C++ and documented, but not connected to the V10 browser simulator or flashed native LVGL hardware yet.** No claim that EXP thresholds are currently active in the device. User requested careful later development; freeze clear rules first.
+
+## Test from repo root
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Werror firmware/hmi/core/tests/study_bond_policy_test.cpp -o /tmp/pokedock_study_policy_test
+/tmp/pokedock_study_policy_test
+```
+
+This is a host-side portable rule test, not a flashed MCU validation. RTC invalid/rollback dates reject date-dependent credit until the device time is reconciled; the study timer itself must still work independently.

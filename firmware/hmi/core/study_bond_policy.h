@@ -33,6 +33,15 @@ struct StudyBondResult {
 // Commit only after a completed Focus timer, never from a generic timer,
 // a pause, a session reset, or the 5-min rest phase.
 // Presets are fixed to 15/25/45min to prevent accidental custom over-awards.
+inline bool verified_local_day_key(uint32_t k) {
+  const uint32_t year=k/10000u;
+  const uint32_t month=(k/100u)%100u;
+  const uint32_t day=k%100u;
+  if(year<2020u||year>2099u||month<1u||month>12u||day<1u)return false;
+  const bool leap=(year%4u==0u && (year%100u!=0u||year%400u==0u));
+  const uint8_t days[]={31,static_cast<uint8_t>(leap?29:28),31,30,31,30,31,31,30,31,30,31};
+  return day<=days[month-1u];
+}
 inline StudyBondResult commit_verified_focus(StudyBondProgress& p, uint64_t id,
                                              uint16_t duration_minutes,
                                              uint32_t local_day_key) {
@@ -41,7 +50,9 @@ inline StudyBondResult commit_verified_focus(StudyBondProgress& p, uint64_t id,
   if (duration_minutes != 15 && duration_minutes != 25 && duration_minutes != 45) return out;
   // Reject absent/not-yet-synchronized dates for time-bound daily bond.
   // Focus itself may still run offline, but date-dependent rewards need trust.
-  if (local_day_key < 20200101u || local_day_key > 20991231u) return out;
+  if (!verified_local_day_key(local_day_key)) return out;
+  if (p.last_day_key != 0u && local_day_key < p.last_day_key) return out;
+  if (p.total_focus_sessions == UINT32_MAX) return out;
   if (p.credited_minutes > UINT32_MAX - duration_minutes) return out;
   const uint32_t prev = p.credited_minutes;
   const uint32_t next = prev + duration_minutes;
