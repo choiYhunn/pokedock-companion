@@ -23,6 +23,19 @@ The V14 front remains a quiet Gengar/clock HMI with a rear **70° landscape** iP
 
 **Mechanical source:** manufacturer's official [4.3C hardware/dimensions](https://github.com/waveshareteam/ESP32-S3-Touch-LCD-4.3C/tree/main/hardware/dimensions) includes DXF/PDF/STEP. C-BOX mounting pitch noted as 75mm; bolt size/depth not yet established.
 
+
+## V14 production package (2026-10-19; physical verification pending)
+
+**Current one-entry execution plan:** [V14 master WBS](docs/V14_MASTER_EXECUTION_PLAN.md). Follow this plan, not old version-specific shopping tables. The current purchase and test source of truth:
+
+- [Source-linked phased BOM and budget](docs/V14_PURCHASE_AND_BUDGET.md) · [machine-readable BOM CSV](procurement/v14_bom.csv)
+- [DFM physical measurement / structure](docs/V14_MANUFACTURING_INTERFACE.md) · [OpenSCAD 1:1 dry-fit angle templates](cad/pokedock_v14_dryfit_templates.scad)
+- [Power and wiring](docs/V14_ELECTRICAL_INTERFACE.md) · [Native IDF/LVGL roadmap](docs/V14_FIRMWARE_ROADMAP.md)
+- [Day-by-day hands-on build instructions](docs/V14_HANDS_ON_BUILD_INSTRUCTIONS.md) · [Verified host + ESP-IDF build report](docs/V14_VALIDATION_REPORT_20261019.md) · [Testing/evidence matrix](docs/V14_TEST_PROTOCOL.md) · [host regression command](scripts/test_host.sh)
+- [Portable fault-injection ledger](firmware/hmi/core/focus_ledger.h) · [officially unverified ESP-IDF M0 scaffold](firmware/hmi/espidf/README.md)
+
+Opt-in C++ LVGL9 HOME/FOCUS/BREAK preview has been added for a **compile-only** experiment; native MCU screen/RTC/NVS and charging have **not been shown to work on real hardware**. Host Node/C++/OpenSCAD PASS is not the same as ESP-IDF compile/flash or finished product fit. The 33630 cased display, actual case/charger measurements, DC polarity and fastener engagement remain production release blockers.
+
 ## Archive: earlier V11 and implementation references
 
 1. **[V11 master execution index](docs/V11_EXECUTION_INDEX.md)** — single handoff and stage gates.

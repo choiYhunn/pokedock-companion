@@ -17,10 +17,21 @@ void StudyEngine::startCommon(RunMode mode, uint32_t duration_s, uint64_t now_ms
 }
 
 void StudyEngine::startFocus(uint32_t duration_s, uint64_t now_ms) {
+  // Match the verified-study reward contract. Zero/unknown durations must
+  // never create a completion event or phantom Focus session credit.
+  if (duration_s != 15u * 60u && duration_s != 25u * 60u &&
+      duration_s != 45u * 60u) {
+    startCommon(RunMode::IDLE, 0, now_ms);
+    return;
+  }
   startCommon(RunMode::FOCUS, duration_s, now_ms);
 }
 
 void StudyEngine::startCountdown(uint32_t duration_s, uint64_t now_ms) {
+  if (duration_s == 0) {
+    startCommon(RunMode::IDLE, 0, now_ms);
+    return;
+  }
   startCommon(RunMode::COUNTDOWN, duration_s, now_ms);
 }
 
@@ -37,13 +48,16 @@ uint32_t StudyEngine::currentElapsed(uint64_t now_ms) const {
 
 void StudyEngine::pause(uint64_t now_ms) {
   if (snap_.mode == RunMode::IDLE || snap_.paused) return;
-  snap_.elapsed_s = currentElapsed(now_ms);
+  freeze(now_ms);  // Keep remaining_s consistent when paused between ticks.
   snap_.paused = true;
   paused_at_ms_ = now_ms;
 }
 
 void StudyEngine::resume(uint64_t now_ms) {
   if (snap_.mode == RunMode::IDLE || !snap_.paused) return;
+  // Host monotonic clock should never go backward; reject bad input rather
+  // than unsigned-underflowing pause duration and corrupting Focus credit.
+  if (now_ms < paused_at_ms_) return;
   accumulated_pause_ms_ += now_ms - paused_at_ms_;
   snap_.paused = false;
   paused_at_ms_ = 0;

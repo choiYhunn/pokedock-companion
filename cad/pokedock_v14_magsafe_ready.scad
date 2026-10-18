@@ -81,7 +81,8 @@ echo("V14 front-view height margin mm (+ may hide horizontally):",HIDE_HEIGHT_MA
 echo("Phone 14 Pro case MAGSAFE yes, brand/thickness/coil center TBD.");
 echo("Charging puck is OPTIONAL removable; do not assume charging performance.");
 echo("NOT accounting for seated downward sightline, camera bump, cable, mount tolerances.");
-assert(POSE=="landscape", "V14 manufacturing baseline is landscape only; use V12 for portrait study");\nassert(PHONE_ANGLE>5 && PHONE_ANGLE<80);
+assert(POSE=="landscape", "V14 manufacturing baseline is landscape only; use V12 for portrait study");
+assert(PHONE_ANGLE>5 && PHONE_ANGLE<80);
 assert(SCREEN_ANGLE>=60 && SCREEN_ANGLE<=88);
 assert(BASE_W>SCREEN_W);
 assert(MAGSAFE_DIAMETER<PHONE_XSPAN);
