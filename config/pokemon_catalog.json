@@ -1,10 +1,10 @@
 {
-  "version": 4,
+  "version": 7,
   "favorites": [
     {
-      "name": "gengar",
       "id": 94,
-      "role": "night",
+      "name": "gengar",
+      "role": "main_partner/night",
       "types": [
         "ghost",
         "poison"
@@ -14,43 +14,20 @@
       "nfc": true
     },
     {
-      "name": "togepi",
-      "id": 175,
-      "role": "morning",
+      "id": 393,
+      "name": "piplup",
+      "role": "break/menu_journey",
       "types": [
-        "fairy"
+        "water"
       ],
-      "accent": "#F2C0A7",
-      "quote": "오늘의 첫 퀘스트부터 가볍게!",
+      "accent": "#91BEDF",
+      "quote": "팽도리가 쉬는 시간을 기다리고 있어!",
       "nfc": true
     },
     {
-      "name": "pachirisu",
-      "id": 417,
-      "role": "charging",
-      "types": [
-        "electric"
-      ],
-      "accent": "#7CBCE6",
-      "quote": "전기 모으는 중! 폰은 잠깐 잊자.",
-      "nfc": true
-    },
-    {
-      "name": "lucario",
-      "id": 448,
-      "role": "focus",
-      "types": [
-        "fighting",
-        "steel"
-      ],
-      "accent": "#53759A",
-      "quote": "마음을 가다듬고 한 세션만.",
-      "nfc": true
-    },
-    {
-      "name": "togekiss",
       "id": 468,
-      "role": "calm",
+      "name": "togekiss",
+      "role": "calm/menu_desk",
       "types": [
         "fairy",
         "flying"
@@ -60,15 +37,27 @@
       "nfc": true
     },
     {
-      "name": "jirachi",
-      "id": 385,
-      "role": "birthday",
+      "id": 448,
+      "name": "lucario",
+      "role": "focus/menu_train",
       "types": [
-        "steel",
-        "psychic"
+        "fighting",
+        "steel"
       ],
-      "accent": "#E4C65E",
-      "quote": "한 번 더 해내면 소원에 가까워져.",
+      "accent": "#53759A",
+      "quote": "마음을 가다듬고 한 세션만.",
+      "nfc": true
+    },
+    {
+      "id": 195,
+      "name": "quagsire",
+      "role": "rest/menu_link",
+      "types": [
+        "water",
+        "ground"
+      ],
+      "accent": "#9CCAD4",
+      "quote": "누오처럼 잠깐 멍때려도 괜찮아.",
       "nfc": true
     }
   ],
@@ -219,6 +208,86 @@
       "NIGHT",
       "DEX",
       "WISH"
+    ]
+  },
+  "preference_profile": {
+    "primary": {
+      "id": 94,
+      "name": "gengar",
+      "priority": "overwhelming favorite"
+    },
+    "secondary_tied": [
+      {
+        "id": 393,
+        "name": "piplup"
+      },
+      {
+        "id": 468,
+        "name": "togekiss"
+      },
+      {
+        "id": 448,
+        "name": "lucario"
+      },
+      {
+        "id": 195,
+        "name": "quagsire"
+      }
+    ],
+    "other_preferences": [
+      "Generation IV / Sinnoh",
+      "cute physical goods and stationery",
+      "small unexpected easter eggs"
+    ],
+    "last_confirmed": "2026-10-18"
+  },
+  "supporting": [
+    {
+      "id": 175,
+      "name": "togepi",
+      "role": "morning",
+      "types": [
+        "fairy"
+      ],
+      "accent": "#F2C0A7",
+      "quote": "좋은 아침!",
+      "nfc": true
+    },
+    {
+      "id": 417,
+      "name": "pachirisu",
+      "role": "charge",
+      "types": [
+        "electric"
+      ],
+      "accent": "#7CBCE6",
+      "quote": "전기 모으는 중!",
+      "nfc": true
+    },
+    {
+      "id": 385,
+      "name": "jirachi",
+      "role": "birthday_easter_egg",
+      "types": [
+        "steel",
+        "psychic"
+      ],
+      "accent": "#E4C65E",
+      "quote": "오늘은 특별한 날이야.",
+      "nfc": true
+    }
+  ],
+  "defaults": {
+    "partner_id": 94,
+    "menu_style": "gengar_hideout",
+    "nav": [
+      "HOME",
+      "POKEBALL_MENU",
+      "DEX"
+    ],
+    "screen_resolution": [
+      800,
+      480
     ]
   }
 }
