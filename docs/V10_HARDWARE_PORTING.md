@@ -1,7 +1,7 @@
 # PokéDock V10 — ESP-IDF / LVGL / Hardware port checklist
 
 ## Current status — important
-GitHub Pages V10 is a functional **browser simulation**, NOT a flashable ESP-IDF application. The repo has portable C++ engines, UI screen IDs, and a pinned board BSP component manifest, but not a fully integrated project root CMakeLists and tested main application. No hardware has been flashed in this chat.
+GitHub Pages V10 is a functional **browser simulation**, NOT a flashable ESP-IDF application. The repo has portable C++ engines, UI screen IDs, a BSP dependency manifest, and now a **console-only ESP-IDF M0 scaffold** at [firmware/hmi/espidf](../firmware/hmi/espidf/README.md). This scaffold has **not been compiled or flashed**, and no native LVGL HOME/Focus screen exists. The old `firmware/hmi/main/idf_component.yml` was never a standalone buildable app. No hardware has been flashed in this chat.
 
 ### Official references
 - Board & pin map: https://docs.waveshare.com/ESP32-S3-Touch-LCD-4.3C
