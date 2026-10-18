@@ -1,12 +1,24 @@
 # PokéDock Companion
 
-**Latest engineering baseline (2026-10-18): V10 interactive UI + V11 measured-fit / assembly design.**
+**Latest industrial/mechanical baseline (2026-10-18): V12 QUIET DESK.** Product/UI web prototype remains V10; real board and charger have **not** been validated.
 
-A practical 4.3-inch Pokémon-inspired desk companion for a personal non-commercial gift. A Gengar HOME clock and 15/25/45-minute Focus are the everyday product; the Poké Ball opens Pokémon play. Rear iPhone MagSafe docking and cute private notes are supporting features.
+**[Open V12 live design calculator](https://choiyhunn.github.io/pokedock-companion/design.html)** · **[Interact with V10 device UI](https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10)**
 
-**[Open interactive 800×480 simulator — V10](https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10)** · [GitHub Pages landing](https://choiyhunn.github.io/pokedock-companion/?v=10)
+The product is intentionally a clean front-facing Gengar/clock picture-frame with **a separate rear MagSafe phone support**, no front phone tray and no bulky integrated NFC platform. A/B mechanical decision is now explicit: **A horizontal/landscape phone for desk-space efficiency**, vs **B portrait low-angle phone for better concealed front**; choose after physically testing exact iPhone model/case/puck and 4.3C-BOX mounting case.
 
-## Start here: engineering documents
+### V12 physical source of truth
+1. [Industrial design form/space comparison](docs/V12_INDUSTRIAL_DESIGN.md), including reference envelope ~169×118mm A vs ~148×187mm B using **unverified sample case/case allowance dimensions**.
+2. [Interactive dimensional review lab](design.html) — user can adjust iPhone 14 variant, case allowance, screen housing dimensions, angle.
+3. [V12 configurable OpenSCAD mock](cad/pokedock_v12_quiet_desk.scad) — layout choices and dimensions; **not print-ready/structurally validated**.
+4. [Actual measurement register](docs/V12_MEASUREMENT_REGISTER.md) — required OEM rear mount/bolt/puck/camera/cable inputs.
+5. [Fabrication & industrial finishing plan](docs/V12_FABRICATION_PLAN.md) — modular OEM screen bracket, removable phone rails, separate base and hidden cable runs.
+6. [Phase A/B procurement](docs/V12_PROCUREMENT.md) — exact screen SKU, separate certified screen and MagSafe supplies, deferred C3/NFC/LED.
+7. [Day-of-assembly SOP](docs/V11_ASSEMBLY_SOP.md) and [electrical isolation](docs/V11_ELECTRICAL_WIRING.md), plus [ESP-IDF/LVGL bring-up](docs/V10_HARDWARE_PORTING.md).
+8. [Cumulative study-to-Pokémon core policy](docs/V11_STUDY_POKEMON_PROGRESS.md).
+
+**Mechanical source:** manufacturer's official [4.3C hardware/dimensions](https://github.com/waveshareteam/ESP32-S3-Touch-LCD-4.3C/tree/main/hardware/dimensions) includes DXF/PDF/STEP. C-BOX mounting pitch noted as 75mm; bolt size/depth not yet established.
+
+## Archive: earlier V11 and implementation references
 
 1. **[V11 master execution index](docs/V11_EXECUTION_INDEX.md)** — single handoff and stage gates.
 2. **[V11 mechanical calculations + measurement worksheet](docs/V11_MECHANICAL_DESIGN.md)** — corrected rear phone geometry and fit options.
@@ -18,7 +30,7 @@ A practical 4.3-inch Pokémon-inspired desk companion for a personal non-commerc
 8. **[V10 test and readiness gates](docs/V10_TEST_ACCEPTANCE.md)**.
 9. **[Proposed HTTPS OTA / dual-app slots](firmware/hmi/ota/README.md)** — design only, not deployed.
 
-CAD:
+Older CAD archive:
 - [V11 parameterized fit mock](cad/pokedock_v11_fit_mock.scad) — **unmeasured samples; DO NOT PRINT AS PRODUCTION ENCLOSURE**.
 - [Old V4 sketch](cad/pokedock_v4_compact.scad) — historical conceptual sketch with incompatible assumptions, superseded for fit.
 - [Official Waveshare 4.3C 2D DXF and 3D STEP reference](https://github.com/waveshareteam/ESP32-S3-Touch-LCD-4.3C/tree/main/hardware/dimensions) — manufacturer PCB/display model; plastic **C-BOX** case must still be physically verified.

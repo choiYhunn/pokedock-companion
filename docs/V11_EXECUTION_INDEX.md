@@ -1,4 +1,16 @@
-# PokéDock V11 — Master fabrication handoff
+# PokéDock V12 — Master fabrication handoff (previous V11 stages preserved)
+
+## V12 design-first reading order (current)
+
+1. [V12 space/form decision and orientation comparison](V12_INDUSTRIAL_DESIGN.md)
+2. [V12 model/phone/charger measurement register](V12_MEASUREMENT_REGISTER.md)
+3. [V12 fabrication component architecture and assembly details](V12_FABRICATION_PLAN.md)
+4. [V12 phased purchasing and item criteria](V12_PROCUREMENT.md)
+5. [V12 interactive design calculator](../design.html) / [V12 concept CAD](../cad/pokedock_v12_quiet_desk.scad)
+6. [V11 step-by-step safe bring-up](V11_ASSEMBLY_SOP.md), [power separation](V11_ELECTRICAL_WIRING.md) and [ESP-IDF/LVGL port](V10_HARDWARE_PORTING.md)
+7. [Progression policy](V11_STUDY_POKEMON_PROGRESS.md), [test acceptance](V10_TEST_ACCEPTANCE.md)
+
+**Decision:** A = landscape phone behind screen when space/one-hand MagSafe pass; B = portrait low-angle phone when concealment quality wins. Both retain slim front screen and no front phone tray. The final choice cannot be made without actual phone/case and screen dimensions. Source model values are *samples*.
 
 This index is the **single reading order** for building an actually usable gift, not a promise that the Waveshare MCU product is already completed.
 
@@ -25,7 +37,7 @@ Waveshare publishes **2D DXF / 3D STEP** for ESP32-S3-Touch-LCD-4.3C in [hardwar
 7. [V10 acceptance tests](V10_TEST_ACCEPTANCE.md) — web mock tests already checked vs device/power tests still pending.
 8. [Future OTA](../firmware/hmi/ota/README.md) — dual slots and rollback **proposal**, not running on device.
 
-Parametric design fixture: [V11 OpenSCAD reference mock](../cad/pokedock_v11_fit_mock.scad) — sample dimensions only, not final print STL.
+Historic parametric fixture (superseded): [V11 OpenSCAD reference mock](../cad/pokedock_v11_fit_mock.scad) — sample dimensions only, not final print STL.
 Current web prototype: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
 
 ## Decision gates and next action
