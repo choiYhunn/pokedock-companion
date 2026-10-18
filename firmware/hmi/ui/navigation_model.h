@@ -30,7 +30,8 @@ static constexpr MenuEntry kJourneyMenu[] = {
 static constexpr MenuEntry kDeskMenu[] = {
   {ScreenId::WEATHER, "Weather"},
   {ScreenId::ALARM, "Alarm"},
-  {ScreenId::LIGHT, "Light"}
+  {ScreenId::LIGHT, "Light"},
+  {ScreenId::OUR_SPACE, "Our Private Nook"}
 };
 
 static constexpr MenuEntry kLinkMenu[] = {
