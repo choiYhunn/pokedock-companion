@@ -33,7 +33,7 @@ app_main:
 ## Screen-by-screen, measurable milestones
 | Stage | Real HW output | Design and test contract |
 | --- | --- | --- |
-| L0 | Vendor LVGL canvas | 800×480 native panel and responsive touch, four corners ×5 |
+| L0 | BSP-backed LVGL prototype (source created) | An opt-in English HOME/FOCUS/BREAK screen exists for compilation. **Display & touch response on actual 33630 not yet verified**; test four corners ×5 |
 | L1 | HOME | offline-safe clock/date, Gengar fallback static, big Focus action, brightness and Settings |
 | L2 | FOCUS | 15/25/45 active timer, pause/resume monotonic, 5min separate rest, Back while running, only one complete event |
 | L3 | TIMER | ordinary 3/5/10/30min; none of it increases study totals; distinct alarm policy |
