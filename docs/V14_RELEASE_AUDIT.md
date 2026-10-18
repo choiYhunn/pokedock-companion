@@ -130,4 +130,4 @@
 - **CONDITIONAL**: 완제품 MagSafe/PD 어댑터 구매 — 기보유 여부 및 스마트폰 실제 테스트 후.
 - **NO-GO**: 현재 SCAD 그대로 STL 출고, 75×75mm 홀 가공, 스피커/센서/NFC/LED 선구매, MagSafe로 MCU 직접 공급, 기존 V10 HTML MCU에 업로드, OTA 기능 배송.
 
-참조: [V14 design](V14_MAGSAFE_READY_DESIGN.md) · [BOM](V14_PURCHASING_BOM.md) · [SOP](V14_ASSEMBLY_SOP.md) · [measurement register](V12_MEASUREMENT_REGISTER.md) · [vendor 4.3C documentation](https://docs.waveshare.com/ESP32-S3-Touch-LCD-4.3C) · [Apple MagSafe 1m](https://www.apple.com/kr/shop/product/mgd74kh/a).
+참조: [V14 design](V14_MAGSAFE_READY_DESIGN.md) · [BOM](V14_PURCHASING_BOM.md) · [SOP](V14_ASSEMBLY_SOP.md) · [V14 verified electrical map](V14_ELECTRICAL_INTERFACE.md) · [measurement register](V12_MEASUREMENT_REGISTER.md) · [vendor 4.3C documentation](https://docs.waveshare.com/ESP32-S3-Touch-LCD-4.3C) · [Apple MagSafe 1m](https://www.apple.com/kr/shop/product/mgd74kh/a).
