@@ -4,6 +4,7 @@ on:
     branches: [engineering/v14-production-plan-20261019]
     paths:
       - '.github/workflows/v14_host_validation.yml'
+      - 'firmware/hmi/core/tests/focus_ledger_test.cpp' # one final rerun when fix lands
   workflow_dispatch: {}
 permissions:
   contents: read
