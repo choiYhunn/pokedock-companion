@@ -1,5 +1,24 @@
 # PokéDock Companion
 
+## Current V10 — utility-first product and staged hardware (2026-10-18)
+
+**[Direct 800×480 V10 simulator](https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10)**
+
+PokéDock is now organized around two everyday actions rather than 15 equal menu choices:
+- HOME: clock, Gengar, D-day and todo status, one tap to start Focus.
+- 집중: 15/25/45-minute focus followed by a 5-minute reward-free break, clearly distinct from plain countdown.
+- Poké Ball: **매일 쓰는 도구** (tasks, D-day, plain timer, alarm, couple nook) or **포켓몬 놀이** (partner, Dex, egg, trainer), with extra settings hidden under a third compact row.
+- Explicit **← 뒤로** preserves menu depth; **도감에 기록 / 나중에** on reward is now a real state transition. Browser progress is stored in the local browser profile. Some settings/phone/weather views are demos.
+
+**Build status:** No 4.3C-BOX has been verified/flashed by this repo yet. Not a working physical unit. UI GIF/CSS does not run as LVGL on the MCU without porting. OTA is a proposal, not installed.
+
+**Build and purchase guides:**
+1. [V10 product/UX freeze](docs/V10_PRODUCT_FREEZE.md)
+2. [Staged purchase BOM](docs/V10_BOM_AND_PURCHASE.md) — Waveshare exact SKU **33630**, supply compatibility, iPhone MagSafe, phase B sensors held.
+3. [ESP-IDF / LVGL bring-up steps](docs/V10_HARDWARE_PORTING.md) — first validate manufacturer's factory 4.3C example and board power, then minimum HOME/Focus native port, then animation, OTA, Dock.
+4. [Bench/UI acceptance gates](docs/V10_TEST_ACCEPTANCE.md).
+
+
 A compact Pokémon-themed **study / desk companion** built around a 4.3-inch ESP32-S3 touch HMI.
 
 ## Live UI Lab
@@ -120,7 +139,7 @@ Study is connected to progression:
 - Light themes and contextual UI follow Pokémon roles rather than arbitrary RGB presets.
 
 Stable simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
 
 
 ## Fan-system V4
@@ -157,7 +176,7 @@ The study loop is:
 `Quest -> Focus training -> EXP/Bond/Egg -> Encounter -> Dex/Badge -> Partner Center`.
 
 Stable interactive simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
 
 
 ## UI V6 — simplified hierarchy
@@ -186,7 +205,7 @@ The second layer contains the existing utility screens, so functionality is pres
 This follows the same general information-architecture principle used by Pokémon GO and Pokémon Sleep: keep the primary activity surface focused, and move inventory/settings/secondary systems behind a menu rather than keeping them permanently visible.
 
 Simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
 
 
 ## V7 — Gengar's Hideout / real-life gift audit
@@ -197,11 +216,11 @@ https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
 - Audit separates **working browser demo / portable C++ core / pending hardware integration** and reprioritizes an actually useful birthday-gift MVP.
 - Read [V7 full audit](docs/V7_FULL_AUDIT.md) for detailed daily-use, mechanical, Qi, phone BLE, accessibility and acceptance criteria.
 
-Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
+Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
 
 ## V8 — iPhone 14 family, living Gengar and private gift
 
-- Live interactive UI: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
+- Live interactive UI: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
 - Gengar gently floats on HOME; tap the character for different reactions. Five taps reveal the couple nook.
 - The Gengar Poké Ball menu contains the low-key **우리 서랍** shortcut under Desk.
 - Anniversary date and a custom private love letter are editable without hardcoding identifiable information in public source.
@@ -215,7 +234,7 @@ Note: the browser uses localStorage, which is neither encrypted nor shared acros
 
 ## V9 — playable character selection + OTA foundation (2026-10-18)
 
-Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
+Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10
 
 **Pokémon-game-inspired interaction**, rather than only a floating static image:
 - On HOME or Trainer, tap **파트너 선택** to open a real 800×480 PARTY SELECT screen.

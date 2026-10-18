@@ -11,7 +11,7 @@ struct ScreenDescriptor {
 
 static constexpr ScreenDescriptor kScreenRegistry[] = {
   {ScreenId::HOME,      "HOME",      true,  false, true},
-  {ScreenId::FOCUS,     "TRAIN",     false, true,  true},
+  {ScreenId::FOCUS,     "FOCUS",     true,  true,  true},
   {ScreenId::QUESTS,    "QUEST",     false, false, true},
   {ScreenId::TIMER,     "TIMER",     false, true,  true},
   {ScreenId::STOPWATCH, "STOPWATCH", false, true,  true},
@@ -20,7 +20,7 @@ static constexpr ScreenDescriptor kScreenRegistry[] = {
   {ScreenId::TRAINER,   "TRAINER",   false, false, true},
   {ScreenId::BADGES,    "BADGES",    false, false, true},
   {ScreenId::EGG,       "EGG",       false, false, true},
-  {ScreenId::DEX,       "DEX",       true,  false, true},
+  {ScreenId::DEX,       "DEX",       false, false, true},
   {ScreenId::NFC,       "NFC",       false, false, true},
   {ScreenId::WEATHER,   "WEATHER",   false, false, true},
   {ScreenId::ALARM,     "ALARM",     false, false, true},

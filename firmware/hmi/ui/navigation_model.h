@@ -1,45 +1,38 @@
 #pragma once
 #include "screen_ids.h"
 
-enum class MenuGroup : unsigned char {
-  TRAIN,
-  JOURNEY,
-  DESK,
-  LINK
-};
+// V10: the 800x480 persistent bar is HOME | FOCUS | central Poke Ball drawer.
+// Drawer is a modal, not a ScreenId. FOCUS uses the study/rest timer;
+// TIMER is a separate general-purpose countdown without study rewards.
+enum class MenuGroup : unsigned char { DAILY, PLAY, EXTRA };
 
 struct MenuEntry {
   ScreenId screen;
   const char* label;
 };
 
-static constexpr MenuEntry kTrainMenu[] = {
-  {ScreenId::FOCUS, "Focus"},
-  {ScreenId::TIMER, "Timer"},
-  {ScreenId::STOPWATCH, "Stopwatch"}
+static constexpr MenuEntry kDailyMenu[] = {
+  {ScreenId::QUESTS, "To-do / D-day"},
+  {ScreenId::TIMER, "General countdown"},
+  {ScreenId::ALARM, "Alarm"},
+  {ScreenId::OUR_SPACE, "Private couple nook"}
 };
-
-static constexpr MenuEntry kJourneyMenu[] = {
-  {ScreenId::QUESTS, "Quest"},
-  {ScreenId::TRAINER, "Trainer"},
-  {ScreenId::EGG, "Egg"},
+static constexpr MenuEntry kPlayMenu[] = {
+  {ScreenId::TRAINER, "Party / Trainer"},
+  {ScreenId::DEX, "Pokedex"},
+  {ScreenId::EGG, "Mystery Egg"},
   {ScreenId::BADGES, "Badges"},
   {ScreenId::STATS, "Record"}
 };
-
-static constexpr MenuEntry kDeskMenu[] = {
-  {ScreenId::WEATHER, "Weather"},
-  {ScreenId::ALARM, "Alarm"},
+static constexpr MenuEntry kExtraMenu[] = {
+  {ScreenId::SETTINGS, "Settings"},
   {ScreenId::LIGHT, "Light"},
-  {ScreenId::OUR_SPACE, "Our Private Nook"}
-};
-
-static constexpr MenuEntry kLinkMenu[] = {
-  {ScreenId::PHONE, "Phone"},
+  {ScreenId::WEATHER, "Weather"},
+  {ScreenId::PHONE, "Phone presence"},
   {ScreenId::NFC, "NFC"},
-  {ScreenId::SETTINGS, "Settings"}
+  {ScreenId::STOPWATCH, "Stopwatch"}
 };
 
-// Persistent device-level navigation is intentionally minimal:
-// HOME | POKE BALL MENU | DEX
-// Birthday is event-driven and not part of the everyday menu.
+// The animated partner-select overlay is a modal over the currently active
+// screen; it is not a persisted screen nor a fourth permanent navigation tab.
+// The native LVGL port MUST implement an explicit previous-screen stack.

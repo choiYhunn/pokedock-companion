@@ -10,7 +10,7 @@ enum class ScreenId : uint8_t {
 inline const char* screen_id_name(ScreenId id) {
   switch(id) {
     case ScreenId::HOME: return "center";
-    case ScreenId::FOCUS: return "train";
+    case ScreenId::FOCUS: return "focus";
     case ScreenId::QUESTS: return "quest";
     case ScreenId::TIMER: return "timer";
     case ScreenId::STOPWATCH: return "stopwatch";
