@@ -100,3 +100,8 @@
 .screen.night .party-dialog-line{color:#ded5e9}
 .screen.night .party-dialog:before{background:#2e2840}
 .screen.night .party-stage{opacity:.86}
+
+.party-sound{position:absolute;top:1.35cqw;right:6.05cqw;z-index:30;min-width:6.2cqw;height:3.9cqw;border:1px solid #e2d6ed;border-radius:999px;background:#fffaf5c9;color:#594a70;font-size:1.15cqw;font-weight:950;cursor:pointer}
+.party-sound[aria-pressed="true"]{background:#72588f;color:#fff}
+.party-sound:focus-visible{outline:.3cqw solid #7a56a8}
+.screen.night .party-sound{background:#655278;color:#fff}
