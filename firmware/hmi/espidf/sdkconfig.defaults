@@ -11,3 +11,4 @@ CONFIG_ESP32S3_DATA_CACHE_LINE_64B=y
 # No OTA partition table selected for experimental M0/M1; use known-good
 # factory recovery before any flash. No automatic user-data migration.
 CONFIG_PARTITION_TABLE_SINGLE_APP_LARGE=y
+CONFIG_LV_FONT_MONTSERRAT_48=y
