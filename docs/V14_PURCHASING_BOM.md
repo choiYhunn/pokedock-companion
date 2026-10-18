@@ -1,5 +1,7 @@
 # PokéDock V14 — confirmed-case staged order list
 
+> Latest engineering blockers, measured-vs-assumed dimensions and the staged gate matrix: [V14 release audit](V14_RELEASE_AUDIT.md).
+
 **As of 2026-10-18: confirmed recipient iPhone 14 Pro + MagSafe-compatible case. NOTHING HAS BEEN PURCHASED by this assistant.** The list distinguishes must-buy, conditional, and defer. Use product model names, not random copycat PCB modules.
 
 ## Phase 1: essential screen and safe test components

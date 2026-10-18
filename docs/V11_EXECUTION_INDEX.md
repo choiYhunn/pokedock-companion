@@ -5,16 +5,17 @@
 1. [V14 physical/industrial design and precise fit gates](V14_MAGSAFE_READY_DESIGN.md)
 2. [V14 purchasing list with buy/reuse/defer](V14_PURCHASING_BOM.md)
 3. [V14 build/test SOP](V14_ASSEMBLY_SOP.md)
-4. [V14 parametric reference CAD](../cad/pokedock_v14_magsafe_ready.scad) and [updated calculator](../design.html)
-5. [Measurement register](V12_MEASUREMENT_REGISTER.md), [electrical isolation](V11_ELECTRICAL_WIRING.md), [native porting](V10_HARDWARE_PORTING.md)
+4. [V14 parametric reference CAD](../cad/pokedock_v14_magsafe_ready.scad), [1:1 dry-fit templates](../cad/pokedock_v14_dryfit_templates.scad), and [updated calculator](../design.html)
+5. [V14 release blockers and executable build/acceptance audit](V14_RELEASE_AUDIT.md); [vendor-derived electrical map](V14_ELECTRICAL_INTERFACE.md); [new ESP-IDF M0 scaffold](../firmware/hmi/espidf/README.md)
+6. [Measurement register](V12_MEASUREMENT_REGISTER.md), [electrical isolation](V11_ELECTRICAL_WIRING.md), [native porting](V10_HARDWARE_PORTING.md)
 
 ---
 
-# PokéDock V13 — compact iPhone 14 Pro re-evaluation (previous designs preserved)
+# Archived: PokéDock V13 — compact iPhone 14 Pro re-evaluation (historical; V14 supersedes it)
 
-## V13 current engineering decision
+## V13 historical engineering decision — do not use for new fabrication
 
-1. **[V13 iPhone 14 Pro compact landscape slot; passive vs optional MagSafe](V13_COMPACT_IPHONE_14_PRO.md)** — current decision baseline; supersedes low-angle portrait as default.
+1. **[V13 iPhone 14 Pro compact landscape slot; passive vs optional MagSafe](V13_COMPACT_IPHONE_14_PRO.md)** — previous decision baseline; superseded by V14 MagSafe-ready.
 2. [Current V12 measurement register, corrected for 14 Pro & real C-BOX dimensions](V12_MEASUREMENT_REGISTER.md)
 3. [V12 fabrication component architecture and assembly details](V12_FABRICATION_PLAN.md)
 4. [V12 phased purchasing and item criteria](V12_PROCUREMENT.md)
@@ -26,10 +27,10 @@
 
 This index is the **single reading order** for building an actually usable gift, not a promise that the Waveshare MCU product is already completed.
 
-## Concept freeze
+## Historical concept freeze (superseded by the V14 header)
 - 4.3" 800×480 LCD = daily **HOME/Focus/Timer**, Gengar default, no overwhelming UI.
 - One Poké Ball menu hides Pokémon game/party interactions; romantic private note and planner stay secondary.
-- iPhone **14-family**, exact model/case pending. Protected MagSafe puck behind display, **separate power**, no front phone tray.
+- Historical assumption only: iPhone **14-family**, exact model/case pending. **V14 confirmed iPhone 14 Pro + MagSafe case.** Protected MagSafe puck behind display, **separate power**, no front phone tray.
 - Rear phone support geometry **not yet physically validated**; old V4 78mm total depth is not a real build fit.
 - C3/NFC/ambient light are optional second-stage modules; avoid blocking the gift waiting for these.
 - Focus-to-Pokémon is cumulative minutes, no artificial reward for regular countdown or 5-minute breaks.

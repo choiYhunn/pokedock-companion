@@ -6,7 +6,7 @@ Target:
 - ESP-IDF + official Waveshare BSP / examples
 - LVGL for UI
 
-Do not rewrite display/touch/audio/RTC drivers unless required.
+Do not rewrite display/touch/audio/RTC drivers unless required. The [ESP-IDF M0 console-only skeleton](espidf/README.md) has been added, but is **not compiled/flashed, has no LVGL**, and must follow the manufacturer 4.3C vendor-demo baseline and release gates.
 
 ## Layers
 

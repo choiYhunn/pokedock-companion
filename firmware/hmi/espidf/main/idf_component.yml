@@ -1,0 +1,5 @@
+dependencies:
+  idf:
+    version: ">=5.3,<6.0"
+  waveshare/esp32_s3_touch_lcd_4_3c:
+    version: "3.0.1"

@@ -1,4 +1,6 @@
-# PokéDock V10 — Purchase checklist / BOM (2026-10-18)
+# PokéDock V10 — historical purchase checklist / BOM (2026-10-18)
+
+> **ARCHIVED; DO NOT ORDER FROM THIS FILE.** Current phone is **iPhone 14 Pro + MagSafe case**, and purchase gate is [V14 BOM](V14_PURCHASING_BOM.md) plus [release audit](V14_RELEASE_AUDIT.md).
 
 ## Buy in phases. No speculative large shopping cart.
 

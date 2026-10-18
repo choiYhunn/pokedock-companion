@@ -1,3 +1,5 @@
+> **ARCHIVED V13 — superseded by [V14 MagSafe-ready design](V14_MAGSAFE_READY_DESIGN.md). Latest confirmed iPhone is 14 Pro with MagSafe case, and V14 includes optional removable puck from the start. This file explains historical space-first reasoning, not build-ready dimensions.**
+
 # PokéDock V13 — iPhone 14 Pro compact slot decision (2026-10-18)
 
 ## Decision: SPACE FIRST, CHARGING OPTIONAL

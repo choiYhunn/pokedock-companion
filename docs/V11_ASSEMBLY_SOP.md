@@ -1,3 +1,5 @@
+> **HISTORICAL V11 SOP — use [V14 SOP](V14_ASSEMBLY_SOP.md), [V14 audit](V14_RELEASE_AUDIT.md) and [V14 electrical map](V14_ELECTRICAL_INTERFACE.md) for current 14 Pro landscape 70° hardware. Older 25°/30°/35° phone trial steps are obsolete.**
+
 # PokéDock V11 — From boxes to working gift: assembly SOP
 
 **This is a reproducible procedure, not evidence the physical device was assembled.** Use the milestone gates; stop when a test fails. Most time-consuming work is LVGL/native firmware port, not screwing the stand together.

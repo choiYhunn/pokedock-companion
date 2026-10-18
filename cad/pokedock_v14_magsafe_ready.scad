@@ -11,16 +11,16 @@
 // Choose PART: "assembly", "base", "screen_frame", "phone_support", "template_2d"
 // Poses: "landscape" (space-first default) or "portrait" (concealment-first).
 // No front projecting phone tray, no internal Qi RF construction.
-// Mount pattern is only a REFERENCE until fastener type/depth is verified.
+// 75 mm "pitch" does NOT prove four 75x75 mounting holes or thread/depth.\n// All dimensions remain conceptual until actual cased 33630 is measured.
 $fn = 48;
 PART = "assembly";
-POSE = "landscape";          // landscape / portrait
+POSE = "landscape";          // V14 release candidate = LANDSCAPE; portrait is archived V12 study
 DISPLAY_MODEL = "sample";    // sample; replace dimensions from OEM 4.3C-BOX
 SHOW_SCREEN = true;
 SHOW_PHONE = true;
-SHOW_PUCK = true;    // V14 MagSafe-ready. This is a VISUAL placeholder, not a print-ready puck socket.
+SHOW_PUCK = false;   // Off until physical puck measurement; VISUAL disk ONLY, never a retainer.
 SHOW_CABLES = false;
-SHOW_MOUNT_MARKERS = true;
+SHOW_MOUNT_MARKERS = false; // NEVER use unverified 75x75 visual markers as drilled holes
 PRINT_SPLIT_GAP = 17;
 
 // --------- MEASUREMENT VARIABLES: NOT FINAL MANUFACTURING DIMENSIONS ---------
@@ -31,7 +31,7 @@ SCREEN_ANGLE = 76;           // deg above desktop, A/B-test 70/76/80
 SCREEN_Y0 = 15;              // front screen bottom, measured rear datum
 SCREEN_Z0 = 12;              // raises screen to clear base
 OEM_REAR_MOUNT_PITCH = 75;   // manufacturer states rear mounting pitch 75 mm
-SCREW_HOLE_D = 0;            // KEEP 0 until OEM hole size/thread/depth confirmed
+SCREW_HOLE_D = 0;            // KEEP 0 until exact OEM hole count/XY/thread/depth confirmed
 // CONFIRMED iPhone 14 Pro BODY 147.5x71.5x7.85mm; MagSafe case model/dimensions TBD
 PHONE_LENGTH = 147.5;
 PHONE_WIDTH = 71.5;
@@ -81,7 +81,7 @@ echo("V14 front-view height margin mm (+ may hide horizontally):",HIDE_HEIGHT_MA
 echo("Phone 14 Pro case MAGSAFE yes, brand/thickness/coil center TBD.");
 echo("Charging puck is OPTIONAL removable; do not assume charging performance.");
 echo("NOT accounting for seated downward sightline, camera bump, cable, mount tolerances.");
-assert(PHONE_ANGLE>5 && PHONE_ANGLE<80);
+assert(POSE=="landscape", "V14 manufacturing baseline is landscape only; use V12 for portrait study");\nassert(PHONE_ANGLE>5 && PHONE_ANGLE<80);
 assert(SCREEN_ANGLE>=60 && SCREEN_ANGLE<=88);
 assert(BASE_W>SCREEN_W);
 assert(MAGSAFE_DIAMETER<PHONE_XSPAN);
