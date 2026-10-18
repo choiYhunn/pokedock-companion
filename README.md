@@ -10,7 +10,7 @@ The Pages site is not just a landing page. It is the current visual review envir
 - coded V4 product visualization,
 - coded V4 structure poster,
 - interactive 800×480 device mock,
-- 15 complete screen concepts,
+- interactive screen concepts including private couple space and planner,
 - working Focus / Timer / Stopwatch simulation,
 - phone parked / priority alert / Night / NFC / Birthday state simulation.
 
@@ -120,7 +120,7 @@ Study is connected to progression:
 - Light themes and contextual UI follow Pokémon roles rather than arbitrary RGB presets.
 
 Stable simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=7
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
 
 
 ## Fan-system V4
@@ -157,7 +157,7 @@ The study loop is:
 `Quest -> Focus training -> EXP/Bond/Egg -> Encounter -> Dex/Badge -> Partner Center`.
 
 Stable interactive simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=7
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
 
 
 ## UI V6 — simplified hierarchy
@@ -186,7 +186,7 @@ The second layer contains the existing utility screens, so functionality is pres
 This follows the same general information-architecture principle used by Pokémon GO and Pokémon Sleep: keep the primary activity surface focused, and move inventory/settings/secondary systems behind a menu rather than keeping them permanently visible.
 
 Simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=7
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
 
 
 ## V7 — Gengar's Hideout / real-life gift audit
@@ -197,4 +197,18 @@ https://choiyhunn.github.io/pokedock-companion/simulator.html?v=7
 - Audit separates **working browser demo / portable C++ core / pending hardware integration** and reprioritizes an actually useful birthday-gift MVP.
 - Read [V7 full audit](docs/V7_FULL_AUDIT.md) for detailed daily-use, mechanical, Qi, phone BLE, accessibility and acceptance criteria.
 
-Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=7
+Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
+
+## V8 — iPhone 14 family, living Gengar and private gift
+
+- Live interactive UI: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
+- Gengar gently floats on HOME; tap the character for different reactions. Five taps reveal the couple nook.
+- The Gengar Poké Ball menu contains the low-key **우리 서랍** shortcut under Desk.
+- Anniversary date and a custom private love letter are editable without hardcoding identifiable information in public source.
+- Real local To-do editor (up to 5 tasks, completion/removal) and D-day title/date; contents persist in the same browser profile.
+- Clock refreshes automatically as minutes change. Simulated timer accounts for delayed background callbacks by elapsed real time.
+- iPhone 14 family: protected MagSafe puck design, exact model/case and physical thermal testing pending.
+- iOS notifications via ANCS are optional and **not implemented on-device**; mere Bluetooth connection is not equivalent to notification access.
+- See [V8 couple & pet spec](docs/COUPLE_AND_PET_V8.md) and [iPhone 14 hardware plan](docs/IPHONE_14_INTEGRATION_V8.md).
+
+Note: the browser uses localStorage, which is neither encrypted nor shared across devices. The hardware LVGL, persistence, charging and Bluetooth integrations are separate unfinished milestones.
