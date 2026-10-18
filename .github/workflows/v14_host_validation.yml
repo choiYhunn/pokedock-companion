@@ -5,7 +5,8 @@ on:
     paths:
       - '.github/workflows/v14_host_validation.yml'
       - 'firmware/hmi/core/tests/focus_ledger_test.cpp'
-      - 'scripts/test_host.sh' # host diagnostic rerun after initial failed geometry export
+      - 'scripts/test_host.sh'
+      - 'cad/pokedock_v14_magsafe_ready.scad' # one rerun after SCAD parser repair
   workflow_dispatch: {}
 permissions:
   contents: read
