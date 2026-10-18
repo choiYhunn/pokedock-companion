@@ -1,55 +1,44 @@
 <!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PokéDock Companion</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PokéDock Companion — Quiet Desk</title>
 <style>
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(#efebe3,#faf8f3 45%,#f1ede6);color:#23252a;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
-.wrap{max-width:1180px;margin:auto;padding-left:20px;padding-right:20px}.top{position:sticky;top:0;z-index:20;height:62px;display:flex;align-items:center;justify-content:space-between;background:#f7f4eeeb;backdrop-filter:blur(15px);border-bottom:1px solid #0000000a;padding:0 max(20px,calc((100vw - 1140px)/2))}
-.brand{font-weight:900}.top nav{display:flex;gap:8px}.top a{text-decoration:none;color:#50535b;font-size:12px}.hero{display:grid;grid-template-columns:.85fr 1.15fr;gap:32px;align-items:center;padding-top:58px;padding-bottom:58px}.hero h1{font-size:68px;letter-spacing:-.065em;line-height:.94;margin:12px 0}.hero h1 span{color:#628ca8}.hero p{line-height:1.75;color:#595c64}.hero img{width:100%;filter:drop-shadow(0 25px 35px #0002)}
-.badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px}.badges span{background:#fff;border:1px solid #fff;border-radius:999px;padding:7px 9px;font-size:10px}
-.section{padding:70px 0}.section h2{font-size:38px;letter-spacing:-.045em;margin:0 0 10px}.section p{color:#64676f;line-height:1.7}.sim-card{background:#20242c;border-radius:24px;padding:12px;box-shadow:0 25px 60px #0002}.sim-head{display:flex;justify-content:space-between;align-items:center;color:#fff;padding:8px 7px 14px}.sim-head strong{font-size:18px}.sim-head a{color:#dbe9f3;text-decoration:none;font-size:12px}.sim-card iframe{width:100%;height:900px;border:0;border-radius:16px;background:#1f232b}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.card{background:#fffdf8;border:1px solid #fff;border-radius:20px;padding:18px}.card b{display:block;margin-bottom:6px}.card p{font-size:12px;margin:0}.poster{margin-top:20px;background:white;border-radius:22px;padding:10px}.poster img{width:100%;display:block;border-radius:15px}.foot{border-top:1px solid #d9d5cc;padding:24px 0 40px;color:#777;font-size:11px}
-@media(max-width:850px){.hero{grid-template-columns:1fr}.hero h1{font-size:48px}.top nav{display:none}.grid{grid-template-columns:1fr}.sim-card iframe{height:1180px}}
-</style>
-</head>
-<body>
-<header class="top"><div class="brand">PokéDock Companion</div><nav><a href="#structure">구조</a><a href="#sim">Simulator</a><a href="https://github.com/choiYhunn/pokedock-companion">GitHub</a></nav></header>
+:root{--ink:#282631;--muted:#716c78;--vio:#6f5d86;--line:#e4dee5}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);background:#f6f4f0;font:15px/1.55 system-ui,-apple-system,"Noto Sans KR",sans-serif}a{color:inherit}
+.wrap{max-width:1110px;margin:auto;padding:0 20px}.nav{height:65px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.nav strong{font-weight:950;letter-spacing:-.02em}.navlinks{display:flex;align-items:center;gap:17px;font-size:12px;font-weight:800}.navlinks a{text-decoration:none;color:#6b6376}
+.hero{padding:76px 0 60px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:35px}.ey{font-size:11px;font-weight:950;letter-spacing:.16em;color:#826e9a}.hero h1{font-size:clamp(38px,5.8vw,68px);line-height:1.08;letter-spacing:-.06em;margin:10px 0 18px}.hero h1 span{color:#8c79a4}.lead{font-size:17px;line-height:1.8;color:#696273;max-width:530px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin:26px 0}.action{border-radius:13px;padding:12px 17px;font-size:13px;font-weight:900;text-decoration:none;display:inline-block;background:#fff;border:1px solid #e1dce7}.action.primary{color:#fff;background:#544366;border-color:#544366}
+.fact{display:flex;gap:9px;flex-wrap:wrap;font-size:11px;color:#6e6378}.fact span{padding:6px 10px;border-radius:999px;background:#ece7f0}
+.shell{border-radius:25px;padding:26px;background:linear-gradient(145deg,#eae5ee,#f8f7f4);border:1px solid #e6dfea}
+.frame{width:100%;aspect-ratio:800/480;background:#ede6d9;border:10px solid #d7d1d1;border-radius:15px;box-shadow:0 17px 35px #3b345128;position:relative;display:flex;align-items:center;justify-content:space-between;padding:9% 7%;overflow:hidden}
+.frame:before{content:"";position:absolute;right:-9%;top:-16%;width:70%;height:140%;border-radius:50%;background:#b8aacd44}.frame .clock{font-weight:950;font-size:clamp(27px,4vw,53px);line-height:1;letter-spacing:-.08em;position:relative}.frame .small{color:#716a78;font-size:11px;margin-top:10px;font-weight:800}.frame .ghost{font-size:clamp(35px,5vw,70px);line-height:1;position:relative;filter:drop-shadow(0 8px 6px #4d42642c)}.base{height:12px;border-radius:5px 5px 12px 12px;background:#aea3b7;width:72%;margin:auto;box-shadow:0 10px 0 -5px #9993a3}.caption{font-size:12px;color:#716b78;margin-top:25px}
+.section{padding:42px 0}.section h2{font-size:clamp(25px,3vw,34px);letter-spacing:-.04em;margin:0 0 10px}.section p{color:#736c79}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}.card{background:#fff;border-radius:16px;border:1px solid var(--line);padding:23px}.card b{display:block;margin-bottom:7px;font-size:15px}.card p{font-size:12px;margin:0;line-height:1.7}
+.workspace{background:#27232e;color:white;border-radius:24px;padding:14px;margin:18px 0}.workhead{display:flex;justify-content:space-between;padding:9px 10px 15px;align-items:center}.workhead strong{font-size:15px}.workhead a{font-size:11px;color:#dfdaeb}
+.workspace iframe{border:0;border-radius:14px;background:#20232c;width:100%;height:870px}.scope{background:#eeeaf0;border-radius:17px;padding:20px;line-height:1.7;font-size:13px;color:#62566e}.foot{padding:36px 0 50px;border-top:1px solid var(--line);font-size:11px;color:#77727e}
+@media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:42px}.cards{grid-template-columns:1fr}.workspace iframe{height:1140px}}
+@media(max-width:560px){.navlinks a:nth-child(2){display:none}.shell{padding:15px}.frame{border-width:7px}}
+</style></head><body>
+<div class="wrap nav"><strong>PokéDock · Quiet Desk</strong><div class="navlinks"><a href="design.html">실물 설계</a><a href="#prototype">UI 직접 조작</a><a href="https://github.com/choiYhunn/pokedock-companion">GitHub 소스</a></div></div>
 <main>
-<section class="hero wrap" id="structure">
-<div>
-<div style="font-size:11px;font-weight:800;letter-spacing:.14em;color:#777">V4 · COMPACT STUDY COMPANION</div>
-<h1>앞은 비우고,<br><span>폰은 뒤로.</span></h1>
-<p>4.3인치 화면이 제품의 중심이고, 휴대폰은 뒤 경사 지지대에서 Qi 충전하며 시야에서 빠진다. NFC/피규어는 측면 포드로 이동하고, 전면에는 별도 충전 트레이가 없다.</p>
-<div class="badges"><span>800×480 Touch</span><span>Wi‑Fi</span><span>BLE</span><span>RTC</span><span>NFC</span><span>Qi</span><span>Study Log</span></div>
+<section class="hero wrap">
+<div><div class="ey">PERSONAL DESK COMPANION · V12 INDUSTRIAL DESIGN</div><h1>작은 책상에,<br><span>팬텀 한 마리.</span></h1>
+<p class="lead">앞에서는 귀여운 포켓몬 시계와 집중 도우미. 뒤에서는 아이폰 MagSafe 충전. 공부에 도움이 되면서도 선물처럼 느껴지는 작은 디지털 기기를 설계하고 있어.</p>
+<div class="actions"><a class="action primary" href="design.html">책상 공간·거치대 설계 보기 ↗</a><a class="action" href="simulator.html?v=10">UI 직접 만져보기 ↗</a></div>
+<div class="fact"><span>800×480 Touch</span><span>Gengar First</span><span>MagSafe Rear Dock</span><span>RTC / Focus</span></div>
 </div>
-<div><img src="/pokedock-companion/site/product-v4.svg" alt="PokéDock V4 structure"></div>
+<div class="shell" aria-label="제품 콘셉트 구성도"><div class="frame"><div><div class="clock">09:41</div><div class="small">FOCUS · GENGAR</div><div class="small">오늘도 천천히 ♡</div></div><div class="ghost">◕‿◕</div></div><div class="base"></div><div class="caption">정돈된 전면 디자인 방향을 보여주는 추상 구성도 · 실제 기기 사진이나 렌더링이 아님</div></div>
 </section>
-
-<section class="section wrap" id="sim">
-<h2>UI Simulator</h2>
-<p>Simulator V6는 실제 800×480 기기 화면처럼 동작한다. 상시 내비게이션은 HOME / 집중 / 포켓볼 메뉴 세 개. 포켓볼을 누르면 팬텀의 비밀기지가 열려 네 기능 그룹을 안내하고, HOME에서 파트너 선택을 누르면 포켓몬 게임처럼 파티 선택 화면이 열리고, 픽셀 캐릭터의 등장·움직임을 감상한 뒤 확정할 수 있다. 팬텀을 터치하면 숨은 둘만의 서랍도 나타난다. 할 일·D-day·기념일·편지는 브라우저에서 직접 수정할 수 있다. 일부 수치와 연동은 데모 상태다.</p>
-<div class="sim-card">
-<div class="sim-head"><strong>PokéDock · Device UI V10</strong><a href="/pokedock-companion/simulator.html?v=10">전체 화면으로 열기 ↗</a></div>
-<iframe src="/pokedock-companion/simulator.html?v=10" title="PokéDock UI Simulator"></iframe>
+<section class="section wrap"><div class="ey">WHY THIS FORM</div><h2>보이는 건 단순하게, 쓰는 건 편리하게.</h2>
+<div class="cards">
+<div class="card"><b>01 · 귀여움은 화면 안에</b><p>장식이 많은 조형물 대신 팬텀이 살아 움직이는 간결한 액자형 기기. 나머지 포켓몬은 원할 때 선택.</p></div>
+<div class="card"><b>02 · 뒤쪽에 숨긴 아이폰</b><p>완제품 MagSafe를 따로 구동하고, 가로형/세로형 후면 지지대 중 공간·안정성·시야를 실측해서 결정.</p></div>
+<div class="card"><b>03 · 실제 쓰는 도구부터</b><p>HOME 시계, 집중 25분, 일반 타이머, D-day, 개인 메시지를 우선하고 NFC·LED·OTA는 안정화 후 추가.</p></div>
 </div>
 </section>
-
-<section class="section wrap">
-<h2>현재 구현 범위</h2>
-<div class="grid">
-<div class="card"><b>Study Core</b><p>Focus, Timer, Stopwatch, Today, Study Log, D-day/To-do.</p></div>
-<div class="card"><b>BLE Phone Bridge</b><p>UI 시뮬레이션과 PhoneEvent/프레임 decoder까지. 실제 Android/iPhone adapter는 다음 단계.</p></div>
-<div class="card"><b>Wi‑Fi</b><p>NTP, 날씨, 로컬 웹 설정, OTA. 네트워크가 없어도 핵심 타이밍 기능은 유지.</p></div>
-<div class="card"><b>Dock</b><p>ESP32-C3 + NFC + 폰 감지 + 조도 + RGB. HMI와 ESP-NOW.</p></div>
-<div class="card"><b>Qi</b><p>완제품 보호회로 충전기를 후면 경사 지지대 쪽에 기구적으로 통합.</p></div>
-<div class="card"><b>Birthday</b><p>평소에는 실용 기기, 생일에만 별도 Secret Event가 가장 높은 우선순위로 동작.</p></div>
-</div>
-<div class="poster"><img src="/pokedock-companion/site/product-poster-v4.svg" alt="PokéDock V4 poster"></div>
+<section class="section wrap" id="prototype"><div class="ey">INTERACTIVE WEB DEMO</div><h2>현재 조작 가능한 UI</h2><p>브라우저 시뮬레이터 V10. 이 화면이 실제 Waveshare 기기에 포팅됐다는 뜻은 아니야.</p>
+<div class="workspace"><div class="workhead"><strong>PokéDock · Device UI V10</strong><a href="simulator.html?v=10">전체 화면 ↗</a></div><iframe src="simulator.html?v=10" title="PokéDock UI Simulator"></iframe></div>
 </section>
-</main>
-<footer class="foot wrap">PokéDock Companion · personal non-commercial fan project</footer>
-<div style="text-align:center;font-size:13px;padding:15px 10px;color:#5f5a65">V10: 매일 쓰는 도구 / 포켓몬 놀이 분리 · 집중 25분 + 휴식 5분 · 뒤로 가기 · 보상은 도감에 기록을 눌러 확정합니다. 실제 하드웨어는 아직 포팅 전입니다.</div>
-</body>
-</html>
+<section class="section wrap"><div class="ey">BUILD STATUS</div><h2>구현·제작은 분리해서 검증</h2>
+<div class="scope">**현재 상태:** V10 웹 UI와 C++ 엔진/성장 규칙, V12 공간 검토 CAD·조립 계획은 준비됐어. 실제 4.3C-BOX의 케이스 치수·전원·LVGL 화면·MagSafe 충전 안정성·OTA는 아직 실물 검증 전이야. 측정용 CAD는 완제품 출력 파일이 아니므로 무조건 출력하면 안 돼.<br><br>
+<a href="design.html">실제 공간 계산</a> · <a href="https://github.com/choiYhunn/pokedock-companion/blob/main/docs/V12_INDUSTRIAL_DESIGN.md">기구 설계서</a> · <a href="https://github.com/choiYhunn/pokedock-companion/blob/main/docs/V11_EXECUTION_INDEX.md">제작 순서</a></div></section>
+</main><footer class="wrap foot">PokéDock Companion · personal noncommercial fan gift · Not affiliated with The Pokémon Company. The drawings are design studies, not certified hardware.</footer>
+</body></html>
