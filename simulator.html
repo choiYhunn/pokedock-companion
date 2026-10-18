@@ -180,6 +180,7 @@ button{font:inherit}.lab{min-height:100vh;display:flex;flex-direction:column;ali
 .reward .later{color:#ece5f7;background:#ffffff14;border:1px solid #ffffff44}
 .quickapps .menu-back{min-height:4.8cqw;font-size:1.28cqw}
 .screen:has(.party-overlay) .topbar,.screen:has(.party-overlay) .bottomnav{visibility:hidden}
+.reward-shade{position:absolute;inset:0;z-index:79;background:#221b3088;backdrop-filter:blur(.2cqw);border:0;cursor:pointer}.reward-shade:focus-visible{outline:.4cqw solid #dcc8f0;outline-offset:-1cqw}
 </style>
 <link rel="stylesheet" href="ui/party-game.css?v=9">
 <script defer src="ui/party-game.js?v=9"></script>
@@ -278,7 +279,7 @@ function notice(){if(!S.notice)return "";const n={call:["CALL · 엄마","수신
 function reward(){
  if(!S.reward)return "";
  const d=dexEntry(S.reward);
- return '<div class="reward '+(S.rewardShiny?"shiny":"")+'"><img src="'+P(d.id)+'"><div class="copy"><span class="eyebrow">집중 완료 · 포켓몬 발견!</span><h3>'+d.name+'</h3><p>도감에 기록하면 내 포켓몬이 돼.</p><div class="reward-actions"><button class="btn pokeball" data-action="register">도감에 기록</button><button class="btn later" data-action="reward-later">나중에</button></div></div></div>';
+ return '<button class="reward-shade" data-action="reward-later" aria-label="보상을 나중에 기록"></button><div class="reward '+(S.rewardShiny?"shiny":"")+'"><img src="'+P(d.id)+'"><div class="copy"><span class="eyebrow">집중 완료 · 포켓몬 발견!</span><h3>'+d.name+'</h3><p>도감에 기록하면 내 포켓몬이 돼.</p><div class="reward-actions"><button class="btn pokeball" data-action="register">도감에 기록</button><button class="btn later" data-action="reward-later">나중에</button></div></div></div>';
 }
 function detail(){if(!S.detail)return "";const d=dexEntry(S.detail);if(!d)return "";const caught=S.caught.includes(d.id);return '<div class="detail"><button class="closex" data-action="close-detail">×</button><div class="copy"><span class="eyebrow">POKÉDEX ENTRY</span><div class="medium">No.'+String(d.id).padStart(3,'0')+' '+d.name+'</div>'+types(d.types)+'<p class="muted">'+(caught?'CAUGHT · 파트너/테마로 사용할 수 있어요.':'LOCKED · Training과 Egg에서 만날 수 있어요.')+'</p>'+(caught&&PARTNERS[d.id]?'<button class="btn primary" data-action="set-partner" data-id="'+d.id+'">PARTNER로 지정</button>':'')+'</div><img src="'+P(d.id)+'"></div>'}
 function home(){
