@@ -3,9 +3,9 @@
 #include "screen_ids.h"
 
 struct PartnerVm {
-  uint16_t pokemon_id = 468; uint16_t level = 12; uint8_t bond = 67;
+  uint16_t pokemon_id = 94; uint16_t level = 12; uint8_t bond = 67;
   uint16_t study_exp = 285; uint8_t egg_progress = 42;
-  char name[24] = "Togekiss"; char role[16] = "CALM"; char quote[96] = {};
+  char name[24] = "Gengar"; char role[16] = "MAIN_PARTNER"; char quote[96] = {};
 };
 
 struct TrainerVm {
