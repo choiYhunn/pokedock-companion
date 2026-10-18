@@ -6,7 +6,7 @@
 2. [V14 purchasing list with buy/reuse/defer](V14_PURCHASING_BOM.md)
 3. [V14 build/test SOP](V14_ASSEMBLY_SOP.md)
 4. [V14 parametric reference CAD](../cad/pokedock_v14_magsafe_ready.scad), [1:1 dry-fit templates](../cad/pokedock_v14_dryfit_templates.scad), and [updated calculator](../design.html)
-5. [V14 release blockers and executable build/acceptance audit](V14_RELEASE_AUDIT.md)
+5. [V14 release blockers and executable build/acceptance audit](V14_RELEASE_AUDIT.md); [vendor-derived electrical map](V14_ELECTRICAL_INTERFACE.md); [new ESP-IDF M0 scaffold](../firmware/hmi/espidf/README.md)
 6. [Measurement register](V12_MEASUREMENT_REGISTER.md), [electrical isolation](V11_ELECTRICAL_WIRING.md), [native porting](V10_HARDWARE_PORTING.md)
 
 ---
