@@ -56,3 +56,15 @@ On 2026-10-05 the reward and trainer-progression tests were also compiled manual
 and both executed successfully.
 
 No recurring GitHub Actions workflow is added for these host tests yet because Pages/design commits should not consume unnecessary Actions minutes. Run the tests locally before firmware milestones and before tagging a hardware build.
+
+## Portable Pokémon motion policy (V9)
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Werror \
+  partner_motion_test.cpp -o partner_motion_test
+./partner_motion_test
+```
+
+Expected output: `Partner animation policy tests passed`.
+
+The C++ policy was separately compiled with these warning flags during V9 development. This is not a validation of the real LVGL renderer.

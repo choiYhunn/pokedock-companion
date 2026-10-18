@@ -120,7 +120,7 @@ Study is connected to progression:
 - Light themes and contextual UI follow Pokémon roles rather than arbitrary RGB presets.
 
 Stable simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
 
 
 ## Fan-system V4
@@ -157,7 +157,7 @@ The study loop is:
 `Quest -> Focus training -> EXP/Bond/Egg -> Encounter -> Dex/Badge -> Partner Center`.
 
 Stable interactive simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
 
 
 ## UI V6 — simplified hierarchy
@@ -186,7 +186,7 @@ The second layer contains the existing utility screens, so functionality is pres
 This follows the same general information-architecture principle used by Pokémon GO and Pokémon Sleep: keep the primary activity surface focused, and move inventory/settings/secondary systems behind a menu rather than keeping them permanently visible.
 
 Simulator:
-https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
+https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
 
 
 ## V7 — Gengar's Hideout / real-life gift audit
@@ -197,11 +197,11 @@ https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
 - Audit separates **working browser demo / portable C++ core / pending hardware integration** and reprioritizes an actually useful birthday-gift MVP.
 - Read [V7 full audit](docs/V7_FULL_AUDIT.md) for detailed daily-use, mechanical, Qi, phone BLE, accessibility and acceptance criteria.
 
-Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
+Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
 
 ## V8 — iPhone 14 family, living Gengar and private gift
 
-- Live interactive UI: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
+- Live interactive UI: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
 - Gengar gently floats on HOME; tap the character for different reactions. Five taps reveal the couple nook.
 - The Gengar Poké Ball menu contains the low-key **우리 서랍** shortcut under Desk.
 - Anniversary date and a custom private love letter are editable without hardcoding identifiable information in public source.
@@ -212,3 +212,21 @@ Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=8
 - See [V8 couple & pet spec](docs/COUPLE_AND_PET_V8.md) and [iPhone 14 hardware plan](docs/IPHONE_14_INTEGRATION_V8.md).
 
 Note: the browser uses localStorage, which is neither encrypted nor shared across devices. The hardware LVGL, persistence, charging and Bluetooth integrations are separate unfinished milestones.
+
+## V9 — playable character selection + OTA foundation (2026-10-18)
+
+Live: https://choiyhunn.github.io/pokedock-companion/simulator.html?v=9
+
+**Pokémon-game-inspired interaction**, rather than only a floating static image:
+- On HOME or Trainer, tap **파트너 선택** to open a real 800×480 PARTY SELECT screen.
+- Animated Gen-V pixel sprite stage, original colored game-style dialogue, list selection cursor, entrance / confirmation and subtle sparkle effects.
+- Eight party members (Gengar, Piplup, Togekiss, Lucario, Quagsire, Togepi, Pachirisu, Jirachi). Each of the five main favorites has distinct motion and dialogue.
+- Touch, keyboard arrows/Enter/Esc, optional softly generated SFX (**off by default**).
+- Selected partner updates HOME and persists in this browser's localStorage; respects `prefers-reduced-motion`.
+- HOME companion shows mini animated pixel sprite and distinct personality motion while the main artwork remains visually readable.
+- Animated GIFs and artwork currently load from online PokeAPI sprite repositories. They need an offline asset port and usage-rights review before hardware delivery.
+- Portable future LVGL state/motion policy in `firmware/hmi/core/partner_motion.h` with a host test.
+
+**OTA answer:** LVGL source/UI can update later via ESP-IDF HTTPS firmware OTA, provided the initial board firmware config includes two suitable OTA slots, health-gated rollback and a recovery plan. Animation assets stored outside the app may be updated separately in future, but the safe asset swapper is not yet built. See [firmware/hmi/ota/README.md](firmware/hmi/ota/README.md) and [V9 UI/motion spec](docs/PARTY_ANIMATION_V9.md).
+
+**Not yet completed:** physical LVGL/HMI integration, OTA flashed-and-tested on the device, sprite asset packaging, runtime font fit/animation frame profiling.
