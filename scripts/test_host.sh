@@ -29,9 +29,13 @@ g++ "${flags[@]}" "$tests/partner_motion_test.cpp" -o "$tmp/motion"
 "$tmp/motion"
 if command -v openscad >/dev/null; then
   echo "OpenSCAD syntax and profile mesh validation"
-  openscad -o "$tmp/angle70.svg" -D 'PART="angle_70"' cad/pokedock_v14_dryfit_templates.scad 2>"$tmp/angle70.log"
+  if ! openscad -o "$tmp/angle70.svg" -D 'PART="angle_70"' cad/pokedock_v14_dryfit_templates.scad 2>"$tmp/angle70.log"; then
+    cat "$tmp/angle70.log"; exit 1
+  fi
   test -s "$tmp/angle70.svg"
-  openscad -o "$tmp/v14.stl" cad/pokedock_v14_magsafe_ready.scad 2>"$tmp/v14.log"
+  if ! openscad -o "$tmp/v14.stl" cad/pokedock_v14_magsafe_ready.scad 2>"$tmp/v14.log"; then
+    cat "$tmp/v14.log"; exit 1
+  fi
   test -s "$tmp/v14.stl"
   echo "OpenSCAD sample geometries parse/export PASS (NOT DFM approval)"
 else
