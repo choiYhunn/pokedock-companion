@@ -1,5 +1,7 @@
 # PokéDock V14 — assembly and measurements SOP
 
+> Current controlled fabrication blockers and pass/fail gates: [V14 release audit](V14_RELEASE_AUDIT.md).
+
 ## 0. Record hard facts first
 - iPhone 14 Pro + MagSafe compatible case **CONFIRMED**.
 - iPhone case make/model and actual dimensions, which side the camera should be on, coil center in case, real puck diameter/thickness and lead bend **NOT YET MEASURED**.
