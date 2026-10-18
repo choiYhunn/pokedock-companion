@@ -83,7 +83,7 @@ function side(q){
  var endY=num("startY",40)+q.run*Math.cos(rd(q.ang));
  var endZ=q.tip;
  var puckY=num("startY",40)+q.run*.51*Math.cos(rd(q.ang));
- var puckZ=11+q.run*.51*Math.sin(rd(q.ang));
+ var puckZ=7+q.run*.51*Math.sin(rd(q.ang));
  $("side").innerHTML='<line x1="8" y1="'+by+'" x2="329" y2="'+by+'" stroke="#95869c" stroke-width="1.8"/>'+
  '<rect x="'+X(0)+'" y="'+Z(4)+'" width="'+(q.d*scale)+'" height="4" rx="2" fill="#e4dce9"/>'+
  '<line x1="'+X(15)+'" y1="'+Z(12)+'" x2="'+X(screenY)+'" y2="'+Z(q.screenTop)+'" stroke="#afa4bf" stroke-width="8" stroke-linecap="round"/>'+
@@ -101,7 +101,7 @@ function topview(q){
  '<text x="12" y="16" fill="#756a7e" font-size="11">전면 ↓</text>';
 }
 function render(){
- var q=calc(pose,num("tilt",39));
+ var q=calc(pose,num("tilt",70));
  $("angText").textContent=q.ang+"°";
  $("width").textContent=Math.round(q.w)+" mm";
  $("depth").textContent=Math.round(q.d)+" mm";
@@ -110,10 +110,10 @@ function render(){
  var h=q.screenTop-q.tip;
  var over=Math.max(0,(q.span-num("screenW",116.3))/2);
  $("status").textContent=(h<0?"휴대폰 윗부분이 화면보다 약 "+Math.round(-h)+" mm 높아질 수 있음. ":"화면 상단이 휴대폰보다 약 "+Math.round(h)+" mm 높은 계산. ")+"좌우 추정 노출 "+over.toFixed(1)+" mm/쪽. 눈높이에서 반드시 실물 확인.";
- var a=calc("landscape",pose==="landscape"?q.ang:39),b=calc("portrait",pose==="portrait"?q.ang:32);
+ var a=calc("landscape",pose==="landscape"?q.ang:70),b=calc("portrait",pose==="portrait"?q.ang:32);
  $("comparison").innerHTML=[a,b].map(function(v){return '<tr class="'+(v.pose===pose?'selected':'')+'"><td>'+ (v.pose==="landscape"?"가로형":"세로형")+'</td><td>'+Math.round(v.w)+' × '+Math.round(v.d)+' mm</td><td>'+v.area.toFixed(1)+' cm²</td><td>'+(v.pose==="landscape"?"양쪽 노출/충전 정렬":"깊이/은닉각 확인")+'</td></tr>'}).join("");
 }
-document.querySelectorAll("[data-pose]").forEach(function(b){b.onclick=function(){pose=b.dataset.pose;document.querySelectorAll("[data-pose]").forEach(function(c){c.classList.toggle("on",c.dataset.pose===pose)});$("tilt").value=pose==="landscape"?39:32;render()}});
+document.querySelectorAll("[data-pose]").forEach(function(b){b.onclick=function(){pose=b.dataset.pose;document.querySelectorAll("[data-pose]").forEach(function(c){c.classList.toggle("on",c.dataset.pose===pose)});$("tilt").value=pose==="landscape"?70:32;render()}});
 document.querySelectorAll("input,select").forEach(function(i){i.addEventListener("input",render)});
 render();
 })();
