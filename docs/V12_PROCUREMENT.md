@@ -1,3 +1,5 @@
+> **V13 purchase change:** do NOT treat MagSafe and a second PD adapter as Phase A essentials. First make **passive landscape 70° slot** for confirmed iPhone 14 Pro, then optionally add a protected removable MagSafe module after a fit/heat/space test. See [V13 decision](V13_COMPACT_IPHONE_14_PRO.md). Earlier table below is preserved as V12 history.
+
 # PokéDock V12 — phased sourcing with price confidence (2026-10-18)
 
 Only **Phase A** is recommended now and even that remains pending user purchase authorization. Do not interpret a BOM as an order. Confirm iPhone variant/case and existing household USB-C adapter inventory first.

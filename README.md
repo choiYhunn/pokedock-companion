@@ -1,5 +1,7 @@
 # PokéDock Companion
 
+**Latest mechanical decision (2026-10-18): V13 iPhone 14 Pro COMPACT SLOT.** Use [V13 decision](docs/V13_COMPACT_IPHONE_14_PRO.md) and [V13 OpenSCAD adjustable mock](cad/pokedock_v13_compact_slot.scad). Confirmed phone is **14 Pro**; confirmed cased Waveshare 4.3C-BOX external envelope **116.3×79×18mm**. Default rear phone orientation becomes **landscape 70°**, with a **passive noncharging padded slot first** and **optional removable MagSafe only later**. This supersedes the V12 39° landscape/32° portrait prior defaults. No manufacturing clearances have been signed off.
+
 **Latest industrial/mechanical baseline (2026-10-18): V12 QUIET DESK.** Product/UI web prototype remains V10; real board and charger have **not** been validated.
 
 **[Open V12 live design calculator](https://choiyhunn.github.io/pokedock-companion/design.html)** · **[Interact with V10 device UI](https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10)**

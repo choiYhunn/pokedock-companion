@@ -1,16 +1,16 @@
-# PokéDock V12 — Master fabrication handoff (previous V11 stages preserved)
+# PokéDock V13 — compact iPhone 14 Pro re-evaluation (previous designs preserved)
 
-## V12 design-first reading order (current)
+## V13 current engineering decision
 
-1. [V12 space/form decision and orientation comparison](V12_INDUSTRIAL_DESIGN.md)
-2. [V12 model/phone/charger measurement register](V12_MEASUREMENT_REGISTER.md)
+1. **[V13 iPhone 14 Pro compact landscape slot; passive vs optional MagSafe](V13_COMPACT_IPHONE_14_PRO.md)** — current decision baseline; supersedes low-angle portrait as default.
+2. [Current V12 measurement register, corrected for 14 Pro & real C-BOX dimensions](V12_MEASUREMENT_REGISTER.md)
 3. [V12 fabrication component architecture and assembly details](V12_FABRICATION_PLAN.md)
 4. [V12 phased purchasing and item criteria](V12_PROCUREMENT.md)
-5. [V12 interactive design calculator](../design.html) / [V12 concept CAD](../cad/pokedock_v12_quiet_desk.scad)
+5. [Rebaselined design calculator](../design.html) / **[V13 iPhone 14 Pro compact CAD mock](../cad/pokedock_v13_compact_slot.scad)** (sample clearances; NOT fabrication-ready)
 6. [V11 step-by-step safe bring-up](V11_ASSEMBLY_SOP.md), [power separation](V11_ELECTRICAL_WIRING.md) and [ESP-IDF/LVGL port](V10_HARDWARE_PORTING.md)
 7. [Progression policy](V11_STUDY_POKEMON_PROGRESS.md), [test acceptance](V10_TEST_ACCEPTANCE.md)
 
-**Decision:** A = landscape phone behind screen when space/one-hand MagSafe pass; B = portrait low-angle phone when concealment quality wins. Both retain slim front screen and no front phone tray. The final choice cannot be made without actual phone/case and screen dimensions. Source model values are *samples*.
+**Decision:** V13 A = passive landscape 65–75° slot (70° first), with optional removable MagSafe as B, both shallow. Old 32° portrait ramp is rejected as the default for desk-space reasons. iPhone model 14 Pro is confirmed; case model still unknown. C-BOX **116.3×79×18mm** dimensions are confirmed in manufacturer cased diagram. Derived footprint remains a sample until fit test.
 
 This index is the **single reading order** for building an actually usable gift, not a promise that the Waveshare MCU product is already completed.
 

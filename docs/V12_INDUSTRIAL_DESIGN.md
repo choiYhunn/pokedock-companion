@@ -1,3 +1,5 @@
+> **Superseded for default mechanical orientation on 2026-10-18 by [V13 compact iPhone 14 Pro](V13_COMPACT_IPHONE_14_PRO.md).** V12 132×86 HMI and regular iPhone 14 are former sample assumptions. C-BOX manufacturer outside size is **116.3×79×18mm**, and recipient phone is **iPhone 14 Pro**. V12 remains historical comparison only; do not purchase tooling based on its default.
+
 # PokéDock V12 — QUIET DESK industrial design / physical baseline
 
 > **Engineering baseline, NOT production-approved tooling.** Case, magnet puck, iPhone with case, fastener, thermal, line-of-sight, and structural load are still unmeasured. In the CAD, every HMI/phone/puck dimension except Apple bare-phone dimensions is marked a placeholder. Never order an STL, drill the Waveshare case or apply power solely from this file.
