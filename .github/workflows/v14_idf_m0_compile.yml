@@ -4,6 +4,7 @@ on:
     branches: [engineering/v14-production-plan-20261019]
     paths:
       - '.github/workflows/v14_idf_m0_compile.yml'
+      - 'firmware/hmi/espidf/main/pokedock_lvgl_demo.cpp' # opt-in device UI compile only
   workflow_dispatch: {}
 permissions:
   contents: read
@@ -13,9 +14,16 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Compile-check opt-in LCD demo without enabling it in release defaults
+        run: echo 'CONFIG_POKEDOCK_HMI_START=y' >> firmware/hmi/espidf/sdkconfig.defaults
       - name: ESP32-S3 console skeleton cross-build
         uses: espressif/esp-idf-ci-action@v1
         with:
           esp_idf_version: release-v5.5
           target: esp32s3
           path: firmware/hmi/espidf
+      - name: Assert 33630 16MB flash and octal PSRAM build contract
+        run: |
+          grep -q '^CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y' firmware/hmi/espidf/sdkconfig
+          grep -q '^CONFIG_SPIRAM_MODE_OCT=y' firmware/hmi/espidf/sdkconfig
+          test -s firmware/hmi/espidf/build/pokedock_hmi_bringup.bin
