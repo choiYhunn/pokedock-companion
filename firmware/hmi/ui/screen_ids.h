@@ -4,7 +4,7 @@
 enum class ScreenId : uint8_t {
   HOME, FOCUS, QUESTS, TIMER, STOPWATCH, TODAY, STATS,
   TRAINER, BADGES, EGG, DEX, NFC, WEATHER, ALARM, PHONE,
-  LIGHT, SETTINGS, BIRTHDAY, NIGHT
+  LIGHT, SETTINGS, BIRTHDAY, NIGHT, OUR_SPACE
 };
 
 inline const char* screen_id_name(ScreenId id) {
@@ -28,6 +28,7 @@ inline const char* screen_id_name(ScreenId id) {
     case ScreenId::SETTINGS: return "settings";
     case ScreenId::BIRTHDAY: return "birthday";
     case ScreenId::NIGHT: return "night";
+    case ScreenId::OUR_SPACE: return "our-space";
   }
   return "unknown";
 }
