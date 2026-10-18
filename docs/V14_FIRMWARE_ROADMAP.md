@@ -3,7 +3,7 @@
 ## What is executable today
 - Browser: V10 HTML/CSS/JS `simulator.html`, Node smoke tests. **Not** embeddable LVGL UI.
 - Portable C++: `StudyEngine`, deterministic `commit_verified_focus` policy, reward engine, partner motion and host tests. Persistence NVS adapter and actual on-device clock/task wiring **not** implemented.
-- `firmware/hmi/espidf` = M0 *console-only* CMake shell. Existing `main/idf_component.yml` BSP 3.0.1 pinned candidate; not a proven board binary.
+- `firmware/hmi/espidf` = **M0 console by default** plus **optional LVGL9 HOME/FOCUS/BREAK** C++ preview, compiled with Waveshare BSP 3.0.1. [Run 39144643479](https://github.com/choiYhunn/pokedock-companion/actions/runs/39144643479): ESP-IDF 5.5 + 16MB flash + Octal PSRAM + native LVGL9 compile **PASS**; physical board runtime, NVS, RTC, assets remain unverified. The earlier M0 build used wrong 2MB flash and was superseded.
 
 ## Baseline choice and version lock
 1. Obtain actual 33630 board revision and compare against Waveshare first-party `examples/esp-idf/03_lcd`, `06_touch`, `02_rtc`, `05_sd`, `11_speaker_microphone`, `12_lvgl_transplant`. Record first-party SHA + exact `sdkconfig.defaults`, BSP/LVGL version and ESP-IDF tag.
@@ -58,4 +58,4 @@ app_main:
 - No bundled arbitrary Pokémon cries/official music/audio asset downloads in a public repo.
 
 ## Tests and evidence
-See [V14 test protocol](V14_TEST_PROTOCOL.md), [official Wave demos](https://github.com/waveshareteam/ESP32-S3-Touch-LCD-4.3C), [IDF porting baseline](V10_HARDWARE_PORTING.md). Running Node/C++ on a PC is not ESP-IDF cross-build or hardware integration.
+See [V14 test protocol](V14_TEST_PROTOCOL.md), [official Wave demos](https://github.com/waveshareteam/ESP32-S3-Touch-LCD-4.3C), [IDF porting baseline](V10_HARDWARE_PORTING.md). Host regression and the ESP-IDF cross-build both passed; **neither proves actual LCD/touch operation, NVS durability or hardware integration**. See [full validation report](V14_VALIDATION_REPORT_20261019.md).
