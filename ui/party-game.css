@@ -1,0 +1,102 @@
+/* PokéDock V9 — game-inspired partner selection, not a reproduction of any specific game UI.
+   Layout follows the real 800x480 screen via container query units. */
+.party-overlay{position:absolute;inset:0;z-index:85;overflow:hidden;color:#252334;background:linear-gradient(140deg,#efeaf9,#fdf9ed 58%,#e4eff8);display:grid;grid-template-columns:39% 61%;font-family:inherit}
+.party-overlay:before{content:"";position:absolute;inset:0;opacity:.14;pointer-events:none;background:radial-gradient(circle at 1px 1px,#8b7ca2 1px,transparent 1.25px);background-size:1.65cqw 1.65cqw}
+.party-side{display:flex;flex-direction:column;padding:2.3cqw 1.1cqw 1.6cqw 2.3cqw;position:relative;z-index:2;min-height:0;border-right:.2cqw solid #baadd1}
+.party-eyebrow{display:flex;align-items:center;gap:.75cqw;font-size:1.05cqw;color:#79638e;letter-spacing:.17em;font-weight:900}
+.party-title{font-size:2.9cqw;font-weight:950;letter-spacing:-.05em;line-height:1.05;margin:.7cqw 0 .4cqw}
+.party-subtitle{font-size:1.2cqw;color:#6b6472;line-height:1.4;margin-bottom:1.1cqw}
+.party-choices{display:grid;grid-auto-rows:5.25cqw;gap:.65cqw;overflow:auto;scrollbar-width:thin;min-height:0;padding:.15cqw .55cqw .7cqw .1cqw;scroll-padding:.6cqw}
+.party-choice{position:relative;display:grid;grid-template-columns:2.4cqw 4.7cqw 1fr auto;align-items:center;gap:.5cqw;border:1px solid #e1d8e9;background:#ffffffac;color:#30293c;border-radius:1.05cqw;text-align:left;padding:.4cqw .7cqw;cursor:pointer;min-width:0;transition:background .15s,transform .15s,box-shadow .15s}
+.party-choice img{width:4.45cqw;height:4.1cqw;object-fit:contain;image-rendering:pixelated}
+.party-choice .choice-index{font-size:1cqw;color:#80748c;font-weight:900}
+.party-choice .choice-name{font-size:1.4cqw;font-weight:950;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.party-choice .choice-role{display:block;font-size:.91cqw;color:#82788f;font-weight:650;margin-top:.2cqw}
+.party-choice .choice-mark{font-size:1.2cqw;color:#645181;font-weight:900}
+.party-choice[aria-selected="true"]{border:.24cqw solid #70529a;background:#fff;box-shadow:0 .4cqw 1.15cqw #54406e25;transform:translateX(.22cqw)}
+.party-choice[aria-selected="true"]:before{content:"▶";color:#7659a5;position:absolute;left:-1.55cqw;font-size:1.2cqw}
+.party-choice:focus-visible,.party-close:focus-visible,.party-confirm:focus-visible{outline:.35cqw solid #7d55b9;outline-offset:.12cqw}
+.party-footnote{margin-top:auto;padding-top:.7cqw;font-size:1cqw;color:#7c708d}
+.party-scene{position:relative;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:1.6cqw 2cqw 1.4cqw}
+.party-close{position:absolute;top:1.3cqw;right:1.45cqw;z-index:30;width:4cqw;height:4cqw;border:1px solid #ffffffba;border-radius:50%;background:#fff9;cursor:pointer;font-weight:950;font-size:1.7cqw;color:#53475f}
+.party-stage{position:relative;flex:1;min-height:0;margin-right:1.9cqw;overflow:hidden;border-radius:1.6cqw;background:radial-gradient(ellipse at 50% 40%,var(--party-glow,#f4d8fa) 0,transparent 47%),linear-gradient(175deg,var(--party-sky,#e6dafa),#fffaf5 76%);border:.17cqw solid #ffffffb9}
+.party-stage:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.27;background:radial-gradient(circle,#fff 1px,transparent 1.5px);background-size:2.8cqw 2.8cqw}
+.party-stage:after{content:"";position:absolute;left:11%;right:8%;bottom:11%;height:11%;border-radius:50%;background:radial-gradient(ellipse,#7c679b35,transparent 70%)}
+.party-portrait{position:absolute;right:1%;top:1%;width:61%;height:90%;object-fit:contain;opacity:.38;filter:drop-shadow(0 1cqw 1.2cqw #0002);pointer-events:none;animation:portraitArrive .55s ease-out both}
+.party-stage-rail{position:absolute;bottom:12%;left:10%;width:83%;height:2cqw;border-radius:50%;border-bottom:.7cqw solid #b7a6c8b4;transform:perspective(12cqw) rotateX(12deg)}
+.party-pixel-wrap{position:absolute;bottom:13%;left:31%;width:32%;height:55%;z-index:4;display:grid;place-items:end center;pointer-events:none;animation:spriteEntrance .55s cubic-bezier(.2,.9,.25,1.3) both}
+.party-pixel{width:18cqw;max-height:22cqw;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(.3cqw .6cqw 0 #3d2a5360);animation:partyWander 4.1s ease-in-out infinite}
+.party-pixel[data-pose="gengar"]{animation:gengarSneak 4.4s steps(5,end) infinite}
+.party-pixel[data-pose="piplup"]{animation:piplupHop 2.8s cubic-bezier(.2,.75,.3,1) infinite}
+.party-pixel[data-pose="togekiss"]{animation:togekissGlide 4.6s ease-in-out infinite}
+.party-pixel[data-pose="lucario"]{animation:lucarioStance 3.5s cubic-bezier(.45,0,.45,1) infinite}
+.party-pixel[data-pose="quagsire"]{animation:quagsireWobble 4.6s ease-in-out infinite}
+.party-pixel[data-pose="other"]{animation:partyWander 3.4s ease-in-out infinite}
+.party-stage[data-enter="true"] .party-pixel-wrap{animation:spriteEntrance .55s cubic-bezier(.2,.9,.25,1.3) both}
+.party-stage .stage-spark{position:absolute;z-index:5;left:var(--spark-x);top:var(--spark-y);color:#fef9bf;font-size:2.25cqw;text-shadow:0 0 .7cqw #9377bd;opacity:0;pointer-events:none;animation:sparkOut 2.4s linear infinite;animation-delay:var(--spark-d)}
+.party-stage[data-mode="gengar"] .stage-spark{color:#bc9ad7}
+.party-stage[data-mode="lucario"] .stage-spark{color:#6cafe8}
+.party-stage[data-mode="piplup"] .stage-spark{color:#8ad3ef}
+.party-stage[data-mode="togekiss"] .stage-spark{color:#f7c4dc}
+.party-stage[data-mode="quagsire"] .stage-spark{color:#8ecdc6}
+.party-ribbon{position:absolute;left:1.3cqw;top:1.2cqw;display:flex;align-items:center;gap:.65cqw;border-radius:999px;background:#ffffffb3;padding:.5cqw .85cqw;color:#705c7d;font-size:1.1cqw;font-weight:900}
+.party-ribbon span{font-size:1.5cqw}
+.party-dialog{min-height:11.7cqw;flex:0 0 auto;background:#fffefb;border:.3cqw solid #8064aa;box-shadow:inset 0 0 0 .25cqw #f4e6ff,0 .6cqw 1.2cqw #382e4618;border-radius:1.1cqw;margin-top:1.15cqw;margin-right:1.9cqw;padding:1.05cqw 1.4cqw;position:relative;display:flex;gap:1.2cqw;align-items:center}
+.party-dialog:before{content:"";position:absolute;left:1.25cqw;top:-.6cqw;width:1.2cqw;height:1.2cqw;background:#fff;transform:rotate(45deg);border-left:.22cqw solid #8064aa;border-top:.22cqw solid #8064aa}
+.party-details{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:.45cqw}
+.party-meta{font-size:.95cqw;letter-spacing:.08em;font-weight:900;color:#84719a}
+.party-dialog-title{font-size:2.05cqw;font-weight:950;letter-spacing:-.025em;line-height:1}
+.party-dialog-line{font-size:1.28cqw;line-height:1.35;color:#5c5168;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.party-actions{display:flex;flex-direction:column;gap:.65cqw;align-items:stretch;min-width:12cqw}
+.party-confirm{background:#dc6c7c;color:#fff;border:.24cqw solid #bc5368;border-radius:1cqw;min-height:4.2cqw;font-size:1.17cqw;font-weight:950;padding:0 1.1cqw;cursor:pointer;box-shadow:0 .4cqw 0 #ac5263}
+.party-confirm:active{transform:translateY(.25cqw);box-shadow:0 .12cqw 0 #ac5263}
+.party-other{background:#f6effd;color:#5c4781;border:1px solid #d9c9ec;border-radius:.9cqw;font-size:.95cqw;min-height:2.8cqw;cursor:pointer}
+.party-overlay.is-confirming .party-stage{animation:confirmationGlow .75s ease-out}
+.party-overlay.is-confirming .party-pixel{animation:celebrateHop .68s ease-in-out}
+.party-confirmed{position:absolute;left:50%;top:29%;transform:translate(-50%,-50%);z-index:20;border-radius:999px;background:#fff7d8;color:#756126;border:.28cqw solid #f1d276;padding:.8cqw 1.7cqw;font-size:1.8cqw;font-weight:950;box-shadow:0 .8cqw 2cqw #564c7d3d;animation:confirmationFly .8s ease-out both}
+@keyframes spriteEntrance{from{opacity:0;transform:translateX(14cqw) scale(.72)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes portraitArrive{from{opacity:0;transform:translateX(5cqw)}to{opacity:.38;transform:translateX(0)}}
+@keyframes partyWander{0%,100%{transform:translateX(-2cqw)}50%{transform:translateX(3cqw) translateY(-.7cqw)}}
+@keyframes gengarSneak{0%,100%{transform:translateX(-2.5cqw) translateY(0) scaleX(1)}24%{transform:translateX(-.4cqw) translateY(-.8cqw) scaleX(1.04)}48%{transform:translateX(3cqw) translateY(0) scaleX(-1)}76%{transform:translateX(.6cqw) translateY(-1.3cqw) scaleX(-1.04)}}
+@keyframes piplupHop{0%,100%{transform:translateY(0) rotate(-3deg)}37%{transform:translateY(-2.2cqw) rotate(7deg)}53%{transform:translateY(0) rotate(0)}69%{transform:translateY(-.8cqw) rotate(-4deg)}}
+@keyframes togekissGlide{0%,100%{transform:translate(-2cqw,.2cqw) rotate(-4deg)}50%{transform:translate(2cqw,-2cqw) rotate(4deg)}}
+@keyframes lucarioStance{0%,100%{transform:translateX(0) rotate(0)}20%{transform:translateX(-1cqw) rotate(-5deg)}42%{transform:translateX(1.2cqw) rotate(7deg) scale(1.06)}56%{transform:translateX(0) rotate(0)}}
+@keyframes quagsireWobble{0%,100%{transform:rotate(-5deg) scale(1,1)}50%{transform:rotate(5deg) scale(1.07,.94)}}
+@keyframes sparkOut{0%{opacity:0;transform:translateY(1cqw) scale(.35)}45%{opacity:.8}100%{opacity:0;transform:translateY(-2cqw) scale(1.1)}}
+@keyframes confirmationGlow{0%{filter:brightness(1)}45%{filter:brightness(1.22)}100%{filter:brightness(1)}}
+@keyframes celebrateHop{0%,100%{transform:translateY(0) scale(1)}40%{transform:translateY(-3cqw) scale(1.12)}}
+@keyframes confirmationFly{from{opacity:0;transform:translate(-50%,0) scale(.6)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.poke-pet--gengar>.pokemon{animation:idleHaunt 9s ease-in-out infinite}
+.poke-pet--piplup>.pokemon{animation:idleHop 4s ease-in-out infinite}
+.poke-pet--togekiss>.pokemon{animation:idleGlide 7s ease-in-out infinite}
+.poke-pet--lucario>.pokemon{animation:idlePose 6s ease-in-out infinite}
+.poke-pet--quagsire>.pokemon{animation:idleSway 8s ease-in-out infinite}
+.poke-pet--other>.pokemon{animation:buddyFloat 5s ease-in-out infinite}
+.poke-pet--gengar .pet-tip,.poke-pet--gengar .halo{filter:hue-rotate(22deg)}
+.poke-pet-walker{position:absolute;z-index:5;width:9.5cqw;height:9.5cqw;right:3.2cqw;bottom:1.5cqw;object-fit:contain;image-rendering:pixelated;pointer-events:none;filter:drop-shadow(.18cqw .4cqw .12cqw #5e406b4b);animation:miniWalk 7s ease-in-out infinite}
+.poke-pet--piplup .poke-pet-walker{animation:miniHop 3s ease-in-out infinite}
+.poke-pet--togekiss .poke-pet-walker{animation:togekissGlide 4.6s ease-in-out infinite}
+.poke-pet--quagsire .poke-pet-walker{animation:quagsireWobble 4s ease-in-out infinite}
+.poke-pet--lucario .poke-pet-walker{animation:lucarioStance 4s ease-in-out infinite}
+.poke-pet-heart{position:absolute;right:7.5cqw;bottom:12cqw;color:#dd75a7;font-weight:950;font-size:2.5cqw;z-index:9;pointer-events:none;animation:heartPop .8s ease-out both}
+@keyframes miniWalk{0%,100%{transform:translateX(-.5cqw) scaleX(1)}28%{transform:translateX(-3cqw) scaleX(1)}52%{transform:translateX(0) scaleX(-1)}78%{transform:translateX(2cqw) scaleX(-1)}}
+@keyframes miniHop{0%,100%{transform:translateY(0)}45%{transform:translateY(-1.5cqw)}}
+@keyframes idleHaunt{0%,100%{transform:translate(0,0) rotate(-1deg) scale(1)}21%{transform:translate(-1.4cqw,-1.2cqw) rotate(-4deg) scale(.985)}46%{transform:translate(.5cqw,0) rotate(2deg)}70%{transform:translate(1cqw,-.8cqw) rotate(5deg) scale(1.03)}}
+@keyframes idleHop{0%,100%{transform:translateY(0)}30%{transform:translateY(-1.4cqw) rotate(6deg)}39%{transform:translateY(0) rotate(-3deg)}55%{transform:translateY(-.5cqw)}}
+@keyframes idleGlide{0%,100%{transform:translate(-.9cqw,0) rotate(-2deg)}50%{transform:translate(1cqw,-1.7cqw) rotate(3deg)}}
+@keyframes idlePose{0%,100%{transform:rotate(0)}35%{transform:translateY(-.3cqw) rotate(-5deg)}65%{transform:translateY(0) rotate(3deg)}}
+@keyframes idleSway{0%,100%{transform:rotate(-3deg) scale(1)}50%{transform:rotate(3deg) scale(1.02,.985)}}
+@keyframes heartPop{0%{opacity:0;transform:translateY(1cqw) scale(.5)}30%{opacity:1;transform:translateY(-.6cqw) scale(1.2)}100%{opacity:0;transform:translateY(-3cqw) scale(1)}}
+@media (prefers-reduced-motion:reduce){
+ .party-pixel,.party-pixel-wrap,.party-portrait,.party-stage .stage-spark,.poke-pet-walker,.poke-pet-heart,.poke-pet--gengar>.pokemon,.poke-pet--piplup>.pokemon,.poke-pet--togekiss>.pokemon,.poke-pet--lucario>.pokemon,.poke-pet--quagsire>.pokemon{animation:none!important}
+ .party-choice{transition:none!important}
+}
+.screen.night .party-overlay{background:linear-gradient(130deg,#262033,#38304c);color:#eee8fa}
+.screen.night .party-subtitle,.screen.night .party-footnote{color:#cbc0d8}
+.screen.night .party-choice{background:#ffffff16;color:#fff;border-color:#887b9b}
+.screen.night .party-choice[aria-selected="true"]{background:#5a4b73}
+.screen.night .party-choice .choice-index,.screen.night .party-choice .choice-role{color:#c7b9d3}
+.screen.night .party-dialog{background:#2e2840;color:#faf3ff}
+.screen.night .party-dialog-line{color:#ded5e9}
+.screen.night .party-dialog:before{background:#2e2840}
+.screen.night .party-stage{opacity:.86}
