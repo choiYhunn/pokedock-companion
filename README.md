@@ -5,13 +5,13 @@
 
 **Archived V13 (superseded by V14 MagSafe-ready): V13 iPhone 14 Pro COMPACT SLOT.** Use [V13 decision](docs/V13_COMPACT_IPHONE_14_PRO.md) and [V13 OpenSCAD adjustable mock](cad/pokedock_v13_compact_slot.scad). Confirmed phone is **14 Pro**; confirmed cased Waveshare 4.3C-BOX external envelope **116.3×79×18mm**. Default rear phone orientation becomes **landscape 70°**, with a **passive noncharging padded slot first** and **optional removable MagSafe only later**. This supersedes the V12 39° landscape/32° portrait prior defaults. No manufacturing clearances have been signed off.
 
-**Latest industrial/mechanical baseline (2026-10-18): V12 QUIET DESK.** Product/UI web prototype remains V10; real board and charger have **not** been validated.
+**Current release status:** V14 is the latest **design**, not assembled hardware; V10 is only the browser UI. See the [V14 manufacturing audit](docs/V14_RELEASE_AUDIT.md). V12/V13 are archived mechanical investigations.
 
-**[Open V12 live design calculator](https://choiyhunn.github.io/pokedock-companion/design.html)** · **[Interact with V10 device UI](https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10)**
+**[Open V14 live design calculator](https://choiyhunn.github.io/pokedock-companion/design.html?v=14)** · **[Interact with V10 device UI](https://choiyhunn.github.io/pokedock-companion/simulator.html?v=10)**
 
-The product is intentionally a clean front-facing Gengar/clock picture-frame with **a separate rear MagSafe phone support**, no front phone tray and no bulky integrated NFC platform. A/B mechanical decision is now explicit: **A horizontal/landscape phone for desk-space efficiency**, vs **B portrait low-angle phone for better concealed front**; choose after physically testing exact iPhone model/case/puck and 4.3C-BOX mounting case.
+The V14 front remains a quiet Gengar/clock HMI with a rear **70° landscape** iPhone 14 Pro support. A low-angle portrait ramp is no longer a default candidate; choose between **passive slot** and **the same slot plus independently powered removable finished MagSafe puck** after physical fitting and safety tests.
 
-### V12 physical source of truth
+### Archived V12 mechanical references — not current build baseline
 1. [Industrial design form/space comparison](docs/V12_INDUSTRIAL_DESIGN.md), including reference envelope ~169×118mm A vs ~148×187mm B using **unverified sample case/case allowance dimensions**.
 2. [Interactive dimensional review lab](design.html) — user can adjust iPhone 14 variant, case allowance, screen housing dimensions, angle.
 3. [V12 configurable OpenSCAD mock](cad/pokedock_v12_quiet_desk.scad) — layout choices and dimensions; **not print-ready/structurally validated**.
@@ -78,7 +78,7 @@ config/                              catalogs and features
 
 ## Honest readiness
 
-**Implemented:** browser simulator interaction and test scripts; C++ portable engine/policy source and host tests; detailed V11 design/measurement/assembly documents.
+**Implemented:** browser simulator interaction and test scripts; C++ portable engine/policy source and host tests; V14 design/BOM/SOP and sample geometry audit documents. **Not implemented:** a complete native 800×480 LVGL app.
 
 **Not yet implemented/proven:** assembled unit, verified 4.3C-BOX power wiring, actual iPhone fit/temperature, native LVGL HOME/Focus, on-device NVS, audio playback/import, NFC operation, iOS ANCS notification forwarding, device OTA / rollback. GitHub Pages deployment success is not a physical hardware test.
 
