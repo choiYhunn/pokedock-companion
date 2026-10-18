@@ -1,3 +1,15 @@
+# PokéDock V14 — current MagSafe-ready manufacturing baseline
+
+**Confirmed:** girlfriend uses **iPhone 14 Pro with MagSafe-compatible case**. Design is **landscape 70° slim rear cradle**, adjustable/removable *finished* MagSafe puck with its own PD adapter. No long portrait ramp or front phone tray. **No hardware purchased/flashed or case/puck fit tested yet**.
+
+1. [V14 physical/industrial design and precise fit gates](V14_MAGSAFE_READY_DESIGN.md)
+2. [V14 purchasing list with buy/reuse/defer](V14_PURCHASING_BOM.md)
+3. [V14 build/test SOP](V14_ASSEMBLY_SOP.md)
+4. [V14 parametric reference CAD](../cad/pokedock_v14_magsafe_ready.scad) and [updated calculator](../design.html)
+5. [Measurement register](V12_MEASUREMENT_REGISTER.md), [electrical isolation](V11_ELECTRICAL_WIRING.md), [native porting](V10_HARDWARE_PORTING.md)
+
+---
+
 # PokéDock V13 — compact iPhone 14 Pro re-evaluation (previous designs preserved)
 
 ## V13 current engineering decision

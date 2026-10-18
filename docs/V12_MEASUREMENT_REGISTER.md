@@ -1,3 +1,5 @@
+> **V14 confirmed: iPhone 14 Pro AND case is MagSafe-compatible.** Case brand/thickness, charger puck dimensions, 75mm mount screw/thread and actual fit still TBD. [V14 current spec](V14_MAGSAFE_READY_DESIGN.md) supersedes earlier V13/V12 decisions.
+
 > Updated V13: phone is confirmed **iPhone 14 Pro** and manufacturer cased C-BOX dimensions are **116.3×79×18mm**. The older V12 CAD screen dimensions (132×86) are not authoritative. See [V13 decision](V13_COMPACT_IPHONE_14_PRO.md).
 
 # PokéDock V12 — measurement & tolerance register / release blocker
@@ -31,7 +33,7 @@ No field may be silently filled with a sample placeholder for production. Record
 | P08 | Phone landscape magnetic grip/sag and left-right visibility at eye level | photo / force test | TBD | A/B selection |
 | P09 | Portrait grip and rear depth/visibility at eye level | photo / force test | TBD | A/B selection |
 | P10 | 30 dock/undock and 60 min charging thermal/comfort results | log | TBD | final assembly |
-| P11 | Case MagSafe compatibility | yes/no | TBD | design feasibility |
+| P11 | Case MagSafe compatibility | yes/no | **YES, confirmed by user** | design feasibility |
 
 ## 3. Small parts and enclosure criteria
 | Property | First prototype target | Release criterion |

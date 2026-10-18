@@ -1,6 +1,9 @@
 # PokéDock Companion
 
-**Latest mechanical decision (2026-10-18): V13 iPhone 14 Pro COMPACT SLOT.** Use [V13 decision](docs/V13_COMPACT_IPHONE_14_PRO.md) and [V13 OpenSCAD adjustable mock](cad/pokedock_v13_compact_slot.scad). Confirmed phone is **14 Pro**; confirmed cased Waveshare 4.3C-BOX external envelope **116.3×79×18mm**. Default rear phone orientation becomes **landscape 70°**, with a **passive noncharging padded slot first** and **optional removable MagSafe only later**. This supersedes the V12 39° landscape/32° portrait prior defaults. No manufacturing clearances have been signed off.
+**V14 confirmed accessory/geometry baseline — 2026-10-18:** iPhone **14 Pro + MagSafe-compatible everyday case**, paired with cased Waveshare **4.3C-BOX SKU 33630**. Prefer **70° landscape rear slot** with **separately powered, detachable finished MagSafe charging puck**. The phone weight rests on rails/stop independent of the display. Aim for a clean ~170–180mm wide × 90–115mm deep *planning envelope* (not a verified product dimension). **MagSafe case support does not substitute for real charge/heat/fit tests.** See [V14 design](docs/V14_MAGSAFE_READY_DESIGN.md), [V14 purchasing](docs/V14_PURCHASING_BOM.md), [V14 assembly](docs/V14_ASSEMBLY_SOP.md), [V14 CAD](cad/pokedock_v14_magsafe_ready.scad) and [V14 calculator](design.html).
+
+
+**Archived V13 (superseded by V14 MagSafe-ready): V13 iPhone 14 Pro COMPACT SLOT.** Use [V13 decision](docs/V13_COMPACT_IPHONE_14_PRO.md) and [V13 OpenSCAD adjustable mock](cad/pokedock_v13_compact_slot.scad). Confirmed phone is **14 Pro**; confirmed cased Waveshare 4.3C-BOX external envelope **116.3×79×18mm**. Default rear phone orientation becomes **landscape 70°**, with a **passive noncharging padded slot first** and **optional removable MagSafe only later**. This supersedes the V12 39° landscape/32° portrait prior defaults. No manufacturing clearances have been signed off.
 
 **Latest industrial/mechanical baseline (2026-10-18): V12 QUIET DESK.** Product/UI web prototype remains V10; real board and charger have **not** been validated.
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PokéDock V13 | Quiet Desk Design Lab</title>
+<title>PokéDock V14 | Quiet Desk Design Lab</title>
 <style>
 :root{--ink:#292735;--muted:#746d7b;--accent:#826991;--pale:#f1eaf6;--line:#e6e0e9}
 *{box-sizing:border-box}body{margin:0;background:#f6f4f2;color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Noto Sans KR",sans-serif}
@@ -26,16 +26,22 @@ input,select,button{font:inherit}select,input[type=number]{width:100%;padding:9p
 @media(max-width:790px){.layout{grid-template-columns:1fr}}
 @media(max-width:540px){.drawings,.notes{grid-template-columns:1fr}.met strong{font-size:17px}}
 </style></head><body>
-<header><div class="w head"><div><div class="ey">POKÉDOCK / INDUSTRIAL DESIGN · V13</div><h1>Quiet Desk.</h1><p>전면은 포켓몬 시계, 후면은 숨겨진 아이폰 충전대. 크기부터 확인하는 설계 랩.</p></div><div><a class="pill" href="./">프로젝트 홈</a> <a class="pill" href="./simulator.html?v=10">UI 시뮬레이터</a></div></div></header>
+<header><div class="w head"><div><div class="ey">POKÉDOCK / INDUSTRIAL DESIGN · V14</div><h1>Quiet Desk.</h1><p>전면은 포켓몬 시계, 후면은 숨겨진 아이폰 충전대. 크기부터 확인하는 설계 랩.</p></div><div><a class="pill" href="./">프로젝트 홈</a> <a class="pill" href="./simulator.html?v=10">UI 시뮬레이터</a></div></div></header>
 <main class="w"><div class="layout">
 <section class="card"><h2>실제 부품에 맞추기</h2>
-<div class="group"><label for="model">아이폰 모델</label><select id="model">
+<div class="group"><label for="model">아이폰 모델 (확정: 14 Pro)</label><select id="model">
 <option value="14">iPhone 14</option><option value="pro" selected>iPhone 14 Pro</option><option value="plus">iPhone 14 Plus</option><option value="max">iPhone 14 Pro Max</option></select></div>
 <div class="group"><label>거치 방향</label><div class="segment">
 <button class="on" data-pose="landscape" type="button">가로형 · 70° 얇은 슬롯</button>
 <button data-pose="portrait" type="button">세로형 · 정면 은닉</button></div></div>
 <div class="group"><div class="val"><span>아이폰 경사 (책상 기준)</span><output id="angText">70°</output></div><input id="tilt" type="range" min="20" max="80" step="1" value="70"></div>
 <div class="split">
+<div class="group" style="padding:12px;border:1px solid #dfd4e6;border-radius:12px;background:#fbf8fd">
+  <label style="display:flex;gap:10px;align-items:center;cursor:pointer;font-size:13px">
+  <input type="checkbox" id="withMagSafe" checked style="width:19px;height:19px;accent-color:#826991">
+  <span>완제품 MagSafe 충전기 포함 (탈착식)</span></label>
+  <p style="font-size:12px;margin-top:5px">기본 추천: 충전기 포함. 받침만 비교하려면 끄기. 케이스·충전기 치수는 실측해야 해.</p>
+</div>
 <div class="group"><label for="extraL">케이스 세로 증가 mm</label><input id="extraL" type="number" min="0" max="20" value="6"></div>
 <div class="group"><label for="extraW">케이스 가로 증가 mm</label><input id="extraW" type="number" min="0" max="20" value="6"></div>
 <div class="group"><label for="screenW">화면 케이스 폭 mm</label><input id="screenW" type="number" min="100" max="195" value="116.3"></div>
@@ -43,7 +49,7 @@ input,select,button{font:inherit}select,input[type=number]{width:100%;padding:9p
 <div class="group"><label for="startY">폰 시작위치 Y mm</label><input id="startY" type="number" min="20" max="90" value="40"></div>
 <div class="group"><label for="frontAng">화면 경사각</label><input id="frontAng" type="number" min="60" max="88" value="76"></div>
 </div>
-<p style="font-size:12px">아이폰 14 Pro 기본 치수와 Waveshare C-BOX 외형 116.3×79×18mm는 공식 자료. 케이스 증가량·MagSafe·고정 브래킷·케이블·데스크 여유는 임시값이므로 실측해 교체해야 해. 충전은 선택사항이야.</p>
+<p style="font-size:12px">아이폰 14 Pro + MagSafe 케이스 지원은 확인됨. iPhone 14 Pro 기본 치수와 Waveshare C-BOX 외형 116.3×79×18mm는 공식 자료. 케이스 증가량·MagSafe·고정 브래킷·케이블·데스크 여유는 임시값이므로 실측해 교체해야 해. MagSafe 충전기는 탈착식이며 별도 PD 전원이 필요해.</p>
 </section>
 <section class="card"><h2>기하학적 공간 예측</h2>
 <div class="mets"><div class="met"><span>책상 폭</span><strong id="width">—</strong></div><div class="met"><span>책상 깊이</span><strong id="depth">—</strong></div><div class="met"><span>점유 면적</span><strong id="area">—</strong></div></div>
@@ -58,10 +64,10 @@ input,select,button{font:inherit}select,input[type=number]{width:100%;padding:9p
 <section class="card"><h3>02 · 조립</h3><p>화면은 기존 후면 마운트 활용, 휴대폰은 **가로 70° 슬롯형 일반 거치**가 우선. 검증 후 완제품 MagSafe만 탈착식으로 추가 가능.</p></section>
 <section class="card"><h3>03 · 제작 조건</h3><p>실측 → 종이 목업 → 30회 탈착/60분 충전 시험 → 최종 CAD. 모델만 보고 가공하지 않아.</p></section>
 </div>
-<p class="foot"><a href="https://github.com/choiYhunn/pokedock-companion/blob/main/cad/pokedock_v13_compact_slot.scad">OpenSCAD 3D 원본</a> ·
-<a href="https://github.com/choiYhunn/pokedock-companion/blob/main/docs/V13_INDUSTRIAL_DESIGN.md">제작 설계서</a> ·
+<p class="foot"><a href="https://github.com/choiYhunn/pokedock-companion/blob/main/cad/pokedock_v14_magsafe_ready.scad">OpenSCAD 3D 원본</a> ·
+<a href="https://github.com/choiYhunn/pokedock-companion/blob/main/docs/V14_INDUSTRIAL_DESIGN.md">제작 설계서</a> ·
 <a href="https://github.com/choiYhunn/pokedock-companion/blob/main/docs/V11_EXECUTION_INDEX.md">조립 순서</a><br>
-이 페이지는 견적·제작 승인이 아니라 검토용 계산기이며, 입력정보를 외부로 보내지 않아.</p></main>
+설계값은 목표 점유 면적이자 비교용 계산 결과일 뿐, 제조 공차나 실물 충전 성능 보증이 아니야. 입력정보는 서버로 보내지 않아.</p></main>
 <script>
 (function(){
 "use strict";
@@ -73,8 +79,10 @@ function calc(which,tilt){
  var m=phones[$("model").value]||phones["14"];
  var L=m[0]+num("extraL",6),W=m[1]+num("extraW",6);
  var span=which==="landscape"?L:W,run=which==="landscape"?W:L;
- var w=Math.max(num("screenW",116.3)+16,span+16),d=Math.max(70,num("startY",40)+run*Math.cos(rd(tilt))+12);
- return {pose:which,ang:tilt,w:w,d:d,span:span,run:run,area:w*d/100,tip:7+run*Math.sin(rd(tilt)),screenTop:12+num("screenH",79)*Math.sin(rd(num("frontAng",76)))};
+ var charging=$("withMagSafe").checked;
+ var w=Math.max(num("screenW",116.3)+16,span+16);
+ var d=Math.max(charging?95:82,num("startY",40)+run*Math.cos(rd(tilt))+(charging?22:14));
+ return {pose:which,ang:tilt,w:w,d:d,charging:charging,span:span,run:run,area:w*d/100,tip:7+run*Math.sin(rd(tilt)),screenTop:12+num("screenH",79)*Math.sin(rd(num("frontAng",76)))};
 }
 function side(q){
  var scale=155/Math.max(q.d,q.screenTop+12,135),start=26,by=170;
@@ -88,7 +96,7 @@ function side(q){
  '<rect x="'+X(0)+'" y="'+Z(4)+'" width="'+(q.d*scale)+'" height="4" rx="2" fill="#e4dce9"/>'+
  '<line x1="'+X(15)+'" y1="'+Z(12)+'" x2="'+X(screenY)+'" y2="'+Z(q.screenTop)+'" stroke="#afa4bf" stroke-width="8" stroke-linecap="round"/>'+
  '<line x1="'+X(num("startY",40))+'" y1="'+Z(7)+'" x2="'+X(endY)+'" y2="'+Z(endZ)+'" stroke="#8caccb" stroke-width="7" stroke-linecap="round"/>'+
- '<circle cx="'+X(puckY)+'" cy="'+Z(puckZ)+'" r="6" fill="#d6b476"/>'+
+ (q.charging?'<circle cx="'+X(puckY)+'" cy="'+Z(puckZ)+'" r="6" fill="#d6b476"/>':'')+
  '<text x="8" y="18" fill="#766c83" font-size="11">← 앞</text><text x="283" y="18" fill="#766c83" font-size="11">뒤 →</text>';
 }
 function topview(q){
@@ -97,7 +105,7 @@ function topview(q){
  $("top").innerHTML='<rect x="'+x(q.w)+'" y="16" width="'+q.w*sc+'" height="'+q.d*sc+'" rx="8" fill="#e6dfed" stroke="#d0c3da"/>'+
  '<rect x="'+x(q.span)+'" y="'+y(start)+'" width="'+q.span*sc+'" height="'+(length*sc)+'" rx="7" fill="#8caccb" fill-opacity=".7" stroke="#7090b0"/>'+
  '<rect x="'+x(screenW)+'" y="'+y(15)+'" width="'+screenW*sc+'" height="'+13*sc+'" rx="4" fill="#afa4bf"/>'+
- '<circle cx="170" cy="'+y(start+length*.51)+'" r="'+(22*sc)+'" fill="none" stroke="#d6b476" stroke-width="3"/>'+
+ (q.charging?'<circle cx="170" cy="'+y(start+length*.51)+'" r="'+(22*sc)+'" fill="none" stroke="#d6b476" stroke-width="3"/>':'')+
  '<text x="12" y="16" fill="#756a7e" font-size="11">전면 ↓</text>';
 }
 function render(){
@@ -109,7 +117,7 @@ function render(){
  side(q);topview(q);
  var h=q.screenTop-q.tip;
  var over=Math.max(0,(q.span-num("screenW",116.3))/2);
- $("status").textContent=(h<0?"휴대폰 윗부분이 화면보다 약 "+Math.round(-h)+" mm 높아질 수 있음. ":"화면 상단이 휴대폰보다 약 "+Math.round(h)+" mm 높은 계산. ")+"좌우 추정 노출 "+over.toFixed(1)+" mm/쪽. 눈높이에서 반드시 실물 확인.";
+ $("status").textContent=(h<0?"휴대폰 윗부분이 화면보다 약 "+Math.round(-h)+" mm 높아질 수 있음. ":"화면 상단이 휴대폰보다 약 "+Math.round(h)+" mm 높은 계산. ")+"좌우 추정 노출 "+over.toFixed(1)+" mm/쪽. "+(q.charging?"MagSafe 탈착형 설계 여유를 포함한 목표값; 실제 puck·케이블 검증 필요. ":"일반 슬롯 모드. ")+"눈높이에서 반드시 실물 확인.";
  var a=calc("landscape",pose==="landscape"?q.ang:70),b=calc("portrait",pose==="portrait"?q.ang:32);
  $("comparison").innerHTML=[a,b].map(function(v){return '<tr class="'+(v.pose===pose?'selected':'')+'"><td>'+ (v.pose==="landscape"?"가로형":"세로형")+'</td><td>'+Math.round(v.w)+' × '+Math.round(v.d)+' mm</td><td>'+v.area.toFixed(1)+' cm²</td><td>'+(v.pose==="landscape"?"양쪽 노출/충전 정렬":"깊이/은닉각 확인")+'</td></tr>'}).join("");
 }
