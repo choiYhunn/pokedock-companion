@@ -5,7 +5,7 @@ This directory includes a **console M0** and an **opt-in LVGL9 HMI prototype** u
 - Board intended: Waveshare 4.3C-BOX SKU **33630**, 16MB flash / 8MB PSRAM, USB-C download/debug and separate manufacturer-specified DC power.
 - Candidate deps: ESP-IDF 5.5.x and `waveshare/esp32_s3_touch_lcd_4_3c@3.0.1`; versions must be reconciled with official demo + actual PCB revision. Do **not** mix vendor's local LVGL v8 examples and managed LVGL v9 BSP blindly.
 - Default `main/app_main.cpp` imports `StudyEngine` and emits a warning. Optional `CONFIG_POKEDOCK_HMI_START=y` attempts BSP display/touch and creates English HOME/FOCUS/STOP/BREAK LVGL widgets, **without RTC/NTP, NVS, sprites, reward persistence or OTA**. Do not enable before verifying factory demo and power.
-- No board has been connected here and no `idf.py build` or `idf.py flash` results are claimed. Do not flash over a factory image until a backup/recovery method is verified.
+- No real 33630 board has been connected or flashed. **ESP-IDF 5.5 Linux cross-compilation succeeded in [CI run 39144643479](https://github.com/choiYhunn/pokedock-companion/actions/runs/39144643479)** for console default and opt-in LVGL source configuration. This is a software compile test only, not a hardware display/touch or flashed firmware test. Do not flash over a factory image until a backup/recovery method is verified.
 
 ## Windows development / build attempt
 

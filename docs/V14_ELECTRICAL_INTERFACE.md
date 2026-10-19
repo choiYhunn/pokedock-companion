@@ -1,5 +1,7 @@
 # PokéDock V14 — Electrical interface map and isolation checklist (2026-10-19)
 
+> [NEW: practical two-domain wiring diagram](../hardware/v14_wiring_topology.svg) · [harness connection table, safe terminal inspection and power-up SOP](V14_WIRING_HARNESS_BUILD.md). Do not infer physical +/− terminal number from a conceptual block diagram.
+
 > Reference-level signal map from **Waveshare 4.3C** official wiki and first-party `examples/esp-idf/05_sd`. **Do not solder by this document alone.** Exact delivered C-BOX PCB/schematic and factory-driver versions win over a copied table. No wire connected or flash executed yet.
 
 ## Stage A: entirely separate low-voltage supplies
