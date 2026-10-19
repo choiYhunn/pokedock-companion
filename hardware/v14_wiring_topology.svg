@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1020" viewBox="0 0 1440 1020">
+<title>PokéDock V14 two independent power domains and factory board interfaces</title>
+<desc>Safe topological wiring diagram, not a physical connector pinout. HMI has certified DC 12V 2A candidate connected only to OEM marked DC positive and negative after physical polarity verification. Apple MagSafe uses its own certified USB-C PD adapter. USB-C debug from a PC is data/recovery. RTC, LCD, touch, microSD and optional audio are factory on-board connections. No wired C3 in MVP.</desc>
+<style>
+.bg{fill:#f7f8fa}.panel{fill:white;stroke:#d7dee6;stroke-width:2}.supply{fill:#e8f3ff;stroke:#52789c;stroke-width:2}.board{fill:#f2edf9;stroke:#73638d;stroke-width:3}.phone{fill:#eef8f1;stroke:#558268;stroke-width:3}.warning{fill:#fff4e7;stroke:#bf793f;stroke-width:2}.title{font:bold 34px 'Arial','Noto Sans KR',sans-serif;fill:#19283c}.sub{font:18px 'Arial','Noto Sans KR',sans-serif;fill:#4c5b6e}.head{font:bold 22px 'Arial','Noto Sans KR',sans-serif;fill:#25364a}.body{font:19px 'Arial','Noto Sans KR',sans-serif;fill:#263448}.small{font:16px 'Arial','Noto Sans KR',sans-serif;fill:#506074}.tag{font:bold 15px 'Arial','Noto Sans KR',sans-serif;fill:#b14b29}.lineBlue{fill:none;stroke:#366ca1;stroke-width:5}.lineGreen{fill:none;stroke:#327e5c;stroke-width:5}.lineGray{fill:none;stroke:#65748a;stroke-width:4;stroke-dasharray:11 8}.lineNo{stroke:#c34040;stroke-width:4}
+</style>
+<rect class="bg" width="1440" height="1020"/>
+<text class="title" x="55" y="61">PokéDock Companion · V14  |  Electrical wiring topology</text>
+<text class="sub" x="55" y="92">C-BOX SKU 33630 · landscape phone stand · independent finished MagSafe puck · not a PCB terminal-position drawing</text>
+<rect class="panel" x="45" y="124" rx="23" width="1350" height="700"/>
+<text class="head" x="77" y="163">DOMAIN A — HMI 12V DC (example regulated supply; OEM 7–36V input)</text>
+<rect class="supply" x="77" y="189" width="335" height="127" rx="18"/>
+<text class="head" x="94" y="226">Isolated DC adapter</text>
+<text class="body" x="94" y="255">12V 2A regulated candidate</text>
+<text class="small" x="94" y="283">AC mains stay INSIDE certified adapter</text>
+<path class="lineBlue" d="M 412 253 L 534 253"/>
+<polygon points="535,253 520,244 520,262" fill="#366ca1"/>
+<rect class="warning" x="536" y="193" width="343" height="119" rx="12"/>
+<text class="head" x="553" y="224">HMI OEM DC terminal</text>
+<text class="body" x="552" y="254">+ to verified VIN / +</text>
+<text class="body" x="552" y="282">− to verified GND / −</text>
+<path class="lineBlue" d="M 879 253 L 947 253"/>
+<polygon points="948,253 933,244 933,262" fill="#366ca1"/>
+<rect class="board" x="948" y="187" width="404" height="154" rx="19"/>
+<text class="head" x="966" y="223">Waveshare 4.3C-BOX</text>
+<text class="body" x="966" y="254">ESP32-S3 · 800×480 LCD</text>
+<text class="small" x="966" y="284">Touch / RTC / TF / codec on board</text>
+<text class="tag" x="966" y="313">VERIFY physical connector + polarity FIRST</text>
+<line x1="69" y1="382" x2="1367" y2="382" stroke="#e4e8ed" stroke-width="2"/>
+<text class="head" x="77" y="421">DOMAIN B — detachable MagSafe charging (no electrical link to HMI)</text>
+<rect class="supply" x="77" y="449" width="339" height="120" rx="18"/>
+<text class="head" x="94" y="485">Certified USB-C PD adapter</text>
+<text class="body" x="94" y="517">20W+ compatible PD output</text>
+<text class="small" x="94" y="544">Separate from the HMI DC adapter</text>
+<path class="lineGreen" d="M 416 508 L 547 508"/>
+<polygon points="548,508 533,499 533,517" fill="#327e5c"/>
+<rect class="phone" x="549" y="453" width="327" height="111" rx="15"/>
+<text class="head" x="568" y="489">Finished MagSafe puck</text>
+<text class="body" x="568" y="523">Factory cable, removable holder</text>
+<path class="lineGreen" d="M 876 508 L 947 508"/>
+<polygon points="948,508 933,499 933,517" fill="#327e5c"/>
+<rect class="phone" x="950" y="450" width="402" height="118" rx="19"/>
+<text class="head" x="966" y="487">iPhone 14 Pro + MagSafe case</text>
+<text class="body" x="966" y="519">up to 15W · test actual alignment</text>
+<text class="small" x="966" y="547">Ledge/rails carry phone mass</text>
+<line x1="69" y1="606" x2="1367" y2="606" stroke="#e4e8ed" stroke-width="2"/>
+<text class="head" x="77" y="641">SERVICE / INTERNAL FACTORY CONNECTIONS — do not solder or rewire</text>
+<rect class="panel" x="75" y="663" width="310" height="104" rx="12"/>
+<text class="head" x="94" y="700">USB-C ↔ PC</text>
+<text class="small" x="94" y="727">Flash / monitor / recovery only</text>
+<path class="lineGray" d="M 385 714 L 545 714 L 545 634 L 967 634"/>
+<rect class="panel" x="564" y="664" width="788" height="103" rx="12"/>
+<text class="body" x="584" y="695">Onboard: GT911 touch · PCF85063A RTC + CR927 · SDMMC TF · ES8311 codec</text>
+<text class="small" x="584" y="722">I²C GPIO8/9, SDMMC 12/11/13, I²S vendor-assigned; use factory/BSP drivers</text>
+<text class="tag" x="584" y="747">Do not treat these MCU pins as exposed free wiring points</text>
+<rect class="warning" x="47" y="850" width="1346" height="116" rx="15"/>
+<text class="head" x="76" y="885">DO NOT CONNECT / NOT VERIFIED</text>
+<text class="body" x="77" y="917">Never put 12V on USB-C, 5V pins, GPIO, MagSafe puck or speaker. Do not join the two power rails.</text>
+<text class="small" x="77" y="945">Terminal contact positions, mounting screws, speaker header loading and simultaneous PC-USB/DC powering require delivered-board + OEM revision inspection.</text>
+</svg>
