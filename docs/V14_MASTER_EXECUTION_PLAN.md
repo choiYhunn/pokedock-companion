@@ -1,5 +1,7 @@
 # PokéDock Companion V14 — single production execution index (2026-10-19)
 
+> **Start here:** [actual budget/buy-now instructions](V14_BUY_NOW_AND_OWNER_ACTIONS.md) · [two-domain wiring SVG](../hardware/v14_wiring_topology.svg) · [harness SOP](V14_WIRING_HARNESS_BUILD.md).
+
 ## Product definition and non-goals
 **One gift:** a compact, quiet 800×480 Gengar desk companion, with a cased Waveshare ESP32-S3-Touch-LCD-4.3C-BOX **SKU 33630** HMI facing front, a removable iPhone **14 Pro** in landscape at about **70°** behind it, and a detachable **finished** Apple MagSafe puck on **independent USB-C PD**. Confirmed MagSafe-compatible everyday case. Keep a padded *passive* phone ledge functional without wireless charging. No front trays, portrait ramps, giant rear pedestal, exposed mains, battery pack, extra MCU or RGB as baseline.
 
