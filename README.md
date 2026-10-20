@@ -1,6 +1,18 @@
 # PokéDock Companion
+## V16 NEW DIRECTION: Ghost Companion (2026-10-20)
+**User-selected direction:** rounded HYBRID Pepper's Ghost Pokémon companion, with floating character-animation chamber + independent readable desk clock, focus timer and manual-update design. V16 is currently **software prototype + optics/manufacturing plan**, not a physically built or qualified gift. **Do not order V15 33630/stand from old instructions merely because they were formerly ready.** Candidate hardware not purchased or optically confirmed.
 
-## CURRENT DESIGN: V15 DESK-ONLY SCREEN + PURPOSE-BUILT STAND (2026-10-20)
+- [V16 design and implementation directory](v16/README.md)
+- [V16 interactive browser preview](v16/simulator/index.html)
+- [Optics acceptance gates](v16/OPTICS_AND_ACCEPTANCE.md)
+- [BOM provisional costs](v16/BOM_PLANNING.csv)
+- [Manual OTA safety plan](v16/OTA_MANUAL.md)
+
+**Important:** V14/V15 are retained as historical engineering work; V16 supersedes them as the intended GIFT EXPERIENCE, not as a passed hardware design.
+
+---
+
+## FORMER V15 MECHANICAL DESIGN: DESK-ONLY SCREEN + PURPOSE-BUILT STAND (2026-10-20)
 
 **V14 is superseded for fabrication.** User definitively removed phone dock, charging puck, separate USB-C PD supply and phone-case fit from this gift. The product is a standalone minimal **Gengar desk companion** with a cased Waveshare ESP32-S3-Touch-LCD-4.3C-BOX **SKU 33630** front and a 75°-to-desk, U-shaped single-piece PETG cradle. No custom screen enclosure or machining by the user.
 

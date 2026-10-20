@@ -1,0 +1,16 @@
+const assert=require("node:assert/strict");
+const {Engine,CHARACTERS,isValidHHMM,partsKST}=require("../simulator/engine.js");
+let t=0;const wall=()=>new Date("2026-10-20T21:34:00+09:00");const e=new Engine(()=>t,wall);
+assert.equal(CHARACTERS.length,5);
+assert.equal(partsKST(wall()).display,"21:34");
+assert.equal(isValidHHMM("23:59"),true);assert.equal(isValidHHMM("24:20"),false);
+for(let i=0;i<5;i++) e.nextCharacter();assert.equal(e.character,0);
+e.setFocus(15);assert.equal(e.remainingSec,900);
+assert.equal(e.start(),true);t+=100000;e.tick();assert.equal(e.remainingSec,800);
+assert.equal(e.pause(),true);t+=200000;e.tick();assert.equal(e.remainingSec,800);
+assert.equal(e.resume(),true);t+=800001;e.tick();assert.equal(e.remainingSec,0);
+assert.equal(e.drain().filter(x=>x.type==="focus_complete").length,1);e.tick();assert.equal(e.drain().filter(x=>x.type==="focus_complete").length,0);
+e.setAlarm("21:34",true);e.tick();assert.equal(e.drain().filter(x=>x.type==="alarm_fire").length,1);e.tick();assert.equal(e.drain().filter(x=>x.type==="alarm_fire").length,0);
+e.stop();assert.equal(e.mode,"clock");assert.equal(e.running,false);
+assert.throws(()=>e.setAlarm("25:10",true));assert.throws(()=>e.setFocus(1));
+console.log("V16 engine PASS: selection / monotonic focus / pause / alarm dedup / timezone");
