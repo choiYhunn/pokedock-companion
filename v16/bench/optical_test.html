@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#000000"><title>Ghost V16 · Free Optical Test</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;background:#000;color:#f6edff}*{box-sizing:border-box}
+body{margin:0;min-height:100dvh;background:#000;color:#fff}
+.stage{position:fixed;inset:0;background:#000;display:grid;place-items:center;overflow:hidden}
+#art{width:min(82vw,72vh);height:auto;max-width:460px;display:block;filter:none}
+.tools{position:fixed;left:12px;right:12px;bottom:12px;max-width:490px;margin:auto;border:1px solid #6e577a;background:#1f1827ee;border-radius:20px;padding:18px;z-index:5;box-shadow:0 15px 45px #000a}
+h1{font-size:17px;margin:0 0 5px}p{font-size:12px;line-height:1.6;color:#d6c3e0;margin:5px 0 14px}
+.row{display:flex;align-items:center;gap:8px;margin:10px 0;flex-wrap:wrap}
+label{font-size:12px}.row button,button{padding:9px 12px;background:#392b4d;color:white;border:1px solid #8b71a1;border-radius:10px;cursor:pointer}
+button.selected{background:#a06dc0;color:#130b18}input{max-width:190px}
+.actions{display:flex;gap:8px;margin-top:13px}.actions button{flex:1}.primary{background:#a06dc0;border-color:#a06dc0}
+.info{font-size:11px;color:#b99ecb;margin-top:10px}
+.hidden .tools{display:none}.reopen{display:none;position:fixed;right:8px;top:8px;z-index:3;background:#291f3488;border-color:#392b4d;font-size:10px}.hidden .reopen{display:block;opacity:.25}.hidden .reopen:focus-visible{opacity:1}
+</style></head><body>
+<div class="stage"><canvas id="art" width="400" height="400" aria-label="유령 캐릭터 광학 시험 이미지"></canvas></div>
+<section class="tools">
+<h1>Ghost Companion · 광학 사전 테스트</h1>
+<p>휴대폰을 화면 위로 눕히고, 투명 PET·아크릴 판을 약 30° 또는 45°로 세워 정면에서 반사 영상을 보세요. 본 시험 이미지는 저작권 없는 임시 유령 도형입니다. <strong>최종 2.41인치 AMOLED 밝기·시야각을 검증한 것은 아닙니다.</strong></p>
+<div class="row"><label for="scale">크기</label><input id="scale" type="range" min="35" max="115" step="5" value="65"><output id="size">65%</output></div>
+<div class="row"><label>평가 장면</label><button data-mode="pastel" class="selected">보라색</button><button data-mode="white">밝은 흰색</button><button data-mode="detail">미세 디테일</button></div>
+<div class="row"><label><input id="mirror" type="checkbox"> 좌우 반전</label><label><input id="clock" type="checkbox"> 시계 동시 표시</label></div>
+<div class="actions"><button class="primary" id="start">테스트 화면만 보기</button><button id="reset">기본값</button></div>
+<div class="info">주변광: 저녁 / 평소 책상 / 밝은 책상에서 각각 관찰. 눈·입이 60cm 거리에서 인식되는지, 이중상·반사가 보이는지 기록하세요. 100% 완전한 3D 홀로그램은 아닙니다.</div>
+</section><button class="reopen" id="reopen">설정</button>
+<script>
+"use strict";const $=s=>document.querySelector(s),canvas=$("#art"),ctx=canvas.getContext("2d");
+let mode="pastel",scale=65,mirror=false,clock=false;
+function draw(t){let time=t/1000;ctx.clearRect(0,0,400,400);ctx.fillStyle="#000";ctx.fillRect(0,0,400,400);
+ctx.save();ctx.translate(200,205);ctx.scale(mirror?-1:1,1);ctx.scale(scale/100,scale/100);
+ctx.translate(0,Math.sin(time*2)*11);let white=mode==="white",detail=mode==="detail";
+ctx.shadowColor=white?"#ffffff":detail?"#534368":"#ab6de3";ctx.shadowBlur=detail?4:14;
+ctx.fillStyle=white?"#f9f9fa":detail?"#3d3158":"#b58de0";ctx.strokeStyle="#ece1f9";ctx.lineWidth=white?2:3;
+ctx.beginPath();ctx.moveTo(-88,-36);ctx.lineTo(-86,-117);ctx.lineTo(-50,-85);ctx.lineTo(-28,-130);ctx.lineTo(0,-95);ctx.lineTo(32,-136);ctx.lineTo(45,-93);ctx.lineTo(83,-111);ctx.lineTo(84,-42);
+ctx.bezierCurveTo(117,36,72,109,0,103);ctx.bezierCurveTo(-81,102,-117,32,-88,-36);ctx.closePath();ctx.fill();ctx.stroke();ctx.shadowBlur=0;
+ctx.fillStyle=white?"#25242b":"#e8b5ce";ctx.beginPath();ctx.ellipse(-38,-22,19,10,0,0,6.283);ctx.ellipse(38,-22,19,10,0,0,6.283);ctx.fill();
+ctx.strokeStyle=white?"#242127":"#fff2fe";ctx.lineWidth=5;ctx.beginPath();ctx.arc(0,22,53,.12,3.02);ctx.stroke();
+if(detail){ctx.lineWidth=1;ctx.strokeStyle="#675583";for(let k=0;k<12;k++){ctx.beginPath();ctx.moveTo(-63+k*10,66);ctx.lineTo(-59+k*10,72+Math.sin(time*4+k)*4);ctx.stroke();}}
+ctx.restore();
+if(clock){ctx.fillStyle=mode==="detail"?"#777":"#eee";ctx.font="300 38px system-ui";ctx.textAlign="center";ctx.fillText(new Intl.DateTimeFormat("ko-KR",{timeZone:"Asia/Seoul",hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()),200,355);}
+requestAnimationFrame(draw);}
+requestAnimationFrame(draw);
+$("#scale").oninput=e=>{scale=Number(e.target.value);$("#size").textContent=scale+"%";};
+document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll("[data-mode]").forEach(x=>x.classList.toggle("selected",x===b));});
+$("#mirror").onchange=e=>{mirror=e.target.checked;};
+$("#clock").onchange=e=>{clock=e.target.checked;};
+$("#start").onclick=()=>{document.body.classList.add("hidden");};
+$("#reopen").onclick=()=>{document.body.classList.remove("hidden");};
+$("#reset").onclick=()=>{scale=65;mirror=false;clock=false;mode="pastel";$("#scale").value=65;$("#size").textContent="65%";$("#mirror").checked=false;$("#clock").checked=false;document.querySelector('[data-mode="pastel"]').click();};
+</script></body></html>
