@@ -1,0 +1,12 @@
+id,item,qty,low_krw,high_krw,buy_when,source,check
+HMI,Waveshare 4.3C-BOX SKU33630 with plastic case,1,80000,110000,NOW,https://www.waveshare.com/product/esp32-s3-touch-lcd-4.3c.htm,No 33799/4.3B substitution; landing cost not verified
+PRINT,Rev A one-piece PETG U-cradle,1,30000,50000,NOW_PROTOTYPE_ONLY,https://3dfarm.co.kr/3d-printing-service/,Upload MODE=stand STL and get price including shipping
+PAD,0.8-1.0mm protective felt or TPU strips,1,1500,5000,AFTER_DRY_FIT,,Do not glue to glass
+FEET,Non-slip 10-12mm rubber feet,4,500,1500,AFTER_DRY_FIT,,Four of equal thickness
+LOCK,Removable picture-hanging strip pairs,1,3000,8500,IF_NEEDED_AFTER_TIP_TEST,,Housing plastic only after adhesion check
+PWR,Approved regulated isolated 12V2A candidate,1,8800,15000,AFTER_DC_TERMINAL_CHECK,https://www.eduino.kr/,7-36V DC INPUT polarity and rating required
+PIGTAIL,Insulated DC terminal lead with ferrules,1,2000,6000,AFTER_DC_TERMINAL_CHECK,,Prefer qualified preterminated lead
+USB,Data-capable USB-C cable,1,0,7000,REUSE_NOW,,USB debug and recovery
+RTC,CR927 3V backup coin cell,1,0,5500,CHECK_INCLUDED,,Required only for backed-up time
+SD,microSD 16-32GB,1,0,20000,LATER_IF_ASSETS,,Skip initial boot
+GIFT,Gift paper and protective box,1,0,8000,AFTER_QA,,No gift before device stress test
