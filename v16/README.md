@@ -5,6 +5,7 @@ This branch establishes the new design target; **V15 remains the last prior manu
 ## What's actually delivered in this branch
 - [Product & engineering contract](PRODUCT_AND_ENGINEERING.md): exact user-facing UX, character motion policy, proposed MCU, independent clock, acceptance gates.
 - [Optics and finishing](OPTICS_AND_ACCEPTANCE.md): honest 2D reflection limitations and contrast/viewing tests.
+- [Phone-based optical pretest](bench/optical_test.html): BLACK background + moving synthetic ghost silhouette, color contrast/clock/flip/size test. No paid hardware or Pokémon sprites required.
 - [Electrical interface](ELECTRICAL_AND_POWER.md): 2.41 V1/V2 revision, front OLED I2C, 5V USB, optional buzzer, RTC backup risks.
 - [Animation production](ANIMATION_PIPELINE.md): five characters, motion states, memory budget and user-owned 12fps local frame imports.
 - [Assembly and vendor workflow](BUILD_AND_FABRICATION.md): optical gate, measured CAD, print finishing and gift acceptance.
