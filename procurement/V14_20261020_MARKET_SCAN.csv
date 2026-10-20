@@ -1,0 +1,12 @@
+category,model,listed_price,shipping_or_tax,source_url,sku_confidence,risk,buy_gate
+HMI exact,Waveshare ESP32-S3-Touch-LCD-4.3C-BOX 33630,USD 39.99-45.99 family,shipping and KR checkout unknown,https://www.waveshare.com/product/esp32-s3-touch-lcd-4.3c.htm,verified when with case selected,import delivery and return,G1 after G0
+HMI wrong variant,Eleparts ESP32-S3-Touch-LCD-4.3C bare,KRW 86020 VAT incl,delivery extra TBD,https://eleparts.co.kr/goods/view?no=18220907,wrong 33799 variant,missing shell,DONT BUY
+HMI uncertain,Coupang Waveshare 4.3 inch,KRW 63600,free shipping indexed,https://www.coupang.com/vp/products/8555295527,case and SKU not verified,zero product reviews and variant ambiguity,DONT BUY WITHOUT SKU PHOTO
+HMI expensive,Fruugo KR Waveshare 4.3 with case,KRW 158190,shipping KRW 1049,https://www.fruugo.kr/waveshare-touchscreen-development-board-43-inch-with-case/p-506129890-1035518461,uncertain,too expensive,AVOID
+MagSafe original,Apple A3502 1m,KRW 65000,Apple official online,https://www.apple.com/kr/shop/product/mgd74kh/a,exact,price / charging holder,FUTURE G3
+MagSafe Qi2,Anker A25M2 15W,KRW 22900,official Naver through Danawa free shipping,https://prod.danawa.com/info/?pcode=104223722,exact,10.5mm depth and heat,FUTURE G3
+USB-C PD,Samsung EP-T2510N 25W,KRW 15030,shipping included per Danawa,https://prod.danawa.com/info/?pcode=28885547,model verified,confirm chosen seller/FOD,FUTURE G3 OR REUSE
+USB-C PD option,Samsung EP-T2510N 25W Olive Young,KRW 16500,free shipping; seller dispatch up to 21 days,https://www.oliveyoung.co.kr/store/goods/getGoodsDetail.do?goodsNo=B000000261686,exact,delivery time,FUTURE G3
+DC power candidate,Coms 12V 2A,KRW 9570,delivery unknown,https://www.devicemart.co.kr/,unverified DC terminal mate,polarity and KC evidence,FUTURE AFTER HARDWARE
+RTC cell,HITAKA CR927 1 piece,KRW 150,shipping KRW 3000,https://price.enuri.com/catalog/55470791,correct chemistry,shipping exceeds part price,CHECK INCLUDED
+microSD optional,Samsung microSD EVO Plus 32GB old listing,KRW 10300,shipping and current stock unknown,https://www.yes24.com/product/goods/44012910,exact only if in stock,not needed for native minimum,CHECK REUSE / DEFER
