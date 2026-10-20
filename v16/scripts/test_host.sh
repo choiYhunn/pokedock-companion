@@ -3,6 +3,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../../"
 node v16/tests/engine.test.cjs
 node v16/tests/assets.test.cjs
+if python3 -c "import PIL" 2>/dev/null; then bash v16/scripts/test_host_codec.sh; else echo "Pillow missing; GHF1 tests SKIPPED, use python3 -m pip install Pillow"; fi
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 g++ -std=c++17 -O2 -Wall -Wextra -Werror -I v16/firmware v16/firmware/ghost_core_test.cpp -o "$tmp/ghost16"

@@ -18,8 +18,8 @@ START WITH GENGAR ONLY until the optics gate, then all five. Don't multiply cont
 ## File and runtime rules
 - Author layered/vector 2D scenes in graphics software; export transparent PNG/WebP frames with common anchor, no black opaque rectangle.
 - Preview local PNG/WebP sequence in v16/simulator (select current character, choose files; sorted filenames at 12fps). No upload, no hidden collection.
-- Provisional source raster: 320×320 @24fps authored; downsample/hardware image size and actual frame cadence measured. Pre-render any expensive 3D motion on PC, not live on ESP32.
-- MCU RAM calculation: one raw 320×320 RGB565 frame =204800 bytes; 12 uncompressed frames ~=2.46MB. Full 600×450 RGB565 framebuffer =540000 bytes; two ~=1.08MB. A 16MB flash image cannot simply embed long sequences for every character; use microSD/offline assets and partial/prefetch decode.
+- Provisional source raster: 256×256 @24fps authored; downsample/hardware image size and actual frame cadence measured. Pre-render any expensive 3D motion on PC, not live on ESP32.
+- MCU RAM calculation: one raw 256×256 RGB565 frame =204800 bytes; 12 uncompressed frames ~=2.46MB. Full 600×450 RGB565 framebuffer =540000 bytes; two ~=1.08MB. A 16MB flash image cannot simply embed long sequences for every character; use microSD/offline assets and partial/prefetch decode.
 - JPEG drops alpha unless separate mask; render asset decoder and transparency AFTER vendor display is proven. The 24/30fps targets are goals and must be measured on 2.41.
 - Avoid OLED static unchanging composition 24/7 at high brightness; shift subtly and dim at night to mitigate aging.
 - Animation update pack: individual files + reproducible manifest + Ed25519 signature with private signing key kept OFF-device / OUT of Git. v16/tools/assets.cjs provides HOST signer+verifier, **not ESP32 on-device install**.
@@ -32,3 +32,9 @@ START WITH GENGAR ONLY until the optics gate, then all five. Don't multiply cont
 - Animation transitions no visible black-background rectangle, stutter, dropped frame burst, or seam.
 - Quiet at night: no surprise alarm sound; explicit physical input for volume/mute.
 - Delivery scenes: first boot invitation, normal daily idle, timer completion, private birthday reveal. All must work offline after first clock provision.
+
+## Verified low-memory GHF1 candidate, 2026-10-21
+- New [Python conversion tool](tools/ghf_codec.py) and [portable C++ bounded decoder](firmware/ghf_decoder.h). Source offline tests include frame roundtrip, malformed length rejection and C++ sanitizer checks in local environment.
+- RGB565 uncompressed 256x256 =131072 bytes. A single full 600x450 RGB565 framebuffer =540000 bytes; a double buffer =1080000 bytes; 3 x decoded 256x256 frames=393216 bytes before other allocations. These are static size calculations, not real SPI throughput or measured PSRAM allocation.
+- GHF1 binary alpha uses transparent sentinel 0x0000 in the reference renderer. Opaque black shares that numeric representation; a future compositing renderer needs a separate mask or only solid-black background. Fine antialias alpha is thresholded, so inspect real edges.
+- Actual 12/24fps is NOT verified on a real 2.41 display; vendor demo first then PSRAM/SD streaming time measurement and sprite render profiling.
