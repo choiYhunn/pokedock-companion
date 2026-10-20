@@ -2,7 +2,7 @@
 (()=>{"use strict";
 const {Engine,CHARACTERS}=window.GhostEngine,engine=new Engine();
 const $=id=>document.getElementById(id);const canvas=$("pokemon-canvas");const ctx=canvas.getContext("2d");
-let lastTick=0,lastMotion=0;const descriptions=["유령 친구가 둥둥 떠다닙니다.","뒤뚱거리며 활발하게 등장해요.","가볍게 날아와 휴식을 알려줘요.","집중할 때 응원하는 친구예요.","느긋하게 인사하는 친구예요."];
+let lastTick=0;const localFrames=new Map();const descriptions=["유령 친구가 둥둥 떠다닙니다.","뒤뚱거리며 활발하게 등장해요.","가볍게 날아와 휴식을 알려줘요.","집중할 때 응원하는 친구예요.","느긋하게 인사하는 친구예요."];
 const setLog=s=>{$("log").textContent=s;}; const setStatus=s=>{$("status").textContent=s;};
 function choose(i){engine.selectCharacter(i);sync();renderCharButtons();setLog(CHARACTERS[i].name+" 등장!");}
 function renderCharButtons(){const host=$("characters");host.replaceChildren();CHARACTERS.forEach((c,i)=>{const b=document.createElement("button");b.textContent=c.name;b.className=i===engine.character?"active":"";b.addEventListener("click",()=>choose(i));host.append(b);});}
@@ -34,7 +34,7 @@ function draw(ts){const s=engine.snapshot();const t=engine.reducedMotion?0:ts/10
 const phase=s.characterIndex*1.3,breathe=Math.sin(t*2+phase)*6;let dx=0,dy=breathe,r=0,scale=1;
 if(!engine.reducedMotion){switch(s.motion){case"hop":dy-=Math.abs(Math.sin(t*9))*62;break;case"dance":r=Math.sin(t*10)*.18;dx=Math.sin(t*6)*21;break;case"peek":dx=Math.cos(t*7)*40;break;case"spin":r=(t*4)%(Math.PI*2);break;case"enter":scale=.85+Math.abs(Math.sin(t*3))*.15;break;case"celebrate":dy-=Math.abs(Math.sin(t*12))*45;break;case"pose":scale=1+Math.sin(t*4)*.04;break;}}
 ctx.translate(dx,dy);ctx.rotate(r);ctx.scale(scale,scale);
-ellipse(0,93,83,11,"#b59ac71f");paint(s.character,t);ctx.restore();
+ellipse(0,93,83,11,"#b59ac71f");const frames=localFrames.get(s.character.id);if(frames&&frames.length){const frame=frames[Math.floor(t*12)%frames.length];ctx.drawImage(frame,-112,-112,224,224);}else paint(s.character,t);ctx.restore();
 if(!engine.reducedMotion){for(let i=0;i<9;i++){let x=70+((i*63+ts*.008*(i%3+1))%330),y=80+((i*53+ts*.012*(i%2?1:-1))%290);ctx.globalAlpha=.16+.14*Math.sin(t+i);ellipse(x,y,1.4+(i%2),1.4+(i%2),s.character.accent);}ctx.globalAlpha=1;}
 }
 function frame(ts){if(ts-lastTick>=180){engine.tick();for(const e of engine.drain()){if(e.type==="focus_complete")setLog("집중 완료! 이제 쉬어도 좋아요.");if(e.type==="alarm_fire"){setLog("알람 시간이 되었어요.");if(!engine.muted)beep();}}sync();lastTick=ts;}draw(ts);requestAnimationFrame(frame);}
@@ -50,5 +50,6 @@ $("alarm-enabled").onchange=()=>$("alarm-at").onchange();
 $("sound").onchange=()=>{engine.muted=!$("sound").checked;if(!engine.muted)beep();};
 $("reduce").onchange=()=>{engine.reducedMotion=$("reduce").checked;};$("mirror").onchange=()=>{canvas.style.transform=$("mirror").checked?"scaleX(-1)":"none";};
 $("update").onclick=()=>{setLog("업데이트는 시뮬레이터에서 수행되지 않습니다. 실제 장치 OTA는 별도 하드웨어 및 보안 검증 후 연결합니다.");};
+$("asset-frames").addEventListener("change",async ev=>{const files=Array.from(ev.target.files||[]).sort((a,b)=>a.name.localeCompare(b.name));if(!files.length)return;if(files.length>120||files.some(f=>f.size>3*1024*1024)||files.reduce((s,f)=>s+f.size,0)>40*1024*1024){setLog("최대 120장, 파일당 3MB, 합계 40MB 이하로 선택하세요.");return;}try{const frames=await Promise.all(files.map(f=>createImageBitmap(f)));const id=engine.snapshot().character.id;for(const old of localFrames.get(id)||[])old.close();localFrames.set(id,frames);setLog(CHARACTERS[engine.character].name+": "+frames.length+"개 프레임을 12fps로 불러왔습니다. 업로드하지 않습니다.");}catch(err){setLog("프레임 읽기 오류: PNG 또는 WebP 파일인지 확인하세요.");}});
 renderCharButtons();engine.setFocus(25);engine.stop();sync();requestAnimationFrame(frame);
 })();

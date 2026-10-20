@@ -19,7 +19,7 @@ Or directly open v16/simulator/index.html in a browser. Online fonts may be requ
 ESP-IDF requires a supported toolchain and source board driver. Do not flash before electrical and optical gates.
 
 ## Next HARD blockers
-Real optical visibility at 150/300/500lux; sourced display active size and pinout; verified clock OLED and RTC; clean 3D print tolerances; licensed/private high quality animation pack; ESP-IDF AMOLED driver + actual 24fps profiling; signed OTA release and rollback testing.
+Real optical visibility at 150/300/500lux; sourced 2.41in AMOLED (800nit nominal) panel active size, V1/V2 PCB revision and pinout; verified clock OLED and RTC; clean 3D print tolerances; licensed/private high quality animation pack; ESP-IDF AMOLED driver + actual 24fps profiling; signed OTA release and rollback testing.
 No part has been bought or validated in this branch. Do not interpret SOURCE CREATED as GIFT-READY.
 
 ## Why the design changed

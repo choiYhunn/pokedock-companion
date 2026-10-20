@@ -14,12 +14,12 @@ V14/V15 remain historically preserved. V16 is a new concept until optical, hardw
 - Gift rule: no screen-only/table-order appearance; no cloud dependency for core display; no punitive streaks.
 
 ## Provisional architecture
-5V USB-C -> Waveshare ESP32-S3-Touch-AMOLED-1.43, 466x466, QSPI/RTC/TF (hypothesis, **not optically validated**)
+5V USB-C -> FIRST OPTICAL CANDIDATE: Waveshare ESP32-S3-Touch-AMOLED-2.41, 600x450, 800cd/m2 maker-rated; MCU/RTC/TF/QSPI. Board **V1 versus V2 differs in pin mappings**. The 1.43in 466x466, 350cd/m2 part is now SMALLER FALLBACK only; neither is optically validated.
   -> internal upward AMOLED source -> flat beam splitter ~45° -> apparent animation (limited viewing cone)
   -> external I2C SSD1327 1.5inch grayscale 128x128 -> clock, timer, basic settings (connector/pin and pullup verification required)
   -> optional encoder/push-button -> app event queue
   -> OPTIONAL ambient light/proximity sensors AFTER baseline works; I2C address/pin collision & voltage checks needed.
-The 1.43-inch source may prove too small/dim; 2.1-inch Qualia TFT alternative is only a candidate. No board purchase approved by this design.
+The 2.41-inch source may still be too dim or produce doubled reflections; screen brightness is NOT reflected apparent luminance. The 1.43-inch and 2.1-inch Qualia TFT are alternate candidates, not approved buys. No board purchase approved by this design.
 
 ## Renderer contract
 - Software pipeline: assets -> decoded frame cache -> character animation state -> composition -> panel driver.
@@ -56,7 +56,7 @@ G8 gift sign-off: supervised 4h operation, no hot surfaces, no alert surprises, 
 Gates failing -> fallback: animated screen-only rounded device or clean shadow-art clock, not forced expensive assembly.
 
 ## Verified source references
-Waveshare board: https://www.waveshare.com/product/esp32-s3-touch-amoled-1.43.htm
+Waveshare preferred optical prototype: https://www.waveshare.com/esp32-s3-touch-amoled-2.41.htm\nV1/V2 board revision warning: https://docs.waveshare.com/ESP32-S3-Touch-AMOLED-2.41\nAlternative compact AMOLED: https://www.waveshare.com/product/esp32-s3-touch-amoled-1.43.htm
 Waveshare clock OLED: https://www.waveshare.com/wiki/1.5inch_OLED_Module
 Adafruit new Pepper's Ghost project: https://learn.adafruit.com/peppers-ghost-monster-eye
 Espressif OTA docs: https://docs.espressif.com/projects/esp-idf/en/v5.5.1/esp32s3/api-reference/system/esp_https_ota.html
