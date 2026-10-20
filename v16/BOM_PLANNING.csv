@@ -1,0 +1,11 @@
+Item,Reference,Qty,Planning_KRW_min,Planning_KRW_max,Status,Risk_or_gate
+Optical controller,ESP32-S3-Touch-AMOLED-2.41 600x450 800nits maker spec,1,70000,115000,PREFERRED_CANDIDATE,PCB V1 vs V2 driver and optical proof
+Clock OLED,SSD1327 1.5inch grayscale 128x128,1,17000,36000,CANDIDATE,I2C voltage/pins and OLED visibility
+Reflector,flat optical beamsplitter acrylic/film 45deg,1,10000,35000,QUOTE_NEEDED,light leakage and ghost double image
+Main enclosure,outsourced printed base + finishing,1,30000,75000,QUOTE_NEEDED,no raw layer lines on visible surface
+Transparent chamber,clear shield/rounded outer shell,1,15000,35000,QUOTE_NEEDED,quality/fit/no optical distortion
+Input,encoder button / touch adapter,1,3000,13000,CANDIDATE,GPIO availability
+Power,certified USB 5V adapter + quality cable,1,10000,22000,CANDIDATE,current draw unknown
+Pads_and_wiring,feet screws connectors/strain relief,1,7000,16000,CANDIDATE,mechanical safety
+Contingency,one optical/print revision,1,20000,40000,PLANNING,not guaranteed
+TOTAL_ESTIMATE,not a checkout quote,,182000,387000,NOT_ORDERED,scope trim after optics gate

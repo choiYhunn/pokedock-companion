@@ -1,0 +1,12 @@
+menu "Ghost Companion V16 EXPERIMENTAL"
+ config GHOST_V16_ENABLE_OTA
+  bool "Enable EXPERIMENTAL manual OTA (NOT PRODUCTION SAFE)"
+  default n
+  help
+   NEVER enable without board bring-up, version and signature checks,
+   trusted manifest, app-controlled rollback, and physical power tests.
+ config GHOST_V16_UPDATE_BASE
+  string "Trusted HTTPS OTA release URL prefix (ends /)"
+  default ""
+  depends on GHOST_V16_ENABLE_OTA
+endmenu
