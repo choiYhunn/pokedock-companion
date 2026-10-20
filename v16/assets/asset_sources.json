@@ -1,0 +1,70 @@
+{
+  "checked_on": "2026-10-21",
+  "source_repository": "https://github.com/PokeAPI/sprites",
+  "source_tree": "master",
+  "use_status": "REFERENCE_ONLY_NO_LICENSE_CLEARED",
+  "copyright_note": "Pokémon character art and animations are not licensed by the presence of a downloadable public repository. Do not automatically redistribute, commit, host, or package these images. For the gift use only artwork you have rights/permission to use; private-use implications depend on applicable law.",
+  "members": [
+    {
+      "id": "gengar",
+      "dex": 94,
+      "korean": "팬텀",
+      "main": true,
+      "gif_bytes": 50496,
+      "reference_gif": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/showdown/94.gif",
+      "reference_home_png": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/home/94.png",
+      "reference_official_artwork": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/official-artwork/94.png",
+      "technical_rating": "showdown GIF is small pixel art and is not equivalent to premium hand-authored high-resolution motion",
+      "royalty_status": "NOT_CLEARED",
+      "required_final_art": "independently authored/licensed transparent 256x256 PNG/WebP frames, at least idle/enter/exit/two signature actions"
+    },
+    {
+      "id": "piplup",
+      "dex": 393,
+      "korean": "팽도리",
+      "gif_bytes": 86370,
+      "reference_gif": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/showdown/393.gif",
+      "reference_home_png": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/home/393.png",
+      "reference_official_artwork": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/official-artwork/393.png",
+      "technical_rating": "showdown GIF is small pixel art and is not equivalent to premium hand-authored high-resolution motion",
+      "royalty_status": "NOT_CLEARED",
+      "required_final_art": "independently authored/licensed transparent 256x256 PNG/WebP frames, at least idle/enter/exit/two signature actions"
+    },
+    {
+      "id": "togekiss",
+      "dex": 468,
+      "korean": "토게키스",
+      "gif_bytes": 31809,
+      "reference_gif": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/showdown/468.gif",
+      "reference_home_png": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/home/468.png",
+      "reference_official_artwork": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/official-artwork/468.png",
+      "technical_rating": "showdown GIF is small pixel art and is not equivalent to premium hand-authored high-resolution motion",
+      "royalty_status": "NOT_CLEARED",
+      "required_final_art": "independently authored/licensed transparent 256x256 PNG/WebP frames, at least idle/enter/exit/two signature actions"
+    },
+    {
+      "id": "lucario",
+      "dex": 448,
+      "korean": "루카리오",
+      "gif_bytes": 62474,
+      "reference_gif": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/showdown/448.gif",
+      "reference_home_png": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/home/448.png",
+      "reference_official_artwork": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/official-artwork/448.png",
+      "technical_rating": "showdown GIF is small pixel art and is not equivalent to premium hand-authored high-resolution motion",
+      "royalty_status": "NOT_CLEARED",
+      "required_final_art": "independently authored/licensed transparent 256x256 PNG/WebP frames, at least idle/enter/exit/two signature actions"
+    },
+    {
+      "id": "quagsire",
+      "dex": 195,
+      "korean": "누오",
+      "gif_bytes": 52485,
+      "reference_gif": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/showdown/195.gif",
+      "reference_home_png": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/home/195.png",
+      "reference_official_artwork": "https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/official-artwork/195.png",
+      "technical_rating": "showdown GIF is small pixel art and is not equivalent to premium hand-authored high-resolution motion",
+      "royalty_status": "NOT_CLEARED",
+      "required_final_art": "independently authored/licensed transparent 256x256 PNG/WebP frames, at least idle/enter/exit/two signature actions"
+    }
+  ]
+}

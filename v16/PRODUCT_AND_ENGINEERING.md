@@ -4,7 +4,7 @@ V14/V15 remain historically preserved. V16 is a new concept until optical, hardw
 
 ## User-facing product
 - Type: rounded mini hybrid Pepper's Ghost desk clock, NOT regular LCD photo frame.
-- Target: 132(W) x 97(D) x 125(H) mm planning envelope, **not a mechanically verified assembly**.
+- Target: 132(W) x 105(D) x 136(H) mm Rev-B planning envelope (base 54 + chamber 82), not final fit, **not a mechanically verified assembly**.
 - Main visual: a 3–5 cm apparent animated ghost character floating behind a flat 45-degree beam splitter; round edges are on the OUTER housing only.
 - Clock: independent front-facing 1.5-inch grayscale OLED, persistent legibility even if optical content has low contrast.
 - Character roster: Gengar (default), Piplup, Togekiss, Lucario, Quagsire. Character names only; art is not bundled.
@@ -60,3 +60,9 @@ Waveshare preferred optical prototype: https://www.waveshare.com/esp32-s3-touch-
 Waveshare clock OLED: https://www.waveshare.com/wiki/1.5inch_OLED_Module
 Adafruit new Pepper's Ghost project: https://learn.adafruit.com/peppers-ghost-monster-eye
 Espressif OTA docs: https://docs.espressif.com/projects/esp-idf/en/v5.5.1/esp32s3/api-reference/system/esp_https_ota.html
+
+## Audit additions 2026-10-21
+- Source inventory: [assets/asset_sources.json](assets/asset_sources.json); files are rights-uncleared reference links, not redistributed.
+- Portable offline animation GHF1 encoder/decoder added with local Python and C++ tests. Native ESP32 screen streaming still absent.
+- Vendor V2 official example contains a legacy I2C driver conflict report; reuse a single compatible I2C bus driver rather than init a second bus.
+- Purchasing authority: [PROCUREMENT_CURRENT.md](PROCUREMENT_CURRENT.md) and [VERIFICATION_MATRIX.md](VERIFICATION_MATRIX.md), not historical V15 BOM.

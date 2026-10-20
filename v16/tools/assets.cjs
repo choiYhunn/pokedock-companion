@@ -6,7 +6,7 @@
 "use strict";
 const fs=require("node:fs"),path=require("node:path"),crypto=require("node:crypto");
 const MAX_FILES=2000,MAX_FILE=8*1024*1024,MAX_PACK=96*1024*1024;
-const EXT=new Set([".png",".webp",".wav",".ogg",".json"]);
+const EXT=new Set([".png",".webp",".wav",".ogg",".json",".ghf"]);
 function scan(root){const files=[];function walk(rel){for(const entry of fs.readdirSync(path.join(root,rel),{withFileTypes:true})){
  if(!/^[A-Za-z0-9_-][A-Za-z0-9_.-]*$/.test(entry.name)||entry.name.startsWith("."))throw Error("invalid path");
  const local=rel?rel+"/"+entry.name:entry.name;if(local==="manifest.json"||local==="manifest.sig")continue;

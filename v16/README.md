@@ -14,7 +14,11 @@ This branch establishes the new design target; **V15 remains the last prior manu
 - [CAD concept](cad/ghost_v16_concept.scad), MODE=base exports a SINGLE prototype base model only; dimensions, ports and mounts are unverified.
 - [ESP-IDF console-only skeleton](firmware/idf): not an AMOLED/OLED board port.
 - [OTA safety and asset plan](OTA_MANUAL.md): disabled-by-default HTTPS OTA reference module, 16MiB **proposal** partition table, external ED25519 [asset signer/verifier](tools/assets.cjs) and tests. No on-device OTA, signed media install, or network updater is claimed.
-- [Cost envelope](BOM_PLANNING.csv). Price estimates not current shop orders.
+- [Cost envelope](BOM_PLANNING.csv) and [supplier links/checkout rules](PROCUREMENT_CURRENT.md). No purchase approved.
+- [Preorder verification matrix](VERIFICATION_MATRIX.md): host-passed versus physical/unavailable work.
+- [Rev B measured-envelope CAD](cad/ghost_v16_revB_envelope.scad) supersedes generic Rev A dimensions only as a geometric concept.
+- [Artwork reference inventory](assets/asset_sources.json) and [rights review](assets/SOURCE_AND_LICENSE_AUDIT.md).
+- [GHF1 animation converter](tools/ghf_codec.py) / [bounded C++ decoder](firmware/ghf_decoder.h) and host test script (run `bash v16/scripts/test_host_codec.sh`).
 
 ## Run locally
 From this repository: bash v16/scripts/test_host.sh

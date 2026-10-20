@@ -4,7 +4,7 @@ A beamsplitter/reflector makes a virtual **2D image**, not physical free-space h
 - Do not curve the internal reflector; use a flat optically clear piece.
 - The rounded outer wall may be molded clear acrylic or a clear box with rounded edges, but curved optical windows may introduce distortion.
 - Dust, doubled glass reflections and edge glare need evaluation. No visible tape/glue blobs.
-- Clock OLED is independent because a 1.43in optical source may not make digits readable in daylight. Do not assume it works from a 3D mock.
+- Clock OLED is independent because a 2.41in optical source may not make digits readable in daylight. Do not assume it works from a 3D mock.
 - The version-1 CAD only contains a mock base and visual placement, *not* joinery for actual modules, screws, encoder, O-ring, optics or cable strain relief.
 ## Three test scenes
 1. Unlit desk / power off: chamfer/fillets, cable exit, optical transparency, scratches.
@@ -14,3 +14,9 @@ A beamsplitter/reflector makes a virtual **2D image**, not physical free-space h
 Reject module if optical apparent character is less than ~30mm high, blurred, noticeably doubled, or only visible in a dark room. If failed, try larger brighter source/beam splitter redesign ONCE, then screen-style alternative. No sunk-cost continuation.
 ## Priorities
 A: visual crispness. B: physical off-state appearance. C: clock readability. D: 5V safety. E: maintainability. Optional surround lighting should not mask optical artifacts.
+
+## Rev-B dimensional/angle clarification
+- Manufacturer bare 2.41 PCB body 47.2x64.0x11.8mm; active area 37.22x49.65mm. Source board is horizontally arranged in base, not an 88mm-wide source.
+- Candidate flat clear plate 64x70mm at nominal 45°, center z=H+40mm; within 85mm chamber depth and 82mm chamber height in the CAD envelope.
+- **At desk viewing heights, ~30° can be preferable to 45°**, according to independent Pepper's Ghost maker notes; this is a test variable, not a fixed manufacturing angle. Bracket must later allow measured adjustment.
+- CAD Rev B tests only geometry, not actual optical rays, ghost-image size, double reflection or contact tolerances.
