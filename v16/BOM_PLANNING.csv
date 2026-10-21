@@ -1,12 +1,13 @@
-Item,Reference,Qty,Planning_KRW_min,Planning_KRW_max,Status,Comments
-Main AMOLED,Waveshare 2.41 bare Rev2.0,1,70000,105000,CONFIRM_REV2,Manufacturer USD49.99-53.99 option family plus freight/FX
-Front OLED,SSD1327 1.5inch 128x128,1,20000,40000,I2C_SOLDER_CONFIGURATION,Waveshare USD12.99 vs local indexed 35189KRW
-Trial and final optics,Flat PET/PMMA ~64x70 reflector,1,8000,45000,ANGLE_REFLECTION_TEST,No actual price quote; expensive precision glass rejected
-Printed base + finishing,Matte ivory 132x105x54 prelim,1,40000,100000,MEASURE_ACTUAL_HARDWARE,Vendor quote NOT obtained
-Transparent outer chamber,Clear shell 104x85x82 prelim,1,20000,65000,VENDOR_DFM,Curved cover separate flat inner reflector
-Encoder/push knob,KY040 candidate,1,4000,12000,GPIO_AND_SHAFT,Retail listing KRW4550; shipping unknown
-5V supply and 1m USB cable,Certified DC 5V 2A candidate,1,10000,22000,MEASURE_PEAK_CURRENT,Source 18810KRW public listing
-Assembly wiring,JST mates/felt/feet/screws,1,7000,20000,VERIFY_CONNECTOR_PITCH,OLED PH2.0 7pin vs main SH1.0 4pin
-MicroSD,Branded 8-16GB or existing,1,0,15000,SD_FATFS_VERIFY,Do not assume bundled
-Contingency,Optics/print revision budget,1,20000,50000,PLANNING_ONLY,Not a retailer quote
-TOTAL_ESTIMATE,not a checkout quote,,199000,474000,NOT_ORDERED,Do not purchase entire cart before optical test
+Item,Spec,Qty,MinKRW,MaxKRW,Note
+Main,ESP32-S3-Touch-AMOLED-2.41 bare V2 Rev2.0,1,70000,105000,Manufacturer USD49.99-53.99 option-dependent no landed cart
+Clock,Waveshare 2.42inch OLED WHITE SSD1309 128x64 SPI,1,20000,37000,Manufacturer USD12.99; 55.01x27.49mm visible
+Reflector,64x70mm flat PET or PMMA plate with acceptable reflected contrast,1,8000,25000,Not quoted
+Cover,polished clear stock canopy or PMMA fabrication,1,15000,50000,Not quoted stock matching 104x85x82 not found
+PrintedBase,PETG 132x105x54 mock plus finish,1,30000,60000,3DFARM rough estimate not STL quote
+Encoder,EC11 press rotary with premium cap,1,4000,10000,Exact shaft mount still TBD
+Buzzer,optional externally driven piezo,1,0,7000,Rated driver test required
+Wiring,connectors screws strain relief rubber feet,1,8000,20000,Exact harness unknown
+USB,existing certified 5V adapter or new,1,0,18000,Not owned by assumption
+Storage,existing authentic microSD or new,1,0,15000,Not owned by assumption
+Retry,one prototype redo allowance,1,15000,30000,Planning reserve
+Total,Indicative landed planning only,,170000,377000,NOT CHECKOUT VERIFIED

@@ -1,4 +1,4 @@
-# V16 Electrical and Power Interface — unverified hardware contract
+> **Rev C interface:** 2.42in WHITE SSD1309 clock screen via default SPI (not square SSD1327 via I²C), 55.01x27.49mm active and 61.5x39.5mm PCB. Pinout awaits V2 physical schematic.\n\n# V16 Electrical and Power Interface — unverified hardware contract
 
 ## Candidate board selection (NO PURCHASE)
 - First optical candidate: Waveshare ESP32-S3-Touch-AMOLED-2.41 / 2.41-B (manufacturer lists 600x450, 800cd/m2, ESP32-S3R8, 16MB Flash, 8MB PSRAM, USB-C, RTC, TF slot).
@@ -11,7 +11,7 @@ Certified isolated 220Vac-to-5Vdc USB supply
   -> verified USB-C cable
   -> Waveshare 2.41 main board USB-C input (no loose live 220Vac wiring)
   -> exposed I2C connector at 3.3V-logic (pinout from matching V1/V2 schematic)
-      -> SSD1327 1.5in clock OLED only after its I2C hardware-mode resistors and I2C address are checked
+      -> SSD1309 2.42in WHITE OLED via default SPI only after its I2C hardware-mode resistors and I2C address are checked
   -> verified spare GPIO + debounce/pull-up
       -> incremental encoder/push input (NOT bare 5V logic signals)
   -> OPTIONAL spare GPIO through suitable transistor/driver
@@ -21,7 +21,7 @@ Certified isolated 220Vac-to-5Vdc USB supply
   -> optional TF/microSD for large private animation packs; no hardcoded network-only assets
 
 ## Interface risk register
-- OLED module may ship configured for SPI; SSD1327 1.5 Waveshare supports I2C after module configuration; verify resistor selector and schematic before wiring.
+- Rev C SSD1309 OLED is factory SPI; do not confuse its MX1.25 harness with AMOLED SH1.0 connector. Spare SPI GPIO assignments require physical V2 confirmation.
 - Shared I2C bus already carries touch, IMU and RTC. SDA/SCL candidate GPIO47/48 per V1 docs; **V2 variant needs matching schematic verification**; scan addresses (e.g. OLED nominal 0x3C/0x3D) for collisions.
 - 5V USB supplies primary power; DO NOT feed OLED module from a 5V logic source into 3.3V I2C without verified translators.
 - 3.3V regulator capacity for external OLED is UNKNOWN; measure current draw, idle and peak, before connecting.

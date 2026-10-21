@@ -1,10 +1,10 @@
-# V16 End-to-End Preorder Audit Matrix
+> **Rev C check:** 2.42-inch white SSD1309 128x64 SPI clock (PCB 61.5x39.5mm, active 55.01x27.49mm) replaces 1.5-inch square SSD1327. Rev C CAD is conceptual, no purchased or physical part fits proven.\n\n# V16 End-to-End Preorder Audit Matrix
 Checked: 2026-10-21. The words PASS are reserved for executed tests with evidence; source-created != product-ready.
 | Stage | Acceptance | Evidence or blocker | Status |
 |---|---|---|---|
 | Requirements | Round gift-grade B, five characters, clock/focus/alarm, manual update | User decision; V16 source main | DESIGN PASS |
 | Gift industrial appearance | OFF-state attractive from front/side/rear, small desk footprint | Browser concept only, finish/canopy vendor missing | BLOCKED |
-| CAD bounding | 2.41 bare PCB 47.2x64x11.8, active 37.22x49.65, front OLED 44.5x37 | Rev B 132x105x54 shell, 104x85x82 chamber, flat 64x70 reflector mock | HOST GEOMETRY PASS / FIT UNVERIFIED |
+| CAD bounding | 2.41 bare PCB 47.2x64x11.8, active 37.22x49.65, front OLED 61.5x39.5 Rev C | Rev C 132x105x54 shell, 104x85x82 chamber, flat 64x70 reflector mock | HOST GEOMETRY PASS / FIT UNVERIFIED |
 | Reflector geometry | plate entirely inside outer volume and does not block screen | parametric 45deg envelope; bench optical ray tracing and seam alignment missing | CONCEPT ONLY |
 | Optical visual | Ghost facial expression readable at 60cm, 150/300/500lux, multiple sight angles | Hardware absent; commercial screenshot not evidence | BLOCKED |
 | Character inventory | Gengar/Piplup/Togekiss/Lucario/Quagsire | PokeAPI GIF + artwork links verified in Git tree; NOT licensed for redistribution | REFERENCE FOUND / RIGHTS BLOCKED |

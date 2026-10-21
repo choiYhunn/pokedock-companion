@@ -1,7 +1,7 @@
-# V16 Build and Fabrication Plan — NO ORDER without G1 optical sign-off
+> **Current geometry:** [Rev C](cad/ghost_v16_revC_envelope.scad) has the correct rectangular 56.5×29mm clock aperture; old Rev B has a 26.86mm square. Manufacturing fixtures still unverified.\n\n# V16 Build and Fabrication Plan — NO ORDER without G1 optical sign-off
 
 ## Conceptual envelope (NOT fit-verified)
-- Base envelope 132x105x54mm with 20mm-radius outer corners (ivory matte). CAD mock: cad/ghost_v16_concept.scad.
+- Base envelope 132x105x54mm with 20mm-radius outer corners (ivory matte). CAD mock: cad/ghost_v16_revC_envelope.scad.
 - Chamber target outer envelope ~104x85x82mm; internal reflector FLAT ~45deg; corner radius is on the transparent dust cover, not the image reflector.
 - Target assembled height ~136mm (may grow after actual board mechanical dimensions). **DO NOT PRINT CONCEPT AS A FINAL ENCLOSURE.**
 - Accessible rear USB-C, non-slip silicone feet, serviceable hidden screws, one pressable encoder, dark hidden optical cavity, white/cream front clock window.
@@ -19,14 +19,14 @@ P7 Gift finish: labels hidden on rear; dedicated packaging, private letter store
 P8 Update verification: user taps update, release metadata/signature, inactive app slot, boot health check/rollback and USB rescue; pack switching uses A/B assets. Five interrupted/failed upgrade cases must pass before enabling update UI.
 
 ## Outsource brief (to quote only, not send blindly)
-One rounded desk-object housing, 132x105x54mm *preliminary* base, neutral matte ivory, no visible strata, flush 1.5in front window, hidden rear USB access, one side/top encoder, internal opaque optical-light cavity and flat clear reflector support. Manufacturing file and contact surfaces remain pending physical measurements, so request feasibility and expected finishing cost only; do not promise a final STL.
+One rounded desk-object housing, 132x105x54mm *preliminary* base, neutral matte ivory, no visible strata, flush 2.42in 55.01x27.49mm clock active window, hidden rear USB access, one side/top encoder, internal opaque optical-light cavity and flat clear reflector support. Manufacturing file and contact surfaces remain pending physical measurements, so request feasibility and expected finishing cost only; do not promise a final STL.
 
 ## Stop conditions
 Reject if 2.41 projected image still too dull at 300-500lux, external panel makes it look like table-order equipment, front clock too small, enclosure requires unshielded power wiring, BOM exceeds user-approved budget, or secure OTA cannot be proven. Existing V14/V15 effort does not change these gates.
 
 ## New prototype-only CAD output
 - Source: [cad/ghost_v16_revB_envelope.scad](cad/ghost_v16_revB_envelope.scad), MODE="base". Local OpenSCAD exported one component, watertight, envelope 132x105x54mm, approximate printed wall volume 113.87cm^3; not a manufacturer-ready print for final module fastening.
-- CLOCK MODULE: SSD1327 full PCB 44.5x37mm mounted vertical behind 26.86mm square active aperture; physical FPC/pins/screw holes do not exist in CAD until sample inspected.
+- CLOCK MODULE: Rev C SSD1309 PCB 61.5x39.5mm, visible 55.01x27.49mm, nominal 56.5x29mm slot; physical FPC/pins/screw holes do not exist in CAD until sample inspected.
 - SCREEN MODULE: Waveshare bare 2.41 PCB 47.2x64x11.8mm rotated 90° with active screen up in base; rear USB-C cable bend and mounting holes unverified.
 - Optical plate 64x70x~1mm prototype, tilted 45° for the mock, never pre-order expensive plate until ~30°/~45° bench tests.
-- OLED package default SPI; request factory I2C jumper/rework or outsource rework; included Waveshare OLED PH2.0 7-pin and AMOLED SH1.0 4-pin are physically different connectors.
+- Rev C SSD1309 stays in default SPI mode; route a 7-pin MX1.25 harness to verified V2 free GPIO. No I2C resistor microsolder required.

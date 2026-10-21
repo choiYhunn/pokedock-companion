@@ -7,7 +7,7 @@
 4. **Optical transparency**: no AI-generated image certifies luminance or the 30° vs 45° acceptance. Real image height limited to physical screen active height (~37mm), view angle and contrast unproven.
 5. **BOM claims**: USD catalog is not KRW landed cost; domestic OLED marketplace listings may have different controller and PCB size. Ignore claims of universal lowest price.
 6. **Artwork quality**: downloaded Pokémon Showdown GIFs are pixel-art references, not coherent premium motions nor licensed to be repackaged. Private gift should not cause publishing franchise assets into a public repo or OTA releases.
-7. **GHF1 decoder alpha issue**: current portable decoder uses RGB565 0 as transparency *sentinel*. An opaque pure black pixel may be lost if renderer interprets 0 as transparent. Do NOT ship high quality sprites until mask-aware decoder or GHF2 alpha format is tested on panel. RGB565 alone cannot preserve alpha.
+7. **GHF1 decoder alpha issue**: optional `alpha_mask` output (0 transparent / 255 opaque) was added to preserve opaque RGB565 black in a future renderer. No real ESP32 compositor uses this yet; legacy callers using only RGB565 still have the sentinel issue.
 8. **OTA**: docs and disabled prototype only. No real V2 board build/firmware A/B, no signed device manifest verification or on-device atomic asset pack swap. Release update button must remain disabled until fault-injection verification.
 9. **Audible alarm**: 2.41 main board has no speaker; sound requires verified external module and specific GPIO. Default muted.
 10. **Time trust after power removal**: clock hardware has RTC but backup supply and retention must be physically verified. No invented accurate alarm after prolonged power-off without NTP/re-sync.

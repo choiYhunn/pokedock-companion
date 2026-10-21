@@ -18,7 +18,7 @@
 | Branded microSD | reuse owned compatible >=8GB, else authentic 8–16GB | existing ownership unknown | 0–15,000 | offline pack drive |
 | One revision contingency | printed spacer / one optical retry | internal project allowance | 15,000–30,000 | after first verification |
 
-**Total envelope on this indicative itemized plan:** ₩185,000–₩377,000 if every upper range including optional accessories; check arithmetic before publish. Target near ₩220–250k only with combined direct factory shipment, off-the-shelf transparent cover, one FDM prototype, reused power/card and minimal audio hardware. Professional post-paint or custom clear PMMA can push it above ₩300k; do not hide that.
+**Total envelope on this indicative itemized plan:** ₩170,000–₩377,000 if every upper range including optional accessories; check arithmetic before publish. Target near ₩220–250k only with combined direct factory shipment, off-the-shelf transparent cover, one FDM prototype, reused power/card and minimal audio hardware. Professional post-paint or custom clear PMMA can push it above ₩300k; do not hide that.
 
 ## Sourcing route chosen, not a false 'cheapest shop'
 1. **Waveshare one basket preferred** for exact 2.41 V2 board + exact 2.42 WHITE OLED; request total including shipping and VAT. Manufacturer list vs landed Korean estimate distinct.
