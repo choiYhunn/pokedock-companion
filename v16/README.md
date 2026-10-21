@@ -1,4 +1,6 @@
 # V16 Ghost Companion — WORK IN PROGRESS
+
+> **CURRENT DESIGN: Rev C (2026-10-21)** — [Final candidate design](REVC_DESIGN_LOCK.md) · [Supplier/outsource selection](REVC_PROCUREMENT_AND_OUTSOURCE.md) · [Audit](REVC_CRITICAL_AUDIT.md) · [Dimensioned CAD](cad/ghost_v16_revC_envelope.scad). Earlier Rev B dimensions and square-clock choices below are historical only. **Do not purchase complete basket** before optics and fit proof.\n\n
 **Decision date: 2026-10-20.** User selected option B: a *rounded hybrid Pepper's Ghost clock*.
 This branch establishes the new design target; **V15 remains the last prior manufacturing plan, not an approved V16 hardware build**.
 
