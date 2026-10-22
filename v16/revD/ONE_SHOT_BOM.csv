@@ -1,0 +1,13 @@
+Group,Item,Exact chosen specification,Qty,Low_KRW,High_KRW,Vendor_link,Purchase confidence,Notes
+Electronics,Main display MCU,Waveshare ESP32-S3-Touch-AMOLED-2.41 bare SKU30563 V2 Rev2.0 600x450,1,70000,105000,https://www.waveshare.com/esp32-s3-touch-amoled-2.41.htm,Vendor exact SKU YES landed NO,Manufacturer list USD49.99-53.99 options; require V2 written confirmation
+Electronics,Front clock,Waveshare 2.42inch OLED Module WHITE SSD1309 SKU25742 128x64 SPI default,1,20000,37000,https://www.waveshare.com/product/ai/2.42inch-oled-module.htm,Vendor exact SKU YES landed NO,Includes one MX1.25 7PIN cable per vendor; PCB 61.5x39.5 active 55.01x27.49
+Optics,Beam splitter,Coated 30R70T trial or thin film flat plate 82x88x1mm,1,15000,45000,https://iljinoptec.co.kr/ko/%ED%95%98%ED%94%84-%EB%AF%B8%EB%9F%AC/,Size and quote NOT CONFIRMED,Ordinary acrylic produces dim and doubled images
+Optics,Clear chamber,Polished PMMA five-face 104x91x82mm target,1,20000,70000,https://acrico.net/goods/view?no=55,EXACT STOCK SIZE NOT FOUND,Vendor family is only 100mm width not matching candidate
+Manufacturing,Matte housing,RevD PETG 132x105x54 shell plus 2 plate rails and finish,1,45000,90000,https://3dfarm.co.kr/3d-printing-price/,QUOTE REQUIRED,Current SCAD only bounding and rail prototype not final mounting
+Controls,Rotary knob,EC11 push encoder threaded bushing and smooth cap,1,5000,12000,,Shaft dimension TBD,7.2mm candidate hole needs matching part
+Controls,Audible alarm,3.3V active piezo NPN driver and resistor,1,3000,10000,,GPIO43 needs UART0 conflict resolution,No onboard speaker
+Electrical,Connectors,2.54mm header assembly harness strain relief and heatshrink 100-150mm,1,15000,25000,,Actual board header and pinout pending,Do not confuse MX1.25 OLED and SH1.0 connector
+Storage,microSD,Name brand authentic 16GB FAT32,1,7000,15000,,Standard item,Can reuse owned card if verified
+Power,USB power supply,KC certified 5V 2A+ USB-C 1m cable,1,9000,19000,,Total actual current unmeasured,Can reuse trusted adapter
+Finishing,Fasteners and feet,M2 M3 screw kit 4 silicone feet cable retainers,1,5000,10000,,Final board screw boss not drawn yet,Generic parts
+Contingency,One revision allowance,Optical and print correction reserve,1,20000,45000,,NOT A PURCHASED PART,Can reduce only after measurement
