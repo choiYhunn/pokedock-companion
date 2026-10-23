@@ -1,5 +1,7 @@
 # V16 Ghost Companion — WORK IN PROGRESS
 
+**New 2026-10-23:** [Host-tested GHF1 RGB565+alpha optical compositor](runtime/README.md) / [mirror-X renderer](runtime/frame_player.h) / [regression test](runtime/test_frame.cpp). This is an intermediate renderer and must be integrated into verified V2 RM690B0 QSPI driver; no hardware FPS or physical optics certification.
+
 
 > **CURRENT OPTICAL PROTOTYPE: Rev D (2026-10-22)** — [Optical engineer report](revD/VERIFICATION_REPORT.md), [Rev D CAD](revD/revD_envelope.scad), [one-round purchasing checklist](revD/ONE_SHOT_BOM.csv), [host runtime](revD/ghost_runtime.h) and [SSD1309 clock test source](revD/ssd1309_portable.h). The Rev C 64x70mm beam splitter has been superseded by 82x88mm geometric optimization; **no real-optical or physical assembly approval and NO FULL-BASKET PURCHASE**. Current Rev D independent testing bundle also exists in the originating ChatGPT conversation.\n\n> **CURRENT DESIGN: Rev C (2026-10-21)** — [Final candidate design](REVC_DESIGN_LOCK.md) · [Supplier/outsource selection](REVC_PROCUREMENT_AND_OUTSOURCE.md) · [Audit](REVC_CRITICAL_AUDIT.md) · [Dimensioned CAD](cad/ghost_v16_revC_envelope.scad). Earlier Rev B dimensions and square-clock choices below are historical only. **Do not purchase complete basket** before optics and fit proof.\n\n
 **Decision date: 2026-10-20.** User selected option B: a *rounded hybrid Pepper's Ghost clock*.
