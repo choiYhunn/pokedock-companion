@@ -1,0 +1,19 @@
+{
+  "name": "PokéDock Mobile V17 — Little Moments",
+  "short_name": "PokéDock",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f9f7f4",
+  "theme_color": "#f8f5f3",
+  "orientation": "any",
+  "description": "Portrait everyday companion with a separate landscape Pokémon game view",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
