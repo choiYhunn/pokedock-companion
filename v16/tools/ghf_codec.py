@@ -12,8 +12,10 @@ MAX_FRAMES=480
 MAX_BYTES=24*1024*1024
 def rgb565(r,g,b):
     return (r>>3)<<11 | (g>>2)<<5 | (b>>3)
-def frame_bytes(frame,width,height,alpha_cutoff=64):
-    rgba=frame.convert('RGBA').resize((width,height),Image.Resampling.LANCZOS)
+def frame_bytes(frame,width,height,alpha_cutoff=64,resample='smooth'):
+    if resample not in ('smooth','pixel'):raise ValueError('resample')
+    alg=Image.Resampling.NEAREST if resample=='pixel' else Image.Resampling.LANCZOS
+    rgba=frame.convert('RGBA').resize((width,height),alg)
     px=[None if a<alpha_cutoff else rgb565(r,g,b) for r,g,b,a in rgba.getdata()]
     out=bytearray();i=0
     while i<len(px):
@@ -58,7 +60,7 @@ def decode_bytes(data):
         if len(out)>w*h:raise ValueError('overflow')
     if len(out)!=w*h:raise ValueError('decoded length')
     return w,h,out
-def pack(src_path,dest,character,width,height,fps,limit):
+def pack(src_path,dest,character,width,height,fps,limit,resample='smooth'):
     if not(1<=width<=MAX_DIM and 1<=height<=MAX_DIM):raise ValueError('dimensions')
     if not(1<=fps<=30 and 1<=limit<=MAX_FRAMES):raise ValueError('fps or frame limit')
     if character not in ('gengar','piplup','togekiss','lucario','quagsire'):raise ValueError('character')
@@ -66,7 +68,7 @@ def pack(src_path,dest,character,width,height,fps,limit):
     src=Image.open(src_path);frames=[];total=0
     for i,frame in enumerate(ImageSequence.Iterator(src)):
         if i>=limit:break
-        blob=frame_bytes(frame,width,height)
+        blob=frame_bytes(frame,width,height,resample=resample)
         assert decode_bytes(blob)[:2]==(width,height)
         total+=len(blob)
         if total>MAX_BYTES:raise ValueError('pack too large')
@@ -75,7 +77,7 @@ def pack(src_path,dest,character,width,height,fps,limit):
         duration=max(33,min(1000,duration))
         frames.append({'name':name,'duration_ms':duration,'bytes':len(blob),'sha256':hashlib.sha256(blob).hexdigest()})
     if not frames:raise ValueError('no frames')
-    manifest={'format':'ghost-ghf1','schema':1,'character':character,'resolution':[width,height],'frame_count':len(frames),'total_bytes':total,'frames':frames}
+    manifest={'format':'ghost-ghf1','schema':1,'character':character,'resolution':[width,height],'frame_count':len(frames),'total_bytes':total,'render_style':resample,'frames':frames}
     (dest/f'{character}_index.json').write_text(json.dumps(manifest,indent=2),encoding='utf8')
     return manifest
 if __name__=='__main__':
@@ -83,5 +85,6 @@ if __name__=='__main__':
     p.add_argument('--character',choices=['gengar','piplup','togekiss','lucario','quagsire'],required=True)
     p.add_argument('--width',type=int,default=256);p.add_argument('--height',type=int,default=256)
     p.add_argument('--fps',type=int,default=12);p.add_argument('--max-frames',type=int,default=120)
-    a=p.parse_args();m=pack(a.input,a.output_dir,a.character,a.width,a.height,a.fps,a.max_frames)
+    p.add_argument('--resample',choices=['pixel','smooth'],default='smooth')
+    a=p.parse_args();m=pack(a.input,a.output_dir,a.character,a.width,a.height,a.fps,a.max_frames,a.resample)
     print('GHF1 converted',m['frame_count'],'frames',m['total_bytes'],'bytes')
