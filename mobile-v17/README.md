@@ -1,10 +1,24 @@
-# PokéDock Mobile V17 · responsive NEW mobile app (2026-10-23)
-This is a **new layout** rather than a landscape-only copy of the original V10 at /simulator.html.
-- Portrait everyday: large clock, current Pokémon, date and greeting, 15/25/45 Focus, daily alarms, custom local love note, 5-tap Gengar Easter egg.
-- Landscape game: eight real Pokémon forms, classic BW animated pixel GIF or high-res official-artwork (live PokeAPI images), partner actions hop/dance/peek/celebrate, Nintendo-inspired visual hierarchy. Not arbitrary made-up ghost sprites.
-- Saved local state, wall-clock deadline focus, KST alarms checked only while open; NOT guaranteed background/wake alarm.
-- Inline /mobile-v17/index.html is a bundled version of the complete source archived in the ChatGPT 2026-10-23 generated artifact ZIP. Separate readable source: `new-app/{index.html,styles.css,core.js,app.js,sw.js}` in the conversation archive. The source ZIP is **not** stored in GitHub; this published HTML is the live built artifact.
-- PNG/GIF copyrighted Pokémon graphics **not** redistributed in repo; they load dynamically from PokeAPI GitHub. Verify personal/commercial rights before any public store release.
-- Actual APK/IPA NOT compiled. PWA is installable on supported browsers over HTTPS. Neither iOS native notifications nor Android reliable lock-screen alarms implemented.
-- Host tests: Node 6/6 core; Chromium set_content 390px portrait layout 390px width, no script errors; full mobile real-device E2E not claimed.
-- V16 hologram is a separate physical hardware project; its PC optical geometry tests and firmware skeleton do not constitute live display/OTA signoff. See /v16/revD/VERIFICATION_REPORT.md and /v16/REVC_CRITICAL_AUDIT.md.
+# PokéDock Mobile V17.1 · GitHub Pages
+
+Open `https://choiyhunn.github.io/pokedock-companion/mobile-v17/` in iPhone Safari. Wait for **오프라인 준비 완료**, then use Share → Add to Home Screen → Open as Web App → Add. Open the Home Screen icon once while online before testing airplane mode.
+
+## Included
+
+- Portrait companion: clock, Focus 15/25/45 minutes, local note and partner selection.
+- Landscape play: eight partners, integer scaled pixel sprites, four motions, and a five round silhouette quiz.
+- Up to eight editable alarms with weekday, time, title and three original PokéDock chiptune sounds.
+- Browser state is stored on each device. There is no account, cross-device sync, hardware connection or private message delivery.
+
+## Offline and alarm limits
+
+The Pages repository contains no Pokémon PNG/GIF files. On the first online visit the app downloads 16 images from PokeAPI's GitHub sprite repository and caches them on that device. The app shell, original sounds and icons are also cached. The **오프라인 준비 완료** badge reports when those 16 images are cached. Safari can later evict website storage; revisit the URL online if that happens. The first visit and updates require internet, but the user's Windows notebook does not need to stay on because GitHub Pages hosts the site.
+
+Web alarms are checked only while the page is open. iOS may restrict audio playback, and a closed or locked iPhone will not run this JavaScript as a dependable wake alarm. The Android debug APK prepared privately uses native local notifications; it is not distributed in this public repository. A native iOS app still needs Xcode and Apple signing for lock screen local notifications.
+
+Pokémon artwork belongs to its rights holders. Referencing PokeAPI images here does not grant redistribution or commercial rights. The three included WAV melodies are original PokéDock tones.
+
+## Verification
+
+- Local Chromium test: after first online cache completion, network disabled, all 16 remote images and 3 local sounds loaded, silhouette quiz opened, zero page errors.
+- iPhone Safari installation, cache retention and alarm timing remain to be tested on a physical phone.
+- The V16/V18 physical Master Ball is a separate prototype, not connected to this web app.
