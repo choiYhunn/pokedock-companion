@@ -1,0 +1,19 @@
+{
+  "name": "PokéDock — Original Device UI V10",
+  "short_name": "PokéDock",
+  "description": "기존 포케독 V10 UI를 그대로 이식한 모바일 컴패니언. 포켓몬 파트너, 집중, 알람 설정 및 우리 서랍.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#181c23",
+  "theme_color": "#181c23",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
