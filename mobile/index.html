@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
-<link rel="apple-touch-icon" href="icon-180.png">
+
 <style>
 :root{--desk:#181c23;--desk2:#222831;--shell:#ecece8;--screen:#f7f3e9;--ink:#24262c;--muted:#737780;--accent:#9dc4de;--accent-soft:#e7f2f8;--danger:#d86467;--ok:#5f946a}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0,#2d333e,#171b22 68%);font-family:Inter,Pretendard,"Noto Sans KR",system-ui,-apple-system,sans-serif;color:#f5f5f1}
@@ -425,9 +425,38 @@ function act(a,b){if(a==='back'){back()}else if(a==='drawer'){S.drawer=!S.drawer
  if(S.plannerEditor==='task'){const title=($('taskNew')?.value||'').trim().slice(0,44);if(title&&S.todoItems.length<5)S.todoItems.push({title,done:false})}
  else if(S.plannerEditor==='dday'){const date=$('ddayDate')?.value||'';S.ddayDate=/^\d{4}-\d{2}-\d{2}$/.test(date)?date:'';S.ddayTitle=($('ddayTitle')?.value||'').trim().slice(0,28)}
  S.plannerEditor=null;storeLove();render()
-}else if(a==='task-toggle'){const i=Number(b.dataset.id);if(S.todoItems[i])S.todoItems[i].done=!S.todoItems[i].done;storeLove();render()}else if(a==='task-delete'){const i=Number(b.dataset.id);if(Number.isInteger(i)&&i>=0&&i<S.todoItems.length)S.todoItems.splice(i,1);storeLove();render()}else if(a==='menu-group'){S.menuGroup=b.dataset.id;render()}else if(a==='menu-back'){S.menuGroup=null;render()}else if(a==='dismiss-notice'){S.notice=null;render()}else if(a==='partner'){const seq=[94,393,468,448,195,175,417,385];S.partner=seq[(seq.indexOf(S.partner)+1)%seq.length];render()}else if(a==='bond'){S.bond=Math.min(100,S.bond+5);render()}else if(a==='focus-toggle'){if(S.focus>0)S.focusRun=!S.focusRun;render()}else if(a==='focus-preset'){if(!S.focusRun&&S.focusPhase==='study'){S.focusPreset=Number(b.dataset.id);S.focus=S.focusPreset;}render()}else if(a==='focus-reset'){S.focusRun=false;if(S.focusPhase==='break')completeBreak();else S.focus=S.focusPreset;render()}else if(a==='focus-clear'){if(S.reviewMode&&S.focusPhase==='study'){S.focus=0;completeFocus()}render()}else if(a==='timer-toggle'){S.countRun=!S.countRun;render()}else if(a==='timer-reset'){S.count=600;S.countRun=false;render()}else if(a==='preset'){S.count=Number(b.dataset.id);S.countRun=false;render()}else if(a==='sw-toggle'){S.swRun=!S.swRun;render()}else if(a==='lap'){S.laps.unshift(S.sw);render()}else if(a==='sw-reset'){S.sw=0;S.swRun=false;S.laps=[];render()}else if(a==='quest'){const i=Number(b.dataset.id);S.quests[i]=!S.quests[i];render()}else if(a==='egg-plus'){S.egg+=20;if(S.egg>=100){S.egg-=100;S.reward=280;if(!S.caught.includes(280))S.caught.push(280)}render()}else if(a==='nfc-scan'){const seq=[94,393,468,448,195];S.nfcId=seq[((seq.indexOf(S.nfcId)+1)||0)%seq.length];if(!S.nfcId)S.nfcId=94;render()}else if(a==='nfc-partner'){if(PARTNERS[S.nfcId])S.partner=S.nfcId;nav('home')}else if(a==='phone-toggle'){S.phone=!S.phone;render()}else if(a==='ble-toggle'){S.ble=!S.ble;render()}else if(a==='notify'){S.ble=true;S.notice=b.dataset.id;render()}else if(a==='alarm'){const i=Number(b.dataset.id);S.alarms[i]=!S.alarms[i];render()}else if(a==='theme'){S.lightTheme=b.dataset.id;if(S.lightTheme==='night')S.night=true;render()}else if(a==='night'){S.night=!S.night;render()}else if(a==='random'){S.randomEncounter=!S.randomEncounter;render()}else if(a==='brightness'){S.brightness=Math.max(30,Math.min(100,S.brightness+Number(b.dataset.id)));render()}else if(a==='register'){if(S.reward){if(!S.caught.includes(S.reward))S.caught.push(S.reward);if(S.rewardShiny&&!S.shiny.includes(S.reward))S.shiny.push(S.reward)}S.reward=null;S.rewardShiny=false;S.pendingEncounter=null;saveGame();nav('dex')}else if(a==='reward-later'){S.pendingEncounter={id:S.reward,shiny:S.rewardShiny};S.reward=null;S.rewardShiny=false;saveGame();render()}else if(a==='show-pending'){if(S.pendingEncounter){S.reward=S.pendingEncounter.id;S.rewardShiny=S.pendingEncounter.shiny;S.drawer=false;S.menuGroup=null;render()}}else if(a==='close-detail'){S.detail=null;render()}else if(a==='set-partner'){const id=Number(b.dataset.id);if(PARTNERS[id]){S.partner=id;try{localStorage.setItem('pokedock-partner-v9',String(id))}catch(e){}}S.detail=null;nav('home')}else if(a==='wish'){if(!S.badges.includes('WISH'))S.badges.push('WISH');S.bond=Math.min(100,S.bond+10);nav('trainer')}}
+}else if(a==='task-toggle'){const i=Number(b.dataset.id);if(S.todoItems[i])S.todoItems[i].done=!S.todoItems[i].done;storeLove();render()}else if(a==='task-delete'){const i=Number(b.dataset.id);if(Number.isInteger(i)&&i>=0&&i<S.todoItems.length)S.todoItems.splice(i,1);storeLove();render()}else if(a==='menu-group'){S.menuGroup=b.dataset.id;render()}else if(a==='menu-back'){S.menuGroup=null;render()}else if(a==='dismiss-notice'){S.notice=null;render()}else if(a==='partner'){const seq=[94,393,468,448,195,175,417,385];S.partner=seq[(seq.indexOf(S.partner)+1)%seq.length];render()}else if(a==='bond'){S.bond=Math.min(100,S.bond+5);render()}else if(a==='focus-toggle'){if(S.focus>0)S.focusRun=!S.focusRun;render()}else if(a==='focus-preset'){if(!S.focusRun&&S.focusPhase==='study'){S.focusPreset=Number(b.dataset.id);S.focus=S.focusPreset;}render()}else if(a==='focus-reset'){S.focusRun=false;if(S.focusPhase==='break')completeBreak();else S.focus=S.focusPreset;render()}else if(a==='focus-clear'){if(S.reviewMode&&S.focusPhase==='study'){S.focus=0;completeFocus()}render()}else if(a==='timer-toggle'){S.countRun=!S.countRun;render()}else if(a==='timer-reset'){S.count=600;S.countRun=false;render()}else if(a==='preset'){S.count=Number(b.dataset.id);S.countRun=false;render()}else if(a==='sw-toggle'){S.swRun=!S.swRun;render()}else if(a==='lap'){S.laps.unshift(S.sw);render()}else if(a==='sw-reset'){S.sw=0;S.swRun=false;S.laps=[];render()}else if(a==='quest'){const i=Number(b.dataset.id);S.quests[i]=!S.quests[i];render()}else if(a==='egg-plus'){S.egg+=20;if(S.egg>=100){S.egg-=100;S.reward=280;if(!S.caught.includes(280))S.caught.push(280)}render()}else if(a==='nfc-scan'){const seq=[94,393,468,448,195];S.nfcId=seq[((seq.indexOf(S.nfcId)+1)||0)%seq.length];if(!S.nfcId)S.nfcId=94;render()}else if(a==='nfc-partner'){if(PARTNERS[S.nfcId])S.partner=S.nfcId;nav('home')}else if(a==='phone-toggle'){S.phone=!S.phone;render()}else if(a==='ble-toggle'){S.ble=!S.ble;render()}else if(a==='notify'){S.ble=true;S.notice=b.dataset.id;render()}else if(a==='alarm'){const i=Number(b.dataset.id);S.alarms[i]=!S.alarms[i];try{localStorage.setItem(MOBILE_ALARM_KEY,JSON.stringify(S.alarms))}catch(e){}render()}else if(a==='theme'){S.lightTheme=b.dataset.id;if(S.lightTheme==='night')S.night=true;render()}else if(a==='night'){S.night=!S.night;render()}else if(a==='random'){S.randomEncounter=!S.randomEncounter;render()}else if(a==='brightness'){S.brightness=Math.max(30,Math.min(100,S.brightness+Number(b.dataset.id)));render()}else if(a==='register'){if(S.reward){if(!S.caught.includes(S.reward))S.caught.push(S.reward);if(S.rewardShiny&&!S.shiny.includes(S.reward))S.shiny.push(S.reward)}S.reward=null;S.rewardShiny=false;S.pendingEncounter=null;saveGame();nav('dex')}else if(a==='reward-later'){S.pendingEncounter={id:S.reward,shiny:S.rewardShiny};S.reward=null;S.rewardShiny=false;saveGame();render()}else if(a==='show-pending'){if(S.pendingEncounter){S.reward=S.pendingEncounter.id;S.rewardShiny=S.pendingEncounter.shiny;S.drawer=false;S.menuGroup=null;render()}}else if(a==='close-detail'){S.detail=null;render()}else if(a==='set-partner'){const id=Number(b.dataset.id);if(PARTNERS[id]){S.partner=id;try{localStorage.setItem('pokedock-partner-v9',String(id))}catch(e){}}S.detail=null;nav('home')}else if(a==='wish'){if(!S.badges.includes('WISH'))S.badges.push('WISH');S.bond=Math.min(100,S.bond+10);nav('trainer')}}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!e.defaultPrevented){e.preventDefault();back()}});
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.screen){nav(b.dataset.screen);return}if(b.dataset.pokemon){S.detail=Number(b.dataset.pokemon);render();return}if(b.dataset.action){act(b.dataset.action,b);return}});
+
+/* Mobile-only additions: persistent alarm toggles + foreground notification.
+   An installed PWA cannot guarantee OS background alarms when suspended. */
+const MOBILE_ALARM_KEY='pokedock-v10-mobile-alarm-toggles';
+try{const x=JSON.parse(localStorage.getItem(MOBILE_ALARM_KEY)||'null');
+ if(Array.isArray(x)&&x.length===3&&x.every(v=>typeof v==='boolean'))S.alarms=x;}catch(e){}
+let lastMobileAlarmKey='';
+function mobileForegroundAlarm(){
+ const now=new Date(),day=now.getDay(),minute=now.getHours()*60+now.getMinutes();
+ const candidate=[450,490,1340];
+ for(let i=0;i<candidate.length;i++){
+  if(!S.alarms[i]||minute!==candidate[i])continue;
+  if(i===0 && (day===0||day===6))continue;
+  if(i===1 && day!==2 && day!==4)continue;
+  const key=now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+':'+i;
+  if(key===lastMobileAlarmKey)continue;lastMobileAlarmKey=key;
+  const screen=document.getElementById('screen');
+  const existing=document.getElementById('pokedock-mobile-alarm-toast');
+  if(existing)existing.remove();
+  const banner=document.createElement('div');banner.id='pokedock-mobile-alarm-toast';
+  banner.style.cssText='position:absolute;z-index:400;bottom:18%;left:15%;right:15%;border:2px solid #a687c4;border-radius:18px;background:#2a2133;color:#fff;padding:2.2cqw;font-size:1.8cqw;text-align:center;box-shadow:0 12px 30px #0008;';
+  const label=document.createElement('strong');label.textContent='♬ 알람 · '+['07:30 평일','08:10 화/목','22:20 Night prep'][i];banner.append(label);
+  const dismiss=document.createElement('button');dismiss.type='button';dismiss.textContent='확인';
+  dismiss.style.cssText='margin-left:2cqw;border:0;border-radius:9px;background:#f7e5ff;color:#3d284b;padding:.7cqw 1.2cqw;font:inherit';
+  dismiss.addEventListener('click',()=>banner.remove());banner.append(dismiss);screen.append(banner);
+  if(navigator.vibrate)navigator.vibrate([180,120,180]);
+ }
+}
+
 let v8LastTick=Date.now(),v8ClockMinute=new Date().getMinutes();
 setInterval(()=>{
  const now=Date.now(),step=Math.max(0,Math.floor((now-v8LastTick)/1000));
@@ -439,6 +468,7 @@ setInterval(()=>{
  const minute=new Date().getMinutes();
  if(minute!==v8ClockMinute){v8ClockMinute=minute;if(S.screen==='home')redraw=true}
  if(redraw)render();
+ mobileForegroundAlarm();
 },1000);
 $('reviewBtn').onclick=()=>{$('review').classList.toggle('open');S.reviewMode=$('review').classList.contains('open');$('reviewBtn').textContent=S.reviewMode?'목록 닫기':'화면 목록';render()};
 $('resetBtn').onclick=()=>location.reload();
