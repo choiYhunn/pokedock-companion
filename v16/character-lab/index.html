@@ -1,0 +1,30 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PokéDock V16 진짜 포켓몬 2D</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:20px;background:radial-gradient(circle at 40% 0%,#463354,#161221 72%);color:#f9f1ff;font:14px system-ui,sans-serif}main{max-width:1080px;margin:auto}h1{font-size:28px;margin:0 0 7px}p{color:#cfc3d7;line-height:1.7}.layout{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}.panel{padding:20px;border:1px solid #685479;border-radius:22px;background:#251d30}.stage{width:100%;aspect-ratio:1;background:#000;border-radius:16px;display:grid;place-items:center;overflow:hidden;position:relative}.stage img{width:62%;height:62%;object-fit:contain;filter:drop-shadow(0 0 12px #9178be)}.stage.pixel img{width:50%;height:50%;image-rendering:pixelated}.stage.glow img{filter:drop-shadow(0 0 20px #cba3ff)}h2{font-size:14px;margin:15px 0 8px}.opts{display:flex;flex-wrap:wrap;gap:7px}button{border:1px solid #715b84;border-radius:12px;padding:10px 12px;background:#392c47;color:white;cursor:pointer}button.active{background:#8961ac}.foot{font-size:12px;background:#1c1625;padding:14px;border-radius:12px;margin-top:18px}
+@keyframes idle{50%{transform:translateY(-6%)}}@keyframes enter{from{transform:translateX(-120%) scale(.6);opacity:0}to{transform:translateX(0);opacity:1}}@keyframes hop{50%{transform:translateY(-25%)}}@keyframes dance{25%{transform:rotate(-12deg) translateX(-9%)}50%{transform:translateY(-13%)}75%{transform:rotate(12deg) translateX(9%)}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes exit{to{transform:translateX(120%);opacity:0}}
+#pokemon.idle{animation:idle 3s ease-in-out infinite}#pokemon.enter{animation:enter 1s 1}#pokemon.hop{animation:hop 1s 1}#pokemon.dance{animation:dance 1.3s 1}#pokemon.spin{animation:spin 1.2s 1}#pokemon.exit{animation:exit 1s 1 forwards}
+@keyframes gengarSneak{0%,100%{transform:translateX(-9%) translateY(0) scaleX(1)}25%{transform:translateX(0) translateY(-5%) scaleX(1.04)}50%{transform:translateX(10%) scaleX(-1)}75%{transform:translateY(-10%) scaleX(-1.03)}}
+@keyframes piplupHop{0%,100%{transform:translateY(0) rotate(-3deg)}33%{transform:translateY(-20%) rotate(7deg)}60%{transform:translateY(0)}75%{transform:translateY(-9%) rotate(-4deg)}}
+@keyframes togekissGlide{0%,100%{transform:translate(-9%,3%) rotate(-4deg)}50%{transform:translate(10%,-13%) rotate(4deg)}}
+@keyframes lucarioStance{0%,100%{transform:translateX(0) rotate(0)}24%{transform:translateX(-6%) rotate(-5deg)}45%{transform:translateX(7%) rotate(7deg) scale(1.06)}65%{transform:none}}
+@keyframes quagsireWobble{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg) scale(1.07,.93)}}
+#pokemon.idle[data-pose="gengar"]{animation:gengarSneak 3.4s ease-in-out infinite}
+#pokemon.idle[data-pose="piplup"]{animation:piplupHop 2.6s ease-in-out infinite}
+#pokemon.idle[data-pose="togekiss"]{animation:togekissGlide 4.5s ease-in-out infinite}
+#pokemon.idle[data-pose="lucario"]{animation:lucarioStance 3.3s ease-in-out infinite}
+#pokemon.idle[data-pose="quagsire"]{animation:quagsireWobble 3.5s ease-in-out infinite}
+@media(max-width:720px){.layout{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){#pokemon{animation:none!important}}
+</style></head><body><main><h1>PokéDock · 원래 포켓몬 2D 모션 연구실</h1><p>기존 V10과 동일한 실제 포켓몬 모습을 사용해 닌텐도 배틀 GIF와 공식 일러스트를 비교합니다. 2D 반사 영상이지 자유 공간 3D 홀로그램은 아닙니다.</p>
+<div class="layout"><section class="panel"><div class="stage pixel" id="stage"><img id="pokemon" class="idle" alt="포켓몬"></div><p id="caption"></p><div class="foot">포켓몬 이미지는 PokeAPI의 외부 참조 이미지로 불러옵니다. 직접 그린 프레임이 아니며 공개 패키지에 재배포하지 않았습니다.</div></section>
+<section class="panel"><h2>포켓몬 8종</h2><div class="opts" id="roster"></div><h2>소스 선택</h2><div class="opts" id="mode"><button class="active" data-src="pixel">Gen V 움직이는 도트</button><button data-src="art">공식 2D 일러스트</button><button data-src="glow">홀로그램 검정 배경</button></div><h2>동작</h2><div class="opts" id="motions"><button data-anim="idle">대기</button><button data-anim="enter">등장</button><button data-anim="hop">점프</button><button data-anim="dance">춤</button><button data-anim="spin">회전</button><button data-anim="exit">퇴장</button></div>
+<p class="foot">원본 배틀 GIF는 낮은 해상도의 실제 애니메이션이며, 고화질 일러스트 모드는 이미지를 통째로 이동시키는 효과입니다. 고화질 관절 동작/표정 프레임이 제작됐다는 뜻은 아닙니다.</p><p><a href="../../mobile/" style="color:#d2aff4">PokéDock V10 원본 모바일 →</a></p></section></div></main>
+<script>
+const BASE='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+const LIST=[[94,'팬텀'],[393,'팽도리'],[468,'토게키스'],[448,'루카리오'],[195,'누오'],[175,'토게피'],[417,'파치리스'],[385,'지라치']];
+let id=94,mode='pixel',token=0;const $=x=>document.getElementById(x);
+function show(pid){id=pid;const t=++token,img=$('pokemon');img.onerror=()=>{if(t!==token)return;img.onerror=()=>{img.onerror=null;img.src=BASE+pid+'.png'};img.src=BASE+'other/official-artwork/'+pid+'.png'};img.src=mode==='pixel'?BASE+'versions/generation-v/black-white/animated/'+pid+'.gif':BASE+'other/official-artwork/'+pid+'.png';img.className='idle';img.dataset.pose=({94:'gengar',393:'piplup',468:'togekiss',448:'lucario',195:'quagsire'})[pid]||'other';$('stage').className='stage '+mode;$('caption').textContent=LIST.find(x=>x[0]===pid)[1]+' · '+mode;document.querySelectorAll('[data-pid]').forEach(b=>b.classList.toggle('active',Number(b.dataset.pid)===pid))}
+for(const [pid,name] of LIST){const b=document.createElement('button');b.dataset.pid=pid;b.textContent=name;b.addEventListener('click',()=>show(pid));$('roster').append(b)}
+document.querySelectorAll('[data-src]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.src;document.querySelectorAll('[data-src]').forEach(c=>c.classList.toggle('active',b===c));show(id)}));
+document.querySelectorAll('[data-anim]').forEach(b=>b.addEventListener('click',()=>{const img=$('pokemon');img.className='';void img.offsetWidth;img.className=b.dataset.anim;if(b.dataset.anim!=='idle')setTimeout(()=>{if(img.className===b.dataset.anim)img.className='idle'},1400)}));
+show(id);
+</script></body></html>

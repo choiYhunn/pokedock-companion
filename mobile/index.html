@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PokéDock Mobile · Original V10</title>
+<meta name="theme-color" content="#181c23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PokéDock">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+
+<style>
+:root{--desk:#181c23;--desk2:#222831;--shell:#ecece8;--screen:#f7f3e9;--ink:#24262c;--muted:#737780;--accent:#9dc4de;--accent-soft:#e7f2f8;--danger:#d86467;--ok:#5f946a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0,#2d333e,#171b22 68%);font-family:Inter,Pretendard,"Noto Sans KR",system-ui,-apple-system,sans-serif;color:#f5f5f1}
+button{font:inherit}.lab{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:14px 12px 28px;gap:10px}.labbar{width:min(100%,900px);display:flex;align-items:center;justify-content:space-between;gap:10px;color:#cfd4db}.labbar strong{font-size:14px;letter-spacing:-.02em}.labbar small{color:#8e97a3}.labtools{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.labtools button{border:1px solid #ffffff16;background:#ffffff0b;color:#dce1e7;border-radius:10px;padding:7px 10px;font-size:11px;cursor:pointer}.labtools button:active{background:#ffffff18}
+.device-shell{width:min(100%,840px);padding:10px;border-radius:24px;background:linear-gradient(145deg,#f2f2ef,#d9dad8);box-shadow:0 28px 70px #0007,inset 0 0 0 1px #fff}.screen{width:100%;aspect-ratio:800/480;position:relative;overflow:hidden;border-radius:15px;background:var(--screen);color:var(--ink);container-type:inline-size;box-shadow:inset 0 0 0 1px #0000000a}.screen.night{background:#181720;color:#f8f7fb}.screen:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 85% 18%,var(--accent-soft),transparent 32%);opacity:.4;z-index:0}
+.topbar{height:6.2cqw;padding:0 2.4cqw;display:grid;grid-template-columns:1fr auto;align-items:center;position:relative;z-index:20}.brand{display:flex;align-items:center;gap:.7cqw;font-size:1.25cqw;font-weight:950;letter-spacing:.09em}.pokeball{width:1.55cqw;height:1.55cqw;border-radius:50%;background:linear-gradient(#db6265 0 43%,#25282d 43% 58%,#fff 58%);box-shadow:0 .18cqw .35cqw #0002;position:relative}.pokeball:after{content:"";position:absolute;left:50%;top:50%;width:.46cqw;height:.46cqw;border-radius:50%;background:white;border:.18cqw solid #25282d;transform:translate(-50%,-50%)}.statusbar{display:flex;align-items:center;gap:.7cqw;font-size:1.05cqw;color:var(--muted)}.screen.night .statusbar{color:#a9a5b2}.status-dot{width:.68cqw;height:.68cqw;border-radius:50%;background:#7ba882}.status-dot.off{background:#a8a8a8}.top-icon{border:0;background:transparent;color:inherit;width:3.4cqw;height:3.4cqw;border-radius:1cqw;font-size:2cqw;display:grid;place-items:center;cursor:pointer}.top-icon:active{background:#0000000a}.screen.night .top-icon:active{background:#ffffff0c}
+.page{height:calc(100% - 13.4cqw);padding:1.4cqw 2cqw 1.6cqw;position:relative;z-index:2}.bottomnav{height:7.2cqw;display:grid;grid-template-columns:repeat(5,1fr);align-items:stretch;border-top:1px solid #0000000b;background:#ffffff55;position:relative;z-index:15}.screen.night .bottomnav{background:#ffffff07;border-top-color:#ffffff10}.navbtn{border:0;background:transparent;color:#7b7e86;font-size:1.02cqw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25cqw;cursor:pointer}.navbtn i{font-style:normal;font-size:1.55cqw;line-height:1}.navbtn.on{color:#22262c;font-weight:900}.navbtn.on i{filter:drop-shadow(0 .15cqw .3cqw #0002)}.screen.night .navbtn{color:#9692a0}.screen.night .navbtn.on{color:#fff}
+.grid{display:grid;gap:1.2cqw;height:100%}.two{grid-template-columns:1.45fr .82fr}.split{grid-template-columns:1fr 1fr}.full{grid-template-columns:1fr}.stack{display:grid;grid-template-rows:repeat(3,1fr);gap:1cqw;height:100%}.card{position:relative;overflow:hidden;border-radius:1.55cqw;background:#ffffffd9;border:1px solid #ffffffef;box-shadow:0 .7cqw 1.9cqw #1f263008;padding:1.65cqw}.screen.night .card{background:#ffffff0a;border-color:#ffffff0e;box-shadow:none}.card.click{cursor:pointer}.card.click:active{transform:scale(.994);background:#ffffffef}.screen.night .card.click:active{background:#ffffff11}.card-title{font-size:1.3cqw;font-weight:950;line-height:1.15;margin:0}.eyebrow{font-size:.83cqw;font-weight:950;letter-spacing:.12em;color:#6f8293;text-transform:uppercase}.screen.night .eyebrow{color:#a79db9}.muted{font-size:1.06cqw;color:var(--muted);line-height:1.4}.screen.night .muted{color:#aaa6b1}.huge{font-size:7.3cqw;line-height:.9;font-weight:950;letter-spacing:-.065em}.large{font-size:4.2cqw;line-height:.96;font-weight:950;letter-spacing:-.05em}.medium{font-size:2.35cqw;font-weight:900;letter-spacing:-.035em}.chiprow{display:flex;gap:.45cqw;flex-wrap:wrap;align-items:center}.chip{display:inline-flex;align-items:center;min-height:1.8cqw;padding:.2cqw .65cqw;border-radius:999px;background:var(--accent-soft);font-size:.78cqw;font-weight:900;letter-spacing:.04em;color:#46677d}.type{color:white;background:#737783}.fairy{background:#d889bd}.flying{background:#8198d0}.fighting{background:#b84c45}.steel{background:#748795}.ghost{background:#69558c}.poison{background:#9550a3}.electric{background:#d3ab30;color:#3b300d}.psychic{background:#da6984}.normal{background:#8d8c83}.darktype{background:#4d4658}.grass{background:#70a85c}
+.partner-card{padding:1.7cqw 2cqw}.partner-card .copy{position:relative;z-index:5;width:55%}.partner-no{display:flex;align-items:center;gap:.6cqw;font-size:1.16cqw;font-weight:950;letter-spacing:.07em}.partner-no .mini-ball{width:1.25cqw;height:1.25cqw}.partner-name{font-size:3.1cqw;font-weight:950;letter-spacing:-.045em;margin:.6cqw 0 .45cqw}.pokemon{position:absolute;right:1cqw;bottom:-.4cqw;width:43%;height:88%;object-fit:contain;z-index:2;filter:drop-shadow(0 .8cqw .9cqw #0002)}.pokemon.small{width:45%;height:72%;right:-1cqw;bottom:-.5cqw}.halo{position:absolute;right:-2cqw;bottom:-5cqw;width:34cqw;height:34cqw;border-radius:50%;background:radial-gradient(circle,var(--accent-soft),transparent 67%);z-index:1}.speech{margin-top:1cqw;background:#fffffff0;border-radius:1.15cqw 1.15cqw 1.15cqw .2cqw;padding:.85cqw 1cqw;font-size:1.08cqw;font-weight:760;line-height:1.4;max-width:30cqw;box-shadow:0 .4cqw .8cqw #00000008}.screen.night .speech{background:#ffffff10}.bondline{display:flex;justify-content:space-between;align-items:center;margin-top:.95cqw;font-size:.92cqw}.heart{color:#d76983;font-weight:950}.meter{height:.7cqw;border-radius:999px;background:#dce0e2;overflow:hidden;margin-top:.4cqw}.screen.night .meter{background:#ffffff14}.meter i{display:block;height:100%;width:50%;background:linear-gradient(90deg,var(--accent),#efd364);border-radius:999px}
+.mini-card{padding:1.3cqw 1.45cqw;display:flex;flex-direction:column;justify-content:center}.mini-card .value{font-size:1.65cqw;font-weight:950;margin:.22cqw 0}.mini-card .line{display:flex;justify-content:space-between;align-items:center;gap:.5cqw}.questtag{font-size:.74cqw;font-weight:950;color:#5b7b91;letter-spacing:.09em}.progress-note{font-size:.9cqw;color:#7d8087}.rowlist{display:grid;gap:.65cqw;margin-top:.85cqw}.row{min-height:3.5cqw;padding:.72cqw .9cqw;border-radius:.9cqw;background:#ffffffa8;display:flex;align-items:center;justify-content:space-between;gap:1cqw;font-size:1.02cqw}.screen.night .row{background:#ffffff0a}.row strong{font-size:.94cqw}.done{color:var(--ok);font-weight:950}.danger{color:var(--danger);font-weight:950}
+.actionbar{display:flex;gap:.65cqw;flex-wrap:wrap;margin-top:1.05cqw}.btn{border:0;border-radius:.92cqw;min-height:3.4cqw;padding:.65cqw 1.15cqw;background:#edf0f1;color:#282b31;font-size:.95cqw;font-weight:850;cursor:pointer}.btn:active{transform:translateY(.08cqw);filter:brightness(.96)}.btn.primary{background:#27364c;color:#fff}.btn.accent{background:var(--accent-soft);color:#3f6177}.btn.danger{background:#f4dfdf;color:#9d4d50}.btn.pokeball{background:linear-gradient(#db6265 0 43%,#25282d 43% 58%,#fff 58%);color:#202328;border:.18cqw solid #25282d;min-width:5.8cqw;text-shadow:0 .08cqw white}.screen.night .btn{background:#ffffff10;color:#f5f4f8}.screen.night .btn.primary{background:#f3f0f7;color:#25212b}
+.focus-layout{display:grid;grid-template-columns:1.3fr .7fr;gap:1.2cqw;height:100%}.timer-card{display:grid;place-items:center;text-align:center}.timer-card .huge{font-size:9.4cqw}.timer-card .meter{width:30cqw;height:.85cqw;margin:.9cqw auto}.lucario-card .copy{width:64%;position:relative;z-index:4}.lucario-card .pokemon{width:60%;height:80%;right:-5cqw}.lucario-card .speech{max-width:18cqw}.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75cqw;margin-top:.85cqw}.stat{padding:.75cqw;border-radius:.85cqw;background:#ffffff9c;text-align:center}.screen.night .stat{background:#ffffff0a}.stat b{display:block;font-size:1.25cqw}.stat span{font-size:.78cqw;color:var(--muted)}
+.dex-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8cqw}.dex-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.65cqw}.dexmon{height:12.8cqw;border:0;border-radius:1.05cqw;background:#ffffffc9;padding:.55cqw;position:relative;text-align:center;cursor:pointer;color:var(--ink)}.screen.night .dexmon{background:#ffffff0b;color:#fff}.dexmon img{width:100%;height:8.4cqw;object-fit:contain}.dexmon.locked img{filter:grayscale(1) brightness(.18);opacity:.5}.dexmon .no{position:absolute;left:.55cqw;top:.45cqw;font-size:.64cqw;color:#8a8c93}.dexmon b{display:block;font-size:.78cqw;line-height:1}.dexmon .dtype{display:block;font-size:.58cqw;color:#777b82;margin-top:.18cqw}.dexmon.shiny:after{content:"✦";position:absolute;right:.55cqw;top:.35cqw;color:#d4aa25;font-size:1.2cqw}
+.trainer-layout{display:grid;grid-template-columns:1.14fr .86fr;gap:1.2cqw;height:100%}.trainer-card{background:linear-gradient(145deg,#2b3a52,#182437);color:#fff}.trainer-card .pokemon{width:50%;height:90%;right:-1cqw}.trainer-card .copy{width:58%;position:relative;z-index:4}.rank{font-size:.85cqw;color:#f0d264;font-weight:950;letter-spacing:.13em}.record-line{display:flex;justify-content:space-between;align-items:center;padding:.65cqw 0;border-bottom:1px solid #ffffff18;font-size:1.03cqw}.record-line:last-child{border-bottom:0}.badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85cqw}.badge{height:10.8cqw;border-radius:1cqw;background:#ffffffbd;display:grid;place-items:center;text-align:center;padding:.7cqw}.screen.night .badge{background:#ffffff0b}.medal{width:4.1cqw;height:4.1cqw;border-radius:1cqw;transform:rotate(45deg);background:linear-gradient(145deg,var(--m,#88abc2),#fff);box-shadow:inset 0 0 0 .35cqw #ffffff8e,0 .5cqw 1cqw #0001}.badge b{font-size:.8cqw}.badge.locked{opacity:.28}
+.egg-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:1.2cqw;height:100%}.egg-card{display:grid;place-items:center;text-align:center}.egg{width:9.8cqw;height:12cqw;border-radius:52% 48% 45% 45%;background:radial-gradient(circle at 35% 30%,#f5c77d 0 8%,transparent 9%),radial-gradient(circle at 67% 57%,#8fc4e1 0 9%,transparent 10%),radial-gradient(circle at 40% 75%,#d893bc 0 7%,transparent 8%),#fff7dc;box-shadow:inset -1cqw -1.2cqw 0 #efe4bf,0 1.1cqw 1.5cqw #0002;animation:eggBob 2.8s ease-in-out infinite}@keyframes eggBob{50%{transform:translateY(-.45cqw) rotate(2deg)}}
+.quickapps{position:absolute;inset:5.9cqw 1.6cqw 7.2cqw;background:#f9f7f1f7;backdrop-filter:blur(12px);border-radius:1.5cqw;z-index:50;padding:1.4cqw;box-shadow:0 1.5cqw 4cqw #0003;border:1px solid #fff;display:grid;grid-template-columns:repeat(4,1fr);gap:.8cqw}.screen.night .quickapps{background:#23212cf4;border-color:#ffffff0f}.appbtn{border:0;border-radius:1.05cqw;background:#ffffffd9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45cqw;color:#262a30;cursor:pointer}.screen.night .appbtn{background:#ffffff0b;color:#fff}.appbtn:active{transform:scale(.985)}.appicon{font-size:2.3cqw}.appbtn b{font-size:.85cqw}.appbtn span{font-size:.68cqw;color:#7a7e85}.screen.night .appbtn span{color:#aaa6b2}
+.notice{position:absolute;right:2cqw;top:5.7cqw;z-index:60;min-width:24cqw;max-width:31cqw;background:#232832ed;color:#fff;border-radius:1.05cqw;padding:1cqw 1.2cqw;box-shadow:0 .9cqw 2.4cqw #0004}.notice b{display:block;font-size:1cqw}.notice span{display:block;font-size:.82cqw;color:#c7cbd2;margin-top:.25cqw}.reward{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:80;width:48cqw;min-height:28cqw;background:#222732f4;color:#fff;border-radius:1.6cqw;padding:1.6cqw;text-align:center;box-shadow:0 2cqw 5cqw #0005}.reward img{width:13cqw;height:13cqw;object-fit:contain;float:left;margin-right:1.2cqw}.reward .copy{text-align:left;padding-top:1.1cqw}.reward h3{font-size:2cqw;margin:.4cqw 0}.reward p{font-size:.9cqw;color:#c8cbd2}.reward.shiny{box-shadow:0 0 4cqw #f0d56a66}.reward.shiny:before{content:"✦ SHINY";position:absolute;right:1.4cqw;top:1.1cqw;color:#f1d46c;font-size:.85cqw;font-weight:950;letter-spacing:.13em}
+.detail{position:absolute;inset:7.2cqw 12cqw 8.2cqw;z-index:70;background:#fffdf8f8;border-radius:1.6cqw;box-shadow:0 1.8cqw 5cqw #0004;padding:1.5cqw;color:#24262c}.screen.night .detail{background:#26232df8;color:white}.detail img{position:absolute;right:2cqw;bottom:1cqw;width:23cqw;height:23cqw;object-fit:contain}.detail .copy{width:58%;position:relative;z-index:2}.closex{position:absolute;right:1cqw;top:.8cqw;border:0;background:transparent;font-size:2cqw;cursor:pointer;color:inherit}
+.birthday{height:100%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 50% 44%,#354b80,#111827 72%);color:#fff;position:relative;overflow:hidden}.birthday:before,.birthday:after{content:"✦";position:absolute;color:#efd266;font-size:8cqw;opacity:.18}.birthday:before{left:9%;top:14%}.birthday:after{right:10%;bottom:12%}.birthday img{width:19cqw;height:19cqw;object-fit:contain;filter:drop-shadow(0 0 2.4cqw #f2d46988)}.birthday h2{font-size:2.8cqw;margin:.35cqw 0}.birthday p{font-size:1.05cqw;color:#d9ddea}
+.review{width:min(100%,840px);display:none;gap:6px;overflow:auto;padding:2px 0 5px;scrollbar-width:thin}.review.open{display:flex}.review button{flex:0 0 auto;border:1px solid #ffffff12;background:#ffffff08;color:#aeb6c1;border-radius:999px;padding:6px 9px;font-size:10px;cursor:pointer}.review button.active{background:#f5f2eb;color:#24272d;border-color:#fff}.hint{font-size:10px;color:#7f8995;text-align:center;max-width:840px}
+@media(max-width:560px){.lab{padding-left:7px;padding-right:7px}.device-shell{padding:5px;border-radius:16px}.labbar{padding:0 4px}.labbar small{display:none}.labtools button{padding:6px 8px}.hint{font-size:9px}}
+
+/* V6 simplified information architecture */
+.bottomnav{grid-template-columns:1fr 1fr 1fr;height:7.6cqw;padding:0 24cqw;background:#ffffff72}
+.screen.night .bottomnav{background:#ffffff08}
+.navbtn{font-size:.96cqw}
+.navbtn i{font-size:1.5cqw}
+.navball{align-self:center;justify-self:center;width:5.7cqw;height:5.7cqw;border-radius:50%;border:.32cqw solid #272a2f;background:linear-gradient(#dc6265 0 43%,#272a2f 43% 58%,#fff 58%);box-shadow:0 .55cqw 1.2cqw #0003;position:relative;cursor:pointer}
+.navball:after{content:"";position:absolute;left:50%;top:50%;width:1.55cqw;height:1.55cqw;border-radius:50%;background:#fff;border:.3cqw solid #272a2f;transform:translate(-50%,-50%)}
+.navball:active{transform:scale(.96)}
+.page{height:calc(100% - 13.8cqw);padding:1.4cqw 2cqw 1.6cqw}
+.homegrid{display:grid;grid-template-columns:1.42fr .82fr;gap:1.2cqw;height:100%}
+.home-side{display:grid;grid-template-rows:1.12fr .88fr;gap:1cqw;height:100%}
+.home-focus{display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(150deg,#e9f0f6,#fff)}
+.home-focus .focus-time{font-size:4.8cqw;line-height:.9;font-weight:950;letter-spacing:-.055em;margin:.45cqw 0}
+.home-focus .focus-go{display:flex;justify-content:space-between;align-items:center}
+.home-today{display:grid;grid-template-rows:auto 1fr auto;gap:.45cqw}
+.home-today .todayline{display:flex;justify-content:space-between;gap:.8cqw;font-size:.92cqw}
+.clockline{font-size:5.1cqw;line-height:.9;font-weight:950;letter-spacing:-.06em;margin:.45cqw 0 .25cqw}
+.date-line{font-size:.92cqw;color:var(--muted);margin-bottom:.7cqw}
+.partner-summary{display:flex;align-items:center;gap:.55cqw;font-size:.92cqw;font-weight:900}
+.quickapps{display:block;inset:6.2cqw 7cqw 8.2cqw;padding:1.5cqw}
+.menu-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:1cqw}
+.menu-title b{font-size:1.55cqw}.menu-title span{font-size:.9cqw;color:var(--muted)}
+.menu-groups{display:grid;grid-template-columns:1fr 1fr;gap:1cqw;height:calc(100% - 3.8cqw)}
+.menu-group{border:0;border-radius:1.25cqw;padding:1.2cqw;text-align:left;position:relative;overflow:hidden;cursor:pointer;color:#252930;background:#fff}
+.menu-group:active{transform:scale(.99)}
+.menu-group .gicon{font-size:2.5cqw}.menu-group b{display:block;font-size:1.25cqw;margin:.35cqw 0}.menu-group span{font-size:.8cqw;color:#747981;line-height:1.35}
+.menu-group.train{background:#eaf0f5}.menu-group.journey{background:#f5eee4}.menu-group.desk{background:#eef4e9}.menu-group.link{background:#f0eaf5}
+.submenu{display:grid;grid-template-columns:repeat(3,1fr);gap:.8cqw;height:calc(100% - 3.8cqw)}
+.subapp{border:0;border-radius:1.05cqw;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35cqw;cursor:pointer;color:#272a30}
+.subapp:active{transform:scale(.985)}
+.subapp i{font-style:normal;font-size:2.2cqw}.subapp b{font-size:.92cqw}.subapp span{font-size:.7cqw;color:#7b7e85}
+.menu-back{border:0;background:#eceef0;border-radius:.8cqw;padding:.55cqw .8cqw;font-size:.82cqw;font-weight:850;cursor:pointer}
+
+
+/* V7: Sinnoh Poketch x Gengar Hideout — menu-only visual skin and usability pass */
+.quickapps{background:#f8f6fffa!important;border:.22cqw solid #c8bbdf!important;box-shadow:0 1.5cqw 3.5cqw #32244844!important;inset:6.6cqw 6.4cqw 8cqw;border-radius:2.2cqw;padding:1.65cqw}
+.screen.night .quickapps{background:#201b2cfa!important;border-color:#74628f!important}
+.quickapps:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.11;background-image:radial-gradient(#8465ad 1.2px,transparent 1.5px);background-size:1.4cqw 1.4cqw}
+.menu-banner{display:flex;justify-content:space-between;align-items:center;height:6.9cqw;position:relative;z-index:2;padding:0 11cqw 0 .7cqw;border-bottom:1px solid #d7cce4;margin-bottom:1.05cqw}
+.menu-banner .jp{font-weight:950;font-size:.95cqw;letter-spacing:.18em;color:#796493}
+.menu-banner .heading{font-weight:950;font-size:2.15cqw;letter-spacing:-.04em;color:#32283e;line-height:1.15}
+.menu-banner .subhead{font-size:1.05cqw;color:#74657e;margin-top:.35cqw}
+.menu-banner .gengar-button{position:absolute;right:-.3cqw;top:-1.4cqw;width:11.7cqw;height:9.7cqw;border:0;background:none;cursor:pointer;z-index:4;overflow:visible}
+.menu-banner .gengar-button img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 .55cqw .7cqw #54416a55)}
+.menu-banner .gengar-button:active{transform:rotate(-6deg) scale(.97)}
+.menu-banner .gengar-button:after{content:"✦";position:absolute;top:1cqw;left:1cqw;color:#9a7bb3;font-size:1.8cqw;opacity:.7}
+.menu-groups{height:calc(100% - 8.2cqw);gap:1.15cqw;position:relative;z-index:2}
+.menu-group{min-height:0;border:.18cqw solid #ffffff!important;border-radius:1.6cqw;padding:1.25cqw 12.2cqw 1.25cqw 1.45cqw;display:flex;flex-direction:column;justify-content:center;box-shadow:0 .6cqw 1.3cqw #4c3c5e10;transition:transform .14s,box-shadow .14s}
+.menu-group:hover{box-shadow:0 .65cqw 1.6cqw #44315824}
+.menu-group:focus-visible,.subapp:focus-visible{outline:.34cqw solid #6a54a1;outline-offset:.15cqw}
+.menu-group .gicon{font-size:1.7cqw;line-height:1.1}
+.menu-group b{font-size:1.68cqw;margin:.3cqw 0 .25cqw;letter-spacing:-.03em;white-space:nowrap}
+.menu-group span{font-size:1.03cqw;color:#55505f;line-height:1.45;white-space:nowrap}
+.menu-group img{position:absolute;right:-.4cqw;bottom:-1.3cqw;width:13.2cqw;height:14.6cqw;object-fit:contain;filter:drop-shadow(0 .4cqw .5cqw #00000018);transition:transform .15s}
+.menu-group:hover img{transform:translateY(-.3cqw) rotate(2deg)}
+.menu-group.train{background:linear-gradient(120deg,#e2edf8,#f3f7ff)}
+.menu-group.journey{background:linear-gradient(120deg,#e8edf9,#f5efff)}
+.menu-group.desk{background:linear-gradient(120deg,#fff3db,#fffaf0)}
+.menu-group.link{background:linear-gradient(120deg,#e7f5e2,#f7faed)}
+.menu-groups .menu-group .gicon{background:#ffffffaa;border-radius:999px;width:3cqw;height:3cqw;display:grid;place-items:center;font-size:1.6cqw}
+.menu-screen-note{font-size:.86cqw;letter-spacing:.06em;color:#776887;font-weight:750}
+.menu-group .menu-screen-note{margin-top:.35cqw;font-size:.82cqw}
+.menu-crumbs{display:flex;align-items:center;gap:1cqw;position:relative;z-index:2;height:6.9cqw;margin-bottom:1.05cqw;border-bottom:1px solid #d7cce4}
+.menu-back{min-height:4.6cqw;min-width:8.1cqw;background:#f2e9fb;border:1px solid #d8c9ed;color:#423557;font-size:1.14cqw;border-radius:1.1cqw}
+.menu-crumbs .section-title{font-size:1.8cqw;color:#392e46;font-weight:950}
+.menu-crumbs .section-desc{font-size:1.07cqw;color:#716579}
+.menu-crumbs .tiny-mon{width:6.4cqw;height:6.1cqw;object-fit:contain;margin-left:auto}
+.submenu{height:calc(100% - 8.2cqw);gap:1.15cqw;position:relative;z-index:2}
+.subapp{border:.17cqw solid #e4dcea;border-radius:1.2cqw;background:#fffdfd;min-height:7.7cqw;gap:.7cqw}
+.subapp i{font-size:2.4cqw}.subapp b{font-size:1.38cqw}.subapp span{font-size:1cqw}
+.screen.night .menu-banner .heading,.screen.night .menu-crumbs .section-title{color:#f4eaff}
+.screen.night .menu-banner .subhead,.screen.night .menu-crumbs .section-desc,.screen.night .menu-banner .jp{color:#d6c5e8}
+.screen.night .menu-group{color:#272a32}
+.screen.night .subapp{background:#f8f4fc;color:#2b2636}
+.screen.night .subapp span{color:#716581}
+.screen.night .menu-crumbs{border-color:#74628f}
+.menu-easter{position:absolute;bottom:.65cqw;right:1cqw;z-index:8;color:#8a6ba4;font-weight:900;font-size:.9cqw;pointer-events:none}
+/* physical display text sizing fixes */
+.navbtn{font-size:1.34cqw}.navbtn i{font-size:1.9cqw}
+.menu-group .menu-screen-note{font-weight:800}
+.home-focus .focus-go b{font-size:1.45cqw}
+.home-today .todayline{font-size:1.3cqw}
+.home-focus .muted{font-size:1.28cqw}
+.date-line{font-size:1.18cqw}
+.partner-summary{font-size:1.3cqw}
+.clockline{font-size:5.55cqw}
+.review button{font-size:12px}
+
+.water{background:#549ccd}.ground{background:#aa8d64}
+/* Living partner — subtle idle movement */
+.homegrid .partner-card>.pokemon{animation:buddyFloat 4.5s ease-in-out infinite;transform-origin:center bottom}
+@keyframes buddyFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-.85cqw) rotate(1deg)}}
+.pet-hit{position:absolute;right:1cqw;bottom:2cqw;width:39%;height:73%;z-index:7;border:0;background:transparent;border-radius:1.4cqw;cursor:pointer}
+.pet-hit:focus-visible{outline:.32cqw solid #9b83bd}
+.pet-tip{position:absolute;right:2cqw;bottom:1cqw;z-index:8;pointer-events:none;font-size:1.1cqw;color:#6f627f;background:#ffffffd9;border-radius:30px;padding:.3cqw .9cqw}
+@media(prefers-reduced-motion:reduce){.homegrid .partner-card>.pokemon{animation:none!important}}
+
+.ourgrid{height:100%;display:grid;grid-template-columns:1fr 1fr;gap:1.2cqw}
+.our-card{padding:1.6cqw}.our-card h2{font-size:2.2cqw;margin:.6cqw 0}.our-card p{font-size:1.15cqw;line-height:1.5;color:#77677d}
+.our-card .bigdate{font-size:3.2cqw;font-weight:950;margin:.85cqw 0;letter-spacing:-.04em}
+.our-card .love-art{position:absolute;right:0;bottom:0;width:34%;height:52%;object-fit:contain;pointer-events:none}
+.our-form{display:flex;flex-direction:column;gap:.6cqw;position:relative;z-index:3}.our-form label{font-size:1.15cqw;font-weight:850}
+.our-form input,.our-form textarea{font:1.4cqw inherit;background:#fff;color:#25222b;border:1px solid #d8cce3;border-radius:.8cqw;padding:.7cqw;width:100%;display:block;margin-top:.3cqw;min-height:4cqw}
+.our-form textarea{height:10cqw;resize:none;font-size:1.4cqw}
+.our-form small{font-size:1cqw;color:#7c7082}
+
+.quest-card .rowlist{max-height:17cqw;overflow:auto}
+.quest-row{font-size:1.3cqw;min-height:4.3cqw;text-align:left}.quest-row .task-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.quest-row .checked{text-decoration:line-through;opacity:.5}
+.planner-panel{position:absolute;inset:8cqw 12cqw 8.3cqw;z-index:95;background:#fffdfa;color:#29242f;border-radius:1.6cqw;padding:2cqw;box-shadow:0 2cqw 5cqw #0005;display:flex;flex-direction:column;gap:1cqw}.planner-panel h3{font-size:2.2cqw;margin:0}
+.planner-panel label{font-size:1.2cqw;font-weight:850}.planner-panel input{display:block;width:100%;min-height:4.7cqw;margin-top:.4cqw;border-radius:.8cqw;border:1px solid #d8cddd;background:#fff;color:#282531;padding:.9cqw;font-size:1.4cqw}.planner-panel .actionbar{margin-top:auto}
+
+/* V8 physical-panel readability pass: legibility over dashboard density */
+.menu-group b{font-size:2.1cqw}
+.menu-group span{font-size:1.38cqw}
+.menu-group .menu-screen-note{font-size:1.16cqw}
+.menu-banner .heading{font-size:2.65cqw}
+.menu-banner .subhead{font-size:1.45cqw}
+.menu-crumbs .section-title{font-size:2.1cqw}
+.menu-crumbs .section-desc{font-size:1.4cqw}
+.subapp b{font-size:1.7cqw}.subapp span{font-size:1.23cqw}
+.btn{min-height:4.5cqw;font-size:1.37cqw}
+.row{font-size:1.34cqw;min-height:4.4cqw}
+.row strong{font-size:1.24cqw}
+.navbtn{font-size:1.45cqw}.navbtn i{font-size:2.15cqw}
+.speech{font-size:1.35cqw}
+.date-line,.partner-summary{font-size:1.43cqw}
+.home-focus .muted,.home-today .todayline{font-size:1.45cqw}
+.our-form input,.our-form textarea{font-family:inherit;font-size:1.55cqw}
+.our-form .privacy-note,.our-form small{font-size:1.18cqw}
+
+/* V10: utility-first information architecture and reliable wayfinding */
+.bottomnav{grid-template-columns:repeat(3,1fr);padding:0 12cqw;height:7.6cqw}
+.bottomnav .navbtn{min-height:6.4cqw;cursor:pointer}
+.bottomnav .navbtn span{font-size:1.5cqw;font-weight:850}
+.bottomnav .navbtn.on{background:#ffffff75;border-radius:1cqw}
+.topbar .top-back{width:auto;min-width:9cqw;font-size:1.42cqw;font-weight:900;display:flex;justify-content:center;align-items:center;border-radius:1cqw;padding:.45cqw 1cqw}
+.menu-groups-v10{height:calc(100% - 8.2cqw);display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:1fr auto;gap:1.1cqw;position:relative;z-index:2}
+.menu-groups-v10 .menu-group{height:100%;padding-right:13cqw}
+.menu-groups-v10 .menu-more{grid-column:1/-1;background:linear-gradient(120deg,#f1f0f7,#fcfcf7);border:1px solid #d8c9e3;border-radius:1.1cqw;min-height:5.6cqw;padding:1cqw 1.6cqw;display:flex;align-items:center;justify-content:space-between;color:#51445f;font-size:1.45cqw;font-weight:950;cursor:pointer}
+.menu-groups-v10 .menu-more span{color:#796f82;font-size:1.22cqw;font-weight:650}
+.menu-banner .subhead{font-size:1.47cqw}
+.useful-badge{font-size:.97cqw;letter-spacing:.04em;color:#736681;margin:.55cqw 0}
+.focus-purpose{display:flex;align-items:center;justify-content:center;gap:.7cqw;font-size:1.42cqw;font-weight:850;color:#627388;margin:.3cqw 0}
+.focus-preset-row{display:flex;gap:.5cqw;align-items:center;justify-content:center;margin:.5cqw 0 .1cqw}
+.focus-preset-row button{border:1px solid #d5d9dd;border-radius:.8cqw;padding:.45cqw 1.2cqw;font-size:1.22cqw;font-weight:850;background:#f2f4f7;color:#37424f;min-height:3.7cqw;cursor:pointer}
+.focus-preset-row button.active{background:#415c7c;color:#fff;border-color:#415c7c}
+.dex-grid{padding-bottom:1.4cqw}
+.v10-review-label{font-size:.92cqw;color:#865f9c;margin-top:.6cqw}
+.reward .copy{min-width:0}
+.reward .reward-actions{display:flex;flex-wrap:wrap;gap:.8cqw;align-items:center;margin-top:1cqw}
+.reward .reward-actions .btn{font-size:1.24cqw;min-height:4.5cqw}
+.reward .later{color:#ece5f7;background:#ffffff14;border:1px solid #ffffff44}
+.quickapps .menu-back{min-height:4.8cqw;font-size:1.28cqw}
+.screen:has(.party-overlay) .topbar,.screen:has(.party-overlay) .bottomnav{visibility:hidden}
+.reward-shade{position:absolute;inset:0;z-index:79;background:#221b3088;backdrop-filter:blur(.2cqw);border:0;cursor:pointer}.reward-shade:focus-visible{outline:.4cqw solid #dcc8f0;outline-offset:-1cqw}
+
+/* Mobile: original PokéDock 800×480 V10 layout preserved, not redesigned. */
+html,body{overscroll-behavior:none}
+body{touch-action:pan-x pan-y}
+@media (hover:none),(pointer:coarse){
+ .lab{min-height:100dvh;padding:0;gap:0;justify-content:center}
+ .labbar,.hint,.review{display:none!important}
+ .device-shell{width:min(100vw,calc(100dvh * 1.6666667));border-radius:0;padding:0;box-shadow:none}
+ .screen{width:100%;border-radius:0}
+ .labtools{display:none}
+ button{touch-action:manipulation}
+}
+#rotate-warning{display:none}
+#mobile-install{position:fixed;right:10px;top:10px;z-index:150;background:#2d263d;color:#fff;
+ border:1px solid #aa8acb;padding:9px 12px;border-radius:14px;font-weight:800;cursor:pointer}
+@media (display-mode:standalone){#mobile-install{display:none}}
+@media (pointer:coarse) and (orientation:portrait){
+ #rotate-warning{display:flex;position:fixed;inset:0;z-index:999;align-items:center;justify-content:center;
+ padding:26px;text-align:center;background:radial-gradient(circle at 50% 30%,#47365a,#181820 80%);color:#faf5ff}
+ #rotate-warning .rotate-inner{max-width:360px}
+ #rotate-warning .rotate-icon{font-size:48px;margin-bottom:22px}
+ #rotate-warning h2{font-size:23px;margin:0 0 12px}
+ #rotate-warning p{font-size:14px;color:#d3c7e0;line-height:1.7}
+ #mobile-install{display:none}
+}
+</style>
+<link rel="stylesheet" href="../ui/party-game.css?v=9">
+<script defer src="../ui/party-game.js?v=9"></script>
+</head>
+<body>
+<div class="lab">
+  <div class="labbar">
+    <div><strong>PokéDock · Device UI V10</strong> <small>800×480 · 시연용 데이터 포함</small></div>
+    <div class="labtools"><button id="reviewBtn">화면 목록</button><button id="fullBtn">전체화면</button><button id="resetBtn">초기화</button></div>
+  </div>
+  <div class="device-shell"><div id="screen" class="screen"></div></div>
+  <div id="review" class="review"></div>
+  <div class="hint">기기 화면 안에서 직접 조작 · HOME / 포켓볼 MENU / DEX · 팬텀 비밀기지 메뉴 · 날씨·BLE 등 일부 화면은 아직 데모 데이터</div>
+</div>
+<script>
+(()=>{
+"use strict";
+const P=id=>"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"+id+".png";
+const PARTNERS={
+  393:{id:393,name:"Piplup",role:"BREAK",types:["WATER"],quote:"팽도리가 쉬는 시간을 기다리고 있어!",accent:"#91bedf",soft:"#e7f3fb"},
+  195:{id:195,name:"Quagsire",role:"REST",types:["WATER","GROUND"],quote:"누오처럼 잠깐 멍때려도 괜찮아.",accent:"#9ccad4",soft:"#e7f6f5"},
+  468:{id:468,name:"Togekiss",role:"CALM",types:["FAIRY","FLYING"],quote:"오늘도 좋은 일이 생길 것 같아.",accent:"#9dc4de",soft:"#e7f2f8"},
+  448:{id:448,name:"Lucario",role:"FOCUS",types:["FIGHTING","STEEL"],quote:"마음을 가다듬고, 지금 이 한 세션만.",accent:"#53759a",soft:"#dfe9f3"},
+  94:{id:94,name:"Gengar",role:"NIGHT",types:["GHOST","POISON"],quote:"밤에는 내가 지켜볼게.",accent:"#795ba5",soft:"#e7def2"},
+  417:{id:417,name:"Pachirisu",role:"CHARGE",types:["ELECTRIC"],quote:"전기 모으는 중! 폰은 잠깐 잊자.",accent:"#7cbce6",soft:"#e3f3fd"},
+  175:{id:175,name:"Togepi",role:"MORNING",types:["FAIRY"],quote:"오늘 첫 퀘스트부터 가볍게!",accent:"#f2c0a7",soft:"#fff0e9"},
+  385:{id:385,name:"Jirachi",role:"WISH",types:["STEEL","PSYCHIC"],quote:"한 번 더 해내면 소원에 가까워져.",accent:"#e4c65e",soft:"#fff5bf"}
+};
+const DEX=[
+{id:393,name:"Piplup",types:["WATER"]},{id:195,name:"Quagsire",types:["WATER","GROUND"]},
+{id:94,name:"Gengar",types:["GHOST","POISON"]},{id:175,name:"Togepi",types:["FAIRY"]},{id:417,name:"Pachirisu",types:["ELECTRIC"]},{id:448,name:"Lucario",types:["FIGHTING","STEEL"]},
+{id:468,name:"Togekiss",types:["FAIRY","FLYING"]},{id:385,name:"Jirachi",types:["STEEL","PSYCHIC"]},{id:25,name:"Pikachu",types:["ELECTRIC"]},{id:133,name:"Eevee",types:["NORMAL"]},
+{id:778,name:"Mimikyu",types:["GHOST","FAIRY"]},{id:700,name:"Sylveon",types:["FAIRY"]},{id:197,name:"Umbreon",types:["DARK"]},{id:492,name:"Shaymin",types:["GRASS"]}
+];
+const ENCOUNTERS=[25,37,39,54,133,143,196,197,258,280,447,492,570,700,702,778];
+const EXTRA_DEX={
+25:["Pikachu","ELECTRIC"],37:["Vulpix","FIRE"],39:["Jigglypuff","NORMAL / FAIRY"],54:["Psyduck","WATER"],
+143:["Snorlax","NORMAL"],196:["Espeon","PSYCHIC"],258:["Mudkip","WATER"],280:["Ralts","PSYCHIC / FAIRY"],
+447:["Riolu","FIGHTING"],492:["Shaymin","GRASS"],570:["Zorua","DARK"],702:["Dedenne","ELECTRIC / FAIRY"]
+};
+function dexEntry(id){return DEX.find(d=>d.id===id)||(EXTRA_DEX[id]?{id,name:EXTRA_DEX[id][0],types:EXTRA_DEX[id][1].split(" / ")}:{id,name:"No."+id,types:[]})}
+function dexItems(){const known=new Set(DEX.map(d=>d.id));return [...DEX,...S.caught.filter(id=>!known.has(id)).map(id=>dexEntry(id))]}
+
+const labels={home:"HOME",focus:"집중",quests:"할 일",dex:"도감",trainer:"트레이너",timer:"일반 타이머",stopwatch:"스톱워치",stats:"RECORD",badges:"BADGES",egg:"EGG",nfc:"NFC",phone:"PHONE",weather:"WEATHER",alarm:"ALARM",light:"LIGHT",settings:"SETTINGS","our-space":"우리 서랍",birthday:"BIRTHDAY"};
+const screenOrder=["home","focus","dex","quests","trainer","our-space","timer","stopwatch","egg","badges","stats","weather","alarm","light","phone","nfc","settings","birthday"];
+const S={screen:"home",drawer:false,menuGroup:null,history:[],reviewMode:false,focusPhase:"study",focusPreset:1500,pendingEncounter:null,night:false,ble:true,phone:true,notice:null,partner:94,partnerLevel:12,bond:67,exp:285,egg:42,sessions:3,streak:4,rank:"ACE SCHOLAR",badges:["FOCUS","STREAK"],caught:[94,393,468,448,195,175,417,385,25,133,778],shiny:[],focus:1500,focusRun:false,count:600,countRun:false,sw:1938,swRun:false,laps:[1938,1264,612],reward:null,rewardShiny:false,encounters:0,nfcId:null,lightTheme:"calm",randomEncounter:true,quests:[true,false,false,false],alarms:[true,true,true],brightness:72,detail:null,secretTaps:0,petLine:'',petTaps:0,anniversary:"",loveNote:"",todoItems:[],ddayDate:"",ddayTitle:"",plannerEditor:null};
+const $=id=>document.getElementById(id);
+
+const PRIVATE_KEY="pokedock-private-v8";
+function safeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function loadLove(){try{const x=JSON.parse(localStorage.getItem(PRIVATE_KEY)||"{}");if(/^\d{4}-\d{2}-\d{2}$/.test(x.anniversary||""))S.anniversary=x.anniversary;if(typeof x.loveNote==="string")S.loveNote=x.loveNote.slice(0,160);if(Array.isArray(x.todoItems))S.todoItems=x.todoItems.filter(t=>t&&typeof t.title==="string").slice(0,5).map(t=>({title:t.title.slice(0,44),done:!!t.done}));if(typeof x.ddayTitle==="string")S.ddayTitle=x.ddayTitle.slice(0,28);if(/^\d{4}-\d{2}-\d{2}$/.test(x.ddayDate||""))S.ddayDate=x.ddayDate}catch(e){}}
+function storeLove(){try{localStorage.setItem(PRIVATE_KEY,JSON.stringify({anniversary:S.anniversary,loveNote:S.loveNote,todoItems:S.todoItems,ddayDate:S.ddayDate,ddayTitle:S.ddayTitle}))}catch(e){}}
+function loveDay(){if(!S.anniversary)return "우리의 첫날을 설정해줘";const d=new Date(S.anniversary+"T12:00:00"),today=new Date();today.setHours(12,0,0,0);const days=Math.round((today-d)/86400000);return Number.isFinite(days)?(days>=0?"함께한 지 D+"+days:"그날까지 D-"+Math.abs(days)):"날짜 확인"}
+loadLove();
+
+function ddayLabel(){if(!S.ddayDate)return "D-day 설정";const today=new Date();today.setHours(12,0,0,0);const date=new Date(S.ddayDate+"T12:00:00");const d=Math.round((date-today)/86400000);return !Number.isFinite(d)?"날짜 확인":d===0?"D-DAY":d>0?"D-"+d:"D+"+(-d)}
+function taskProgress(){return S.todoItems.length?S.todoItems.filter(t=>t.done).length+"/"+S.todoItems.length+" 완료":"할 일 추가"}
+function plannerPanel(){
+ if(!S.plannerEditor)return "";
+ const fields=S.plannerEditor==="task"?'<label>할 일<input id="taskNew" maxlength="44" placeholder="해야 할 일 하나"></label>':
+  '<label>일정 이름<input id="ddayTitle" maxlength="28" value="'+safeHtml(S.ddayTitle)+'" placeholder="예: 중요한 약속"></label><label>날짜<input id="ddayDate" type="date" value="'+safeHtml(S.ddayDate)+'"></label>';
+ return '<div class="planner-panel"><h3>'+(S.plannerEditor==="task"?"할 일 추가":"D-day 설정")+'</h3>'+fields+'<div class="actionbar"><button class="btn primary" data-action="planner-save">저장</button><button class="btn" data-action="planner-cancel">취소</button></div></div>';
+}
+
+
+const fmt=s=>{s=Math.max(0,Math.floor(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+const partner=()=>PARTNERS[S.partner]||PARTNERS[468];
+const typeClass=t=>({FAIRY:"fairy",FLYING:"flying",FIGHTING:"fighting",STEEL:"steel",GHOST:"ghost",POISON:"poison",ELECTRIC:"electric",PSYCHIC:"psychic",NORMAL:"normal",DARK:"darktype",GRASS:"grass",WATER:"water",GROUND:"ground"}[t]||"");
+const types=arr=>'<div class="chiprow">'+arr.map(t=>'<span class="chip type '+typeClass(t)+'">'+t+'</span>').join("")+'</div>';
+const pokemon=(id,cls="")=>'<img class="pokemon '+cls+'" src="'+P(id)+'" alt="">';
+function theme(){let p=partner();if(S.night)p=PARTNERS[94];if(S.screen==="focus")p=PARTNERS[448];if(S.screen==="phone")p=PARTNERS[417];if(S.screen==="alarm")p=PARTNERS[175];if(S.screen==="birthday")p=PARTNERS[385];document.documentElement.style.setProperty("--accent",p.accent);document.documentElement.style.setProperty("--accent-soft",p.soft)}
+function top(){return '<div class="topbar">'+((S.drawer||S.screen!=="home")?'<button class="top-icon top-back" data-action="back" aria-label="뒤로 가기">← 뒤로</button>':'<button class="top-icon" data-screen="trainer" aria-label="트레이너">★</button>')+'<div class="brand" style="position:absolute;left:50%;transform:translateX(-50%)"><span class="pokeball"></span>POKÉDOCK</div><div class="statusbar"><span style="font-size:1.1cqw;color:#7d7a83">시연</span><button class="top-icon" data-screen="phone" aria-label="휴대폰 상태">▣</button></div></div>'}
+const navIcon={home:"●",focus:"◆",quests:"✓",dex:"▦",trainer:"★"};
+function bottom(){return '<div class="bottomnav">'+
+'<button class="navbtn '+(S.screen==="home"&&!S.drawer?"on":"")+'" data-screen="home"><i>⌂</i><span>HOME</span></button>'+
+'<button class="navbtn '+(S.screen==="focus"&&!S.drawer?"on":"")+'" data-screen="focus"><i>◷</i><span>집중</span></button>'+
+'<button class="navball" data-action="drawer" aria-label="포켓볼 메뉴"></button></div>'}
+function shell(body){return top()+'<div class="page">'+body+'</div>'+bottom()+drawer()+notice()+reward()+detail()+plannerPanel()}
+function drawer(){
+ if(!S.drawer)return "";
+ const groups={
+   everyday:{title:"매일 쓰는 도구",code:"DAILY",desc:"할 일 · 알람 · 타이머",subtitle:"꼭 필요한 일상 기능",pokemon:468,icon:"⌂",apps:[["quests","✓","할 일 / D-day"],["timer","⏱","일반 타이머"],["alarm","♬","알람"],["our-space","♡","우리 서랍"]]},
+   play:{title:"포켓몬 놀이",code:"PLAY",desc:"파트너 · 도감 · 성장",subtitle:"팬텀이 기다리는 작은 놀이터",pokemon:94,icon:"✦",apps:[["party","♥","파트너 선택"],["dex","▦","포켓몬 도감"],["egg","◌","알 부화"],["trainer","★","트레이너"],["badges","◇","배지"],["stats","▥","공부 기록"]]},
+   more:{title:"설정과 추가 기능",code:"MORE",desc:"기기 상태 · 날씨 · 조명",subtitle:"가끔 필요할 때만",pokemon:195,icon:"⚙",apps:[["settings","⚙","설정"],["light","✦","무드 조명"],["weather","☀","날씨"],["phone","▣","폰 거치 상태"],["nfc","◉","NFC 테스트"],["stopwatch","◷","스톱워치"]]}
+ };
+ if(!S.menuGroup){
+   return '<div class="quickapps"><div class="menu-banner"><div><div class="jp">POKÉDOCK · SIMPLE HOME</div><div class="heading">팬텀의 비밀기지</div><div class="subhead">필요한 건 간단히, 포켓몬은 즐겁게.</div></div><button class="gengar-button" data-action="secret-gengar" aria-label="팬텀 인사"><img src="'+P(94)+'" alt="팬텀"></button></div>'+
+   '<div class="menu-groups-v10">'+Object.entries(groups).filter(([k])=>k!=="more").map(([k,g])=>'<button class="menu-group '+(k==="everyday"?"desk":"journey")+'" data-action="menu-group" data-id="'+k+'"><span class="gicon">'+g.icon+'</span><b>'+g.title+'</b><span>'+g.desc+'</span><span class="menu-screen-note">열기 →</span><img src="'+P(g.pokemon)+'" alt=""></button>').join("")+
+   '<button class="menu-more" data-action="menu-group" data-id="more">⚙ 추가 기능 · 설정 <span>필요할 때만 열기 →</span></button></div></div>';
+ }
+ const g=groups[S.menuGroup];if(!g)return "";
+ if(S.menuGroup==="play"&&S.pendingEncounter)g.apps.unshift(["pending","✧","발견 포켓몬 기록"]);
+ return '<div class="quickapps"><div class="menu-crumbs"><button class="menu-back" data-action="menu-back">‹ 뒤로</button><div><div class="section-title">'+g.title+'</div><div class="section-desc">'+g.subtitle+'</div></div><img class="tiny-mon" src="'+P(g.pokemon)+'" alt=""></div><div class="submenu">'+g.apps.map(a=>'<button class="subapp" '+(a[0]==="party"?'data-action="party-open"':a[0]==="pending"?'data-action="show-pending"':'data-screen="'+a[0]+'"')+'><i>'+a[1]+'</i><b>'+a[2]+'</b><span>'+(a[0]==="party"?"선택 화면":a[0]==="pending"?"기록 대기":labels[a[0]])+'</span></button>').join("")+'</div></div>';
+}
+function notice(){if(!S.notice)return "";const n={call:["CALL · 엄마","수신 전화"],calendar:["CALENDAR","15분 뒤 일정"],contact:["PRIORITY CONTACT","새 알림 · 본문 숨김"]}[S.notice];return '<button class="notice" data-action="dismiss-notice"><b>'+n[0]+'</b><span>'+n[1]+'</span></button>'}
+function reward(){
+ if(!S.reward)return "";
+ const d=dexEntry(S.reward);
+ return '<button class="reward-shade" data-action="reward-later" aria-label="보상을 나중에 기록"></button><div class="reward '+(S.rewardShiny?"shiny":"")+'"><img src="'+P(d.id)+'"><div class="copy"><span class="eyebrow">집중 완료 · 포켓몬 발견!</span><h3>'+d.name+'</h3><p>도감에 기록하면 내 포켓몬이 돼.</p><div class="reward-actions"><button class="btn pokeball" data-action="register">도감에 기록</button><button class="btn later" data-action="reward-later">나중에</button></div></div></div>';
+}
+function detail(){if(!S.detail)return "";const d=dexEntry(S.detail);if(!d)return "";const caught=S.caught.includes(d.id);return '<div class="detail"><button class="closex" data-action="close-detail">×</button><div class="copy"><span class="eyebrow">POKÉDEX ENTRY</span><div class="medium">No.'+String(d.id).padStart(3,'0')+' '+d.name+'</div>'+types(d.types)+'<p class="muted">'+(caught?'CAUGHT · 파트너/테마로 사용할 수 있어요.':'LOCKED · Training과 Egg에서 만날 수 있어요.')+'</p>'+(caught&&PARTNERS[d.id]?'<button class="btn primary" data-action="set-partner" data-id="'+d.id+'">PARTNER로 지정</button>':'')+'</div><img src="'+P(d.id)+'"></div>'}
+function home(){
+ const p=partner(),now=new Date(),hh=String(now.getHours()).padStart(2,"0"),mm=String(now.getMinutes()).padStart(2,"0");
+ const ds=(now.getMonth()+1)+"월 "+now.getDate()+"일";
+ return shell('<div class="homegrid"><div class="card partner-card" data-partner="'+p.id+'">'+pokemon(p.id)+'<button class="pet-hit" data-action="pet" aria-label="포켓몬 쓰다듬기"></button><span class="pet-tip">♡ 쓰다듬기</span><div class="halo"></div><div class="copy"><span class="eyebrow">PARTNER CENTER</span><div class="clockline">'+hh+':'+mm+'</div><div class="date-line">'+ds+' · '+S.rank+'</div><div class="partner-summary"><span class="pokeball mini-ball"></span><span>'+p.name+' Lv.'+S.partnerLevel+'</span></div>'+types(p.types)+'<div class="bondline"><span class="heart">♥ BOND '+S.bond+'</span><span>EXP '+S.exp+'</span></div><div class="meter"><i style="width:'+S.bond+'%"></i></div><div class="speech">'+(S.petLine||p.quote)+'</div><div class="actionbar"><button class="btn" data-action="party-open">파트너 선택</button><button class="btn" data-screen="trainer">Trainer Card</button></div></div></div><div class="home-side"><button class="card home-focus click" data-action="quick-focus"><div><span class="eyebrow">바로 집중하기</span><div class="focus-time">'+fmt(S.focus)+'</div><div class="muted">누르면 집중 타이머가 시작돼</div></div><div class="focus-go"><span class="chip">25분 집중 → 5분 휴식</span><b>시작 →</b></div></button><button class="card home-today click" data-screen="quests"><span class="eyebrow">TODAY</span><div><div class="todayline"><b>Daily Quest</b><span>'+Math.min(S.sessions,5)+'/5</span></div><div class="meter"><i style="width:'+Math.min(100,S.sessions/5*100)+'%"></i></div></div><div class="todayline"><span>Egg '+S.egg+'%</span><span>'+safeHtml(ddayLabel())+'</span></div></button></div></div>')}
+function focus(){
+ const studying=S.focusPhase==="study";
+ const title=studying?"공부 집중":"잠깐 휴식",subtitle=studying?"집중하고 포켓몬과 함께 쉬어가기":"휴식 중에는 보상이 발생하지 않아";
+ return shell('<div class="focus-layout"><div class="card timer-card"><div><span class="eyebrow">'+(studying?"LUCARIO · FOCUS":"PIPLUP · BREAK")+'</span>'+
+ '<div class="focus-purpose">'+title+' · '+(studying?"25분 집중 / 5분 휴식":"5분 편하게 쉬기")+'</div>'+
+ '<div class="huge">'+fmt(S.focus)+'</div>'+
+ (studying?'<div class="focus-preset-row">'+[900,1500,2700].map(n=>'<button data-action="focus-preset" data-id="'+n+'" class="'+(S.focusPreset===n?"active":"")+'">'+Math.round(n/60)+'분</button>').join("")+'</div>':'<div class="muted">휴식 뒤에 다시 집중할 수 있어.</div>')+
+ '<div class="meter"><i style="width:'+Math.max(0,Math.min(100,studying?(S.focusPreset-S.focus)*100/S.focusPreset:(300-S.focus)*100/300))+'%"></i></div>'+
+ '<div class="actionbar" style="justify-content:center"><button class="btn pokeball" data-action="focus-toggle">'+(S.focusRun?"일시정지":studying?"집중 시작":"휴식 시작")+'</button>'+
+ '<button class="btn" data-action="focus-reset">'+(studying?"처음부터":"휴식 건너뛰기")+'</button>'+
+ (S.reviewMode?'<button class="btn accent" data-action="focus-clear">시연: 집중 완료</button>':'')+'</div></div></div>'+
+ '<div class="card lucario-card">'+pokemon(studying?448:393)+'<div class="halo"></div><div class="copy"><span class="eyebrow">'+(studying?"FOCUS PARTNER":"BREAK BUDDY")+'</span><div class="medium">'+(studying?"Lucario":"Piplup")+'</div>'+
+ '<div class="speech">'+(studying?"지금은 한 가지 일에만 집중해봐.":"잠깐 쉬어도 괜찮아!")+'</div>'+
+ '<div class="stat-grid"><div class="stat"><b>'+S.sessions+'</b><span>완료</span></div><div class="stat"><b>'+S.streak+'</b><span>연속</span></div><div class="stat"><b>'+S.exp+'</b><span>EXP</span></div></div>'+
+ '<div class="actionbar"><button class="btn" data-screen="quests">오늘 할 일 →</button></div></div></div></div>');
+}
+function quests(){
+ const taskList=S.todoItems.length?S.todoItems.map((t,i)=>'<div class="row quest-row"><button class="btn" data-action="task-toggle" data-id="'+i+'">'+(t.done?"✓":"○")+'</button><span class="task-name '+(t.done?"checked":"")+'">'+safeHtml(t.title)+'</span><button class="btn" data-action="task-delete" data-id="'+i+'">×</button></div>').join(""):'<p class="muted">아직 할 일이 없어. 하나부터 시작해봐.</p>';
+ return shell('<div class="grid split"><div class="card quest-card"><span class="eyebrow">DAILY TO-DO</span><div class="medium">'+taskProgress()+'</div><div class="rowlist">'+taskList+'</div><div class="actionbar"><button class="btn primary" data-action="task-add">+ 할 일</button><button class="btn" data-action="dday-edit">D-day 설정</button></div></div><div class="card">'+pokemon(393,'small')+'<div class="copy" style="width:58%;position:relative;z-index:4"><span class="eyebrow">UPCOMING</span><div class="medium">'+safeHtml(ddayLabel())+'</div><div class="muted">'+(S.ddayTitle?safeHtml(S.ddayTitle):"일정을 등록해줘")+'</div><div class="speech">할 일은 적게, 하나씩 완료!</div><div class="actionbar"><button class="btn primary" data-screen="focus">집중 시작</button><button class="btn" data-screen="our-space">우리 서랍 ♡</button></div></div></div></div>');
+}
+function dex(){return shell('<div class="card" style="height:100%;overflow-y:auto"><div class="dex-head"><div><span class="eyebrow">POKÉDEX</span><div class="medium">'+S.caught.length+' CAUGHT</div></div><div class="chiprow"><span class="chip">EXP '+S.exp+'</span><span class="chip">SHINY '+S.shiny.length+'</span></div></div><div class="dex-grid">'+dexItems().map(d=>{const caught=S.caught.includes(d.id),sh=S.shiny.includes(d.id);return '<button class="dexmon '+(caught?'':'locked')+' '+(sh?'shiny':'')+'" data-pokemon="'+d.id+'"><span class="no">No.'+String(d.id).padStart(3,'0')+'</span><img src="'+P(d.id)+'"><b>'+d.name+'</b><span class="dtype">'+d.types.join(' / ')+'</span></button>'}).join('')+'</div></div>')}
+function trainer(){const p=partner();return shell('<div class="trainer-layout"><div class="card trainer-card">'+pokemon(p.id)+'<div class="copy"><span class="rank">'+S.rank+'</span><div class="trainer-name">TRAINER CARD</div><div class="muted">PARTNER · '+p.name+' Lv.'+S.partnerLevel+'</div>'+types(p.types)+'<div class="bondline"><span class="heart">♥ '+S.bond+'</span><span>EXP '+S.exp+'</span></div><div class="meter"><i style="width:'+S.bond+'%"></i></div><div class="actionbar"><button class="btn" data-action="party-open">파트너 교체</button><button class="btn" data-action="bond">Bond +5</button></div></div></div><div class="card"><span class="eyebrow">TRAINER RECORD</span><div class="record-line"><span>Study time</span><b>8h20m</b></div><div class="record-line"><span>Sessions</span><b>'+S.sessions+'</b></div><div class="record-line"><span>Streak</span><b>'+S.streak+' days</b></div><div class="record-line"><span>Pokédex</span><b>'+S.caught.length+' caught</b></div><div class="record-line"><span>Badges</span><b>'+S.badges.length+'</b></div><div class="actionbar"><button class="btn accent" data-screen="badges">BADGES</button><button class="btn" data-screen="egg">EGG</button><button class="btn" data-screen="stats">RECORD</button></div></div></div>')}
+function timer(){
+ return shell('<div class="grid split"><div class="card timer-card"><div><span class="eyebrow">일반 카운트다운</span><div class="huge">'+fmt(S.count)+'</div><div class="muted">요리·운동·휴식용 · 공부 기록/보상 없음</div>'+
+ '<div class="actionbar" style="justify-content:center"><button class="btn pokeball" data-action="timer-toggle">'+(S.countRun?"일시정지":"시작")+'</button><button class="btn" data-action="timer-reset">초기화</button></div></div></div>'+
+ '<div class="card"><span class="eyebrow">시간 바로 선택</span><div class="rowlist">'+[[180,"3분 · 간단한 일"],[300,"5분 · 짧은 휴식"],[600,"10분 · 스트레칭"],[1800,"30분 · 다른 일정"]].map(([sec,t])=>'<button class="row" data-action="preset" data-id="'+sec+'"><span>'+t+'</span><b>'+Math.round(sec/60)+'분</b></button>').join("")+'</div></div></div>');
+}
+function stopwatch(){return shell('<div class="grid split"><div class="card timer-card"><div><span class="eyebrow">TRAINING LOG</span><div class="huge">'+fmt(S.sw)+'</div><div class="actionbar" style="justify-content:center"><button class="btn pokeball" data-action="sw-toggle">'+(S.swRun?'PAUSE':'START')+'</button><button class="btn" data-action="lap">LAP</button><button class="btn" data-action="sw-reset">RESET</button></div></div></div><div class="card"><span class="eyebrow">LAPS</span><div class="rowlist">'+S.laps.slice(0,5).map((x,i)=>'<div class="row"><span>Lap '+(S.laps.length-i)+'</span><b>'+fmt(x)+'</b></div>').join('')+'</div></div></div>')}
+function stats(){return shell('<div class="grid split"><div class="card"><span class="eyebrow">TRAINER RECORD</span><div class="large">8h20m</div><div class="muted">예시 기록 · 저장/연동 미구현</div><div class="rowlist"><div class="row"><span>Mon</span><b>1h10</b></div><div class="row"><span>Tue</span><b>2h05</b></div><div class="row"><span>Wed</span><b>0h45</b></div><div class="row"><span>Thu</span><b>2h35</b></div></div></div><div class="card">'+pokemon(partner().id,'small')+'<div class="copy" style="width:58%;position:relative;z-index:4"><span class="rank">'+S.rank+'</span><div class="medium">'+S.streak+' DAY STREAK</div><div class="speech">꾸준함도 트레이너의 실력.</div><div class="stat-grid"><div class="stat"><b>'+S.caught.length+'</b><span>DEX</span></div><div class="stat"><b>'+S.badges.length+'</b><span>BADGES</span></div><div class="stat"><b>'+S.shiny.length+'</b><span>SHINY</span></div></div></div></div></div>')}
+function badges(){const all=[['FOCUS','#6c8dac'],['STREAK','#e29b65'],['ROUTINE','#8eae7c'],['NIGHT','#725b96'],['DEX','#d889bd'],['WISH','#e0c255']];return shell('<div class="card" style="height:100%"><span class="eyebrow">TRAINER BADGES</span><div class="medium">Study Achievements</div><p class="muted">PokéDock 전용 배지 · 공식 체육관 배지 복제가 아닌 공부 업적.</p><div class="badge-grid">'+all.map(b=>'<div class="badge '+(S.badges.includes(b[0])?'':'locked')+'"><div class="medal" style="--m:'+b[1]+'"></div><b>'+b[0]+'</b></div>').join('')+'</div></div>')}
+function egg(){return shell('<div class="egg-layout"><div class="card egg-card"><div><div class="egg"></div><div class="medium" style="margin-top:1cqw">Mystery Egg</div><div class="meter"><i style="width:'+S.egg+'%"></i></div><p class="muted">'+S.egg+'% · Focus 완료 +8%</p><button class="btn accent" data-action="egg-plus">DEMO +20%</button></div></div><div class="card">'+pokemon(175,'small')+'<div class="copy" style="width:58%;position:relative;z-index:4"><span class="eyebrow">HATCH RESEARCH</span><div class="medium">부화 조건</div><div class="rowlist"><div class="row"><span>Focus 25m</span><b>+8%</b></div><div class="row"><span>7-day streak</span><b>BONUS</b></div><div class="row"><span>NFC special</span><b>?</b></div></div><div class="speech">알 안에서 작은 소리가 들리는 것 같아.</div></div></div></div>')}
+function nfc(){const id=S.nfcId||417,d=DEX.find(x=>x.id===id)||DEX[0];return shell('<div class="grid split"><div class="card timer-card"><div><span class="eyebrow">NFC SUMMON</span><div style="font-size:5cqw;margin:.6cqw">'+(S.nfcId?'✓':'◉')+'</div><div class="medium">'+(S.nfcId?d.name+' recognized':'측면 포드에 태그/피규어')+'</div><p class="muted">태그 = Partner + Theme + Preset</p><div class="actionbar" style="justify-content:center"><button class="btn pokeball" data-action="nfc-scan">SCAN</button></div></div></div><div class="card">'+pokemon(id,'small')+'<div class="copy" style="width:58%;position:relative;z-index:4"><span class="eyebrow">'+(S.nfcId?'REGISTERED TAG':'WAITING')+'</span><div class="medium">'+(S.nfcId?d.name:'NFC Encounter')+'</div><p class="muted">'+(S.nfcId?'전용 테마와 파트너 preset을 불러왔습니다.':'스캔하면 매핑된 포켓몬이 등장합니다.')+'</p>'+(S.nfcId&&PARTNERS[id]?'<button class="btn primary" data-action="nfc-partner">PARTNER로 지정</button>':'')+'</div></div></div>')}
+function phone(){return shell('<div class="grid split"><button class="card click" data-action="phone-toggle" style="display:grid;place-items:center;text-align:center"><div><div style="font-size:5cqw">'+(S.phone?'⚡':'▱')+'</div><span class="eyebrow">PACHIRISU CHARGE</span><div class="medium">'+(S.phone?'폰 거치됨 · 시연 상태':'폰 없음 · 시연 상태')+'</div><p class="muted">화면 뒤에 두고 집중</p></div></button><div class="card">'+pokemon(417,'small')+'<div class="copy" style="width:58%;position:relative;z-index:4"><span class="eyebrow">PHONE BRIDGE</span><div class="medium">Priority Relay</div><p class="muted">'+(S.ble?'BLE 알림 시연 · 실제 연결 아님':'BLE disconnected')+'</p><div class="actionbar"><button class="btn" data-action="ble-toggle">BLE '+(S.ble?'OFF':'ON')+'</button></div><div class="rowlist"><button class="row" data-action="notify" data-id="call"><span>CALL</span><b>DEMO</b></button><button class="row" data-action="notify" data-id="calendar"><span>CALENDAR</span><b>DEMO</b></button><button class="row" data-action="notify" data-id="contact"><span>PRIORITY CONTACT</span><b>DEMO</b></button></div></div></div></div>')}
+function weather(){return shell('<div class="grid split"><div class="card"><span class="eyebrow">날씨 · 예시 데이터</span><div class="huge">18°</div><div class="muted">맑음 · 체감 17° · 습도 48%</div><div class="rowlist"><div class="row"><span>18시</span><b>16°</b></div><div class="row"><span>21시</span><b>13°</b></div><div class="row"><span>00시</span><b>11°</b></div></div></div><div class="card">'+pokemon(468,'small')+'<div class="copy" style="width:58%;position:relative;z-index:4"><span class="eyebrow">TOGEKISS SKY</span><div class="medium">산책하기 좋은 날씨</div><div class="speech">날씨도 Center 대사에 자연스럽게 반영할게.</div></div></div></div>')}
+function alarm(){return shell('<div class="grid split"><div class="card"><span class="eyebrow">MORNING CENTER</span><div class="medium">Alarm</div><div class="rowlist">'+[['07:30','평일'],['08:10','화/목'],['22:20','Night prep']].map((a,i)=>'<button class="row" data-action="alarm" data-id="'+i+'"><span><strong>'+a[0]+'</strong> · '+a[1]+'</span><b class="'+(S.alarms[i]?'done':'')+'">'+(S.alarms[i]?'ON':'OFF')+'</b></button>').join('')+'</div></div><div class="card">'+pokemon(175,'small')+'<div class="copy" style="width:58%;position:relative;z-index:4"><span class="eyebrow">TOGEPI MORNING</span><div class="medium">Wake-up Buddy</div><div class="speech">좋은 아침! 첫 퀘스트부터 가볍게 시작해보자.</div></div></div></div>')}
+function light(){const themes=[['warm','Togepi Warm',175],['electric','Pachirisu Spark',417],['calm','Togekiss Calm',468],['night','Gengar Night',94]];return shell('<div class="card" style="height:100%"><span class="eyebrow">AMBIENT THEMES</span><div class="medium">Pokémon Light</div><div class="badge-grid" style="grid-template-columns:repeat(4,1fr);margin-top:1cqw">'+themes.map(t=>'<button class="badge click '+(S.lightTheme===t[0]?'':'')+'" data-action="theme" data-id="'+t[0]+'" style="height:20cqw;opacity:'+(S.lightTheme===t[0]?1:.58)+'"><img src="'+P(t[2])+'" style="width:8cqw;height:8cqw;object-fit:contain"><b>'+t[1]+'</b></button>').join('')+'</div></div>')}
+function settings(){return shell('<div class="grid split"><div class="card"><span class="eyebrow">DISPLAY</span><div class="rowlist"><div class="row"><span>Brightness</span><b>'+S.brightness+'%</b></div><div class="actionbar"><button class="btn" data-action="brightness" data-id="-10">−</button><button class="btn" data-action="brightness" data-id="10">+</button></div><button class="row" data-action="night"><span>Night Mode</span><b class="'+(S.night?'done':'')+'">'+(S.night?'ON':'OFF')+'</b></button><button class="row" data-action="random"><span>Random Encounter</span><b class="'+(S.randomEncounter?'done':'')+'">'+(S.randomEncounter?'ON':'OFF')+'</b></button></div></div><div class="card"><span class="eyebrow">CONNECTIVITY</span><div class="rowlist"><div class="row"><span>Wi‑Fi</span><b>시뮬레이터</b></div><button class="row" data-action="ble-toggle"><span>BLE Bridge</span><b class="'+(S.ble?'done':'')+'">'+(S.ble?'ON':'OFF')+'</b></button><div class="row"><span>NFC side</span><b>RIGHT</b></div><div class="row"><span>Web settings</span><b>미연동</b></div></div></div></div>')}
+
+function ourSpace(){
+ return shell('<div class="ourgrid"><div class="card our-card"><span class="eyebrow">GENGAR · A PRIVATE CORNER</span><h2>우리의 작은 서랍 ♡</h2><div class="bigdate">'+safeHtml(loveDay())+'</div><p>팬텀이 조용히 지켜주는 우리만의 날.</p><img class="love-art" src="'+P(94)+'" alt="팬텀"><div class="actionbar"><button class="btn" data-screen="home">HOME</button><button class="btn accent" data-action="birthday-demo">별 이벤트 ✦</button></div></div>'+
+ '<div class="card our-card"><span class="eyebrow">PRIVATE LETTER · LOCAL ONLY</span><h2>작은 편지</h2><div class="our-form"><label>우리가 처음 만난 날<input type="date" id="loveDate" value="'+safeHtml(S.anniversary)+'"></label><label>둘만의 메시지<textarea id="loveNote" maxlength="160" placeholder="여기에 직접 짧은 편지를 남겨줘.">'+safeHtml(S.loveNote)+'</textarea></label><small>이 브라우저에만 저장 · GitHub/서버로 전송하지 않음</small><div class="actionbar"><button class="btn primary" data-action="save-love">저장</button><button class="btn" data-action="clear-love">삭제</button></div></div></div></div>');
+}
+
+function birthday(){return top()+'<div class="page" style="padding:0">'+birthdayBody()+'</div>'+bottom()+drawer()+notice()+reward()+detail()}
+function birthdayBody(){return '<div class="birthday"><div><span class="chip">WISH EVENT · ONE DAY ONLY</span><img src="'+P(385)+'"><h2>Jirachi has appeared.</h2><p>오늘의 소원 리본이 해금되었습니다 ✦</p><div class="actionbar" style="justify-content:center"><button class="btn pokeball" data-action="wish">WISH RIBBON</button><button class="btn" data-screen="home">CENTER</button></div></div></div>'}
+const views={home,focus,quests,dex,trainer,"our-space":ourSpace,timer,stopwatch,stats,badges,egg,nfc,phone,weather,alarm,light,settings,birthday};
+const GAME_KEY="pokedock-v10-game";
+function saveGame(){try{localStorage.setItem(GAME_KEY,JSON.stringify({
+ caught:S.caught,shiny:S.shiny,pendingEncounter:S.pendingEncounter,
+ sessions:S.sessions,exp:S.exp,bond:S.bond,egg:S.egg,encounters:S.encounters
+}))}catch(e){}}
+function loadGame(){try{
+ const a=JSON.parse(localStorage.getItem(GAME_KEY)||"{}");
+ if(Array.isArray(a.caught))S.caught=a.caught.filter(n=>Number.isInteger(n)&&n>0).slice(0,120);
+ if(Array.isArray(a.shiny))S.shiny=a.shiny.filter(n=>Number.isInteger(n)&&n>0).slice(0,120);
+ if(a.pendingEncounter&&Number.isInteger(a.pendingEncounter.id))S.pendingEncounter=a.pendingEncounter;
+ for(const field of ["sessions","exp","bond","egg","encounters"])if(Number.isInteger(a[field])&&a[field]>=0)S[field]=a[field];
+}catch(e){}}
+loadGame();
+function encounter(){
+ S.encounters++;
+ const id=ENCOUNTERS[S.encounters%ENCOUNTERS.length];
+ S.reward=id;
+ S.rewardShiny=S.encounters%8===0;
+}
+function studyReward(){
+ S.sessions++;S.exp+=25;S.bond=Math.min(100,S.bond+2);S.egg+=8;
+ if(S.exp>=S.partnerLevel*30){S.exp-=S.partnerLevel*30;S.partnerLevel++}
+ if(S.egg>=100){S.egg-=100;S.reward=280;S.rewardShiny=false}
+ else if(S.randomEncounter)encounter();
+ if(S.sessions>=5&&!S.badges.includes("ROUTINE"))S.badges.push("ROUTINE");
+ saveGame();
+}
+function completeFocus(){
+ if(S.focusPhase!=="study")return;
+ S.focusRun=false;
+ S.focusPhase="break";S.focus=300;
+ studyReward();
+}
+function completeBreak(){
+ S.focusRun=false;S.focusPhase="study";S.focus=S.focusPreset;
+}
+function render(){theme();const el=$('screen');el.classList.toggle('night',S.night||S.lightTheme==='night');el.style.filter='brightness('+(0.65+S.brightness/200)+')';el.innerHTML=(views[S.screen]||home)();document.querySelectorAll('#review button').forEach(b=>b.classList.toggle('active',b.dataset.screen===S.screen));if(typeof window!=='undefined'&&window.PokeParty)window.PokeParty.afterRender()}
+if(typeof window!=='undefined')window.__pokedockPartyBridge={getPartner:()=>S.partner,getPetTaps:()=>S.petTaps,getScreen:()=>S.screen,selectPartner:(id,persist=true)=>{if(!PARTNERS[id])return;S.partner=id;S.petLine='';S.drawer=false;S.menuGroup=null;S.history=[];S.screen='home';if(persist)try{localStorage.setItem('pokedock-partner-v9',String(id))}catch(e){};render()}};
+function nav(screen){
+ if(screen===S.screen&&!S.drawer)return;
+ if(screen==="home")S.history=[];
+ else S.history.push({screen:S.screen,group:S.drawer?S.menuGroup:null});
+ if(S.history.length>12)S.history.shift();
+ S.screen=screen;S.drawer=false;S.menuGroup=null;S.detail=null;S.plannerEditor=null;render();
+}
+function back(){
+ if(typeof window!=="undefined"&&window.PokeParty?.isOpen()){window.PokeParty.close();return}
+ if(S.plannerEditor){S.plannerEditor=null;render();return}
+ if(S.detail){S.detail=null;render();return}
+ if(S.reward){S.pendingEncounter={id:S.reward,shiny:S.rewardShiny};S.reward=null;S.rewardShiny=false;saveGame();render();return}
+ if(S.drawer){if(S.menuGroup)S.menuGroup=null;else S.drawer=false;render();return}
+ const item=S.history.pop();
+ if(!item){S.screen="home";S.drawer=false;S.menuGroup=null}
+ else{S.screen=item.screen;S.drawer=!!item.group;S.menuGroup=item.group}
+ render();
+}
+function act(a,b){if(a==='back'){back()}else if(a==='drawer'){S.drawer=!S.drawer;if(!S.drawer)S.menuGroup=null;render()}else if(a==='quick-focus'){S.screen='focus';if(S.focus<=0)S.focus=S.focusPhase==='break'?300:S.focusPreset;S.focusRun=true;S.drawer=false;S.menuGroup=null;render()}else if(a==='secret-gengar'){S.secretTaps++;if(S.secretTaps>=5){S.secretTaps=0;S.drawer=false;S.menuGroup=null;S.screen='our-space';render()}}else if(a==='pet'){S.petTaps++;const lines=['팬텀이 조용히 웃었어.','기분이 좋아 보여!','손을 따라 살짝 움직였어.','뭔가 비밀이 있는 듯해.'];S.petLine=lines[(S.petTaps-1)%lines.length];if(S.petTaps%5===0)nav('our-space');else render()}else if(a==='save-love'){const date=$('loveDate')?.value||'';S.anniversary=/^\d{4}-\d{2}-\d{2}$/.test(date)?date:'';S.loveNote=($('loveNote')?.value||'').slice(0,160);storeLove();render()}else if(a==='clear-love'){S.anniversary='';S.loveNote='';storeLove();render()}else if(a==='birthday-demo'){nav('birthday')}else if(a==='task-add'){S.plannerEditor='task';render()}else if(a==='dday-edit'){S.plannerEditor='dday';render()}else if(a==='planner-cancel'){S.plannerEditor=null;render()}else if(a==='planner-save'){
+ if(S.plannerEditor==='task'){const title=($('taskNew')?.value||'').trim().slice(0,44);if(title&&S.todoItems.length<5)S.todoItems.push({title,done:false})}
+ else if(S.plannerEditor==='dday'){const date=$('ddayDate')?.value||'';S.ddayDate=/^\d{4}-\d{2}-\d{2}$/.test(date)?date:'';S.ddayTitle=($('ddayTitle')?.value||'').trim().slice(0,28)}
+ S.plannerEditor=null;storeLove();render()
+}else if(a==='task-toggle'){const i=Number(b.dataset.id);if(S.todoItems[i])S.todoItems[i].done=!S.todoItems[i].done;storeLove();render()}else if(a==='task-delete'){const i=Number(b.dataset.id);if(Number.isInteger(i)&&i>=0&&i<S.todoItems.length)S.todoItems.splice(i,1);storeLove();render()}else if(a==='menu-group'){S.menuGroup=b.dataset.id;render()}else if(a==='menu-back'){S.menuGroup=null;render()}else if(a==='dismiss-notice'){S.notice=null;render()}else if(a==='partner'){const seq=[94,393,468,448,195,175,417,385];S.partner=seq[(seq.indexOf(S.partner)+1)%seq.length];render()}else if(a==='bond'){S.bond=Math.min(100,S.bond+5);render()}else if(a==='focus-toggle'){if(S.focus>0)S.focusRun=!S.focusRun;render()}else if(a==='focus-preset'){if(!S.focusRun&&S.focusPhase==='study'){S.focusPreset=Number(b.dataset.id);S.focus=S.focusPreset;}render()}else if(a==='focus-reset'){S.focusRun=false;if(S.focusPhase==='break')completeBreak();else S.focus=S.focusPreset;render()}else if(a==='focus-clear'){if(S.reviewMode&&S.focusPhase==='study'){S.focus=0;completeFocus()}render()}else if(a==='timer-toggle'){S.countRun=!S.countRun;render()}else if(a==='timer-reset'){S.count=600;S.countRun=false;render()}else if(a==='preset'){S.count=Number(b.dataset.id);S.countRun=false;render()}else if(a==='sw-toggle'){S.swRun=!S.swRun;render()}else if(a==='lap'){S.laps.unshift(S.sw);render()}else if(a==='sw-reset'){S.sw=0;S.swRun=false;S.laps=[];render()}else if(a==='quest'){const i=Number(b.dataset.id);S.quests[i]=!S.quests[i];render()}else if(a==='egg-plus'){S.egg+=20;if(S.egg>=100){S.egg-=100;S.reward=280;if(!S.caught.includes(280))S.caught.push(280)}render()}else if(a==='nfc-scan'){const seq=[94,393,468,448,195];S.nfcId=seq[((seq.indexOf(S.nfcId)+1)||0)%seq.length];if(!S.nfcId)S.nfcId=94;render()}else if(a==='nfc-partner'){if(PARTNERS[S.nfcId])S.partner=S.nfcId;nav('home')}else if(a==='phone-toggle'){S.phone=!S.phone;render()}else if(a==='ble-toggle'){S.ble=!S.ble;render()}else if(a==='notify'){S.ble=true;S.notice=b.dataset.id;render()}else if(a==='alarm'){const i=Number(b.dataset.id);S.alarms[i]=!S.alarms[i];try{localStorage.setItem(MOBILE_ALARM_KEY,JSON.stringify(S.alarms))}catch(e){}render()}else if(a==='theme'){S.lightTheme=b.dataset.id;if(S.lightTheme==='night')S.night=true;render()}else if(a==='night'){S.night=!S.night;render()}else if(a==='random'){S.randomEncounter=!S.randomEncounter;render()}else if(a==='brightness'){S.brightness=Math.max(30,Math.min(100,S.brightness+Number(b.dataset.id)));render()}else if(a==='register'){if(S.reward){if(!S.caught.includes(S.reward))S.caught.push(S.reward);if(S.rewardShiny&&!S.shiny.includes(S.reward))S.shiny.push(S.reward)}S.reward=null;S.rewardShiny=false;S.pendingEncounter=null;saveGame();nav('dex')}else if(a==='reward-later'){S.pendingEncounter={id:S.reward,shiny:S.rewardShiny};S.reward=null;S.rewardShiny=false;saveGame();render()}else if(a==='show-pending'){if(S.pendingEncounter){S.reward=S.pendingEncounter.id;S.rewardShiny=S.pendingEncounter.shiny;S.drawer=false;S.menuGroup=null;render()}}else if(a==='close-detail'){S.detail=null;render()}else if(a==='set-partner'){const id=Number(b.dataset.id);if(PARTNERS[id]){S.partner=id;try{localStorage.setItem('pokedock-partner-v9',String(id))}catch(e){}}S.detail=null;nav('home')}else if(a==='wish'){if(!S.badges.includes('WISH'))S.badges.push('WISH');S.bond=Math.min(100,S.bond+10);nav('trainer')}}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!e.defaultPrevented){e.preventDefault();back()}});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.screen){nav(b.dataset.screen);return}if(b.dataset.pokemon){S.detail=Number(b.dataset.pokemon);render();return}if(b.dataset.action){act(b.dataset.action,b);return}});
+
+/* Mobile-only additions: persistent alarm toggles + foreground notification.
+   An installed PWA cannot guarantee OS background alarms when suspended. */
+const MOBILE_ALARM_KEY='pokedock-v10-mobile-alarm-toggles';
+try{const x=JSON.parse(localStorage.getItem(MOBILE_ALARM_KEY)||'null');
+ if(Array.isArray(x)&&x.length===3&&x.every(v=>typeof v==='boolean'))S.alarms=x;}catch(e){}
+let lastMobileAlarmKey='';
+function mobileForegroundAlarm(){
+ const now=new Date(),day=now.getDay(),minute=now.getHours()*60+now.getMinutes();
+ const candidate=[450,490,1340];
+ for(let i=0;i<candidate.length;i++){
+  if(!S.alarms[i]||minute!==candidate[i])continue;
+  if(i===0 && (day===0||day===6))continue;
+  if(i===1 && day!==2 && day!==4)continue;
+  const key=now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+':'+i;
+  if(key===lastMobileAlarmKey)continue;lastMobileAlarmKey=key;
+  const screen=document.getElementById('screen');
+  const existing=document.getElementById('pokedock-mobile-alarm-toast');
+  if(existing)existing.remove();
+  const banner=document.createElement('div');banner.id='pokedock-mobile-alarm-toast';
+  banner.style.cssText='position:absolute;z-index:400;bottom:18%;left:15%;right:15%;border:2px solid #a687c4;border-radius:18px;background:#2a2133;color:#fff;padding:2.2cqw;font-size:1.8cqw;text-align:center;box-shadow:0 12px 30px #0008;';
+  const label=document.createElement('strong');label.textContent='♬ 알람 · '+['07:30 평일','08:10 화/목','22:20 Night prep'][i];banner.append(label);
+  const dismiss=document.createElement('button');dismiss.type='button';dismiss.textContent='확인';
+  dismiss.style.cssText='margin-left:2cqw;border:0;border-radius:9px;background:#f7e5ff;color:#3d284b;padding:.7cqw 1.2cqw;font:inherit';
+  dismiss.addEventListener('click',()=>banner.remove());banner.append(dismiss);screen.append(banner);
+  if(navigator.vibrate)navigator.vibrate([180,120,180]);
+ }
+}
+
+let v8LastTick=Date.now(),v8ClockMinute=new Date().getMinutes();
+setInterval(()=>{
+ const now=Date.now(),step=Math.max(0,Math.floor((now-v8LastTick)/1000));
+ if(step>0)v8LastTick+=step*1000;
+ let redraw=false;
+ if(S.focusRun&&S.focus>0&&step>0){S.focus=Math.max(0,S.focus-step);redraw=S.screen==='focus';if(S.focus===0){if(S.focusPhase==='study')completeFocus();else completeBreak();redraw=true}}
+ if(S.countRun&&S.count>0&&step>0){S.count=Math.max(0,S.count-step);redraw=redraw||S.screen==='timer';if(S.count===0)S.countRun=false}
+ if(S.swRun&&step>0){S.sw+=step;redraw=redraw||S.screen==='stopwatch'}
+ const minute=new Date().getMinutes();
+ if(minute!==v8ClockMinute){v8ClockMinute=minute;if(S.screen==='home')redraw=true}
+ if(redraw)render();
+ mobileForegroundAlarm();
+},1000);
+$('reviewBtn').onclick=()=>{$('review').classList.toggle('open');S.reviewMode=$('review').classList.contains('open');$('reviewBtn').textContent=S.reviewMode?'목록 닫기':'화면 목록';render()};
+$('resetBtn').onclick=()=>location.reload();
+$('fullBtn').onclick=()=>{const el=document.querySelector('.device-shell');if(document.fullscreenElement)document.exitFullscreen();else el.requestFullscreen?.()};
+$('review').innerHTML=screenOrder.map(x=>'<button data-screen="'+x+'">'+labels[x]+'</button>').join('');
+render();
+})();
+</script>
+<div id="rotate-warning" role="status"><div class="rotate-inner">
+<div class="rotate-icon">↻</div><h2>포케독은 가로 화면이 좋아!</h2>
+<p>원래 V10의 포켓몬·알람·이스터에그 화면을 그대로 담았어.<br>휴대폰을 가로로 돌려서 이용해 줘.</p>
+</div></div>
+<button type="button" id="mobile-install" hidden aria-label="포케독 설치">설치</button>
+<script>
+(()=>{let deferred=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;const b=document.getElementById('mobile-install');if(b)b.hidden=false;});
+document.getElementById('mobile-install').addEventListener('click',async()=>{
+ if(!deferred)return;deferred.prompt();await deferred.userChoice;deferred=null;document.getElementById('mobile-install').hidden=true;
+});
+if('serviceWorker' in navigator && location.protocol==='https:')window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+})();
+</script>
+</body>
+</html>
