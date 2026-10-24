@@ -1,0 +1,35 @@
+id,item,nominal_mm_or_V,accept,measured_1,measured_2,measured_3,mean,pass_fail,photo,note
+G1-M1,glass OD,46.00,45.85-46.15,,,,,,G1-P1,
+G1-M2,glass front to standoff end,10.22,10.00-10.45,,,,,,G1-P5,
+G1-M3,glass front to header pin tips,10.70,10.40-11.00,,,,,,G1-P5,
+G1-M4a,standoff spacing long,31.50,31.30-31.70,,,,,,G1-P2,
+G1-M4b,standoff spacing short,23.20,23.00-23.40,,,,,,G1-P2,
+G1-M5a,PCB max diameter,43.5,43.3-43.7,,,,,,G1-P2,
+G1-M5b,PMMA frame diameter,45.5,45.3-45.7,,,,,,G1-P2,
+G1-M6a,J1 header body length,9.2,record,,,,,,G1-P3,which header is J1:
+G1-M6b,J1 header end to key gap (both ends),>=0.35,>=0.25,,,,,,G1-P4,
+G1-M7a,4090 PCB WxD,20.32x13.97,+/-0.15,,,,,,G1-P7,silkscreen revision:
+G1-M7b,4090 hole spacing,15.24,+/-0.15,,,,,,G1-P7,
+G1-M7c,4090 connector protrusion past PCB edge,0.23,0.0-0.5,,,,,,G1-P7,
+G1-M7d,4090 connector height above PCB,3.26,+/-0.15,,,,,,G1-P7,
+G1-E1,idle current own USB-C,<250 mA,<250 mA,,,,,,,
+G1-E2a,J1-4 to J1-6,5.0 V,4.75-5.25 V,,,,,,,
+G1-E2b,J3-1 to J3-7,3.3 V,3.25-3.35 V,,,,,,,
+G1-E3,J2-1 to J2-2 (no cell),~3.0-3.15 V,record,,,,,,G1-P6,
+G1-E4,boot log panel id / touch id,0x86 or 0xff / vendor 0x11,present,,,,,,,
+G1-E5,UI upright with USB-C down,upright,upright,,,,,,G1-P8,rotation flag:
+G1-E6,touch 5-point error,<=15 px,<=15 px,,,,,,,
+G1-E7,external port: enumerate + 10x read_mac + flash; VCC log,>=4.0 V,all pass,,,,,,,cable length:
+G1-E8,buzzer mean current / audible 1 m / boot-silent 10x,<=60 mA,all pass,,,,,,,
+G1-E9,Android pairing + partner change + time sync,ok,ok,,,,,,,phone model:
+G2-K1a,bezel OD,58.0,57.75-58.25,,,,,,,
+G2-K1b,bezel pocket ID,47.0,>=glass+0.6,,,,,,,
+G2-K1c,window D,37.6,37.35-37.85,,,,,,,
+G2-K4,glass to lip gap (3 places),0.6,0.3-0.9,,,,,,,
+G2-K5,black border L/R/T/B difference,0,<=0.3,,,,,,G2-P1,
+G2-K6,edge touch 8 points,8/8,8/8,,,,,,,
+G2-K7,0.30 feeler at 4 points in opening coupon,pass,4/4,,,,,,,
+G2-K8,USB plug 5x straight + 5x overmolded,pass,10/10,,,,,,G2-P2,
+G2-K9a,joint radial play,<=0.6,<=0.6,,,,,,G2-P3,
+G2-K9b,outer step belt/shell,<=0.2,<=0.2,,,,,,G2-P3,
+G2-K11,button seam gap 4 places / visual at 50 cm,0.6,0.3-0.9 and max-min <= 0.4,,,,,,G2-P4,

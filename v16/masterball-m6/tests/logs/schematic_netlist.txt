@@ -1,0 +1,12 @@
+C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\e5703c39-80f0-418a-b2aa-c03f2c0a3466\scratchpad\venv\Lib\site-packages\fitz\__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  warnings.warn(
+PASS J1-4 = USB_5V = Type-C VBUS = ETA6098 VIN: labels=['USB_5V'] mates_ok=True
+PASS J1-6 = GND: labels=['GND'] mates_ok=True
+PASS J1-1 = U_P = Type-C DP1/DP2, before 22R R19: labels=['U_P'] mates_ok=True
+PASS J1-3 = U_N = Type-C DN1/DN2, before 22R R18: labels=['U_N'] mates_ok=True
+PASS J1-8 = GPIO16 (ESP32-S3R8 pin 22): labels=['IO16'] mates_ok=True
+PASS J1-2 = VBAT (must stay unconnected in M6): labels=['VBAT'] mates_ok=True
+PASS J2-2 = GND: labels=['GND'] mates_ok=True
+PASS J7-1 = VBAT (battery header, empty in M6): labels=['VBAT'] mates_ok=True
+PASS J2-1 = PCF85063 VDD = cathode of D1 (charged from 3V3 through B5819)
+PASS []
