@@ -12,10 +12,10 @@
   <rect x="250" y="90" width="210" height="190" rx="10" fill="#e7f0fa" stroke="#1f6fb2"/>
   <text x="264" y="114" font-weight="700">USB-C 브레이크아웃</text>
   <text x="264" y="134" fill="#555">Adafruit 4090 (CC 5.1 kΩ×2 내장)</text>
-  <text x="264" y="154" fill="#555">하단 후면 포트 블록, M2.5×8 ×2</text>
+  <text x="264" y="154" fill="#555">CC1·CC2 5.1 kΩ 온보드(미배선), PT M2.5×8 ×2</text>
   <g font-family="Consolas, monospace" font-size="13">
-    <text x="420" y="186" text-anchor="end">VBUS</text><text x="420" y="212" text-anchor="end">GND</text>
-    <text x="420" y="238" text-anchor="end">D+</text><text x="420" y="262" text-anchor="end">D−</text>
+    <text x="440" y="186" text-anchor="end">JP1-2 VBUS</text><text x="440" y="212" text-anchor="end">JP1-1 GND</text>
+    <text x="440" y="238" text-anchor="end">JP1-6 D+</text><text x="440" y="262" text-anchor="end">JP1-5 D−</text>
   </g>
 
   <!-- PTC -->
@@ -58,14 +58,14 @@
 
   <!-- buzzer driver -->
   <rect x="250" y="380" width="430" height="220" rx="10" fill="#fdf1f6" stroke="#b03a78"/>
-  <text x="264" y="404" font-weight="700">부저 구동 (소형 만능기판 20×15 mm)</text>
+  <text x="264" y="404" font-weight="700">부저 구동: AO3400A(SOT-23→DIP 변환기판), 만능기판 24×18 mm</text>
   <path d="M760 302 H700 V469 H600" stroke="#c9a400" stroke-width="2" fill="none"/>
   <text x="706" y="440" font-size="12" fill="#806800">IO16</text>
-  <rect x="540" y="458" width="60" height="22" fill="#fff" stroke="#333"/><text x="570" y="474" text-anchor="middle" font-size="12">470 Ω</text>
+  <rect x="540" y="458" width="60" height="22" fill="#fff" stroke="#333"/><text x="570" y="474" text-anchor="middle" font-size="12">100 Ω</text>
   <path d="M540 469 H496" stroke="#333" stroke-width="2" fill="none"/>
-  <circle cx="470" cy="469" r="26" fill="#fff" stroke="#333"/><text x="470" y="473" text-anchor="middle" font-size="11">2N3904</text>
-  <path d="M470 495 V560 H330" stroke="#111" stroke-width="2" fill="none"/><text x="338" y="552" font-size="12">E → GND (W2에서 분기)</text>
-  <rect x="505" y="520" width="22" height="50" fill="#fff" stroke="#333"/><text x="540" y="550" font-size="12">100 kΩ (B→GND)</text>
+  <circle cx="470" cy="469" r="30" fill="#fff" stroke="#333"/><text x="470" y="473" text-anchor="middle" font-size="11">AO3400A</text>
+  <path d="M470 495 V560 H330" stroke="#111" stroke-width="2" fill="none"/><text x="338" y="552" font-size="12">S → GND (W2에서 분기)</text>
+  <rect x="505" y="520" width="22" height="50" fill="#fff" stroke="#333"/><text x="540" y="550" font-size="12">100 kΩ (G→S/GND)</text>
   <path d="M470 443 V420 H392" stroke="#333" stroke-width="2" fill="none"/>
   <circle cx="370" cy="420" r="22" fill="#fff" stroke="#b03a78"/><text x="370" y="424" text-anchor="middle" font-size="11">BZ</text>
   <text x="300" y="462" font-size="12">WT-1205 (5 V, 47 Ω)</text>

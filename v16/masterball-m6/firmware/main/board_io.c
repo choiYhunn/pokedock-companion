@@ -59,6 +59,10 @@ bool board_touch_read(uint16_t *x, uint16_t *y) {
   uint16_t tx = (uint16_t)(((buf[0] & 0x0F) << 8) | buf[1]), ty = (uint16_t)(((buf[2] & 0x0F) << 8) | buf[3]);
   *x = tx >= PD_LCD_RES ? PD_LCD_RES - 1 : tx;
   *y = ty >= PD_LCD_RES ? PD_LCD_RES - 1 : ty;
+  static int64_t s_last_us;
+  const int64_t now_us = esp_timer_get_time();
+  if (now_us - s_last_us > 300000) ESP_LOGI(TAG, "touch raw x=%u y=%u", *x, *y);  // G1-E6 corner check
+  s_last_us = now_us;
 #if CONFIG_PD_SCREEN_ROTATION_180
   *x = PD_LCD_RES - 1 - *x;
   *y = PD_LCD_RES - 1 - *y;
@@ -90,7 +94,7 @@ int board_vcc_mv(void) {
   return acc / 8 * 3;  // R12 200k / R17 100k divider
 }
 
-// ---- buzzer: passive transducer, NPN low-side switch, LEDC square wave ----------------------------
+// ---- buzzer: passive transducer, AO3400A low-side switch (logic-level N-MOSFET), LEDC square wave ---
 typedef struct {
   uint16_t hz, ms;
 } note_t;
@@ -136,7 +140,7 @@ static void step(void *arg) {
 }
 
 void buzzer_init(void) {
-  // Hold the NPN base low before LEDC takes the pin (external 100k pull-down also fitted).
+  // Hold the MOSFET gate low before LEDC takes the pin (external 100k gate pull-down also fitted).
   gpio_set_direction(PD_PIN_BUZZER, GPIO_MODE_OUTPUT);
   gpio_set_level(PD_PIN_BUZZER, 0);
   const ledc_timer_config_t t = {.speed_mode = LEDC_LOW_SPEED_MODE, .duty_resolution = LEDC_TIMER_10_BIT,

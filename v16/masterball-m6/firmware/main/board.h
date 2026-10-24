@@ -24,7 +24,8 @@ extern "C" {
 #define PD_PIN_I2C_SCL 48
 #define PD_PIN_RTC_INT 15
 #define PD_PIN_VCC_ADC 4   // ADC1_CH3, 200k/100k divider from VCC (post power-path, NOT the battery)
-// M6 harness on header J1 (1.27 mm 2x7): pin 8 = IO16 -> 470R -> 2N3904 -> passive buzzer (Soberton WT-1205) on USB_5V
+// M6 harness on header J1 (1.27 mm 2x7): pin 8 = IO16 -> 100R -> AO3400A gate (100k to GND) -> low-side switch
+// for the passive buzzer (Soberton WT-1205) on USB_5V; 1N4148 across the coil
 #define PD_PIN_BUZZER 16
 
 #define PD_LCD_RES 466

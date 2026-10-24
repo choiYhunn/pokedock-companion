@@ -22,9 +22,11 @@ namespace pokedock {
 static constexpr size_t kMaxCommandBytes = 180;
 static constexpr size_t kMaxMessageBytes = 90;  // ~30 Hangul syllables
 static constexpr const char *kFirmwareVersion = "m6-0.2.0";
-// VCC (after PTC + MBR230 Schottky) can be ~4.0 V on a healthy 4.75 V adapter with a long cable;
-// the MP1605 3.3 V buck still regulates above ~3.6 V, so warn only below 3.9 V.
-static constexpr int kUsbLowMv = 3900;
+// VCC (after PTC + MBR230 Schottky) can be ~4.0 V on a healthy 4.75 V adapter with a long cable, and
+// the ADC + divider read it within about +/-0.17 V. The MP1605 3.3 V buck still regulates far below,
+// so the warning trips only when a 30 s average falls under 3.80 V and clears above 3.95 V.
+static constexpr int kUsbLowMv = 3800;
+static constexpr int kUsbOkMv = 3950;
 
 class DeviceEnv {
  public:

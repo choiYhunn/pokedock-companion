@@ -131,7 +131,7 @@ with sync_playwright() as p:
     E("PD.advance(24*3600*1000)")
     check("fires again next day", E("PD.S.ringing"))
     E("PD.longPress()")
-    E("PD.S.usb=3800; PD.render()")
+    E("PD.S.usb=3700; PD.render()")
     check("weak USB pill", "전원 약함" in pg.inner_text("#dev"))
     shot("power_warning")
     E("PD.S.usb=4850; PD.render()")

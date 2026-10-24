@@ -237,10 +237,19 @@ void menu_screen_off() {
 // ---- main loop -----------------------------------------------------------------------------------
 void main_loop(void *) {
   int64_t last_vcc = -60000;
+  int vcc_hist[6] = {5000, 5000, 5000, 5000, 5000, 5000};
+  int vcc_i = 0;
+  bool usb_low = false;
   for (;;) {
     const int64_t now = mono_ms();
-    if (now - last_vcc > 30000) {
-      g_vcc_mv = board_vcc_mv();
+    if (now - last_vcc > 5000) {  // 6 samples x 5 s = 30 s moving average, with hysteresis
+      vcc_hist[vcc_i++ % 6] = board_vcc_mv();
+      int sum = 0;
+      for (int s : vcc_hist) sum += s;
+      g_vcc_mv = sum / 6;
+      if (vcc_i % 6 == 0) ESP_LOGI(TAG, "VCC avg %d mV (warn < %d, clear > %d)", g_vcc_mv.load(), kUsbLowMv, kUsbOkMv);
+      if (g_vcc_mv < kUsbLowMv) usb_low = true;
+      else if (g_vcc_mv > kUsbOkMv) usb_low = false;
       last_vcc = now;
     }
     ui::View v;
@@ -266,7 +275,7 @@ void main_loop(void *) {
       v.partner = g_core.partner();
       v.brightness = g_core.brightness();
       v.preset_min = kPresets[g_set.preset_idx];
-      v.usb_low = g_vcc_mv < kUsbLowMv;
+      v.usb_low = usb_low;
       v.ble_connected = g_ble_connected;
       v.passkey = g_passkey;
     }

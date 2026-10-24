@@ -272,6 +272,12 @@ def purchased():
         x, y = polar_xy(P.COLUMN_R_POS, ang)
         env[f"m3x50_{i}"] = cyl_z(1.5, P.HEAD_SEAT_Z, P.HEAD_SEAT_Z + 50, x, y) + cyl_z(2.75, P.HEAD_SEAT_Z - 3, P.HEAD_SEAT_Z, x, y)
         env[f"m3_insert_{i}"] = cyl_z(2.0, P.BH, P.BH + 5.7, x, y)
+    n = P.unit(P.DRV_AZ_DEG, P.DRV_EL_DEG)
+    pd = Plane(origin=(0, 0, 0), x_dir=V(0, 0, 1).cross(V(*n)).normalized(), z_dir=n)
+    bw, bh, bt = P.DRV_BOARD
+    half_diag = (bw ** 2 + bh ** 2) ** 0.5 / 2
+    c0 = (P.RI ** 2 - half_diag ** 2) ** 0.5 - P.DRV_TAPE  # board back face: corners keep DRV_TAPE to the wall
+    env["buzzer_driver_board"] = local_box(pd, -bw / 2, bw / 2, -bh / 2, bh / 2, c0 - bt, c0)
     d, h = P.WEIGHT_DISC
     env["steel_disc"] = cyl_z(d / 2, P.FLOOR_TOP_Z, P.FLOOR_TOP_Z + h)
     return env

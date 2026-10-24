@@ -118,7 +118,7 @@ function render(){
     const m=absMin();h+=`<div class="lbl clock" data-t="clock">${m<0?'--:--':String(Math.floor(m%1440/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}</div>`;
     h+=spriteHtml();
     if(S.phase==='done')h+=ring(1,6);
-    const st=S.usb<3900?'전원 약함':!S.trusted?'시간 맞춰줘':S.phase==='done'?'수고했어!':'';
+    const st=S.usb<3800?'전원 약함':!S.trusted?'시간 맞춰줘':S.phase==='done'?'수고했어!':'';
     if(st)h+=`<div class="pill" data-t="pill">${st}</div>`;
   }
   h+='</div>';

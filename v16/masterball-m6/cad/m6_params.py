@@ -92,6 +92,10 @@ BUZ_EL_DEG = -15.0
 BUZ_D, BUZ_H = 12.0, 9.5                       # datasheet nominal
 BUZ_TOL = 0.5                                  # datasheet: +/-0.5 mm
 BUZ_FIT = 0.60                                 # radial: d12.5 max part + undersized hole; hot-melt dab
+# buzzer driver perfboard (AO3400A on SOT-23 adapter, 100R, 100k, 1N4148): taped to the lower inner wall
+DRV_AZ_DEG, DRV_EL_DEG = -110.0, -28.0
+DRV_BOARD = (24.0, 18.0, 10.0)                 # perfboard x, y, height incl. parts and 1.6 mm board
+DRV_TAPE = 1.0                                 # minimum gap to the curved wall (2 mm foam tape compresses)
 
 # --- decoration ---------------------------------------------------------------------------
 LOBE_AZ = 42.0                                 # from front (-y) toward +/-x
