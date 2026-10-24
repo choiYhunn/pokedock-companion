@@ -71,7 +71,8 @@ run ui_sim_probe "$PY" -X utf8 tests/ui_sim_probe.py "$LOG/ui"
 
 # ESP-IDF target build (WSL on Windows, native elsewhere)
 if command -v wsl.exe >/dev/null 2>&1; then
-  WP=$(MSYS_NO_PATHCONV=1 wsl.exe -d Ubuntu-22.04 wslpath -a "$(cygpath -w "$(git rev-parse --show-toplevel)")" | tr -d '\r')
+  # C:/Users/... or /c/Users/... -> /mnt/c/Users/... (wslpath output is mangled for non-ASCII paths)
+  WP=$(git rev-parse --show-toplevel | sed -E 's#^([A-Za-z]):/#/\1/#; s#^/([a-zA-Z])/#/mnt/\L\1/#')
   run firmware_build env MSYS_NO_PATHCONV=1 wsl.exe -d Ubuntu-22.04 -- bash -lc "cd '$WP' && bash v16/masterball-m6/tools/idf_build_wsl.sh"
 elif [ -d "$HOME/m6idf/esp-idf" ]; then
   run firmware_build bash tools/idf_build_wsl.sh
