@@ -1,0 +1,66 @@
+PASS untrusted clock shows --:--
+PASS untrusted clock pill
+PASS home clock 08:20
+PASS long press starts focus
+PASS F1 shows 25 + 분 남음
+PASS 24:59 => still 25 minutes (ceil)
+PASS remaining after 15:01 ~ 599 s
+PASS last 10 min switches to MM:SS
+PASS pause freezes
+PASS resume continues
+PASS menu tap does not cancel running focus
+PASS completion once
+PASS no second completion
+PASS alarm not early
+PASS daily alarm fires at its minute
+PASS tap = snooze
+PASS snooze re-rings after 5 min
+PASS ring auto-snoozes after 2 min
+PASS long press dismisses
+PASS fires again next day
+PASS weak USB pill
+PASS 5 taps show hidden message
+PASS screen off after 10 min idle
+PASS first touch only wakes
+PASS no JS errors
+home_unsynced  --:--             80.0px ink  3.47mm 50cm  23.9' clip  -22.8  OK
+home_unsynced  그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -127.0  OK
+home_unsynced  시간 맞춰줘            48.0px ink  3.47mm 50cm  23.9' clip  -27.5  OK
+home           08:20             80.0px ink  4.65mm 50cm  32.0' clip   -5.6  OK
+home           그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -127.2  OK
+focus_minutes  25               210.0px ink 12.07mm 50cm  83.0' clip  -40.4  OK
+focus_minutes  분 남음              48.0px ink  3.39mm 50cm  23.3' clip  -80.6  OK
+focus_mmss     09:59            140.0px ink  8.12mm 50cm  55.8' clip  -12.6  OK
+focus_mmss     집중                48.0px ink  3.47mm 50cm  23.9' clip  -89.3  OK
+menu           09:57            140.0px ink  8.12mm 50cm  55.8' clip  -12.1  OK
+menu           집중                48.0px ink  3.47mm 50cm  23.9' clip  -88.0  OK
+menu           뒤로                40.0px ink  2.84mm 50cm  19.5' clip  -33.0  OK
+menu           타이머               40.0px ink  2.84mm 50cm  19.5' clip  -41.8  OK
+menu           길게: 그만            40.0px ink  2.84mm 50cm  19.5' clip  -43.0  OK
+menu           알람                40.0px ink  2.84mm 50cm  19.5' clip  -54.4  OK
+menu           꺼짐                40.0px ink  2.84mm 50cm  19.5' clip  -82.2  OK
+menu           밝기                40.0px ink  2.84mm 50cm  19.5' clip  -95.4  OK
+menu           40                40.0px ink  2.37mm 50cm  16.3' clip  -79.3  OK
+menu           파트너               40.0px ink  2.84mm 50cm  19.5' clip  -79.3  OK
+menu           팬텀                40.0px ink  2.84mm 50cm  19.5' clip  -72.9  OK
+menu           페어링               40.0px ink  2.84mm 50cm  19.5' clip  -34.1  OK
+focus_done     08:58             80.0px ink  4.65mm 50cm  32.0' clip   -9.0  OK
+focus_done     그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -125.0  OK
+focus_done     수고했어!             48.0px ink  3.47mm 50cm  23.9' clip  -34.7  OK
+alarm          일어날 시간!           48.0px ink  3.47mm 50cm  23.9' clip  -23.5  OK
+alarm          09:00            120.0px ink  6.94mm 50cm  47.7' clip  -34.5  OK
+alarm          탭: 5분 뒤           48.2px ink  3.48mm 50cm  23.9' clip  -77.5  OK
+alarm          길게: 끄기            48.2px ink  3.48mm 50cm  23.9' clip  -30.9  OK
+power_warning  09:07             80.0px ink  4.65mm 50cm  32.0' clip   -6.3  OK
+power_warning  그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -124.4  OK
+power_warning  전원 약함             48.0px ink  3.47mm 50cm  23.9' clip  -36.4  OK
+message        09:07             80.0px ink  4.65mm 50cm  32.0' clip   -6.3  OK
+message        그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -124.4  OK
+message        오늘도 함께하자          29.8px ink  2.19mm 50cm  15.1' clip -137.0  OK
+pairing        09:07             80.0px ink  4.65mm 50cm  32.0' clip   -6.3  OK
+pairing        그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -124.4  OK
+pairing        페어링               48.0px ink  3.47mm 50cm  23.9' clip  -72.4  OK
+pairing        634989            80.0px ink  4.65mm 50cm  32.0' clip  -70.1  OK
+pairing        번호를 앱에 입력         40.0px ink  2.84mm 50cm  19.5' clip  -41.1  OK
+pretendard loaded: True
+VERDICT PASS []

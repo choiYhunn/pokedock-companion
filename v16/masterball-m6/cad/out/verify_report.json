@@ -1,0 +1,646 @@
+{
+ "checks": {
+  "mesh_validity": {
+   "belt_black": {
+    "watertight": true,
+    "volume": 8998.7
+   },
+   "bezel_black": {
+    "watertight": true,
+    "volume": 10960.7
+   },
+   "display_plate_petg": {
+    "watertight": true,
+    "volume": 6014.6
+   },
+   "lobe_left_pink": {
+    "watertight": true,
+    "volume": 2061.4
+   },
+   "lobe_right_pink": {
+    "watertight": true,
+    "volume": 2061.4
+   },
+   "lower_shell_ivory": {
+    "watertight": true,
+    "volume": 100411.6
+   },
+   "m_inlay_white": {
+    "watertight": true,
+    "volume": 315.6
+   },
+   "upper_shell_purple": {
+    "watertight": true,
+    "volume": 84546.5
+   }
+  },
+  "interference": [
+   {
+    "a": "lower_shell_ivory",
+    "b": "usb_screw_l",
+    "overlap_mm3": 12.499,
+    "designed_contact": "engaged"
+   },
+   {
+    "a": "lower_shell_ivory",
+    "b": "usb_screw_r",
+    "overlap_mm3": 12.499,
+    "designed_contact": "engaged"
+   },
+   {
+    "a": "m3_insert_0",
+    "b": "m3x50_0",
+    "overlap_mm3": 24.699,
+    "designed_contact": "engaged"
+   },
+   {
+    "a": "m3_insert_1",
+    "b": "m3x50_1",
+    "overlap_mm3": 24.699,
+    "designed_contact": "engaged"
+   },
+   {
+    "a": "m3_insert_2",
+    "b": "m3x50_2",
+    "overlap_mm3": 24.699,
+    "designed_contact": "engaged"
+   },
+   {
+    "a": "socket_left",
+    "b": "board_286_1_27MM-2X7PIN-MALE",
+    "overlap_mm3": 97.211,
+    "designed_contact": "engaged"
+   },
+   {
+    "a": "socket_right",
+    "b": "board_285_1_27MM-2X7PIN-MALE",
+    "overlap_mm3": 97.211,
+    "designed_contact": "engaged"
+   }
+  ],
+  "fastener_engagement": [
+   {
+    "check": "M3 insert wall in upper boss",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M3 screw wall in lower column",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M3 head seat annulus",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M3 insert wall in upper boss",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M3 screw wall in lower column",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M3 head seat annulus",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M3 insert wall in upper boss",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M3 screw wall in lower column",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M3 head seat annulus",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M2 insert top_l wall in bezel",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "plate land top_l",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M2 insert top_r wall in bezel",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "plate land top_r",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M2 insert bot_l wall in bezel",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "plate land bot_l",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "M2 insert bot_r wall in bezel",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "plate land bot_r",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "rib screw land bot_l",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "rib screw land bot_r",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "plate land at standoff (-15.8,-11.6)",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "plate land at standoff (-15.8,+11.6)",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "plate land at standoff (+15.8,-11.6)",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "plate land at standoff (+15.8,+11.6)",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "USB M2.5 pilot wall in block x=-7.62",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "USB M2.5 pilot wall in block x=+7.62",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "lobe_left_pink screw boss wall in upper",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "lobe_left_pink pilot wall in lobe",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "lobe_right_pink screw boss wall in upper",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "lobe_right_pink pilot wall in lobe",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "buzzer pocket wall",
+    "material_fraction": 1.0
+   },
+   {
+    "check": "plate hole vs board standoff (-15.75,-11.60)",
+    "offset_mm": 0.0
+   },
+   {
+    "check": "plate hole vs board standoff (-15.75,+11.60)",
+    "offset_mm": 0.0
+   },
+   {
+    "check": "plate hole vs board standoff (+15.75,-11.60)",
+    "offset_mm": 0.1
+   },
+   {
+    "check": "plate hole vs board standoff (+15.75,+11.60)",
+    "offset_mm": 0.0
+   }
+  ],
+  "clearance_mmc": [
+   {
+    "a": "bezel_black",
+    "b": "upper_shell_purple",
+    "why": "button in upper opening",
+    "min_clearance_mm": 0.33,
+    "mmc_required_mm": 0.3,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "lower_shell_ivory",
+    "why": "button in lower opening",
+    "min_clearance_mm": 0.33,
+    "mmc_required_mm": 0.3,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "belt_black",
+    "why": "button in belt gap",
+    "min_clearance_mm": 0.34,
+    "mmc_required_mm": 0.3,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "upper_shell_purple",
+    "why": "upper backstop rib gap (foam)",
+    "min_clearance_mm": 0.4,
+    "mmc_required_mm": 0.3,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "belt_black",
+    "b": "lower_shell_ivory",
+    "why": "belt on spigot",
+    "min_clearance_mm": -0.0,
+    "mmc_required_mm": 0.3,
+    "designed_contact": true,
+    "mmc_ok": true
+   },
+   {
+    "a": "upper_shell_purple",
+    "b": "lower_shell_ivory",
+    "why": "upper counterbore on spigot / boss gap",
+    "min_clearance_mm": 0.384,
+    "mmc_required_mm": 0.3,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "socket_left",
+    "b": "display_plate_petg",
+    "why": "J socket through plate window",
+    "min_clearance_mm": 0.85,
+    "mmc_required_mm": 0.35,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "socket_right",
+    "b": "display_plate_petg",
+    "why": "J socket through plate window",
+    "min_clearance_mm": 0.85,
+    "mmc_required_mm": 0.35,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "socket_left",
+    "b": "lower_shell_ivory",
+    "why": "socket vs lower rib",
+    "min_clearance_mm": 0.542,
+    "mmc_required_mm": 0.35,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "socket_right",
+    "b": "upper_shell_purple",
+    "why": "socket vs upper rib",
+    "min_clearance_mm": 0.543,
+    "mmc_required_mm": 0.35,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "buzzer",
+    "b": "lower_shell_ivory",
+    "why": "buzzer pocket",
+    "min_clearance_mm": 0.05,
+    "mmc_required_mm": 0.35,
+    "designed_contact": true,
+    "mmc_ok": true
+   },
+   {
+    "a": "lobe_left_pink",
+    "b": "m_inlay_white",
+    "why": "decor spacing",
+    "min_clearance_mm": 11.113,
+    "mmc_required_mm": 0.3,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "m_inlay_white",
+    "b": "upper_shell_purple",
+    "why": "inlay pocket",
+    "min_clearance_mm": -0.0,
+    "mmc_required_mm": 0.3,
+    "designed_contact": true,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_012_PITCH1MM-4PIN-SMT-HORIZONTAL",
+    "why": "plate vs board part",
+    "min_clearance_mm": 0.97,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_012_PITCH1MM-4PIN-SMT-HORIZONTAL",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 1.543,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_013_PITCH1MM-4PIN-SMT-HORIZONTAL",
+    "why": "plate vs board part",
+    "min_clearance_mm": 0.97,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_013_PITCH1MM-4PIN-SMT-HORIZONTAL",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 1.366,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_279_TYPE-C_16PIN-9X3X7_3",
+    "why": "plate vs board part",
+    "min_clearance_mm": 0.77,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_279_TYPE-C_16PIN-9X3X7_3",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 0.345,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_280_PITCH1MM-4PIN-SMT-HORIZONTAL",
+    "why": "plate vs board part",
+    "min_clearance_mm": 0.97,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_280_PITCH1MM-4PIN-SMT-HORIZONTAL",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 1.551,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_281_PITCH1MM-4PIN-SMT-HORIZONTAL",
+    "why": "plate vs board part",
+    "min_clearance_mm": 0.97,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_281_PITCH1MM-4PIN-SMT-HORIZONTAL",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 1.551,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_282_MICRO_SD_SOCKET_PU",
+    "why": "plate vs board part",
+    "min_clearance_mm": 4.776,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_282_MICRO_SD_SOCKET_PU",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 1.451,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_283_MICRO_SD_SOCKET_PU",
+    "why": "plate vs board part",
+    "min_clearance_mm": 5.17,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_283_MICRO_SD_SOCKET_PU",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 2.773,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_285_1_27MM-2X7PIN-MALE",
+    "why": "plate vs board part",
+    "min_clearance_mm": 1.65,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_285_1_27MM-2X7PIN-MALE",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 4.342,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_286_1_27MM-2X7PIN-MALE",
+    "why": "plate vs board part",
+    "min_clearance_mm": 1.65,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_286_1_27MM-2X7PIN-MALE",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 4.342,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_287_HP1_25MM-2P-SMT-HORIZONTAL",
+    "why": "plate vs board part",
+    "min_clearance_mm": 0.42,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_287_HP1_25MM-2P-SMT-HORIZONTAL",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 5.375,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_293_SWITCHER-4_5X3_3XH3_4",
+    "why": "plate vs board part",
+    "min_clearance_mm": 0.72,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_293_SWITCHER-4_5X3_3XH3_4",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 2.328,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   }
+  ],
+  "insertion_paths": [
+   {
+    "step": "1 display module into bezel pocket from behind (+y -> final)",
+    "ok": true,
+    "hits": []
+   },
+   {
+    "step": "2 USB-C breakout slid outward into port block",
+    "ok": true,
+    "hits": []
+   },
+   {
+    "step": "3 buzzer pushed into pocket",
+    "ok": true,
+    "hits": []
+   },
+   {
+    "step": "4 display sub-assembly lowered into lower shell",
+    "ok": true,
+    "hits": []
+   },
+   {
+    "step": "5 belt lowered over spigot",
+    "ok": true,
+    "hits": []
+   },
+   {
+    "step": "6 upper shell (with lobes + M) lowered",
+    "ok": true,
+    "hits": []
+   },
+   {
+    "step": "7 three M3x50 screws from the base",
+    "ok": true,
+    "hits": []
+   },
+   {
+    "step": "8 lobe left onto seat",
+    "ok": true,
+    "hits": []
+   },
+   {
+    "step": "8 lobe right onto seat",
+    "ok": true,
+    "hits": []
+   }
+  ],
+  "mass_cog": {
+   "without_disc": {
+    "mass_g": 287.5,
+    "cog_mm": [
+     -0.36,
+     -8.42,
+     -1.5
+    ],
+    "tip_angle_deg": 16.4,
+    "push_to_tip_N": 1.55,
+    "push_to_slide_N_mu0.8": 2.26,
+    "push_to_slide_N_mu0.3": 0.85
+   },
+   "with_steel_disc": {
+    "mass_g": 346.7,
+    "cog_mm": [
+     -0.3,
+     -6.98,
+     -10.63
+    ],
+    "tip_angle_deg": 20.4,
+    "push_to_tip_N": 1.8,
+    "push_to_slide_N_mu0.8": 2.72,
+    "push_to_slide_N_mu0.3": 1.02
+   }
+  },
+  "print_overhang": {
+   "upper_shell_purple": {
+    "support_area_total_mm2": 8630.8,
+    "support_area_on_cosmetic_faces_mm2": 0.0
+   },
+   "lower_shell_ivory": {
+    "support_area_total_mm2": 1314.5,
+    "support_area_on_cosmetic_faces_mm2": 0.0
+   },
+   "belt_black": {
+    "support_area_total_mm2": 0.0,
+    "support_area_on_cosmetic_faces_mm2": 0.0
+   },
+   "bezel_black": {
+    "support_area_total_mm2": 626.8,
+    "support_area_on_cosmetic_faces_mm2": 0.0
+   },
+   "display_plate_petg": {
+    "support_area_total_mm2": 0.0,
+    "support_area_on_cosmetic_faces_mm2": 0.0
+   },
+   "lobe_left_pink": {
+    "support_area_total_mm2": 373.6,
+    "support_area_on_cosmetic_faces_mm2": 2.0
+   },
+   "lobe_right_pink": {
+    "support_area_total_mm2": 373.6,
+    "support_area_on_cosmetic_faces_mm2": 2.0
+   },
+   "m_inlay_white": {
+    "support_area_total_mm2": 0.0,
+    "support_area_on_cosmetic_faces_mm2": 0.0
+   }
+  }
+ },
+ "fail": [],
+ "verdict": "PASS"
+}

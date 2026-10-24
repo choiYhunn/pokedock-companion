@@ -1,0 +1,114 @@
+{
+ "upper_shell_purple": {
+  "volume_mm3": 84845.6,
+  "valid": true,
+  "bbox": [
+   -68.91,
+   -62.45,
+   3.5,
+   68.91,
+   68.91,
+   69.0
+  ],
+  "stl_watertight": true,
+  "stl_faces": 10324
+ },
+ "lower_shell_ivory": {
+  "volume_mm3": 100807.1,
+  "valid": true,
+  "bbox": [
+   -68.91,
+   -62.45,
+   -61.0,
+   68.91,
+   68.91,
+   7.5
+  ],
+  "stl_watertight": true,
+  "stl_faces": 12056
+ },
+ "belt_black": {
+  "volume_mm3": 9158.5,
+  "valid": true,
+  "bbox": [
+   -69.0,
+   -62.53,
+   -3.5,
+   69.0,
+   69.0,
+   3.5
+  ],
+  "stl_watertight": true,
+  "stl_faces": 616
+ },
+ "bezel_black": {
+  "volume_mm3": 10970.9,
+  "valid": true,
+  "bbox": [
+   -29.0,
+   -71.4,
+   -29.0,
+   29.0,
+   -59.08,
+   29.0
+  ],
+  "stl_watertight": true,
+  "stl_faces": 3864
+ },
+ "display_plate_petg": {
+  "volume_mm3": 6020.6,
+  "valid": true,
+  "bbox": [
+   -29.0,
+   -59.08,
+   -29.0,
+   29.0,
+   -56.58,
+   29.0
+  ],
+  "stl_watertight": true,
+  "stl_faces": 5644
+ },
+ "lobe_left_pink": {
+  "volume_mm3": 2086.0,
+  "valid": true,
+  "bbox": [
+   -45.09,
+   -48.39,
+   38.44,
+   -23.26,
+   -27.66,
+   54.36
+  ],
+  "stl_watertight": true,
+  "stl_faces": 1862
+ },
+ "lobe_right_pink": {
+  "volume_mm3": 2086.0,
+  "valid": true,
+  "bbox": [
+   23.26,
+   -48.39,
+   38.44,
+   45.09,
+   -27.66,
+   54.36
+  ],
+  "stl_watertight": true,
+  "stl_faces": 1862
+ },
+ "m_inlay_white": {
+  "volume_mm3": 324.2,
+  "valid": true,
+  "bbox": [
+   -12.9,
+   -59.32,
+   33.61,
+   12.9,
+   -48.45,
+   47.67
+  ],
+  "stl_watertight": true,
+  "stl_faces": 482
+ }
+}

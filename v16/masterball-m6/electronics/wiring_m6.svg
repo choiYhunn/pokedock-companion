@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" font-family="Segoe UI, Noto Sans KR, sans-serif" font-size="14">
+  <title>PokéDock M6 wiring (USB 5 V, no main battery)</title>
+  <rect width="1100" height="700" fill="#fbfaf7"/>
+  <text x="24" y="34" font-size="20" font-weight="700" fill="#2c2338">PokéDock M6 배선도 — USB-C 5 V 상시 전원, 메인 배터리 없음</text>
+  <text x="24" y="56" fill="#6b6278">핀 번호는 Waveshare 공식 회로도(J1/J2/J3)와 일치 · tests/harness_check.py 로 자동 대조 · 굵은 선 = 전원</text>
+
+  <!-- adapter + external port -->
+  <rect x="24" y="110" width="170" height="70" rx="10" fill="#efe9f6" stroke="#5b4a7a"/>
+  <text x="38" y="138" font-weight="700">KC 인증 USB 어댑터</text>
+  <text x="38" y="160" fill="#555">5 V ≥ 1 A, USB-C 케이블</text>
+  <line x1="194" y1="145" x2="250" y2="145" stroke="#333" stroke-width="3"/>
+  <rect x="250" y="90" width="210" height="190" rx="10" fill="#e7f0fa" stroke="#1f6fb2"/>
+  <text x="264" y="114" font-weight="700">USB-C 브레이크아웃</text>
+  <text x="264" y="134" fill="#555">Adafruit 4090 (CC 5.1 kΩ×2 내장)</text>
+  <text x="264" y="154" fill="#555">하단 후면 포트 블록, M2.5×8 ×2</text>
+  <g font-family="Consolas, monospace" font-size="13">
+    <text x="420" y="186" text-anchor="end">VBUS</text><text x="420" y="212" text-anchor="end">GND</text>
+    <text x="420" y="238" text-anchor="end">D+</text><text x="420" y="262" text-anchor="end">D−</text>
+  </g>
+
+  <!-- PTC -->
+  <rect x="520" y="170" width="70" height="26" rx="4" fill="#fff4dc" stroke="#b07a00"/>
+  <text x="555" y="188" text-anchor="middle" font-size="12">PTC 0.75 A</text>
+
+  <!-- wires to J1 -->
+  <path d="M460 182 H520" stroke="#d22" stroke-width="3" fill="none"/>
+  <path d="M590 182 H760" stroke="#d22" stroke-width="3" fill="none"/>
+  <path d="M460 208 H760" stroke="#111" stroke-width="3" fill="none"/>
+  <path d="M460 234 C600 234 620 256 760 256" stroke="#1a8a3a" stroke-width="2" fill="none"/>
+  <path d="M460 258 C600 258 620 232 760 280" stroke="#888" stroke-width="2" fill="none"/>
+  <text x="610" y="296" fill="#555" font-size="12">D+/D− 꼬임쌍, 160 mm</text>
+
+  <!-- board -->
+  <rect x="760" y="80" width="316" height="420" rx="14" fill="#eaf5ee" stroke="#2f7a4c"/>
+  <text x="776" y="106" font-weight="700">Waveshare ESP32-S3-Touch-AMOLED-1.43</text>
+  <text x="776" y="126" fill="#555">일반형 SKU 30106 (케이스 없음) · 뒷면 헤더</text>
+  <rect x="776" y="140" width="140" height="186" fill="#fff" stroke="#2f7a4c"/>
+  <text x="846" y="160" text-anchor="middle" font-weight="700">J1 (1.27 2×7)</text>
+  <g font-family="Consolas, monospace" font-size="12">
+    <text x="786" y="186">4 USB_5V ●</text>
+    <text x="786" y="212">6 GND    ●</text>
+    <text x="786" y="258">1 U_P    ●</text>
+    <text x="786" y="282">3 U_N    ●</text>
+    <text x="786" y="306">8 IO16   ●</text>
+    <text x="786" y="322" fill="#999">2 VBAT 미사용</text>
+  </g>
+  <rect x="930" y="140" width="130" height="90" fill="#fff" stroke="#2f7a4c"/>
+  <text x="995" y="160" text-anchor="middle" font-weight="700">J2 RTC (SH1.0)</text>
+  <g font-family="Consolas, monospace" font-size="12"><text x="940" y="184">1 RTC_VDD +</text><text x="940" y="204">2 GND</text></g>
+  <text x="940" y="222" font-size="11" fill="#555">3V3→B5819→VDD (충전됨)</text>
+  <rect x="930" y="240" width="130" height="66" fill="#fff" stroke="#bbb" stroke-dasharray="4 3"/>
+  <text x="995" y="262" text-anchor="middle" fill="#888">J3 미사용</text>
+  <text x="995" y="282" text-anchor="middle" fill="#888">J7 배터리 미사용</text>
+  <text x="776" y="356" fill="#2f7a4c" font-size="13">보드 내부: VCC ADC = GPIO4 (200k/100k)</text>
+  <text x="776" y="376" fill="#2f7a4c" font-size="13">QSPI 9–14, RST 21, I2C 47/48 (터치 0x38, RTC 0x51)</text>
+  <text x="776" y="396" fill="#2f7a4c" font-size="13">보드 USB-C는 내부 정비용(구체 안에서는 꽂을 수 없음)</text>
+  <text x="776" y="416" fill="#2f7a4c" font-size="13">마이크로SD 카드 삽입 금지(베젤 간섭)</text>
+
+  <!-- buzzer driver -->
+  <rect x="250" y="380" width="430" height="220" rx="10" fill="#fdf1f6" stroke="#b03a78"/>
+  <text x="264" y="404" font-weight="700">부저 구동 (소형 만능기판 20×15 mm)</text>
+  <path d="M760 302 H700 V469 H600" stroke="#c9a400" stroke-width="2" fill="none"/>
+  <text x="706" y="440" font-size="12" fill="#806800">IO16</text>
+  <rect x="540" y="458" width="60" height="22" fill="#fff" stroke="#333"/><text x="570" y="474" text-anchor="middle" font-size="12">680 Ω</text>
+  <path d="M540 469 H496" stroke="#333" stroke-width="2" fill="none"/>
+  <circle cx="470" cy="469" r="26" fill="#fff" stroke="#333"/><text x="470" y="473" text-anchor="middle" font-size="11">2N3904</text>
+  <path d="M470 495 V560 H330" stroke="#111" stroke-width="2" fill="none"/><text x="338" y="552" font-size="12">E → GND (W2에서 분기)</text>
+  <rect x="505" y="520" width="22" height="50" fill="#fff" stroke="#333"/><text x="540" y="550" font-size="12">100 kΩ (B→GND)</text>
+  <path d="M470 443 V420 H392" stroke="#333" stroke-width="2" fill="none"/>
+  <circle cx="370" cy="420" r="22" fill="#fff" stroke="#b03a78"/><text x="370" y="424" text-anchor="middle" font-size="11">BZ</text>
+  <text x="300" y="462" font-size="12">12 mm 수동형 5 V</text>
+  <path d="M348 420 H300 V440" stroke="#d22" stroke-width="3" fill="none"/><text x="264" y="580" font-size="12" fill="#d22">BZ + = +5 V (PTC 뒤에서 분기)</text>
+  <text x="264" y="500" font-size="12">1N4148 BZ 병렬 (캐소드 → +5 V)</text>
+
+  <!-- RTC cell -->
+  <rect x="760" y="530" width="316" height="120" rx="10" fill="#f4f4f4" stroke="#777"/>
+  <text x="776" y="554" font-weight="700">선택: RTC 백업 셀</text>
+  <text x="776" y="576" font-size="13">충전식 MS621FE 계열(3 V) + 직렬 1 kΩ → J2-1</text>
+  <text x="776" y="596" font-size="13" fill="#b00">CR 일차전지 절대 금지(3V3로 충전됨)</text>
+  <text x="776" y="616" font-size="13">연결 전 J2-1 전압 실측(약 3.0–3.15 V 예상)</text>
+  <text x="776" y="636" font-size="13">셀 데이터시트 충전 전압 범위와 대조 필수</text>
+  <text x="24" y="680" fill="#6b6278" font-size="12">검증: 회로도·펌웨어 핀 정의 자동 대조 PASS. 실기 전류·USB 데이터 통신·부저 음량은 미실측.</text>
+</svg>
