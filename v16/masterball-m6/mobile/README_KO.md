@@ -5,13 +5,13 @@
 | 파일 | 역할 | 검증 |
 |---|---|---|
 | `pokedock_ble_protocol.mjs` | 명령 인코딩, 입력 검증, ACK·상태 디코딩 (기기 `core/protocol.hpp`와 같은 규격) | `tests/ble_e2e_bridge_test.mjs` |
-| `pokedock_ble_client.mjs` | 세션 ID, seq, ACK 대기(2초), 재시도 3회(같은 seq), 재연결 백오프, 상태 재동기화 | 위 E2E 12/12 PASS (시뮬레이션 링크) |
+| `pokedock_ble_client.mjs` | 세션 ID, seq, ACK 대기(2초), 재시도 3회(같은 seq), 재연결 백오프, 상태 재동기화 | 위 E2E 16/16 PASS (시뮬레이션 링크, 무셀 정전 복구 4건 포함) |
 | `capacitor_transport.mjs` | Android/iOS 네이티브 BLE (`@capacitor-community/bluetooth-le`) | **실기기 미검증** |
 
 ## 기기가 기준(source of truth)
 
 - 타이머·알람·설정은 기기가 독립적으로 실행합니다. 앱이 없어도, 인터넷이 없어도 동작합니다.
-- 앱은 연결될 때마다 상태를 다시 읽고, 시계를 동기화합니다(`syncClock()`).
+- 앱은 연결될 때마다 상태를 다시 읽습니다. 기기 시계가 미신뢰이거나 마지막 동기화가 12시간을 넘었으면 **자동으로 time_sync**를 보냅니다. RTC 백업 셀이 없으므로 정전 뒤 시간 복구는 이 경로뿐입니다.
 - 앱이 백그라운드에 있을 때 연결을 계속 유지한다고 가정하지 않습니다.
 
 ## 보안

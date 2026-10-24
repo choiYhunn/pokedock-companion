@@ -29,6 +29,7 @@ arc_box = Pos(P.R - 6, 0, 0) * Box(16, 40, 30)   # +x side, away from the button
 
 kit = {
     "fitkit_port_coupon": lower & port_box,
+    "fitkit_opening_coupon": lower & (Pos(0, -62, -20) * Box(76, 26, 34)),  # lower half of the button opening
     "fitkit_joint_coupon": lower & arc_box,
     "fitkit_belt_segment": belt & arc_box,
     "fitkit_upper_segment": upper & arc_box,

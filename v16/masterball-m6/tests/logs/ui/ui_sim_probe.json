@@ -82,7 +82,7 @@
   ],
   "menu": [
    {
-    "text": "09:57",
+    "text": "09:58",
     "font_px": 140,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 103,
@@ -316,11 +316,11 @@
     "role": "lbl"
    },
    {
-    "text": "634989",
+    "text": "728750",
     "font_px": 80,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 59,
-    "overshoot_px": -70.1,
+    "overshoot_px": -77.2,
     "role": "lbl"
    },
    {
@@ -518,7 +518,7 @@
    "inside_circle": true
   },
   {
-   "text": "09:57",
+   "text": "09:58",
    "font_px": 140,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 103,
@@ -994,11 +994,11 @@
    "inside_circle": true
   },
   {
-   "text": "634989",
+   "text": "728750",
    "font_px": 80,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 59,
-   "overshoot_px": -70.1,
+   "overshoot_px": -77.2,
    "role": "lbl",
    "screen": "pairing",
    "ink_mm": 4.65,

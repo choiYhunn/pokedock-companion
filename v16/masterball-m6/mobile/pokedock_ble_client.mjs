@@ -8,7 +8,10 @@
 import { MIN_MTU, decodeEvent, encodeCommand } from './pokedock_ble_protocol.mjs';
 
 export class PokeDockClient {
-  constructor(transport, { ackTimeoutMs = 2000, retries = 3, random = Math.random, sleep, log = () => {} } = {}) {
+  constructor(transport, { ackTimeoutMs = 2000, retries = 3, random = Math.random, sleep, log = () => {}, now = () => Date.now(),
+    autoSync = true } = {}) {
+    this.now = now;
+    this.autoSync = autoSync;
     this.t = transport;
     this.ackTimeoutMs = ackTimeoutMs;
     this.retries = retries;
@@ -35,7 +38,18 @@ export class PokeDockClient {
     }
     this.connected = true;
     await this.refresh();
+    // No RTC backup cell: after any power cut the ball's clock is untrusted until a phone syncs it.
+    const c = this.state.clock;
+    if (this.autoSync && (!c.trusted || c.syncAgeMin < 0 || c.syncAgeMin > 12 * 60)) {
+      await this.#sendNow('time_sync', this.#clockArgs());  // direct: we may already be inside a queued send
+      this.log('clock synced on connect');
+    }
     return this.state;
+  }
+
+  #clockArgs() {
+    const t = this.now();
+    return { t: Math.floor(t / 1000), tz: -new Date(t).getTimezoneOffset() };
   }
 
   async disconnect() { this.wantConnected = false; this.connected = false; await this.t.disconnect(); }
@@ -130,7 +144,5 @@ export class PokeDockClient {
   dismissAlarm() { return this.send('alarm_dismiss'); }
   snoozeAlarm() { return this.send('alarm_snooze'); }
   setMessage(txt) { return this.send('message', { txt }); }
-  syncClock(now = Date.now()) {
-    return this.send('time_sync', { t: Math.floor(now / 1000), tz: -new Date(now).getTimezoneOffset() });
-  }
+  syncClock() { return this.send('time_sync', this.#clockArgs()); }
 }

@@ -1,2 +1,2 @@
-harness wires: 9 | firmware pins: {'LCD_CS': 9, 'LCD_CLK': 10, 'LCD_D0': 11, 'LCD_D1': 12, 'LCD_D2': 13, 'LCD_D3': 14, 'LCD_RST': 21, 'I2C_SDA': 47, 'I2C_SCL': 48, 'RTC_INT': 15, 'VCC_ADC': 4, 'BUZZER': 16}
+harness wires: 7 | firmware pins: {'LCD_CS': 9, 'LCD_CLK': 10, 'LCD_D0': 11, 'LCD_D1': 12, 'LCD_D2': 13, 'LCD_D3': 14, 'LCD_RST': 21, 'I2C_SDA': 47, 'I2C_SCL': 48, 'RTC_INT': 15, 'VCC_ADC': 4, 'BUZZER': 16}
 PASS []

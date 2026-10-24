@@ -161,7 +161,7 @@ for ang in P.COLUMN_ANGLES:
     eng.append(("M3 head seat annulus", L, (x, y, P.HEAD_SEAT_Z), (0, 0, 1), 2.4, 0.3, 1.5))
 for key, ang in P.INSERT_ANG.items():
     x, z = polar(P.INSERT_R, ang)
-    eng.append((f"M2 insert {key} wall in bezel", BZ, (x, P.PLATE_FRONT_Y, z), (0, -1, 0), 1.6 + 0.6, 0.5, 4.0))
+    eng.append((f"M2 PT pilot {key} wall in bezel", BZ, (x, P.PLATE_FRONT_Y, z), (0, -1, 0), P.M2_PT_PILOT / 2 + 0.8, 0.5, 6.0))
     eng.append((f"plate land {key}", PL, (x, P.PLATE_FRONT_Y, z), (0, 1, 0), 2.6, 0.3, 2.2))
 for key in ("bot_l", "bot_r"):
     x, z = polar(P.INSERT_R, P.INSERT_ANG[key])
@@ -325,6 +325,13 @@ def stability(mass, cog):
             "push_to_slide_N_mu0.3": round(W * 0.3, 2)}
 
 
+plug = purch["usb_plug_path"]
+desk_z = P.BASE_Z - 3.0
+report["checks"]["usb_plug_vs_desk"] = {"plug_path_min_z": round(float(plug.bounds[0][2]), 1), "desk_z": desk_z,
+                                        "clearance_mm": round(float(plug.bounds[0][2] - desk_z), 1)}
+if plug.bounds[0][2] - desk_z < 5.0:
+    fail("USB plug path comes within 5 mm of the desk")
+print("usb plug vs desk", report["checks"]["usb_plug_vs_desk"])
 report["checks"]["mass_cog"] = {"without_disc": stability(mass_wo, cog_wo), "with_steel_disc": stability(mass_w, cog_w)}
 print("mass/cog", report["checks"]["mass_cog"])
 

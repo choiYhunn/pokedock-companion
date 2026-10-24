@@ -21,7 +21,10 @@ namespace pokedock {
 
 static constexpr size_t kMaxCommandBytes = 180;
 static constexpr size_t kMaxMessageBytes = 90;  // ~30 Hangul syllables
-static constexpr const char *kFirmwareVersion = "m6-0.1.0";
+static constexpr const char *kFirmwareVersion = "m6-0.2.0";
+// VCC (after PTC + MBR230 Schottky) can be ~4.0 V on a healthy 4.75 V adapter with a long cable;
+// the MP1605 3.3 V buck still regulates above ~3.6 V, so warn only below 3.9 V.
+static constexpr int kUsbLowMv = 3900;
 
 class DeviceEnv {
  public:
@@ -42,6 +45,7 @@ class ProtocolEngine {
   const std::string &message() const { return message_; }
   void restore_message(const std::string &m) { message_ = m; }
   uint32_t rev() const { return rev_; }
+  void forget_sessions() { cache_ = {}; }  // RAM-only: a reboot loses the duplicate-ACK cache
   void bump() { ++rev_; }
 
   // Returns the ACK JSON. `authenticated` = LE link encrypted with an authenticated bond.
@@ -71,7 +75,7 @@ class ProtocolEngine {
                     std::to_string(al.minute_of_day % 60) + "," + std::to_string(core_.alarm_ringing() ? 1 : 0) + "]";
     std::string clk = "[" + std::to_string(env_.local_abs_minute() >= 0 ? 1 : 0) + "," + std::to_string(env_.sync_age_min()) + "]";
     int mv = env_.usb_mv();
-    std::string pwr = "[" + std::to_string(mv) + "," + std::to_string(mv >= 4400 ? 1 : 0) + "]";
+    std::string pwr = "[" + std::to_string(mv) + "," + std::to_string(mv >= kUsbLowMv ? 1 : 0) + "]";
     return JsonWriter()
         .kv("r", rev_).kv("p", core_.partner()).kv("b", core_.brightness()).kv("snd", core_.sound() ? 1 : 0)
         .raw("f", f).raw("a", a).raw("clk", clk).raw("pwr", pwr).kv("msg", int64_t(message_.size()))

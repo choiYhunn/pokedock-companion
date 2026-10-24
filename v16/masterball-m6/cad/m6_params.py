@@ -41,14 +41,17 @@ BEZEL_FRONT_Y = -71.4           # 2.4 mm proud of the sphere pole, 2.1 mm in fro
 WINDOW_CHAMFER = 0.6
 BEZEL_R = 29.0
 WINDOW_R = 18.8                 # visible black border 0.43 mm nominal
-POCKET_R = GLASS_R + FIT_VENDOR  # 23.30
+POCKET_R = GLASS_R + 0.50        # rev B: 0.50 (hole undersize + PETG shrink + glass tol); centred by screws
 PLATE_FRONT_Y = GLASS_Y + GLASS_TO_STANDOFF  # -59.08 (= bezel rear face)
 PLATE_T = 2.5
 PLATE_BACK_Y = PLATE_FRONT_Y + PLATE_T        # -56.58
 PLATE_R = 29.0                  # flush with bezel OD; 0.35 to shell opening, >=1.3 to inner wall
-INSERT_R = 26.10                # M2 heat-set inserts in bezel rear face
+INSERT_R = 26.10                # M2 PT-screw pilots in bezel rear face (rev B: no heat-set inserts)
+M2_PT_PILOT = 1.7               # pilot for M2 self-tapping (PT/plastite) screws in PETG
+M2_CLEAR = 2.2                  # clearance for M2 through plate / rib (play 0.10)
 INSERT_ANG = {"top_l": 135, "top_r": 45, "bot_l": 225, "bot_r": 315}
-OPENING_R = BEZEL_R + FIT_PRINT  # 29.35 hole in shells/belt
+OPENING_R = BEZEL_R + 0.60     # rev B: 0.60 (was 0.35) after FDM stack, see tolerance_stack.py
+SCREW_PLAY = 0.10               # M2 PT screw in d2.2 clearance hole (rev A: d2.4 -> 0.20)
 
 # --- backstop ribs ------------------------------------------------------------------------
 RIB_T = 3.0
@@ -60,12 +63,12 @@ RIB_WINDOW_R = 20.0
 SPIGOT_R_OUT = 65.0
 SPIGOT_R_IN = 63.4
 SPIGOT_TOP_Z = BH + 4.0                        # 7.5
-COUNTERBORE_R = SPIGOT_R_OUT + FIT_PRINT       # 65.35 (upper shell + belt bore)
+COUNTERBORE_R = SPIGOT_R_OUT + 0.55            # rev B: 0.55 (upper shell + belt bore; spigot ring flexes)
 SPIGOT_FRONT_CLEAR_R = 38.5
 COLUMN_R_POS = 26.0
 COLUMN_ANGLES = (90.0, 210.0, 330.0)           # around z from +x, 90 = back
 COLUMN_OD = 8.0
-M3_CLEAR = 3.4
+M3_CLEAR = 3.8                                  # rev B: long printed bore prints small
 M3_HEAD_BORE = 6.5
 HEAD_SEAT_Z = -43.0                            # M3x50 DIN912: tip at +7 mm
 M3_INSERT_HOLE = 4.0                           # M3 x 5.7 heat-set insert
@@ -79,12 +82,16 @@ USB_CONN_PROTRUDE = 0.23
 USB_HOLES = [(-7.62, 2.54), (7.62, 2.54)]       # x, distance from connector edge, d2.5
 USB_POCKET = (14.0, 8.6, 2.3)                  # outer plug pocket w, h, depth (0.5 mm floor)
 USB_HOLE = (9.3, 3.7)
+USB_SLOT_CLR = 0.45                            # rev B: receptacle / PCB pass-through slot (was 0.30/0.35)
 
-# --- buzzer (12 mm passive magnetic, 3.3 V) --------------------------------------------------
+# --- buzzer: Soberton WT-1205 (5 V passive magnetic, d12.0 x H9.5, tolerance +/-0.5) --------------
+BUZZER_PART = "Soberton WT-1205"
+BUZZER_RAIL_V = 5.0
 BUZ_AZ_DEG = 140.0                             # around z from +x (back-left)
 BUZ_EL_DEG = -15.0
-BUZ_D, BUZ_H = 12.0, 9.5
-BUZ_FIT = 0.40                                 # radial; fixed with a dab of hot-melt
+BUZ_D, BUZ_H = 12.0, 9.5                       # datasheet nominal
+BUZ_TOL = 0.5                                  # datasheet: +/-0.5 mm
+BUZ_FIT = 0.60                                 # radial: d12.5 max part + undersized hole; hot-melt dab
 
 # --- decoration ---------------------------------------------------------------------------
 LOBE_AZ = 42.0                                 # from front (-y) toward +/-x

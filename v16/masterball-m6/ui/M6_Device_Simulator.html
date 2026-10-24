@@ -66,7 +66,7 @@ label{display:inline-flex;gap:6px;align-items:center}
   </div>
   <div class="ctl">
     <label>파트너 <select id="pt"></select></label>
-    <label>USB 전압 <input type="range" id="usb" min="4000" max="5100" step="50" value="4850"><span id="usbv"></span></label>
+    <label>USB 전압 <input type="range" id="usb" min="3600" max="5100" step="50" value="4850"><span id="usbv"></span></label>
   </div>
   <div class="ctl"><button data-act="pair">페어링 번호 표시</button><button data-act="msg">숨은 메시지 보기</button></div>
   <div id="log" aria-live="polite"></div>
@@ -118,7 +118,7 @@ function render(){
     const m=absMin();h+=`<div class="lbl clock" data-t="clock">${m<0?'--:--':String(Math.floor(m%1440/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}</div>`;
     h+=spriteHtml();
     if(S.phase==='done')h+=ring(1,6);
-    const st=S.usb<4400?'전원 약함':!S.trusted?'시간 맞춰줘':S.phase==='done'?'수고했어!':'';
+    const st=S.usb<3900?'전원 약함':!S.trusted?'시간 맞춰줘':S.phase==='done'?'수고했어!':'';
     if(st)h+=`<div class="pill" data-t="pill">${st}</div>`;
   }
   h+='</div>';

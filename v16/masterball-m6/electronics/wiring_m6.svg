@@ -20,7 +20,7 @@
 
   <!-- PTC -->
   <rect x="520" y="170" width="70" height="26" rx="4" fill="#fff4dc" stroke="#b07a00"/>
-  <text x="555" y="188" text-anchor="middle" font-size="12">PTC 0.75 A</text>
+  <text x="555" y="188" text-anchor="middle" font-size="12">MF-R075</text>
 
   <!-- wires to J1 -->
   <path d="M460 182 H520" stroke="#d22" stroke-width="3" fill="none"/>
@@ -53,7 +53,7 @@
   <text x="995" y="282" text-anchor="middle" fill="#888">J7 배터리 미사용</text>
   <text x="776" y="356" fill="#2f7a4c" font-size="13">보드 내부: VCC ADC = GPIO4 (200k/100k)</text>
   <text x="776" y="376" fill="#2f7a4c" font-size="13">QSPI 9–14, RST 21, I2C 47/48 (터치 0x38, RTC 0x51)</text>
-  <text x="776" y="396" fill="#2f7a4c" font-size="13">보드 USB-C는 내부 정비용(구체 안에서는 꽂을 수 없음)</text>
+  <text x="776" y="396" fill="#2f7a4c" font-size="13">보드 USB-C는 정비용 — 외부 포트와 동시 연결 금지</text>
   <text x="776" y="416" fill="#2f7a4c" font-size="13">마이크로SD 카드 삽입 금지(베젤 간섭)</text>
 
   <!-- buzzer driver -->
@@ -61,23 +61,23 @@
   <text x="264" y="404" font-weight="700">부저 구동 (소형 만능기판 20×15 mm)</text>
   <path d="M760 302 H700 V469 H600" stroke="#c9a400" stroke-width="2" fill="none"/>
   <text x="706" y="440" font-size="12" fill="#806800">IO16</text>
-  <rect x="540" y="458" width="60" height="22" fill="#fff" stroke="#333"/><text x="570" y="474" text-anchor="middle" font-size="12">680 Ω</text>
+  <rect x="540" y="458" width="60" height="22" fill="#fff" stroke="#333"/><text x="570" y="474" text-anchor="middle" font-size="12">470 Ω</text>
   <path d="M540 469 H496" stroke="#333" stroke-width="2" fill="none"/>
   <circle cx="470" cy="469" r="26" fill="#fff" stroke="#333"/><text x="470" y="473" text-anchor="middle" font-size="11">2N3904</text>
   <path d="M470 495 V560 H330" stroke="#111" stroke-width="2" fill="none"/><text x="338" y="552" font-size="12">E → GND (W2에서 분기)</text>
   <rect x="505" y="520" width="22" height="50" fill="#fff" stroke="#333"/><text x="540" y="550" font-size="12">100 kΩ (B→GND)</text>
   <path d="M470 443 V420 H392" stroke="#333" stroke-width="2" fill="none"/>
   <circle cx="370" cy="420" r="22" fill="#fff" stroke="#b03a78"/><text x="370" y="424" text-anchor="middle" font-size="11">BZ</text>
-  <text x="300" y="462" font-size="12">12 mm 수동형 5 V</text>
+  <text x="300" y="462" font-size="12">WT-1205 (5 V, 47 Ω)</text>
   <path d="M348 420 H300 V440" stroke="#d22" stroke-width="3" fill="none"/><text x="264" y="580" font-size="12" fill="#d22">BZ + = +5 V (PTC 뒤에서 분기)</text>
   <text x="264" y="500" font-size="12">1N4148 BZ 병렬 (캐소드 → +5 V)</text>
 
   <!-- RTC cell -->
   <rect x="760" y="530" width="316" height="120" rx="10" fill="#f4f4f4" stroke="#777"/>
-  <text x="776" y="554" font-weight="700">선택: RTC 백업 셀</text>
-  <text x="776" y="576" font-size="13">충전식 MS621FE 계열(3 V) + 직렬 1 kΩ → J2-1</text>
-  <text x="776" y="596" font-size="13" fill="#b00">CR 일차전지 절대 금지(3V3로 충전됨)</text>
-  <text x="776" y="616" font-size="13">연결 전 J2-1 전압 실측(약 3.0–3.15 V 예상)</text>
-  <text x="776" y="636" font-size="13">셀 데이터시트 충전 전압 범위와 대조 필수</text>
+  <text x="776" y="554" font-weight="700">RTC 백업 셀: 구매 제외</text>
+  <text x="776" y="576" font-size="13">J2는 3V3→B5819로 전류 제한 없이 충전됨</text>
+  <text x="776" y="596" font-size="13" fill="#b00">충전 전압·전류 검증 전 셀 연결 금지(CR 절대 금지)</text>
+  <text x="776" y="616" font-size="13">정전 후 시간은 앱 연결 시 자동 동기화로 복구</text>
+  <text x="776" y="636" font-size="13">G1-E3에서 J2 전압만 기록</text>
   <text x="24" y="680" fill="#6b6278" font-size="12">검증: 회로도·펌웨어 핀 정의 자동 대조 PASS. 실기 전류·USB 데이터 통신·부저 음량은 미실측.</text>
 </svg>

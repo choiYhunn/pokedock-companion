@@ -107,7 +107,7 @@ def build_lower():
     part = part + rib
     for key in ("bot_l", "bot_r"):
         x, z = polar_xz(P.INSERT_R, P.INSERT_ANG[key])
-        part = part - cyl_y(1.2, P.LOWER_RIB_Y0 - 1, P.LOWER_RIB_Y0 + P.RIB_T + 1, x, z)
+        part = part - cyl_y(P.M2_CLEAR / 2, P.LOWER_RIB_Y0 - 1, P.LOWER_RIB_Y0 + P.RIB_T + 1, x, z)
     # external USB-C port (Adafruit 4090) on a cantilever block, axis = outward radial at elevation -25.
     # Local frame: z = port axis (outward), x = ball x, +y = physically down/forward. The block sits
     # BELOW the PCB; both M2.5 screws are driven from the cavity side, past the receptacle.
@@ -121,8 +121,9 @@ def build_lower():
     pcb_bot = pcb_top + pcb_t
     block = local_box(pl, -11, 11, pcb_bot, pcb_bot + 6.5, pcb_edge - pcb_d - 0.4, P.RI + 0.8) & Sphere(P.R - 0.6)
     part = part + block
-    part = part - local_box(pl, -cw / 2 - 0.3, cw / 2 + 0.3, -ch / 2 - 0.3, ch / 2 + 0.3, mouth - cl - 0.5, P.RI + 0.35)
-    part = part - local_box(pl, -pcb_w / 2 - 0.35, pcb_w / 2 + 0.35, pcb_top - 0.3, pcb_bot + 0.05, pcb_edge - 2.0, P.RI + 0.5)
+    k = P.USB_SLOT_CLR
+    part = part - local_box(pl, -cw / 2 - k, cw / 2 + k, -ch / 2 - k, ch / 2 + k, mouth - cl - 0.5, P.RI + 0.35)
+    part = part - local_box(pl, -pcb_w / 2 - k, pcb_w / 2 + k, pcb_top - k, pcb_bot + 0.05, pcb_edge - 2.0, P.RI + 0.5)
     part = part - local_box(pl, -P.USB_HOLE[0] / 2, P.USB_HOLE[0] / 2, -P.USB_HOLE[1] / 2, P.USB_HOLE[1] / 2, P.RI - 1, P.R + 2)
     pw, ph, pdepth = P.USB_POCKET
     part = part - local_box(pl, -pw / 2, pw / 2, -ph / 2, ph / 2, P.R - pdepth, P.R + 3)
@@ -133,9 +134,9 @@ def build_lower():
     n = P.unit(-140, P.BUZ_EL_DEG)
     pb = Plane(origin=(0, 0, 0), x_dir=V(0, 0, 1).cross(V(*n)).normalized(), z_dir=n)
     c_face = P.RI - 0.4
-    boss = local_cyl(pb, P.BUZ_D / 2 + P.BUZ_FIT + 1.6, 0, 0, c_face - P.BUZ_H - 0.5, P.RI + 0.6) & Sphere(P.R - 0.5)
+    boss = local_cyl(pb, P.BUZ_D / 2 + P.BUZ_FIT + 1.6, 0, 0, c_face - P.BUZ_H - P.BUZ_TOL - 0.5, P.RI + 0.6) & Sphere(P.R - 0.5)
     part = part + boss
-    part = part - local_cyl(pb, P.BUZ_D / 2 + P.BUZ_FIT, 0, 0, c_face - P.BUZ_H - 1, c_face)
+    part = part - local_cyl(pb, P.BUZ_D / 2 + P.BUZ_FIT, 0, 0, c_face - P.BUZ_H - P.BUZ_TOL - 1, c_face)
     for k in range(7):
         rr, a = (0.0, 0.0) if k == 0 else (3.2, 60.0 * k)
         part = part - local_cyl(pb, 0.75, rr * math.cos(math.radians(a)), rr * math.sin(math.radians(a)), c_face - 0.5, P.R + 2)
@@ -166,6 +167,7 @@ def build_upper():
     cavity = Sphere(P.RI) & zslab(P.BH - 1, P.R)
     part = outer - cavity
     part = part - cyl_z(P.COUNTERBORE_R, P.BH - 1, P.SPIGOT_TOP_Z + 0.4)
+    part = part - (Pos(0, 0, P.BH + 0.2) * Cone(P.COUNTERBORE_R + 0.4, P.COUNTERBORE_R, 0.4))  # elephant-foot relief
     part = part - opening()
     for ang in P.COLUMN_ANGLES:
         x, y = polar_xy(P.COLUMN_R_POS, ang)
@@ -190,6 +192,7 @@ def build_upper():
 
 def build_belt():
     part = (Sphere(P.R) & zslab(-P.BH, P.BH)) - cyl_z(P.COUNTERBORE_R, -P.BH - 1, P.BH + 1)
+    part = part - (Pos(0, 0, -P.BH + 0.2) * Cone(P.COUNTERBORE_R + 0.4, P.COUNTERBORE_R, 0.4))  # elephant-foot relief
     return part - opening()
 
 
@@ -198,19 +201,20 @@ def build_bezel():
     skirt = [(24.5 + 4.5 * math.sin(math.radians(t)), -64.0 - (fy + 64.0) * -math.cos(math.radians(t)))
              for t in range(0, 91, 10)]
     pts = [(P.WINDOW_R, fy + P.WINDOW_CHAMFER), (P.WINDOW_R + P.WINDOW_CHAMFER, fy)] + skirt[1:] + [
-        (P.BEZEL_R, P.PLATE_FRONT_Y), (P.POCKET_R, P.PLATE_FRONT_Y), (P.POCKET_R, gy), (P.WINDOW_R, gy)]
+        (P.BEZEL_R, P.PLATE_FRONT_Y - 0.4), (P.BEZEL_R - 0.4, P.PLATE_FRONT_Y),  # 0.4 chamfer: first layer on bed
+        (P.POCKET_R, P.PLATE_FRONT_Y), (P.POCKET_R, gy), (P.WINDOW_R, gy)]
     pts = [(24.5, fy) if i == 2 else p for i, p in enumerate(pts)]
     prof = make_face(Polyline(*pts, close=True))
     part = revolve(prof, axis=Axis.Y)
     for key, ang in P.INSERT_ANG.items():
         x, z = polar_xz(P.INSERT_R, ang)
-        part = part - cyl_y(1.6, P.PLATE_FRONT_Y - 4.5, P.PLATE_FRONT_Y + 0.5, x, z)
+        part = part - cyl_y(P.M2_PT_PILOT / 2, P.PLATE_FRONT_Y - 6.5, P.PLATE_FRONT_Y + 0.5, x, z)  # M2 PT screw pilot
     return part
 
 
 def countersink(x, z):
-    hole = cyl_y(1.15, P.PLATE_FRONT_Y - 1, P.PLATE_BACK_Y + 1, x, z)
-    cone = Plane(origin=(x, P.PLATE_BACK_Y + 0.01, z), z_dir=(0, -1, 0)).location * Cone(2.1, 1.15, 0.95, align=None)
+    hole = cyl_y(P.M2_CLEAR / 2, P.PLATE_FRONT_Y - 1, P.PLATE_BACK_Y + 1, x, z)
+    cone = Plane(origin=(x, P.PLATE_BACK_Y + 0.01, z), z_dir=(0, -1, 0)).location * Cone(2.1, P.M2_CLEAR / 2, 0.95, align=None)
     return hole + Pos(0, 0, 0) * cone
 
 
@@ -220,7 +224,7 @@ def build_plate():
         part = part - countersink(x, z)
     for key, ang in P.INSERT_ANG.items():
         x, z = polar_xz(P.INSERT_R, ang)
-        part = part - (countersink(x, z) if key.startswith("top") else cyl_y(1.2, P.PLATE_FRONT_Y - 1, P.PLATE_BACK_Y + 1, x, z))
+        part = part - (countersink(x, z) if key.startswith("top") else cyl_y(P.M2_CLEAR / 2, P.PLATE_FRONT_Y - 1, P.PLATE_BACK_Y + 1, x, z))
     wx, wz = P.PLATE_WINDOW
     for sx in (-1, 1):
         part = part - (Pos(sx * P.HEADERS_X, (P.PLATE_FRONT_Y + P.PLATE_BACK_Y) / 2, 0) * Box(wx, 5, wz))
@@ -260,7 +264,7 @@ def purchased():
     env["usb_plug_path"] = local_box(pl, -6.2, 6.2, -3.3, 3.3, P.R - P.USB_POCKET[2] + 0.05, P.R + 25)
     n = P.unit(-140, P.BUZ_EL_DEG)
     pb = Plane(origin=(0, 0, 0), x_dir=V(0, 0, 1).cross(V(*n)).normalized(), z_dir=n)
-    env["buzzer"] = local_cyl(pb, P.BUZ_D / 2, 0, 0, P.RI - 0.4 - P.BUZ_H, P.RI - 0.45)
+    env["buzzer"] = local_cyl(pb, P.BUZ_D / 2 + P.BUZ_TOL / 2, 0, 0, P.RI - 0.4 - P.BUZ_H - P.BUZ_TOL, P.RI - 0.45)  # max-size part
     sx, sz = P.SOCKET_BOX
     env["socket_left"] = Pos(-P.HEADERS_X, sum(P.SOCKET_Y) / 2, 0) * Box(sx, P.SOCKET_Y[1] - P.SOCKET_Y[0], sz)
     env["socket_right"] = Pos(P.HEADERS_X, sum(P.SOCKET_Y) / 2, 0) * Box(sx, P.SOCKET_Y[1] - P.SOCKET_Y[0], sz)

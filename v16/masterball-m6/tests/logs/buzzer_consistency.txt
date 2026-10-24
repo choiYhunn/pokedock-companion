@@ -1,0 +1,2 @@
+base drive 5.43 mA vs needed 3.55 mA; tones 1976-2794 Hz
+PASS []

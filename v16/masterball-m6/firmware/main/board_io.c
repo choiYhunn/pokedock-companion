@@ -11,6 +11,7 @@
 static const char *TAG = "pd_io";
 static i2c_master_bus_handle_t s_bus;
 static i2c_master_dev_handle_t s_touch;
+static uint8_t s_touch_chip;
 
 void board_i2c_init(void) {
   const i2c_master_bus_config_t cfg = {
@@ -30,8 +31,25 @@ void board_touch_init(void) {
   const i2c_device_config_t dev = {.dev_addr_length = I2C_ADDR_BIT_LEN_7, .device_address = 0x38, .scl_speed_hz = 400000};
   ESP_ERROR_CHECK(i2c_master_bus_add_device(s_bus, &dev, &s_touch));
   uint8_t normal_mode[2] = {0x00, 0x00};
-  if (i2c_master_transmit(s_touch, normal_mode, 2, 50) != ESP_OK) ESP_LOGW(TAG, "FT3168 did not ACK");
+  if (i2c_master_transmit(s_touch, normal_mode, 2, 50) != ESP_OK) {
+    ESP_LOGE(TAG, "touch controller at 0x38 did not ACK");
+    return;
+  }
+  // Waveshare documents FT3168; some batches/variants list FT6146. Both are FocalTech parts with the
+  // same register map (0x02 TD_STATUS, 0x03-0x06 P1 XH/XL/YH/YL), so one read path serves both.
+  // Identify for the G1 log: 0xA3 = chip ID, 0xA8 = vendor ID (0x11 = FocalTech), 0xA6 = firmware.
+  uint8_t reg = 0xA3, chip = 0, vend = 0, fw = 0;
+  i2c_master_transmit_receive(s_touch, &reg, 1, &chip, 1, 20);
+  reg = 0xA8;
+  i2c_master_transmit_receive(s_touch, &reg, 1, &vend, 1, 20);
+  reg = 0xA6;
+  i2c_master_transmit_receive(s_touch, &reg, 1, &fw, 1, 20);
+  s_touch_chip = chip;
+  ESP_LOGI(TAG, "touch: chip_id=0x%02x vendor=0x%02x fw=0x%02x (%s)", chip, vend, fw,
+           vend == 0x11 ? "FocalTech, common FT3168/FT6x46 map" : "UNKNOWN vendor - verify on G1");
 }
+
+uint8_t board_touch_chip(void) { return s_touch_chip; }
 
 bool board_touch_read(uint16_t *x, uint16_t *y) {
   uint8_t reg = 0x02, n = 0, buf[4];
@@ -76,10 +94,14 @@ int board_vcc_mv(void) {
 typedef struct {
   uint16_t hz, ms;
 } note_t;
+// Soberton WT-1205 (5 V, 47 ohm, rated 2400 Hz 1/2-duty square). Notes stay within ~1.9-2.8 kHz
+// where its output is strongest; LEDC duty is 0 (coil off) whenever nothing plays.
+#define PD_BUZZER_MIN_HZ 1900
+#define PD_BUZZER_MAX_HZ 2800
 static const note_t k_chirp[] = {{2093, 60}, {0, 30}, {2637, 80}, {0, 0}};
-static const note_t k_done[] = {{1568, 120}, {2093, 120}, {2637, 120}, {3136, 260}, {0, 0}};
-static const note_t k_alarm[] = {{2637, 140}, {0, 80}, {2637, 140}, {0, 80}, {3136, 220}, {0, 600}, {0, 0}};
-static const note_t k_pair[] = {{1760, 80}, {0, 40}, {1760, 80}, {0, 0}};
+static const note_t k_done[] = {{1976, 120}, {2217, 120}, {2489, 120}, {2794, 260}, {0, 0}};
+static const note_t k_alarm[] = {{2400, 140}, {0, 80}, {2400, 140}, {0, 80}, {2637, 220}, {0, 600}, {0, 0}};
+static const note_t k_pair[] = {{2093, 80}, {0, 40}, {2093, 80}, {0, 0}};
 static const note_t *s_tune;
 static int s_idx;
 static bool s_loop;

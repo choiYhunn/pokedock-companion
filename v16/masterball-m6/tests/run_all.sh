@@ -3,7 +3,7 @@
 # no GitHub Actions. Requirements: g++/gcc (C++17), node >= 20, python with build123d, trimesh,
 # manifold3d, scipy, networkx, playwright (+ an installed Edge or Chromium) and the vendor STEP
 # parts extracted by tools/vendor_step_to_parts.py.
-# usage: PY=<python> VENDOR_PARTS=<dir> tests/run_all.sh
+# usage: PY=<python> VENDOR_PARTS=<dir> SCHEMATIC_PDF=<vendor schematic pdf> tests/run_all.sh
 set -u
 cd "$(dirname "$0")/.."
 PY=${PY:-python}
@@ -19,6 +19,13 @@ run core_regression bash -c "g++ -std=c++17 -O2 -Wall -Wextra -Werror tests/core
 run protocol bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror tests/protocol_test.cpp -o build/proto && ./build/proto"
 run ble_e2e_bridge bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror tests/ble_bridge_host.cpp -o build/ble_bridge && node tests/ble_e2e_bridge_test.mjs build/ble_bridge"
 run harness_check "$PY" -X utf8 tests/harness_check.py
+run buzzer_consistency "$PY" -X utf8 tests/buzzer_consistency_check.py
+if [ -n "${SCHEMATIC_PDF:-}" ]; then
+  run schematic_netlist "$PY" -X utf8 tests/schematic_netlist_check.py "$SCHEMATIC_PDF"
+else
+  echo "SKIP schematic_netlist (set SCHEMATIC_PDF to the official Waveshare schematic)"
+fi
+run tolerance_stack "$PY" -X utf8 cad/tolerance_stack.py cad/out/tolerance_stack.json
 run pdk_roundtrip "$PY" -X utf8 tests/pdk_roundtrip_test.py build/pdk
 if [ -n "${VENDOR_PARTS:-}" ]; then
   run cad_build "$PY" -X utf8 cad/build_m6.py cad/out

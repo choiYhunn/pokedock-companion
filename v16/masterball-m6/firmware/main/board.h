@@ -24,7 +24,7 @@ extern "C" {
 #define PD_PIN_I2C_SCL 48
 #define PD_PIN_RTC_INT 15
 #define PD_PIN_VCC_ADC 4   // ADC1_CH3, 200k/100k divider from VCC (post power-path, NOT the battery)
-// M6 harness on header J1 (1.27 mm 2x7): pin 8 = IO16 -> NPN -> passive buzzer on USB_5V
+// M6 harness on header J1 (1.27 mm 2x7): pin 8 = IO16 -> 470R -> 2N3904 -> passive buzzer (Soberton WT-1205) on USB_5V
 #define PD_PIN_BUZZER 16
 
 #define PD_LCD_RES 466
@@ -43,8 +43,9 @@ void board_lvgl_unlock(void);
 
 void board_touch_init(void);
 bool board_touch_read(uint16_t *x, uint16_t *y);
+uint8_t board_touch_chip(void);  // FocalTech chip ID (reg 0xA3), logged at boot for G1
 
-int board_vcc_mv(void);  // VCC (USB 5 V minus Schottky ~4.6-4.9 V when healthy)
+int board_vcc_mv(void);  // VCC = USB 5 V - cable - PTC - MBR230: ~4.0-4.8 V when healthy
 
 void buzzer_init(void);
 typedef enum { PD_TUNE_CHIRP, PD_TUNE_ALARM, PD_TUNE_DONE, PD_TUNE_PAIR } pd_tune_t;

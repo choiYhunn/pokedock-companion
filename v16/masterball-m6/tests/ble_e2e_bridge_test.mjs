@@ -86,14 +86,14 @@ await test('MTU below 185 is refused before any command', async () => {
 });
 
 const link = new LinkTransport(dev);
-const app = new PokeDockClient(link, { ...fast, random: () => 0.25 });
+const app = new PokeDockClient(link, { ...fast, random: () => 0.25, autoSync: false }); // explicit sync tested below
 const seen = [];
 app.onState((s) => seen.push(s));
 
 await test('connect reads initial state (device standalone defaults)', async () => {
   const s = await app.connect();
   assert.equal(s.partner, 94);
-  assert.equal(s.firmware, 'm6-0.1.0');
+  assert.equal(s.firmware, 'm6-0.2.0');
   assert.equal(s.clock.trusted, false);
 });
 
@@ -172,6 +172,53 @@ await test('app restart = new session, seq restarts at 1 and still executes', as
   await restarted.setSound(false);
   assert.equal(await dev.rev(), before + 1);
   assert.equal(restarted.seq, 1);
+});
+
+// ---- no RTC backup cell: recovery after power cuts relies on the phone ------------------------
+let wall = Date.UTC(2026, 9, 25, 20, 0, 0); // 05:00 KST next morning
+let mono = 0;
+const tickBoth = async (ms) => { wall += ms; mono += ms; await dev.tick(mono); };
+const phone = new PokeDockClient(new LinkTransport(dev), { ...fast, random: () => 0.5, now: () => wall });
+
+await test('RTC-less: connect auto-syncs an untrusted clock, alarm armed for 06:30', async () => {
+  await dev.cmd('P', (l) => l.startsWith('B '));      // cold boot, clock unknown
+  mono = 0;
+  const s = await phone.connect();                     // auto time_sync because clk.trusted == 0
+  assert.equal(s.clock.trusted, true);
+  await phone.setAlarm(6, 30, true);
+  await phone.disconnect();
+});
+
+await test('RTC-less: power cut keeps NVS settings but the clock becomes untrusted', async () => {
+  await dev.cmd('P', (l) => l.startsWith('B '));
+  mono = 0;
+  const raw = new PokeDockClient(new LinkTransport(dev), { ...fast, autoSync: false });
+  const s = await raw.connect();
+  assert.equal(s.clock.trusted, false);
+  assert.equal(s.alarm.enabled, true);
+  assert.equal(s.alarm.hour * 60 + s.alarm.minute, 6 * 60 + 30);
+  assert.equal(s.partner, 393, 'partner survived the power cut via NVS');
+  await raw.disconnect();
+});
+
+await test('RTC-less: no alarm while the clock is untrusted (never rings at a wrong time)', async () => {
+  await tickBoth(100 * 60000);                          // 06:40 real time, device does not know it
+  const raw = new PokeDockClient(new LinkTransport(dev), { ...fast, autoSync: false });
+  const s = await raw.connect();
+  assert.equal(s.alarm.ringing, false);
+  await raw.disconnect();
+});
+
+await test('RTC-less: phone reconnect after the alarm time -> no stale alarm, next day rings once', async () => {
+  await phone.connect();                                // auto-sync at 06:40 -> 06:30 already past by > grace
+  await tickBoth(60000);
+  await phone.refresh();
+  assert.equal(phone.state.alarm.ringing, false, 'stale 06:30 alarm must not fire at 06:41');
+  await tickBoth((23 * 60 + 49) * 60000);               // next day 06:30
+  await new Promise((r) => setTimeout(r, 30));
+  await phone.refresh();
+  assert.equal(phone.state.alarm.ringing, true);
+  await phone.dismissAlarm();
 });
 
 await test('every ACK/state fits a 185-byte MTU (enforced by link)', async () => {

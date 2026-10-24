@@ -1,32 +1,131 @@
 {
-  "_source": "Waveshare ESP32-S3-Touch-AMOLED-1.43 schematic (files.waveshare.com, 2024), OUTPUT block J1/J3 and RTC block J2; vendor demo V3 pin defines",
+  "_source": "Waveshare ESP32-S3-Touch-AMOLED-1.43 schematic (files.waveshare.com, 2024): J1/J2/J3/J4/J7 nets re-verified 2026-10-24 against the PDF's own netlist layer by tests/schematic_netlist_check.py",
   "board_pins": {
-    "J1": {"1": "U_P", "2": "VBAT", "3": "U_N", "4": "USB_5V", "5": "IO6", "6": "GND", "7": "IO5", "8": "IO16",
-           "9": "IO3", "10": "IO17", "11": "IO2", "12": "IO7", "13": "IO1", "14": "IO0"},
-    "J3": {"1": "3V3", "2": "IO18", "3": "SCL", "4": "IO38", "5": "SDA", "6": "IO39", "7": "GND", "8": "IO40",
-           "9": "RXD", "10": "IO41", "11": "TXD", "12": "IO46", "13": "3V3", "14": "IO45"},
-    "J2": {"1": "RTC_VDD (cathode of D1 B5819WS from 3V3)", "2": "GND"},
-    "J7": {"note": "1S LiPo MX1.25 header - LEFT EMPTY in M6 (no main battery)"}
+    "J1": {
+      "1": "U_P",
+      "2": "VBAT",
+      "3": "U_N",
+      "4": "USB_5V",
+      "5": "IO6",
+      "6": "GND",
+      "7": "IO5",
+      "8": "IO16",
+      "9": "IO3",
+      "10": "IO17",
+      "11": "IO2",
+      "12": "IO7",
+      "13": "IO1",
+      "14": "IO0"
+    },
+    "J3": {
+      "1": "3V3",
+      "2": "IO18",
+      "3": "SCL",
+      "4": "IO38",
+      "5": "SDA",
+      "6": "IO39",
+      "7": "GND",
+      "8": "IO40",
+      "9": "RXD",
+      "10": "IO41",
+      "11": "TXD",
+      "12": "IO46",
+      "13": "3V3",
+      "14": "IO45"
+    },
+    "J2": {
+      "1": "RTC_VDD (cathode of D1 B5819WS from 3V3)",
+      "2": "GND"
+    },
+    "J7": {
+      "note": "1S LiPo MX1.25 header - LEFT EMPTY in M6 (no main battery)"
+    }
   },
-  "reserved_by_board": {"IO9-IO14": "AMOLED QSPI", "IO21": "AMOLED reset", "IO47/IO48": "I2C touch/RTC/IMU",
-                        "IO38-IO41": "microSD", "IO4": "VCC ADC", "IO15": "RTC_INT", "IO8": "IMU_INT",
-                        "IO0/IO3/IO45/IO46": "strapping - never drive at boot"},
+  "reserved_by_board": {
+    "IO9-IO14": "AMOLED QSPI",
+    "IO21": "AMOLED reset",
+    "IO47/IO48": "I2C touch/RTC/IMU",
+    "IO38-IO41": "microSD",
+    "IO4": "VCC ADC",
+    "IO15": "RTC_INT",
+    "IO8": "IMU_INT",
+    "IO0/IO3/IO45/IO46": "strapping - never drive at boot"
+  },
   "harness": [
-    {"wire": "W1", "from": "USB-C breakout VBUS", "via": "PTC 0.75 A hold", "to": "J1-4", "net": "USB_5V", "awg": 26, "colour": "red", "len_mm": 160},
-    {"wire": "W2", "from": "USB-C breakout GND", "to": "J1-6", "net": "GND", "awg": 26, "colour": "black", "len_mm": 160},
-    {"wire": "W3", "from": "USB-C breakout D+", "to": "J1-1", "net": "U_P", "awg": 28, "colour": "green", "len_mm": 160, "twist_with": "W4"},
-    {"wire": "W4", "from": "USB-C breakout D-", "to": "J1-3", "net": "U_N", "awg": 28, "colour": "white", "len_mm": 160, "twist_with": "W3"},
-    {"wire": "W5", "from": "J1-8", "to": "buzzer driver R1", "net": "IO16", "awg": 28, "colour": "yellow", "len_mm": 150},
-    {"wire": "W6", "from": "W1 after PTC (splice at breakout)", "to": "buzzer +", "net": "USB_5V", "awg": 28, "colour": "red", "len_mm": 60},
-    {"wire": "W7", "from": "W2 (splice at breakout)", "to": "buzzer driver emitter", "net": "GND", "awg": 28, "colour": "black", "len_mm": 60},
-    {"wire": "W8 (optional)", "from": "RTC cell +", "via": "1 kohm series resistor", "to": "J2-1", "net": "RTC_VDD", "awg": 30, "colour": "red", "len_mm": 40},
-    {"wire": "W9 (optional)", "from": "RTC cell -", "to": "J2-2", "net": "GND", "awg": 30, "colour": "black", "len_mm": 40}
+    {
+      "wire": "W1",
+      "from": "USB-C breakout VBUS",
+      "via": "Bourns MF-R075 PTC (hold 0.75 A, trip 1.5 A, 60 V, R1max 0.60 ohm)",
+      "to": "J1-4",
+      "net": "USB_5V",
+      "awg": 26,
+      "colour": "red",
+      "len_mm": 160
+    },
+    {
+      "wire": "W2",
+      "from": "USB-C breakout GND",
+      "to": "J1-6",
+      "net": "GND",
+      "awg": 26,
+      "colour": "black",
+      "len_mm": 160
+    },
+    {
+      "wire": "W3",
+      "from": "USB-C breakout D+",
+      "to": "J1-1",
+      "net": "U_P",
+      "awg": 28,
+      "colour": "green",
+      "len_mm": 160,
+      "twist_with": "W4"
+    },
+    {
+      "wire": "W4",
+      "from": "USB-C breakout D-",
+      "to": "J1-3",
+      "net": "U_N",
+      "awg": 28,
+      "colour": "white",
+      "len_mm": 160,
+      "twist_with": "W3"
+    },
+    {
+      "wire": "W5",
+      "from": "J1-8",
+      "to": "buzzer driver R1",
+      "net": "IO16",
+      "awg": 28,
+      "colour": "yellow",
+      "len_mm": 150
+    },
+    {
+      "wire": "W6",
+      "from": "W1 after PTC (splice at breakout)",
+      "to": "buzzer + (WT-1205 pin +)",
+      "net": "USB_5V",
+      "awg": 28,
+      "colour": "red",
+      "len_mm": 60
+    },
+    {
+      "wire": "W7",
+      "from": "W2 (splice at breakout)",
+      "to": "buzzer driver emitter",
+      "net": "GND",
+      "awg": 28,
+      "colour": "black",
+      "len_mm": 60
+    }
   ],
   "buzzer_driver": {
-    "R1": "680 ohm, IO16 -> Q1 base (Ib ~3.7 mA)",
+    "R1": "470 ohm, IO16 -> Q1 base (Ib ~5.4 mA: saturates the 106 mA DC coil current even at beta 30)",
     "R2": "100 kohm, base -> GND (silent through reset / boot)",
     "Q1": "2N3904 NPN, emitter GND, collector -> buzzer -",
-    "D1": "1N4148 across buzzer, cathode to +5 V (flyback for a magnetic transducer)",
-    "BZ": "12 mm PASSIVE magnetic transducer, rated 5 V, coil >= 40 ohm, height <= 9.5 mm, resonance ~2.4-2.7 kHz (exact SKU to be chosen with datasheet)"
-  }
+    "D1": "1N4148 across buzzer, cathode to +5 V (flyback; same as the WT-1205 datasheet test circuit)",
+    "BZ": "Soberton WT-1205 passive magnetic transducer, 5 V (4-6 Vo-p), coil 47 +/-7 ohm, 50 mA max mean, 2400 Hz, d12.0 x 9.5 mm +/-0.5, pins 6.5 mm (Digi-Key 433-1028-ND)"
+  },
+  "rtc_backup": "EXCLUDED from M6 purchase: J2 is charged from 3V3 through B5819 with no current limit; no cell until charge voltage/current are validated (G1-E3 + datasheet). Without it the clock is restored by phone time_sync after any power cut.",
+  "dual_port_rule": "Never connect the board's own USB-C and the external port at the same time: their VBUS (USB_5V) and D+/D- are the same nets. The board port is only reachable with the upper shell removed; label it."
 }

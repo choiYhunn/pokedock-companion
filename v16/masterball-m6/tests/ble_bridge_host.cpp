@@ -4,6 +4,8 @@
 //   R                           -> "S <hex state>"        (characteristic read)
 //   T <mono_ms>                 -> advance monotonic clock, tick core, "E <events>" if any
 //   X                           -> "X <rev>" (introspection for tests)
+//   P                           -> power cut + reboot WITHOUT an RTC backup cell: RAM state lost,
+//                                  NVS snapshot restored, wall clock untrusted (PCF85063 OS flag)
 #include <cstdio>
 #include <iostream>
 #include <sstream>
@@ -13,8 +15,20 @@
 
 using namespace pokedock;
 
+struct Nvs {  // what the firmware persists (app_main.cpp Env::persist)
+  bool valid = false;
+  int partner = 94, brightness = 40;
+  bool sound = true;
+  AlarmConfig alarm;
+  PersistedAlarmState alarm_state;
+  std::string message;
+};
+
 struct BridgeEnv : DeviceEnv {
   int64_t mono = 0, abs_min = -1, synced_mono = -1;
+  Core *core = nullptr;
+  ProtocolEngine *engine = nullptr;
+  Nvs nvs;
   int64_t mono_ms() override { return mono; }
   int64_t local_abs_minute() override { return abs_min; }
   bool set_utc(int64_t t, int tz) override {
@@ -24,7 +38,9 @@ struct BridgeEnv : DeviceEnv {
   }
   int sync_age_min() override { return synced_mono < 0 ? -1 : int((mono - synced_mono) / 60000); }
   int usb_mv() override { return 4870; }
-  void persist() override {}
+  void persist() override {
+    nvs = {true, core->partner(), core->brightness(), core->sound(), core->alarm(), core->persisted(), engine->message()};
+  }
   void reaction() override {}
 };
 
@@ -47,6 +63,8 @@ int main() {
   Core core;
   BridgeEnv env;
   ProtocolEngine pe(core, env);
+  env.core = &core;
+  env.engine = &pe;
   std::string line;
   std::cout << "READY " << kFirmwareVersion << std::endl;
   while (std::getline(std::cin, line)) {
@@ -74,6 +92,22 @@ int main() {
         std::cout << "E " << ev << "\nS " << hex(pe.state_json()) << "\n";
       }
       std::cout << "K" << std::endl;
+    } else if (op == "P") {
+      int64_t wall_before = env.abs_min;  // the real world keeps going; the device forgets
+      core = Core();
+      if (env.nvs.valid) {
+        core.set_partner(env.nvs.partner);
+        core.set_brightness(env.nvs.brightness);
+        core.set_sound(env.nvs.sound);
+        core.restore(env.nvs.alarm, env.nvs.alarm_state);
+        pe.restore_message(env.nvs.message);
+      }
+      pe.forget_sessions();
+      env.abs_min = -1;
+      env.synced_mono = -1;
+      env.mono = 0;
+      pe.bump();
+      std::cout << "B " << wall_before << std::endl;
     } else if (op == "X") {
       std::cout << "X " << pe.rev() << std::endl;
     }

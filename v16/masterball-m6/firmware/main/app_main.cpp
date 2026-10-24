@@ -29,7 +29,6 @@ namespace {
 constexpr int kPresets[] = {15, 25, 45, 60};
 constexpr int kBrightSteps[] = {20, 40, 70, 100};
 constexpr int64_t kScreenOffMs = 10 * 60 * 1000;
-constexpr int kUsbLowMv = 4400;
 
 SemaphoreHandle_t g_mux;  // guards core, engine, settings (BLE host task + main loop + LVGL task)
 struct Lock {
