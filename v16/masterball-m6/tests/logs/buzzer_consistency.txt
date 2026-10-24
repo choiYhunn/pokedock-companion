@@ -1,2 +1,2 @@
-base drive 5.43 mA vs needed 3.55 mA; tones 1976-2794 Hz
+peak coil 131 mA, VDS(on) <= 6.3 mV, FET loss 0.41 mW (+0.05 C), VOH min 2.64 V vs RDS spec at 2.5 V; tones 1976-2794 Hz
 PASS []

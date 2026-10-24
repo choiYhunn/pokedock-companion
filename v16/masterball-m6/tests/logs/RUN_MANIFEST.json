@@ -1,0 +1,4 @@
+{"mode":"strict","started_utc":"2026-10-24T13:16:22Z","finished_utc":"2026-10-24T13:25:12Z",
+ "git_head":"0f6edeff9da4065745b2ce0dec9d730e11b8e6f8","uncommitted_source_files":0,"source_fingerprint":"add09a8f3686a24141146a95cc7c9bc8e37f7bb416fb98201b0234cb282af38a",
+ "results":{"core_regression":"PASS","protocol":"PASS","ble_e2e_bridge":"PASS","harness_check":"PASS","buzzer_consistency":"PASS","doc_consistency":"PASS","schematic_netlist":"PASS","adafruit4090_netlist":"PASS","tolerance_stack":"PASS","pdk_roundtrip":"PASS","cad_build":"PASS","cad_fitkit":"PASS","cad_verify":"PASS","driver_board_check":"PASS","ui_sim_probe":"PASS","firmware_build":"PASS"},
+ "tools":{"gpp":"g++.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r2) 15.2.0","node":"v24.22.1","python":"Python 3.13.8"}}

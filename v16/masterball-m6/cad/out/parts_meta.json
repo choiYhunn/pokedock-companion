@@ -14,7 +14,7 @@
   "stl_faces": 10322
  },
  "lower_shell_ivory": {
-  "volume_mm3": 100525.9,
+  "volume_mm3": 100708.4,
   "valid": true,
   "bbox": [
    -68.91,
@@ -25,7 +25,7 @@
    7.5
   ],
   "stl_watertight": true,
-  "stl_faces": 12040
+  "stl_faces": 12100
  },
  "belt_black": {
   "volume_mm3": 8626.2,

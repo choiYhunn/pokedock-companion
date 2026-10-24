@@ -1,0 +1,52 @@
+C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\e5703c39-80f0-418a-b2aa-c03f2c0a3466\scratchpad\venv\Lib\site-packages\trimesh\triangles.py:302: RuntimeWarning: invalid value encountered in divide
+  center_mass = integrated[1:4] / volume
+{
+ "clearance_mm": {
+  "lower_shell_ivory": 0.8,
+  "upper_shell_purple": 24.48,
+  "bezel_black": 68.08,
+  "display_plate_petg": 65.63,
+  "buzzer": 9.83,
+  "usb_breakout": 33.82,
+  "steel_disc": 29.83,
+  "socket_left": 65.57,
+  "socket_right": 83.93,
+  "m3x50_0": 34.9,
+  "m3x50_1": 26.09,
+  "m3x50_2": 66.6,
+  "usb_screw_l": 38.61,
+  "usb_screw_r": 50.61
+ },
+ "insertion_path_hits": [],
+ "display_subassembly_xy_overlap": false,
+ "board_top_z": -17.2,
+ "tape": {
+  "foam_thickness_mm": 1.0,
+  "pads": "2 x (5 x 18 mm) printed seat pads, gap 0.8 mm",
+  "tape_area_mm2": 180.0,
+  "foam_compression_pct": [
+   20,
+   20
+  ],
+  "lead_zone_gap_min_mm (between pads)": 1.96,
+  "board_mass_g_est": 3.0,
+  "note": "adhesion on rough FDM layers: IPA wipe, 30 s press; hot-melt fillet as backup"
+ },
+ "wire_reach_mm": {
+  "J1 (either header)": {
+   "needed": 148,
+   "harness": 180
+  },
+  "USB breakout": {
+   "needed": 98,
+   "harness": 120
+  },
+  "buzzer": {
+   "needed": 61,
+   "harness": 80
+  }
+ },
+ "source_fingerprint": "add09a8f3686a24141146a95cc7c9bc8e37f7bb416fb98201b0234cb282af38a",
+ "verdict": "PASS",
+ "fail": []
+}

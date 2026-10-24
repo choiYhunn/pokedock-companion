@@ -1,5 +1,5 @@
 upper_shell_purple {'volume_mm3': 84779.0, 'valid': True, 'bbox': [-68.91, -62.33, 3.5, 68.91, 68.91, 69.0], 'stl_watertight': True, 'stl_faces': 10322}
-lower_shell_ivory {'volume_mm3': 100525.9, 'valid': True, 'bbox': [-68.91, -62.33, -61.0, 68.91, 68.91, 7.5], 'stl_watertight': True, 'stl_faces': 12040}
+lower_shell_ivory {'volume_mm3': 100708.4, 'valid': True, 'bbox': [-68.91, -62.33, -61.0, 68.91, 68.91, 7.5], 'stl_watertight': True, 'stl_faces': 12100}
 belt_black {'volume_mm3': 8626.2, 'valid': True, 'bbox': [-69.0, -62.41, -3.5, 69.0, 69.0, 3.5], 'stl_watertight': True, 'stl_faces': 762}
 bezel_black {'volume_mm3': 10724.0, 'valid': True, 'bbox': [-29.0, -71.4, -29.0, 29.0, -59.08, 29.0], 'stl_watertight': True, 'stl_faces': 4032}
 display_plate_petg {'volume_mm3': 6028.8, 'valid': True, 'bbox': [-29.0, -59.08, -29.0, 29.0, -56.58, 29.0], 'stl_watertight': True, 'stl_faces': 5644}

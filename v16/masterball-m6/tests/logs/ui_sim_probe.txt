@@ -30,7 +30,7 @@ home           08:20             80.0px ink  4.65mm 50cm  32.0' clip   -5.6  OK
 home           그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -127.2  OK
 focus_minutes  25               210.0px ink 12.07mm 50cm  83.0' clip  -40.4  OK
 focus_minutes  분 남음              48.0px ink  3.39mm 50cm  23.3' clip  -80.6  OK
-focus_mmss     09:59            140.0px ink  8.12mm 50cm  55.8' clip  -12.6  OK
+focus_mmss     09:58            140.0px ink  8.12mm 50cm  55.8' clip  -12.6  OK
 focus_mmss     집중                48.0px ink  3.47mm 50cm  23.9' clip  -89.3  OK
 menu           09:58            140.0px ink  8.12mm 50cm  55.8' clip  -12.1  OK
 menu           집중                48.0px ink  3.47mm 50cm  23.9' clip  -88.0  OK
@@ -60,7 +60,7 @@ message        오늘도 함께하자          29.8px ink  2.19mm 50cm  15.1' cl
 pairing        09:07             80.0px ink  4.65mm 50cm  32.0' clip   -6.3  OK
 pairing        그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -124.4  OK
 pairing        페어링               48.0px ink  3.47mm 50cm  23.9' clip  -72.4  OK
-pairing        728750            80.0px ink  4.65mm 50cm  32.0' clip  -77.2  OK
+pairing        638547            80.0px ink  4.65mm 50cm  32.0' clip  -73.3  OK
 pairing        번호를 앱에 입력         40.0px ink  2.84mm 50cm  19.5' clip  -41.1  OK
 pretendard loaded: True
 VERDICT PASS []
