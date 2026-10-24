@@ -4,6 +4,8 @@
 - 브랜치: `design/m6-usb-powered-manufacturable-20261024` (main 미병합)
 - 기준 자료: 2026-10-24 독립 감사(M5 NO-GO), Waveshare 공식 STEP·치수도·회로도·ESP-IDF 데모 V3
 
+> **Rev C Release Candidate**: 현재 기준은 `docs/REV_C_FINAL_KO.md`(변경·제약·주문 범위), `docs/G1_START_HERE_KO.md`(실물 착수 절차), `tests/logs/RUN_MANIFEST.json`(strict 검증 결과)입니다.
+>
 > **Rev B (2026-10-24)**: 주문 전 최종 검토를 반영했습니다. 바뀐 내용은 FDM 공차 재설계, 회로도 넷리스트 독립 대조, 부저 Soberton WT-1205 확정, PTC MF-R075 확정, RTC 셀 제외 + 무셀 복구 검증, 터치 변형 식별, G1/G2 절차서입니다. 상세 내용은 **`docs/REV_B_PREORDER_REVIEW_KO.md`**에 있습니다. 아래 본문은 Rev A 기록이며, 수치가 다르면 Rev B 문서를 따릅니다.
 
 ## 최종 판정
@@ -97,7 +99,7 @@
 
 - `harness.json`: 배선 표. 출발·도착 핀을 공식 회로도(J1/J2/J3)와 펌웨어 핀 정의에 자동으로 대조합니다(`tests/harness_check.py` PASS).
 - `wiring_m6.svg` / `docs/img/m6_wiring.png`: 배선도. 근거는 `docs/img/vendor_schematic_*.png`(회로도 발췌)입니다.
-- 부저: IO16(J1-8, 스트래핑 핀 아님) → 680 Ω → 2N3904, 베이스 100 kΩ 풀다운(부팅 중 무음). 부저는 USB 5 V로 구동하는 수동형이며 1N4148 플라이백을 둡니다. LEDC PWM으로 멜로디를 내고, 소리 ON/OFF를 지원합니다.
+- 부저(Rev C): IO16(J1-8, 스트래핑 핀 아님) → 100 Ω → AO3400A 게이트, 게이트–소스 100 kΩ 풀다운(부팅 중 무음), 드레인 → Soberton WT-1205(−), WT-1205(+) → USB 5 V, 1N4148 플라이백(캐소드 +5 V). Rev A의 680 Ω + 2N3904 방식은 포화가 보증되지 않아 교체했습니다(`docs/REV_C_FINAL_KO.md`). LEDC PWM으로 멜로디를 내고, 소리 ON/OFF를 지원합니다.
 - 보드 내부 사실(회로도 근거): BAT_ADC(GPIO4)는 VBAT가 아니라 **VCC**를 측정합니다. 따라서 USB 전압 저하 경고에 사용합니다.
 - 금지 사항: 마이크로SD 카드 삽입(카드 모서리가 베젤 포켓과 간섭). 자산은 플래시에 저장하므로 SD가 필요 없습니다.
 

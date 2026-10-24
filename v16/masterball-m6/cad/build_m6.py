@@ -130,6 +130,13 @@ def build_lower():
     for hx, hd in P.USB_HOLES:   # pilot d2.0 for M2.5 x 8 self-tapping (plastite)
         c = pcb_edge - hd
         part = part - (pl.location * Pos(hx, pcb_bot + 3.0, c) * Plane.XZ.location * Cylinder(1.0, 6.0))
+    # buzzer-driver perfboard seat: two flat pads so 1.0 mm foam tape sees a uniform 0.8 mm gap
+    nd = P.unit(P.DRV_AZ_DEG, P.DRV_EL_DEG)
+    pdv = Plane(origin=(0, 0, 0), x_dir=V(0, 0, 1).cross(V(*nd)).normalized(), z_dir=nd)
+    bw, bh, _ = P.DRV_BOARD
+    for sx in (-1, 1):
+        x0, x1 = sorted((sx * (bw / 2 - P.DRV_PAD_W), sx * bw / 2))
+        part = part + (local_box(pdv, x0, x1, -bh / 2, bh / 2, P.DRV_C0 + P.DRV_PAD_GAP, P.RI + 0.6) & Sphere(P.R - 0.6))
     # buzzer pocket + sound holes
     n = P.unit(-140, P.BUZ_EL_DEG)
     pb = Plane(origin=(0, 0, 0), x_dir=V(0, 0, 1).cross(V(*n)).normalized(), z_dir=n)
@@ -275,9 +282,7 @@ def purchased():
     n = P.unit(P.DRV_AZ_DEG, P.DRV_EL_DEG)
     pd = Plane(origin=(0, 0, 0), x_dir=V(0, 0, 1).cross(V(*n)).normalized(), z_dir=n)
     bw, bh, bt = P.DRV_BOARD
-    half_diag = (bw ** 2 + bh ** 2) ** 0.5 / 2
-    c0 = (P.RI ** 2 - half_diag ** 2) ** 0.5 - P.DRV_TAPE  # board back face: corners keep DRV_TAPE to the wall
-    env["buzzer_driver_board"] = local_box(pd, -bw / 2, bw / 2, -bh / 2, bh / 2, c0 - bt, c0)
+    env["buzzer_driver_board"] = local_box(pd, -bw / 2, bw / 2, -bh / 2, bh / 2, P.DRV_C0 - bt, P.DRV_C0)
     d, h = P.WEIGHT_DISC
     env["steel_disc"] = cyl_z(d / 2, P.FLOOR_TOP_Z, P.FLOOR_TOP_Z + h)
     return env

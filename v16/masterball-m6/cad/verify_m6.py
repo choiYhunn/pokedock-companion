@@ -368,6 +368,16 @@ for k, up in ORIENT.items():
 report["checks"]["print_overhang"] = ov
 print("overhang", ov)
 
+# provenance: which sources produced this report, and which meshes were checked
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "tests"))
+import hashlib  # noqa: E402
+
+from source_fingerprint import fingerprint  # noqa: E402
+
+report["source_fingerprint"] = fingerprint()
+report["stl_sha256"] = {os.path.relpath(f, CAD).replace(os.sep, "/"): hashlib.sha256(open(f, "rb").read()).hexdigest()
+                        for f in sorted(glob.glob(f"{CAD}/stl/*.stl") + glob.glob(f"{CAD}/purchased/*.stl")
+                                        + glob.glob(f"{CAD}/fitkit/*.stl"))}
 report["verdict"] = "PASS" if not report["fail"] else "FAIL"
 json.dump(report, open(OUT, "w"), indent=1, default=float)
 print("VERDICT", report["verdict"], len(report["fail"]), "failures")

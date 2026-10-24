@@ -34,7 +34,7 @@ h = json.loads((ROOT / "electronics" / "harness.json").read_text(encoding="utf8"
 drv = h["buzzer_driver"]
 if BZ["part"] not in drv["BZ"] or FET["part"] not in drv["Q1"] or "1N4148" not in drv["D1"]:
     fail.append("harness driver parts differ from WT-1205 / AO3400A / 1N4148")
-if not any(w["net"] == "USB_5V" and "buzzer +" in w["to"] for w in h["harness"]):
+if not any(w["net"] == "USB_5V" and "WT-1205 pin +" in w["to"] for w in h["harness"]):
     fail.append("buzzer + is not fed from USB_5V")
 svg = (ROOT / "electronics" / "wiring_m6.svg").read_text(encoding="utf8")
 if FET["part"] not in svg or "2N3904" in svg:

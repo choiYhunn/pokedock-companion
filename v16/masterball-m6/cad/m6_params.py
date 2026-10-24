@@ -95,7 +95,11 @@ BUZ_FIT = 0.60                                 # radial: d12.5 max part + unders
 # buzzer driver perfboard (AO3400A on SOT-23 adapter, 100R, 100k, 1N4148): taped to the lower inner wall
 DRV_AZ_DEG, DRV_EL_DEG = -110.0, -28.0
 DRV_BOARD = (24.0, 18.0, 10.0)                 # perfboard x, y, height incl. parts and 1.6 mm board
-DRV_TAPE = 1.0                                 # minimum gap to the curved wall (2 mm foam tape compresses)
+DRV_TAPE = 1.0                                 # board-corner clearance to the raw curved wall
+DRV_C0 = math.sqrt(RI ** 2 - (DRV_BOARD[0] ** 2 + DRV_BOARD[1] ** 2) / 4) - DRV_TAPE  # board back-face plane
+DRV_PAD_W = 5.0                                # two printed seat pads under the short edges (flat, 5 x 18 mm)
+DRV_PAD_GAP = 0.8                              # pad top -> board back; 1.0 mm foam tape compresses 20 %
+DRV_FOAM = 1.0
 
 # --- decoration ---------------------------------------------------------------------------
 LOBE_AZ = 42.0                                 # from front (-y) toward +/-x

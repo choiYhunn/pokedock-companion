@@ -6,3 +6,7 @@ build/
 *.elf
 *.map
 .DS_Store
+
+# M6 vendor references (downloaded by tools/fetch_vendor_refs.sh, not redistributed)
+vendor_cache/
+firmware/out/

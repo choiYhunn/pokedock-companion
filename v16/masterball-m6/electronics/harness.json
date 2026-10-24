@@ -98,16 +98,16 @@
       "net": "IO16",
       "awg": 28,
       "colour": "yellow",
-      "len_mm": 150
+      "len_mm": 180
     },
     {
       "wire": "W6",
       "from": "W1 after PTC (splice at breakout)",
-      "to": "buzzer + (WT-1205 pin +)",
+      "to": "buzzer driver +5 V node (feeds W8 and D1 cathode)",
       "net": "USB_5V",
       "awg": 28,
       "colour": "red",
-      "len_mm": 60
+      "len_mm": 120
     },
     {
       "wire": "W7",
@@ -116,16 +116,35 @@
       "net": "GND",
       "awg": 28,
       "colour": "black",
-      "len_mm": 60
+      "len_mm": 120
+    },
+    {
+      "wire": "W8",
+      "from": "buzzer driver: +5 V node (W6)",
+      "to": "WT-1205 pin +",
+      "net": "USB_5V",
+      "awg": 28,
+      "colour": "red",
+      "len_mm": 80
+    },
+    {
+      "wire": "W9",
+      "from": "buzzer driver: AO3400A drain (SOT-23 pin 3)",
+      "to": "WT-1205 pin -",
+      "net": "BZ_DRAIN",
+      "awg": 28,
+      "colour": "blue",
+      "len_mm": 80
     }
   ],
   "buzzer_driver": {
     "R1": "100 ohm 1/4 W: IO16 -> Q1 gate (edge-rate / ringing damper)",
     "R2": "100 kohm 1/4 W: Q1 gate -> source/GND (off through reset, boot and when the socket is unplugged)",
-    "Q1": "AO3400A N-MOSFET, SOT-23 on a SOT-23-to-DIP adapter: drain -> buzzer -, source -> GND. VGS(th) 0.65-1.45 V; RDS(on) < 48 mohm guaranteed at VGS 2.5 V; VDS 30 V; VGS +/-12 V",
+    "Q1": "AO3400A N-MOSFET, SOT-23 (pin 1 = G, pin 2 = S, pin 3 = D, AOS datasheet top view) on a SOT-23-to-DIP adapter: drain -> W9 -> buzzer -, source -> GND. VGS(th) 0.65-1.45 V; RDS(on) < 48 mohm at VGS 2.5 V; VDS 30 V; VGS +/-12 V",
     "D1": "1N4148 across the buzzer coil, cathode to +5 V (clamps the coil flyback to ~5.7 V)",
     "BZ": "Soberton WT-1205 passive magnetic transducer, 5 V (4-6 Vo-p), coil 47 +/-7 ohm, 50 mA max mean, 2400 Hz, d12.0 x 9.5 mm +/-0.5, pins 6.5 mm (Digi-Key 433-1028-ND)",
-    "why_not_2N3904": "2N3904 saturation is only specified to IC 50 mA with IB 5 mA (VCE(sat) <= 0.3 V); the WT-1205 coil can peak at 5.25 V / 40 ohm = 131 mA, where only active-region hFE >= 30 at VCE 1 V is given, and a 3.3 V GPIO cannot supply a forced-beta-10 base current (13 mA)."
+    "why_not_2N3904": "2N3904 saturation is only specified to IC 50 mA with IB 5 mA (VCE(sat) <= 0.3 V); the WT-1205 coil can peak at 5.25 V / 40 ohm = 131 mA, where only active-region hFE >= 30 at VCE 1 V is given, and a 3.3 V GPIO cannot supply a forced-beta-10 base current (13 mA).",
+    "board": "24 x 18 mm perfboard, parts lying flat (max height <= 8.4 mm incl. wire exits), leads trimmed <= 1.0 mm + Kapton on the back; held by 1.0 mm foam tape on the two printed seat pads (cad: DRV_*)"
   },
   "rtc_backup": "EXCLUDED from M6 purchase: J2 is charged from 3V3 through B5819 with no current limit; no cell until charge voltage/current are validated (G1-E3 + datasheet). Without it the clock is restored by phone time_sync after any power cut.",
   "dual_port_rule": "Never connect the board's own USB-C and the external port at the same time: their VBUS (USB_5V) and D+/D- are the same nets. The board port is only reachable with the upper shell removed; label it.",
