@@ -1,0 +1,10 @@
+PASS  connect: reads state and auto time_syncs the untrusted clock (no RTC cell)
+PASS  app partner change reaches the device; non-partner is refused before sending
+PASS  V18 weekday alarm is projected to the single M6 alarm and rings on the device
+PASS  no alarm within 24 h → the app disables the device alarm
+PASS  focus start / pause / resume / cancel mirror the app timer
+PASS  lost ACK is retried with the same seq and executed once
+PASS  link drop → automatic reconnect on next command, state re-read
+PASS  Korean message from 우리 서랍 (30 syllables) fits, 31 is refused locally
+PASS  unauthenticated link → auth NACK with a readable Korean hint
+PASS: 9/9 app↔engine checks (simulated link; not a radio test)
