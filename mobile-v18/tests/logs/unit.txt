@@ -1,0 +1,40 @@
+✔ 8 partners kept first in V17 order, Gengar first; 24 total with the requested 16 (1.1961ms)
+✔ Pokédex ids match config/pokemon_catalog.json and the service worker list (5.9496ms)
+✔ no Pokémon image or audio file is committed in mobile-v18 (0.4179ms)
+✔ V17.1 data migrates once: partner, alarms, letter, quiz best; V17 key untouched (1.2363ms)
+✔ running V17 focus timer survives migration with its end time (0.3661ms)
+✔ garbage state falls back safely (0.6582ms)
+✔ state round-trips through JSON unchanged (0.6196ms)
+✔ KST clock and weekday (0.183ms)
+✔ timer derives remaining time from the end time (no drift across sleep) (0.155ms)
+✔ single focus completes once, even when checked long after the end (0.3136ms)
+✔ pomodoro 25/5: focus → auto break → waits for next focus; 4th focus gets long break (0.1779ms)
+✔ reset credits partial focus ≥ 1 minute, never breaks (0.116ms)
+✔ focus stats: today, week, total; midnight-spanning session counts on its end day (1.3919ms)
+✔ alarm rings once per day; catch-up window covers a throttled tab (0.2802ms)
+✔ midnight boundary: 23:59 Saturday alarm checked at 00:00 Sunday still rings for Saturday (0.0913ms)
+✔ alarm switched on after its minute passed does not ring retroactively (0.0922ms)
+✔ next alarm across the week and its relative time (0.1587ms)
+✔ duplicate alarms are detected only when both are on and share a weekday (0.1401ms)
+✔ M6 projection sends only an alarm ringing within 24 h (firmware keeps one daily alarm) (0.1307ms)
+✔ visit streak, pet daily cap and bond level (0.1596ms)
+✔ badges are awarded once with the earning day (0.2518ms)
+✔ records: higher-is-better and lower-is-better (0.0995ms)
+✔ daily pick is stable for a day and the type quiz always contains the answer once (1.3191ms)
+✔ quiz choices: 4 distinct, answer included, hard prefers shared types (1.1584ms)
+✔ fresh deck avoids immediate repeats and prefers unseen Pokémon (0.4636ms)
+✔ memory: pairs, match, miss and settle (0.3676ms)
+✔ runner: collisions, scoring, invulnerability and game over without images (0.3016ms)
+✔ runner: difficulty ramps and pointer control is clamped to the field (2.3659ms)
+✔ balance summary uses only the player picks (0.2056ms)
+✔ Capacitor hex codec round-trips and tolerates spaces (0.3284ms)
+✔ all app commands fit the 180-byte limit, including a 30-syllable message (0.4778ms)
+✔ mock transport + real client: ACK, state notify, NACK mapping (374.36ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 503.5543
