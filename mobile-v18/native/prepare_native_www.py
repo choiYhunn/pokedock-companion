@@ -30,6 +30,9 @@ PERMS = [
     '<uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />',
     '<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />',
     '<uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />',
+    # bluetooth-le 7.x declares location without a limit; BLE scans only need it up to Android 11.
+    '<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="30" />',
+    '<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30" />',
 ]
 
 

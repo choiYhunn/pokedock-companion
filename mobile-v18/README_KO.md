@@ -85,7 +85,7 @@ M6 파트너 8종(순서 유지): 팬텀 #94, 팽도리 #393, 토게키스 #468,
 | 프로토콜 | PR #21 v2 그대로. 명령 검증, ACK 대기, 같은 seq 재시도, 재연결 백오프, 상태 재동기화, RTC 없는 시계 자동 동기화 |
 | 앱 기능 | 검색·연결·해제, 페어링 안내(볼 화면 6자리), 상태 조회(파트너·밝기·소리·집중·알람·시계·USB 전원·펌웨어), 파트너 변경, 밝기, 소리, 시간 동기화, 다음 알람, 집중 동기화, 메시지, 반응, 오류 코드의 한국어 설명, 통신 기록 |
 | Android Chrome / 데스크톱 Chrome·Edge | Web Bluetooth 전송 구현. **실기기 미검증** |
-| Android 네이티브 | `@capacitor-community/bluetooth-le@7.3.2` 원시 브리지 전송 구현, 플러그인 설치와 `cap sync` 완료. **APK 미빌드·실기기 미검증** |
+| Android 네이티브 | `@capacitor-community/bluetooth-le@7.3.2` 원시 브리지 전송 구현, 디버그 APK 빌드 완료(아래). **실기기 미검증** |
 | iPhone Safari | Web Bluetooth가 없어 연결 버튼을 숨기고 이유를 보여 줌 |
 | 모의 연결 `?m6=mock` | 테스트 전용. 화면에 “모의 연결 (테스트)”로 표시하고 “연결됨”이라고 쓰지 않음 |
 | 검증 | V18 앱 경로 ↔ PR #21 C++ `ProtocolEngine` 브리지 9/9, PR #21 원본 E2E 16/16(복사한 클라이언트 사용). 둘 다 **무선 통신 시험이 아님** (G3 남음) |
@@ -121,10 +121,19 @@ NODE_PATH=<playwright가 있는 node_modules> node mobile-v18/tests/v18_e2e.cjs 
 node mobile-v18/tests/ble_bridge_app_test.mjs <PR #21 ble_bridge_host 빌드 결과>
 ```
 
+## Android 디버그 APK (개인 설치용, 저장소에 포함하지 않음)
+
+- 파일: `PokeDock_V18_debug_20261025.apk` (로컬 `Downloads`와 `PokeDock_Mobile_V18_Native_20261025/app_android`, 8.6 MB)
+- `com.pokedock.littlemoments` versionCode 3 / versionName 1.8.0, minSdk 23, target/compile SDK 35
+- 서명: 디버그 키, v1+v2 검증 통과. 서명 인증서 SHA-256 `ede9a013…27fc`가 V17.1 APK와 **같아서**, V17.1 위에 업데이트로 설치하면 데이터가 남습니다.
+- 포함: V18 앱, 스프라이트 48개(개인 빌드), 알람 WAV 3개. 울음소리 파일은 넣지 않았습니다.
+- 권한: 알림, 정확한 알람, 진동, BLUETOOTH_SCAN(neverForLocation), BLUETOOTH_CONNECT. 플러그인이 요청하는 위치 권한은 Android 11 이하에서만 쓰도록 `maxSdkVersion=30`으로 제한했습니다.
+- 재빌드: `python mobile-v18/native/prepare_native_www.py <capacitor 프로젝트>` → `npx cap sync android` → `android/gradlew assembleDebug` (JDK 21, Android SDK platform 35 / build-tools 35.0.0)
+
 ## 남은 일 (미완료 · 사실대로)
 
 - **실기기 시험을 하지 않았습니다.** iPhone Safari 홈 화면 설치, 캐시 유지, 실제 오디오(특히 iOS의 OGG 울음소리 재생), 저사양 Android의 프레임
-- **Android APK를 다시 빌드하지 못했습니다.** 이 PC에 Android SDK가 없고, SDK를 설치하려면 Android SDK 라이선스 동의가 필요합니다(사용자 승인 필요). 네이티브 프로젝트는 로컬 `PokeDock_Mobile_V18_Native_20261025/app_android`에 `cap sync`까지 준비해 두었습니다.
+- Android 디버그 APK는 빌드했지만(2026-10-25, 사용자 승인 후 SDK 설치) **휴대폰에 설치해 실행해 보지는 않았습니다.**
 - Android 잠금 화면 알람, 정확한 알람 권한, 절전 상태 타이밍, 알림 액션(스누즈)은 실기기에서 확인해야 합니다.
 - iOS 네이티브: Mac, Xcode, Apple 서명이 필요하며 빌드하지 않았습니다.
 - M6 BLE 실무선 연결, 본딩, MTU, 끊김 복구 (하드웨어 게이트 G3)
