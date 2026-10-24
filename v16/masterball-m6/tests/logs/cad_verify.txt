@@ -2,3 +2,51 @@ C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\e5703c39-80f0-
   center_mass = integrated[1:4] / volume
 C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\e5703c39-80f0-418a-b2aa-c03f2c0a3466\scratchpad\venv\Lib\site-packages\trimesh\triangles.py:302: RuntimeWarning: divide by zero encountered in divide
   center_mass = integrated[1:4] / volume
+interference pairs reported: 7
+engagement {'check': 'M3 insert wall in upper boss', 'material_fraction': 1.0}
+engagement {'check': 'M3 screw wall in lower column', 'material_fraction': 1.0}
+engagement {'check': 'M3 head seat annulus', 'material_fraction': 1.0}
+engagement {'check': 'M3 insert wall in upper boss', 'material_fraction': 1.0}
+engagement {'check': 'M3 screw wall in lower column', 'material_fraction': 1.0}
+engagement {'check': 'M3 head seat annulus', 'material_fraction': 1.0}
+engagement {'check': 'M3 insert wall in upper boss', 'material_fraction': 1.0}
+engagement {'check': 'M3 screw wall in lower column', 'material_fraction': 1.0}
+engagement {'check': 'M3 head seat annulus', 'material_fraction': 1.0}
+engagement {'check': 'M2 PT pilot top_l wall in bezel', 'material_fraction': 1.0}
+engagement {'check': 'plate land top_l', 'material_fraction': 1.0}
+engagement {'check': 'M2 PT pilot top_r wall in bezel', 'material_fraction': 1.0}
+engagement {'check': 'plate land top_r', 'material_fraction': 1.0}
+engagement {'check': 'M2 PT pilot bot_l wall in bezel', 'material_fraction': 1.0}
+engagement {'check': 'plate land bot_l', 'material_fraction': 1.0}
+engagement {'check': 'M2 PT pilot bot_r wall in bezel', 'material_fraction': 1.0}
+engagement {'check': 'plate land bot_r', 'material_fraction': 1.0}
+engagement {'check': 'rib screw land bot_l', 'material_fraction': 1.0}
+engagement {'check': 'rib screw land bot_r', 'material_fraction': 1.0}
+engagement {'check': 'plate land at standoff (-15.8,-11.6)', 'material_fraction': 1.0}
+engagement {'check': 'plate land at standoff (-15.8,+11.6)', 'material_fraction': 1.0}
+engagement {'check': 'plate land at standoff (+15.8,-11.6)', 'material_fraction': 1.0}
+engagement {'check': 'plate land at standoff (+15.8,+11.6)', 'material_fraction': 1.0}
+engagement {'check': 'USB M2.5 pilot wall in block x=-7.62', 'material_fraction': 1.0}
+engagement {'check': 'USB M2.5 pilot wall in block x=+7.62', 'material_fraction': 1.0}
+engagement {'check': 'lobe_left_pink screw boss wall in upper', 'material_fraction': 1.0}
+engagement {'check': 'lobe_left_pink pilot wall in lobe', 'material_fraction': 1.0}
+engagement {'check': 'lobe_right_pink screw boss wall in upper', 'material_fraction': 1.0}
+engagement {'check': 'lobe_right_pink pilot wall in lobe', 'material_fraction': 1.0}
+engagement {'check': 'buzzer pocket wall', 'material_fraction': 1.0}
+engagement {'check': 'plate hole vs board standoff (-15.75,-11.60)', 'offset_mm': 0.0}
+engagement {'check': 'plate hole vs board standoff (-15.75,+11.60)', 'offset_mm': 0.0}
+engagement {'check': 'plate hole vs board standoff (+15.75,-11.60)', 'offset_mm': 0.1}
+engagement {'check': 'plate hole vs board standoff (+15.75,+11.60)', 'offset_mm': 0.0}
+path 1 display module into bezel pocket from behind (+y -> final) OK
+path 2 USB-C breakout slid outward into port block OK
+path 3 buzzer pushed into pocket OK
+path 4 display sub-assembly lowered into lower shell OK
+path 5 belt lowered over spigot OK
+path 6 upper shell (with lobes + M) lowered OK
+path 7 three M3x50 screws from the base OK
+path 8 lobe left onto seat OK
+path 8 lobe right onto seat OK
+usb plug vs desk {'plug_path_min_z': -42.7, 'desk_z': -64.0, 'clearance_mm': 21.3}
+mass/cog {'without_disc': {'mass_g': np.float64(286.2), 'cog_mm': [-0.37, -8.37, -1.48], 'tip_angle_deg': 16.5, 'push_to_tip_N': 1.55, 'push_to_slide_N_mu0.8': np.float64(2.25), 'push_to_slide_N_mu0.3': np.float64(0.84)}, 'with_steel_disc': {'mass_g': np.float64(345.4), 'cog_mm': [-0.31, -6.94, -10.66], 'tip_angle_deg': 20.5, 'push_to_tip_N': 1.79, 'push_to_slide_N_mu0.8': np.float64(2.71), 'push_to_slide_N_mu0.3': np.float64(1.02)}}
+overhang {'upper_shell_purple': {'support_area_total_mm2': 8632.5, 'support_area_on_cosmetic_faces_mm2': 0.0}, 'lower_shell_ivory': {'support_area_total_mm2': 1321.8, 'support_area_on_cosmetic_faces_mm2': 0.0}, 'belt_black': {'support_area_total_mm2': 0.0, 'support_area_on_cosmetic_faces_mm2': 0.0}, 'bezel_black': {'support_area_total_mm2': 633.1, 'support_area_on_cosmetic_faces_mm2': 0.0}, 'display_plate_petg': {'support_area_total_mm2': 0.0, 'support_area_on_cosmetic_faces_mm2': 0.0}, 'lobe_left_pink': {'support_area_total_mm2': 373.6, 'support_area_on_cosmetic_faces_mm2': 2.0}, 'lobe_right_pink': {'support_area_total_mm2': 373.6, 'support_area_on_cosmetic_faces_mm2': 2.0}, 'm_inlay_white': {'support_area_total_mm2': 0.0, 'support_area_on_cosmetic_faces_mm2': 0.0}}
+VERDICT PASS 0 failures

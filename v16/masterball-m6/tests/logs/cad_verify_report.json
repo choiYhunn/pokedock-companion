@@ -239,7 +239,7 @@
     "a": "bezel_black",
     "b": "belt_black",
     "why": "button in belt gap",
-    "min_clearance_mm": 0.585,
+    "min_clearance_mm": 0.586,
     "mmc_required_mm": 0.3,
     "designed_contact": false,
     "mmc_ok": true
@@ -266,7 +266,7 @@
     "a": "upper_shell_purple",
     "b": "lower_shell_ivory",
     "why": "upper counterbore on spigot / boss gap",
-    "min_clearance_mm": 0.321,
+    "min_clearance_mm": 0.463,
     "mmc_required_mm": 0.3,
     "designed_contact": false,
     "mmc_ok": true
@@ -302,7 +302,7 @@
     "a": "socket_right",
     "b": "upper_shell_purple",
     "why": "socket vs upper rib",
-    "min_clearance_mm": 0.543,
+    "min_clearance_mm": 0.542,
     "mmc_required_mm": 0.35,
     "designed_contact": false,
     "mmc_ok": true
@@ -320,7 +320,7 @@
     "a": "lobe_left_pink",
     "b": "m_inlay_white",
     "why": "decor spacing",
-    "min_clearance_mm": 11.124,
+    "min_clearance_mm": 11.116,
     "mmc_required_mm": 0.3,
     "designed_contact": false,
     "mmc_ok": true
@@ -383,7 +383,7 @@
     "a": "bezel_black",
     "b": "board_279_TYPE-C_16PIN-9X3X7_3",
     "why": "bezel vs board part",
-    "min_clearance_mm": 0.545,
+    "min_clearance_mm": 0.546,
     "mmc_required_mm": 0.25,
     "designed_contact": false,
     "mmc_ok": true
@@ -400,26 +400,26 @@
    {
     "a": "bezel_black",
     "b": "board_280_PITCH1MM-4PIN-SMT-HORIZONTAL",
-    "why": "bezel vs board part",
-    "min_clearance_mm": 1.751,
-    "mmc_required_mm": 0.25,
-    "designed_contact": false,
-    "mmc_ok": true
-   },
-   {
-    "a": "display_plate_petg",
-    "b": "board_281_PITCH1MM-4PIN-SMT-HORIZONTAL",
-    "why": "plate vs board part",
-    "min_clearance_mm": 0.97,
-    "mmc_required_mm": 0.25,
-    "designed_contact": false,
-    "mmc_ok": true
-   },
-   {
-    "a": "bezel_black",
-    "b": "board_281_PITCH1MM-4PIN-SMT-HORIZONTAL",
     "why": "bezel vs board part",
     "min_clearance_mm": 1.75,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "display_plate_petg",
+    "b": "board_281_PITCH1MM-4PIN-SMT-HORIZONTAL",
+    "why": "plate vs board part",
+    "min_clearance_mm": 0.97,
+    "mmc_required_mm": 0.25,
+    "designed_contact": false,
+    "mmc_ok": true
+   },
+   {
+    "a": "bezel_black",
+    "b": "board_281_PITCH1MM-4PIN-SMT-HORIZONTAL",
+    "why": "bezel vs board part",
+    "min_clearance_mm": 1.751,
     "mmc_required_mm": 0.25,
     "designed_contact": false,
     "mmc_ok": true
@@ -491,7 +491,7 @@
     "a": "bezel_black",
     "b": "board_286_1_27MM-2X7PIN-MALE",
     "why": "bezel vs board part",
-    "min_clearance_mm": 4.542,
+    "min_clearance_mm": 4.547,
     "mmc_required_mm": 0.25,
     "designed_contact": false,
     "mmc_ok": true
