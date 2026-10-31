@@ -1,0 +1,17 @@
+PASS  MTU below 185 is refused before any command
+PASS  connect reads initial state (device standalone defaults)
+PASS  unauthenticated link: write refused with auth error, nothing changes
+PASS  set partner -> ACK ok + state notification
+PASS  invalid input rejected locally, never sent
+PASS  lost ACK -> retry with same seq -> executed exactly once
+PASS  disconnect after write -> reconnect -> cached ACK, no double execution, state resync
+PASS  device runs standalone while app is away; app resyncs on connect
+PASS  clock sync + daily alarm rings on device and is dismissed from the app
+PASS  Korean private message within 90 bytes; 31 syllables refused locally
+PASS  app restart = new session, seq restarts at 1 and still executes
+PASS  RTC-less: connect auto-syncs an untrusted clock, alarm armed for 06:30
+PASS  RTC-less: power cut keeps NVS settings but the clock becomes untrusted
+PASS  RTC-less: no alarm while the clock is untrusted (never rings at a wrong time)
+PASS  RTC-less: phone reconnect after the alarm time -> no stale alarm, next day rings once
+PASS  every ACK/state fits a 185-byte MTU (enforced by link)
+PASS: 16 passed, 0 failed (simulated link; not a radio test)

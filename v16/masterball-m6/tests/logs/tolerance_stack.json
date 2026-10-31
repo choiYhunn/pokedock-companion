@@ -1,0 +1,210 @@
+{
+ "model": "FDM tolerance stack + sensitivity for the M6 critical fits (worst case and Monte Carlo).\n\nverify_m6.py checks geometric clearance against a symmetric +/-0.15 mm per surface. Real FDM\nis biased (outer walls bulge, holes print small), shrinks by material, and assembly play moves\nparts. This model makes each contributor explicit (radial mm, + = more clearance):\n\n  outer_wall  printed outer surface  : -0.20 .. 0.00   (bulge / seam)\n  hole_wall   printed hole surface   : -0.25 .. 0.00   (holes print undersize)\n  shrink      PLA 0.2-0.5 %, PETG 0.3-0.8 % of the feature radius (outer grows clearance,\n              hole loses it); same-material pairs share 70 % of their shrink (same spool/shop)\n  position    assembly play between the two features (screw-in-hole, spigot float, ...)\n  vendor      purchased-part tolerance from its drawing\n\nusage: python tolerance_stack.py <out.json> [--n 200000]\n",
+ "samples": 200000,
+ "before_m6_rev_a": [
+  {
+   "fit": "F1 button bezel (PETG) in shell opening (PLA)",
+   "nominal_mm": 0.35,
+   "worst_case_min_mm": -0.459,
+   "p0_1_percentile_mm": -0.287,
+   "p_interference": 0.27186,
+   "sensitivity_share": {
+    "hole_wall": 0.31,
+    "position": 0.2,
+    "outer_wall": 0.2,
+    "opening_halves_shrink_offset": 0.2,
+    "outer_shrink": 0.06,
+    "hole_shrink": 0.04
+   }
+  },
+  {
+   "fit": "F2 display plate rim in opening throat",
+   "nominal_mm": 0.35,
+   "worst_case_min_mm": -0.36,
+   "p0_1_percentile_mm": -0.24,
+   "p_interference": 0.25072,
+   "sensitivity_share": {
+    "hole_wall": 0.38,
+    "outer_wall": 0.25,
+    "position": 0.25,
+    "outer_shrink": 0.07,
+    "hole_shrink": 0.05
+   }
+  },
+  {
+   "fit": "F3 glass (vendor 46.00 +/-0.1) in bezel pocket (PETG)",
+   "nominal_mm": 0.3,
+   "worst_case_min_mm": -0.186,
+   "p0_1_percentile_mm": -0.161,
+   "p_interference": 0.313895,
+   "sensitivity_share": {
+    "hole_wall": 0.73,
+    "hole_shrink": 0.16,
+    "vendor": 0.12
+   }
+  },
+  {
+   "fit": "F4 lower spigot (PLA) in belt / upper bore (PLA)",
+   "nominal_mm": 0.35,
+   "worst_case_min_mm": -0.296,
+   "p0_1_percentile_mm": -0.114,
+   "p_interference": 0.107375,
+   "sensitivity_share": {
+    "hole_wall": 0.42,
+    "outer_wall": 0.27,
+    "hole_shrink": 0.15,
+    "outer_shrink": 0.15
+   }
+  },
+  {
+   "fit": "F5 USB receptacle slides through block slot (PLA)",
+   "nominal_mm": 0.3,
+   "worst_case_min_mm": -0.024,
+   "p0_1_percentile_mm": -0.011,
+   "p_interference": 0.00579,
+   "sensitivity_share": {
+    "hole_wall": 0.86,
+    "vendor": 0.14,
+    "hole_shrink": 0.0
+   }
+  },
+  {
+   "fit": "F6 buzzer d12 in pocket (PLA)",
+   "nominal_mm": 0.6,
+   "worst_case_min_mm": 0.217,
+   "p0_1_percentile_mm": 0.235,
+   "p_interference": 0.0,
+   "sensitivity_share": {
+    "hole_wall": 0.61,
+    "vendor": 0.39,
+    "hole_shrink": 0.0
+   }
+  },
+  {
+   "fit": "F7 M3 shank in 35 mm column bore",
+   "nominal_mm": 0.4,
+   "worst_case_min_mm": 0.041,
+   "p0_1_percentile_mm": 0.05,
+   "p_interference": 0.0,
+   "sensitivity_share": {
+    "hole_wall": 0.86,
+    "bore_straightness": 0.14,
+    "hole_shrink": 0.0
+   }
+  }
+ ],
+ "after_m6_rev_b": [
+  {
+   "fit": "F1 button bezel (PETG) in shell opening (PLA)",
+   "nominal_mm": 0.6,
+   "worst_case_min_mm": -0.111,
+   "p0_1_percentile_mm": 0.045,
+   "p_interference": 0.00011,
+   "sensitivity_share": {
+    "hole_wall": 0.36,
+    "opening_halves_shrink_offset": 0.23,
+    "outer_wall": 0.23,
+    "outer_shrink": 0.07,
+    "position": 0.06,
+    "hole_shrink": 0.05
+   }
+  },
+  {
+   "fit": "F2 display plate rim in opening throat",
+   "nominal_mm": 0.6,
+   "worst_case_min_mm": -0.011,
+   "p0_1_percentile_mm": 0.095,
+   "p_interference": 0.0,
+   "sensitivity_share": {
+    "hole_wall": 0.47,
+    "outer_wall": 0.3,
+    "outer_shrink": 0.09,
+    "position": 0.08,
+    "hole_shrink": 0.06
+   }
+  },
+  {
+   "fit": "F3 glass (vendor 46.00 +/-0.1) in bezel pocket (PETG)",
+   "nominal_mm": 0.5,
+   "worst_case_min_mm": 0.012,
+   "p0_1_percentile_mm": 0.038,
+   "p_interference": 0.0,
+   "sensitivity_share": {
+    "hole_wall": 0.72,
+    "hole_shrink": 0.16,
+    "vendor": 0.12
+   }
+  },
+  {
+   "fit": "F4 lower spigot (PLA) in belt / upper bore (PLA)",
+   "nominal_mm": 0.55,
+   "worst_case_min_mm": -0.097,
+   "p0_1_percentile_mm": 0.086,
+   "p_interference": 0.0,
+   "sensitivity_share": {
+    "hole_wall": 0.42,
+    "outer_wall": 0.27,
+    "hole_shrink": 0.15,
+    "outer_shrink": 0.15
+   }
+  },
+  {
+   "fit": "F5 USB receptacle slides through block slot (PLA)",
+   "nominal_mm": 0.45,
+   "worst_case_min_mm": 0.125,
+   "p0_1_percentile_mm": 0.139,
+   "p_interference": 0.0,
+   "sensitivity_share": {
+    "hole_wall": 0.86,
+    "vendor": 0.14,
+    "hole_shrink": 0.0
+   }
+  },
+  {
+   "fit": "F6 buzzer d12 in pocket (PLA)",
+   "nominal_mm": 0.6,
+   "worst_case_min_mm": 0.217,
+   "p0_1_percentile_mm": 0.235,
+   "p_interference": 0.0,
+   "sensitivity_share": {
+    "hole_wall": 0.61,
+    "vendor": 0.39,
+    "hole_shrink": 0.0
+   }
+  },
+  {
+   "fit": "F7 M3 shank in 35 mm column bore",
+   "nominal_mm": 0.4,
+   "worst_case_min_mm": 0.041,
+   "p0_1_percentile_mm": 0.05,
+   "p_interference": 0.0,
+   "sensitivity_share": {
+    "hole_wall": 0.86,
+    "bore_straightness": 0.14,
+    "hole_shrink": 0.0
+   }
+  }
+ ],
+ "opening_clearance_sweep": {
+  "0.35": {
+   "worst": -0.36,
+   "p_interference": 0.14242
+  },
+  "0.45": {
+   "worst": -0.26,
+   "p_interference": 0.025335
+  },
+  "0.55": {
+   "worst": -0.161,
+   "p_interference": 0.001385
+  },
+  "0.65": {
+   "worst": -0.061,
+   "p_interference": 0.0
+  },
+  "0.75": {
+   "worst": 0.039,
+   "p_interference": 0.0
+  }
+ }
+}

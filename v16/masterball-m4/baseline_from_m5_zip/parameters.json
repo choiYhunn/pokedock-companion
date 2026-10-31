@@ -1,0 +1,8 @@
+{
+  "design": "M4", "units": "mm", "manufacturer_board": "Waveshare ESP32-S3-Touch-AMOLED-1.43 STANDARD without case",
+  "shell_diameter": 138.0, "wall": 2.8, "base_flat_z": -61.0,
+  "active_display_diameter": 36.75, "bezel_outer_diameter": 60.0, "bezel_window_diameter": 38.0,
+  "module_outer_envelope_diameter_assumed": 46.0, "radial_nominal_clearance": 0.7,
+  "module_depth_envelope_assumed": 13.0, "battery_envelope_max": [60,40,10],
+  "print_no_go": ["official standard-board 3D STEP missing", "retainer clamping surface unknown", "rear hatch fixing incomplete", "USB-C cable/connector insertion sweep unverified", "battery model, connector and antenna clearance unverified"]
+}

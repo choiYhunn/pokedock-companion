@@ -1,0 +1,5 @@
+fitkit_port_coupon 3841.2 mm3
+fitkit_opening_coupon 8394.7 mm3
+fitkit_joint_coupon 2679.9 mm3
+fitkit_belt_segment 969.2 mm3
+fitkit_upper_segment 1322.2 mm3

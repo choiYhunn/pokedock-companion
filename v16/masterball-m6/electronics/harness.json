@@ -1,0 +1,163 @@
+{
+  "_source": "Waveshare ESP32-S3-Touch-AMOLED-1.43 schematic (files.waveshare.com, 2024): J1/J2/J3/J4/J7 nets re-verified 2026-10-24 against the PDF's own netlist layer by tests/schematic_netlist_check.py",
+  "board_pins": {
+    "J1": {
+      "1": "U_P",
+      "2": "VBAT",
+      "3": "U_N",
+      "4": "USB_5V",
+      "5": "IO6",
+      "6": "GND",
+      "7": "IO5",
+      "8": "IO16",
+      "9": "IO3",
+      "10": "IO17",
+      "11": "IO2",
+      "12": "IO7",
+      "13": "IO1",
+      "14": "IO0"
+    },
+    "J3": {
+      "1": "3V3",
+      "2": "IO18",
+      "3": "SCL",
+      "4": "IO38",
+      "5": "SDA",
+      "6": "IO39",
+      "7": "GND",
+      "8": "IO40",
+      "9": "RXD",
+      "10": "IO41",
+      "11": "TXD",
+      "12": "IO46",
+      "13": "3V3",
+      "14": "IO45"
+    },
+    "J2": {
+      "1": "RTC_VDD (cathode of D1 B5819WS from 3V3)",
+      "2": "GND"
+    },
+    "J7": {
+      "note": "1S LiPo MX1.25 header - LEFT EMPTY in M6 (no main battery)"
+    }
+  },
+  "reserved_by_board": {
+    "IO9-IO14": "AMOLED QSPI",
+    "IO21": "AMOLED reset",
+    "IO47/IO48": "I2C touch/RTC/IMU",
+    "IO38-IO41": "microSD",
+    "IO4": "VCC ADC",
+    "IO15": "RTC_INT",
+    "IO8": "IMU_INT",
+    "IO0/IO3/IO45/IO46": "strapping - never drive at boot"
+  },
+  "harness": [
+    {
+      "wire": "W1",
+      "from": "Adafruit 4090 JP1-2 VBUS",
+      "via": "Bourns MF-R075 PTC (hold 0.75 A, trip 1.5 A, 60 V, R1max 0.60 ohm)",
+      "to": "J1-4",
+      "net": "USB_5V",
+      "awg": 26,
+      "colour": "red",
+      "len_mm": 170
+    },
+    {
+      "wire": "W2",
+      "from": "Adafruit 4090 JP1-1 GND",
+      "to": "J1-6",
+      "net": "GND",
+      "awg": 26,
+      "colour": "black",
+      "len_mm": 170
+    },
+    {
+      "wire": "W3",
+      "from": "Adafruit 4090 JP1-6 D+",
+      "to": "J1-1",
+      "net": "U_P",
+      "awg": 28,
+      "colour": "green",
+      "len_mm": 170,
+      "twist_with": "W4"
+    },
+    {
+      "wire": "W4",
+      "from": "Adafruit 4090 JP1-5 D-",
+      "to": "J1-3",
+      "net": "U_N",
+      "awg": 28,
+      "colour": "white",
+      "len_mm": 170,
+      "twist_with": "W3"
+    },
+    {
+      "wire": "W5",
+      "from": "J1-8",
+      "to": "buzzer driver R1 (gate resistor)",
+      "net": "IO16",
+      "awg": 28,
+      "colour": "yellow",
+      "len_mm": 180
+    },
+    {
+      "wire": "W6",
+      "from": "W1 after PTC (splice at breakout)",
+      "to": "buzzer driver +5 V node (feeds W8 and D1 cathode)",
+      "net": "USB_5V",
+      "awg": 28,
+      "colour": "red",
+      "len_mm": 120
+    },
+    {
+      "wire": "W7",
+      "from": "W2 (splice at breakout)",
+      "to": "buzzer driver: AO3400A source + R2",
+      "net": "GND",
+      "awg": 28,
+      "colour": "black",
+      "len_mm": 120
+    },
+    {
+      "wire": "W8",
+      "from": "buzzer driver: +5 V node (W6)",
+      "to": "WT-1205 pin +",
+      "net": "USB_5V",
+      "awg": 28,
+      "colour": "red",
+      "len_mm": 80
+    },
+    {
+      "wire": "W9",
+      "from": "buzzer driver: AO3400A drain (SOT-23 pin 3)",
+      "to": "WT-1205 pin -",
+      "net": "BZ_DRAIN",
+      "awg": 28,
+      "colour": "blue",
+      "len_mm": 80
+    }
+  ],
+  "buzzer_driver": {
+    "R1": "100 ohm 1/4 W: IO16 -> Q1 gate (edge-rate / ringing damper)",
+    "R2": "100 kohm 1/4 W: Q1 gate -> source/GND (off through reset, boot and when the socket is unplugged)",
+    "Q1": "AO3400A N-MOSFET, SOT-23 (pin 1 = G, pin 2 = S, pin 3 = D, AOS datasheet top view) on a SOT-23-to-DIP adapter: drain -> W9 -> buzzer -, source -> GND. VGS(th) 0.65-1.45 V; RDS(on) < 48 mohm at VGS 2.5 V; VDS 30 V; VGS +/-12 V",
+    "D1": "1N4148 across the buzzer coil, cathode to +5 V (clamps the coil flyback to ~5.7 V)",
+    "BZ": "Soberton WT-1205 passive magnetic transducer, 5 V (4-6 Vo-p), coil 47 +/-7 ohm, 50 mA max mean, 2400 Hz, d12.0 x 9.5 mm +/-0.5, pins 6.5 mm (Digi-Key 433-1028-ND)",
+    "why_not_2N3904": "2N3904 saturation is only specified to IC 50 mA with IB 5 mA (VCE(sat) <= 0.3 V); the WT-1205 coil can peak at 5.25 V / 40 ohm = 131 mA, where only active-region hFE >= 30 at VCE 1 V is given, and a 3.3 V GPIO cannot supply a forced-beta-10 base current (13 mA).",
+    "board": "24 x 18 mm perfboard, parts lying flat (max height <= 8.4 mm incl. wire exits), leads trimmed <= 1.0 mm + Kapton on the back; held by 1.0 mm foam tape on the two printed seat pads (cad: DRV_*)"
+  },
+  "rtc_backup": "EXCLUDED from M6 purchase: J2 is charged from 3V3 through B5819 with no current limit; no cell until charge voltage/current are validated (G1-E3 + datasheet). Without it the clock is restored by phone time_sync after any power cut.",
+  "dual_port_rule": "Never connect the board's own USB-C and the external port at the same time: their VBUS (USB_5V) and D+/D- are the same nets. The board port is only reachable with the upper shell removed; label it.",
+  "adafruit_4090_pins": {
+    "1": "GND",
+    "2": "VBUS",
+    "3": "SBU2 (n/c)",
+    "4": "CC1 (5.1k to GND on board, n/c)",
+    "5": "D-",
+    "6": "D+",
+    "7": "SBU1 (n/c)",
+    "8": "CC2 (5.1k to GND on board, n/c)",
+    "_source": "Adafruit-USB-C-Downstream-Breakout rev B .sch netlist (tests/adafruit4090_netlist_check.py)"
+  },
+  "strain_relief": "Zip-tie the harness bundle to the rear M3 column (y=+26) 40 mm from the breakout; dab hot-melt over the 4090 solder pads; keep D+/D- 10 mm away from the buzzer wires."
+}

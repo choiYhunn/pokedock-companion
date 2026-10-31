@@ -1,0 +1,8 @@
+menu "PokeDock M6"
+    config PD_SCREEN_ROTATION_180
+        bool "Rotate UI 180 degrees (set after checking the mounted board orientation)"
+        default n
+        help
+            The board is mounted with its USB-C pointing down. If the native panel origin
+            ends up upside-down on the real unit, enable this; touch is rotated to match.
+endmenu

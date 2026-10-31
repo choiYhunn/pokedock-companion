@@ -1,0 +1,6 @@
+# PokeDock M6, 16 MB flash. No OTA by design: updates are USB-only and user-initiated.
+# Name,   Type, SubType, Offset,   Size
+nvs,      data, nvs,     0x9000,   0x6000
+phy_init, data, phy,     0xf000,   0x1000
+factory,  app,  factory, 0x10000,  0x600000
+assets,   data, 0x40,    0x610000, 0x9F0000

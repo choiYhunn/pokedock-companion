@@ -1,0 +1,18 @@
+REV A
+  F1 button bezel (PETG) in shell opening (PLA)        nom  0.35  WC -0.459  p0.1% -0.287  P(int) 0.2719  top [('hole_wall', 0.31), ('position', 0.2)]
+  F2 display plate rim in opening throat               nom  0.35  WC -0.360  p0.1% -0.240  P(int) 0.2507  top [('hole_wall', 0.38), ('outer_wall', 0.25)]
+  F3 glass (vendor 46.00 +/-0.1) in bezel pocket (PETG nom  0.30  WC -0.186  p0.1% -0.161  P(int) 0.3139  top [('hole_wall', 0.73), ('hole_shrink', 0.16)]
+  F4 lower spigot (PLA) in belt / upper bore (PLA)     nom  0.35  WC -0.296  p0.1% -0.114  P(int) 0.1074  top [('hole_wall', 0.42), ('outer_wall', 0.27)]
+  F5 USB receptacle slides through block slot (PLA)    nom  0.30  WC -0.024  p0.1% -0.011  P(int) 0.0058  top [('hole_wall', 0.86), ('vendor', 0.14)]
+  F6 buzzer d12 in pocket (PLA)                        nom  0.60  WC  0.217  p0.1%  0.235  P(int) 0.0000  top [('hole_wall', 0.61), ('vendor', 0.39)]
+  F7 M3 shank in 35 mm column bore                     nom  0.40  WC  0.041  p0.1%  0.050  P(int) 0.0000  top [('hole_wall', 0.86), ('bore_straightness', 0.14)]
+REV B
+  F1 button bezel (PETG) in shell opening (PLA)        nom  0.60  WC -0.111  p0.1%  0.045  P(int) 0.0001  top [('hole_wall', 0.36), ('opening_halves_shrink_offset', 0.23)]
+  F2 display plate rim in opening throat               nom  0.60  WC -0.011  p0.1%  0.095  P(int) 0.0000  top [('hole_wall', 0.47), ('outer_wall', 0.3)]
+  F3 glass (vendor 46.00 +/-0.1) in bezel pocket (PETG nom  0.50  WC  0.012  p0.1%  0.038  P(int) 0.0000  top [('hole_wall', 0.72), ('hole_shrink', 0.16)]
+  F4 lower spigot (PLA) in belt / upper bore (PLA)     nom  0.55  WC -0.097  p0.1%  0.086  P(int) 0.0000  top [('hole_wall', 0.42), ('outer_wall', 0.27)]
+  F5 USB receptacle slides through block slot (PLA)    nom  0.45  WC  0.125  p0.1%  0.139  P(int) 0.0000  top [('hole_wall', 0.86), ('vendor', 0.14)]
+  F6 buzzer d12 in pocket (PLA)                        nom  0.60  WC  0.217  p0.1%  0.235  P(int) 0.0000  top [('hole_wall', 0.61), ('vendor', 0.39)]
+  F7 M3 shank in 35 mm column bore                     nom  0.40  WC  0.041  p0.1%  0.050  P(int) 0.0000  top [('hole_wall', 0.86), ('bore_straightness', 0.14)]
+opening sweep {'0.35': {'worst': -0.36, 'p_interference': 0.14242}, '0.45': {'worst': -0.26, 'p_interference': 0.025335}, '0.55': {'worst': -0.161, 'p_interference': 0.001385}, '0.65': {'worst': -0.061, 'p_interference': 0.0}, '0.75': {'worst': 0.039, 'p_interference': 0.0}}
+REV B PASS []
