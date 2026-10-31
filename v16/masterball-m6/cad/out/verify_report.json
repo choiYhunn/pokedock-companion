@@ -266,10 +266,10 @@
     "a": "upper_shell_purple",
     "b": "lower_shell_ivory",
     "why": "upper counterbore on spigot / boss gap",
-    "min_clearance_mm": 0.297,
+    "min_clearance_mm": 0.455,
     "mmc_required_mm": 0.3,
     "designed_contact": false,
-    "mmc_ok": false
+    "mmc_ok": true
    },
    {
     "a": "socket_left",
@@ -293,7 +293,7 @@
     "a": "socket_left",
     "b": "lower_shell_ivory",
     "why": "socket vs lower rib",
-    "min_clearance_mm": 0.543,
+    "min_clearance_mm": 0.542,
     "mmc_required_mm": 0.35,
     "designed_contact": false,
     "mmc_ok": true
@@ -302,7 +302,7 @@
     "a": "socket_right",
     "b": "upper_shell_purple",
     "why": "socket vs upper rib",
-    "min_clearance_mm": 0.542,
+    "min_clearance_mm": 0.543,
     "mmc_required_mm": 0.35,
     "designed_contact": false,
     "mmc_ok": true
@@ -320,7 +320,7 @@
     "a": "lobe_left_pink",
     "b": "m_inlay_white",
     "why": "decor spacing",
-    "min_clearance_mm": 11.109,
+    "min_clearance_mm": 11.119,
     "mmc_required_mm": 0.3,
     "designed_contact": false,
     "mmc_ok": true
@@ -401,7 +401,7 @@
     "a": "bezel_black",
     "b": "board_280_PITCH1MM-4PIN-SMT-HORIZONTAL",
     "why": "bezel vs board part",
-    "min_clearance_mm": 1.75,
+    "min_clearance_mm": 1.751,
     "mmc_required_mm": 0.25,
     "designed_contact": false,
     "mmc_ok": true
@@ -437,7 +437,7 @@
     "a": "bezel_black",
     "b": "board_282_MICRO_SD_SOCKET_PU",
     "why": "bezel vs board part",
-    "min_clearance_mm": 1.654,
+    "min_clearance_mm": 1.65,
     "mmc_required_mm": 0.25,
     "designed_contact": false,
     "mmc_ok": true
@@ -455,7 +455,7 @@
     "a": "bezel_black",
     "b": "board_283_MICRO_SD_SOCKET_PU",
     "why": "bezel vs board part",
-    "min_clearance_mm": 2.972,
+    "min_clearance_mm": 2.973,
     "mmc_required_mm": 0.25,
     "designed_contact": false,
     "mmc_ok": true
@@ -491,7 +491,7 @@
     "a": "bezel_black",
     "b": "board_286_1_27MM-2X7PIN-MALE",
     "why": "bezel vs board part",
-    "min_clearance_mm": 4.543,
+    "min_clearance_mm": 4.544,
     "mmc_required_mm": 0.25,
     "designed_contact": false,
     "mmc_ok": true
@@ -646,10 +646,8 @@
    }
   }
  },
- "fail": [
-  "MMC clearance upper_shell_purple x lower_shell_ivory: 0.297 < 0.3"
- ],
- "source_fingerprint": "257b58fb3360d5673bd9c6fd1b04d6c255e95697781907b95b56257761742ae0",
+ "fail": [],
+ "source_fingerprint": "9124f79b92498a0da73cb709a108f1016c5e987023498e53319559ba346e0896",
  "stl_sha256": {
   "fitkit/fitkit_belt_segment.stl": "d8a2e817492303be51f18477f131d1005daa9494ab47b5a6ce2e484d34cec29d",
   "fitkit/fitkit_joint_coupon.stl": "13cd12660d1431acaae550455f9d0992a33df547b798bb634a186aea441db296",
@@ -680,5 +678,5 @@
   "stl/m_inlay_white.stl": "b5255d30ab444c1039b5d72fb030f6cb782f10aa91c04bb636f544bc17f05d4e",
   "stl/upper_shell_purple.stl": "e64e388637b41340d93bb7e23ffa8ecd17121e91333947f29e9eafb19f125554"
  },
- "verdict": "FAIL"
+ "verdict": "PASS"
 }

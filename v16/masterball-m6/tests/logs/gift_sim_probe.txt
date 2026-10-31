@@ -1,0 +1,60 @@
+test pack 12491 bytes, 9 clips
+PASS no pack: placeholder text
+PASS no pack: no partner canvas
+PASS pack parsed
+PASS pack: partner drawn
+PASS pack: placeholder gone
+PASS home 94: inside circle
+PASS home 94: integer zoom
+PASS home 94: not over the clock
+PASS home 393: inside circle
+PASS home 393: integer zoom
+PASS home 393: not over the clock
+PASS home 468: inside circle
+PASS home 468: integer zoom
+PASS home 468: not over the clock
+PASS home 448: inside circle
+PASS home 448: integer zoom
+PASS home 448: not over the clock
+PASS home 195: inside circle
+PASS home 195: integer zoom
+PASS home 195: not over the clock
+PASS home 175: inside circle
+PASS home 175: integer zoom
+PASS home 175: not over the clock
+PASS home 417: inside circle
+PASS home 417: integer zoom
+PASS home 417: not over the clock
+PASS home 385: inside circle
+PASS home 385: integer zoom
+PASS home 385: not over the clock
+PASS back to Gengar after 8 partners
+PASS tap plays touch
+PASS touch shows a heart
+PASS message slot accepted
+PASS 5 taps: egg dance
+PASS 5 taps: private message from the slot
+PASS focus: cheer loop on the focus stage
+PASS focus: inside circle
+PASS focus: never over the minutes or the label
+PASS focus complete: celebrate
+PASS alarm rings
+PASS alarm: partner on the alarm stage
+PASS alarm: title replaced by the partner
+PASS alarm: partner never over the time or hint
+PASS alarm: inside circle
+PASS night idle: sleeping
+PASS sleep shows Zzz
+PASS touch wakes the sleeping partner (greet)
+PASS browser draws >= 30 fps
+PASS no JS errors
+  94: 222x189 px = 17.5x14.9 mm, zoom 3x
+  393: 90x123 px = 7.1x9.7 mm, zoom 3x
+  468: 172x104 px = 13.6x8.2 mm, zoom 2x
+  448: 141x189 px = 11.1x14.9 mm, zoom 3x
+  195: 201x174 px = 15.9x13.7 mm, zoom 3x
+  175: 120x114 px = 9.5x9.0 mm, zoom 3x
+  417: 159x165 px = 12.5x13.0 mm, zoom 3x
+  385: 165x141 px = 13.0x11.1 mm, zoom 3x
+browser fps 64.0 decode ms 0.034
+VERDICT PASS []
