@@ -13,10 +13,14 @@ export PATH="$(dirname "$(~/.local/bin/uv python find 3.11)"):$PATH"
 . ~/m6idf/esp-idf/export.sh >/dev/null
 cd "$DST/firmware"
 rm -f sdkconfig  # always regenerate from defaults (a previous rotate180 build must not leak into the normal image)
-OUT=pokedock_m6_merged.bin
+# Gift builds (version "...-gift") get their own file name so they can never overwrite the
+# manufacturing image that the vendor package pins (vendor/MFG_PIN.json).
+BASE=pokedock_m6_merged
+grep -q 'kFirmwareVersion = "[^"]*-gift"' "$SRC/core/protocol.hpp" && BASE=pokedock_m6_gift
+OUT=$BASE.bin
 if [ "${1:-}" = "rotate180" ]; then
   echo "CONFIG_PD_SCREEN_ROTATION_180=y" >> sdkconfig.defaults
-  OUT=pokedock_m6_merged_rotate180.bin
+  OUT=${BASE}_rotate180.bin
 fi
 idf.py set-target esp32s3 >/dev/null
 idf.py build

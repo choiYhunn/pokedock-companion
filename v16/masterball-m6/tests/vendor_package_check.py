@@ -64,7 +64,7 @@ for w in h["harness"]:
                    for r in turnkey if r["category"] == "harness"):
             fail.append(f"BOM_TURNKEY harness wire colour {c} not listed")
 
-fw = re.search(r'kFirmwareVersion = "([^"]+)"', (ROOT / "core/protocol.hpp").read_text(encoding="utf8")).group(1)
+fw = json.loads((ROOT / "vendor/MFG_PIN.json").read_text(encoding="utf8"))["firmware_version"]  # vendor docs quote the pinned build
 for doc in ("vendor/01_PRODUCT_SPEC_1P_KO.md", "vendor/03_SOP_BUILD_KO.md", "docs/CLOCK_WITHOUT_PHONE_KO.md"):
     if fw not in (ROOT / doc).read_text(encoding="utf8"):
         fail.append(f"{doc} does not quote firmware {fw}")

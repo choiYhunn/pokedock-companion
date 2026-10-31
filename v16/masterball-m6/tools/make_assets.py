@@ -1,11 +1,17 @@
-"""Build the private PDK1 sprite pack for the "assets" flash partition.
+"""Build the PRIVATE PDK1 sprite pack (and optional private message) for the "assets" partition.
 
-usage: python make_assets.py <private_dir> <out.bin>
-<private_dir> holds files named <dex>_<anim>.gif (anim = idle, sleep, greet, jump, dance, touch,
-cheer, celebrate, alarm, egg), e.g. 94_idle.gif. A plain <dex>.gif is used as the idle animation.
-The pack stays on the owner's PC and is flashed with:
-  esptool.py --chip esp32s3 write_flash 0x610000 out.bin
-Never commit the GIFs or the .bin to the public repository (Pokémon artwork is not ours).
+usage: python tools/make_assets.py <private_dir> <out_dir_or_pack.bin>
+
+<private_dir> (outside the repository, e.g. Documents/프로젝트/PokeDock_Private_Assets/src) holds
+  <dex>_<anim>.gif   anim = idle, sleep, greet, jump, dance, touch, cheer, celebrate, alarm, egg
+  <dex>.gif          used as the idle clip (Gen-V style pixel sprite, <= 128 px)
+  message.txt        optional gift message, UTF-8, <= 90 bytes (about 30 Hangul syllables)
+Only "idle" is required: the m6-0.4.0-gift firmware animates every mood from the idle frames
+(motion + original overlays) and uses a per-mood clip when the pack has one.
+
+Writes assets_pack.bin (flash at 0x610000) and, with message.txt, message_slot.bin (flash at
+0xFFF000 = last 4 KiB of the assets partition). See docs/GIFT_CONTENT_KO.md.
+Never commit the GIFs, message.txt or the .bin files: the artwork is not ours and the message is private.
 """
 import os
 import struct
@@ -15,6 +21,8 @@ ANIMS = ["idle", "sleep", "greet", "jump", "dance", "touch", "cheer", "celebrate
 DEX = [94, 393, 468, 448, 195, 175, 417, 385]
 MAX_W = 128
 PARTITION_BYTES = 0x9F0000
+ASSETS_OFFSET = 0x610000
+PDM_SLOT_BYTES, PDM_MAX_BYTES = 4096, 90
 
 
 def rgb565(r, g, b):
@@ -87,8 +95,26 @@ def build(entries):
     return out
 
 
+def message_slot(text):
+    data = text.strip().encode("utf-8")
+    if not data:
+        raise SystemExit("message.txt is empty")
+    if len(data) > PDM_MAX_BYTES:
+        raise SystemExit(f"message is {len(data)} bytes; the device keeps at most {PDM_MAX_BYTES} (~30 Hangul syllables)")
+    if any(c < 0x20 and c != 0x0A for c in data):
+        raise SystemExit("message contains control characters")
+    return b"PDM1" + struct.pack("<H", len(data)) + data + bytes([0xFF]) * (PDM_SLOT_BYTES - 6 - len(data))
+
+
 def main():
     src, dst = sys.argv[1:3]
+    if dst.lower().endswith(".bin"):
+        pack_path = dst
+        msg_path = dst[:-4] + "_message.bin"
+    else:
+        os.makedirs(dst, exist_ok=True)
+        pack_path = os.path.join(dst, "assets_pack.bin")
+        msg_path = os.path.join(dst, "message_slot.bin")
     entries = []
     for dex in DEX:
         for anim_id, anim in enumerate(ANIMS):
@@ -100,13 +126,26 @@ def main():
             frames, ms = frames_from_gif(path)
             pal, idx = quantise(frames)
             entries.append((dex, anim_id, frames[0].width, frames[0].height, ms, pal, idx))
-            print(f"{dex:3d} {anim:9s} {len(frames):3d} frames {frames[0].width}x{frames[0].height} {len(pal)} colours")
-    missing = [d for d in DEX if not any(e[0] == d for e in entries)]
+            print(f"{dex:3d} {anim:9s} {len(frames):3d} frames {frames[0].width}x{frames[0].height} {ms:3d} ms {len(pal):3d} colours")
+    missing = [d for d in DEX if not any(e[0] == d and e[1] == 0 for e in entries)]
     if missing:
-        print("WARNING: no idle animation for", missing, "- the device shows a neutral placeholder for them")
+        print("NOTE: no idle clip for", missing, "- the device keeps the neutral placeholder for them")
     data = build(entries)
-    open(dst, "wb").write(data)
-    print(f"wrote {dst}: {len(data)} bytes, {len(entries)} animations")
+    with open(pack_path, "wb") as f:
+        f.write(data)
+    print(f"wrote {pack_path}: {len(data)} bytes ({100 * len(data) / PARTITION_BYTES:.1f} % of the assets partition), "
+          f"{len(entries)} clips for {len(DEX) - len(missing)} partners")
+    flash = f"write_flash 0x{ASSETS_OFFSET:X} {os.path.basename(pack_path)}"
+    msg_file = os.path.join(src, "message.txt")
+    if os.path.exists(msg_file):
+        with open(msg_file, encoding="utf-8") as f:
+            slot = message_slot(f.read())
+        with open(msg_path, "wb") as f:
+            f.write(slot)
+        print(f"wrote {msg_path}: private message slot ({slot[4] | slot[5] << 8} bytes of text)")
+        flash += f" 0x{ASSETS_OFFSET + PARTITION_BYTES - PDM_SLOT_BYTES:X} {os.path.basename(msg_path)}"
+    print("flash (assets only, the app firmware is untouched):")
+    print(f"  python -m esptool --chip esp32s3 -p <PORT> -b 460800 {flash}")
 
 
 if __name__ == "__main__":

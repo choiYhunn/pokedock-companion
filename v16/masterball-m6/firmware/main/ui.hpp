@@ -19,6 +19,7 @@ struct View {
   int alarm_h = 7, alarm_m = 0;
   bool alarm_en = false;
   int partner = 94;
+  bool night = false;  // 23:00-06:59 with a trusted clock: the partner may fall asleep
   int brightness = 40;
   int preset_min = 25;
   bool usb_low = false;
@@ -43,7 +44,7 @@ struct Actions {  // called from the LVGL task with the LVGL lock held
 void init(const Actions &a);
 void update(const View &v);            // call with the LVGL lock held
 void show_message(const std::string &m);
-void react(uint8_t anim);              // play a one-shot partner animation (pdk_anim)
+void react(uint8_t anim);              // one-shot partner mood (pdk_anim); loops follow the state
 void set_screen_on(bool on);
 bool menu_open();
 void close_menu();

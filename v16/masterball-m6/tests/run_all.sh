@@ -44,12 +44,15 @@ fi
 
 run core_regression bash -c "g++ -std=c++17 -O2 -Wall -Wextra -Werror tests/core_regression_test.cpp -o build/core_reg && ./build/core_reg"
 run clock_set bash -c "g++ -std=c++17 -O2 -Wall -Wextra -Werror tests/clock_set_test.cpp -o build/clock_set && ./build/clock_set"
+run anim_director bash -c "g++ -std=c++17 -O2 -Wall -Wextra -Werror -Icore tests/anim_director_test.cpp -o build/anim_dir && ./build/anim_dir"
+run anim_parity bash -c "g++ -std=c++17 -O2 -Wall -Wextra -Werror tests/anim_dump.cpp -o build/anim_dump && node tests/anim_parity_test.mjs build/anim_dump"
 run protocol bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror tests/protocol_test.cpp -o build/proto && ./build/proto"
 run ble_e2e_bridge bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror tests/ble_bridge_host.cpp -o build/ble_bridge && node tests/ble_e2e_bridge_test.mjs build/ble_bridge"
 run harness_check "$PY" -X utf8 tests/harness_check.py
 run buzzer_consistency "$PY" -X utf8 tests/buzzer_consistency_check.py
 run doc_consistency "$PY" -X utf8 tests/doc_consistency_check.py
 run vendor_package_check "$PY" -X utf8 tests/vendor_package_check.py
+run private_asset_guard "$PY" -X utf8 tests/private_asset_guard.py
 if have "$SCHEMATIC_PDF"; then run schematic_netlist "$PY" -X utf8 tests/schematic_netlist_check.py "$SCHEMATIC_PDF"
 else skip schematic_netlist "no official schematic at $SCHEMATIC_PDF"; fi
 if have "$ADAFRUIT_SCH"; then run adafruit4090_netlist "$PY" -X utf8 tests/adafruit4090_netlist_check.py "$ADAFRUIT_SCH"
@@ -70,6 +73,7 @@ else
   for s in cad_build cad_fitkit cad_verify driver_board_check; do skip "$s" "no vendor STEP parts at $VENDOR_PARTS"; done
 fi
 run ui_sim_probe "$PY" -X utf8 tests/ui_sim_probe.py "$LOG/ui"
+run gift_sim_probe "$PY" -X utf8 tests/gift_sim_probe.py "$LOG/gift"  # public geometric TEST pack only
 
 # ESP-IDF target build (WSL on Windows, native elsewhere)
 if command -v wsl.exe >/dev/null 2>&1; then

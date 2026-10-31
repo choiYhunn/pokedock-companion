@@ -315,6 +315,7 @@ void main_loop(void *) {
       v.preset_min = kPresets[g_set.preset_idx];
       v.usb_low = usb_low;
       v.ble_connected = g_ble_connected;
+      v.night = v.clock_trusted && (v.hh >= 23 || v.hh < 7);
       v.passkey = g_passkey;
     }
     if (ev & kEvAlarmRing) {
@@ -322,7 +323,13 @@ void main_loop(void *) {
       if (g_core.sound()) buzzer_play(PD_TUNE_ALARM);
     }
     if (ev & (kEvAlarmAutoSnooze | kEvAlarmGaveUp)) buzzer_stop();
-    if ((ev & kEvFocusComplete) && g_core.sound()) buzzer_play(PD_TUNE_DONE);
+    if (ev & kEvFocusComplete) {
+      // a long focus without touches would otherwise hit the 10 min screen-off exactly now and hide
+      // the celebration: wake the screen and restart the idle timer
+      g_screen_on = true;
+      g_last_touch_ms = now;
+      if (g_core.sound()) buzzer_play(PD_TUNE_DONE);
+    }
     if (ev) ble_notify_state();
 
     const bool busy = v.ringing || v.phase == FocusPhase::kRunning || v.passkey;
@@ -395,6 +402,15 @@ extern "C" void app_main(void) {
   g_clock_trusted = trusted;
   ESP_LOGI(TAG, "RTC %s", trusted ? "trusted" : "NOT set (oscillator stopped / never synced)");
   assets_init();
+  {  // Private gift message from the owner's assets flash (PDM1 slot). A message set later over BLE
+     // (stored in NVS and different from the default) wins; the public sources only hold the default.
+    char gift[PDM_MAX_BYTES + 1];
+    Lock l;
+    if (assets_message(gift, sizeof gift) && g_engine.message() == kDefaultMessage) {
+      g_engine.restore_message(gift);
+      ESP_LOGI(TAG, "gift message loaded from the assets partition (%u bytes)", unsigned(strlen(gift)));
+    }
+  }
 
   const ui::Actions actions{on_tap,        on_long_press, menu_timer, menu_alarm,  menu_brightness, menu_partner,
                             menu_pairing,  menu_screen_off, menu_time, clock_saved, alarm_time_saved};

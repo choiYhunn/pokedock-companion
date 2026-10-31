@@ -1,0 +1,10 @@
+{
+ "_why": "The manufacturer builds and tests with this exact firmware. Gift content (partner moods, private sprite pack, private message) is a separate later step and must never change the vendor ZIP. tools/make_vendor_package.py refuses to run unless core/protocol.hpp reports this version.",
+ "firmware_version": "m6-0.3.0",
+ "commit": "23cfd70",
+ "branch": "design/m6-usb-powered-manufacturable-20261024",
+ "vendor_zip": "PokeDock_M6_RevC_Vendor_Package_20261031.zip",
+ "vendor_zip_sha256": "715d65469f6e81dbdd9cecaeca02150b785168629ba1d044166bd73f3f32a88d",
+ "merged_bin_sha256": "3957049e53be954fb99a29005db07e8a8bf7ed8a24086fa9c1bb328823b87dc9",
+ "rotate180_bin_sha256": "0091aafa51616476f5366d1bbc48d10e56ecfffd4c74500f34ba2d1e32119c94"
+}
