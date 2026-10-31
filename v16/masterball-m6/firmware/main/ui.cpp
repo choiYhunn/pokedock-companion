@@ -2,6 +2,7 @@
 
 #include <cstdio>
 
+#include "anim_director.hpp"
 #include "assets.h"
 #include "board.h"
 #include "esp_timer.h"
@@ -25,13 +26,21 @@ const lv_color_t kIvory = lv_color_hex(0xFBF8F1), kInk = lv_color_hex(0x4A356D),
 
 Actions g_act{};
 lv_obj_t *scr, *stage, *clock_lbl, *sprite, *placeholder, *ring, *big_lbl, *unit_lbl, *status_lbl;
+lv_obj_t *overlay_lbl, *alarm_title;
 lv_obj_t *alarm_box, *alarm_time, *menu, *menu_btn[6], *pair_box, *pair_digits, *msg_box, *msg_lbl;
 lv_obj_t *edit_box, *edit_title, *edit_ctx, *edit_value, *edit_unit, *edit_prev, *edit_next;
 View g_last;
 bool g_menu = false;
-uint8_t g_anim = PDK_IDLE;
-uint32_t g_frame = 0;
-int64_t g_anim_until = 0, g_msg_until = 0;
+int64_t g_msg_until = 0;
+pokedock::Director g_dir;  // partner moods: state loops + one-shots (core/anim_director.hpp)
+struct {                   // last decoded frame, so a 30 Hz motion tick only decodes on frame change
+  int dex = -1, anim = -1, idx = -1;
+  uint16_t w = 0, h = 0;
+} g_frame_key;
+struct {  // on-device performance log (every 30 s): decode cost and real frame interval
+  uint32_t decodes = 0, ticks = 0;
+  int64_t decode_us = 0, decode_max_us = 0, since = 0;
+} g_perf;
 
 using pokedock::ClockField;
 constexpr ClockField kClockFields[] = {ClockField::kYear, ClockField::kMonth, ClockField::kDay, ClockField::kHour,
@@ -89,6 +98,12 @@ void screen_event(lv_event_t *e) {
     return;
   }
   if (g_menu) return;
+  if (code == LV_EVENT_SHORT_CLICKED || code == LV_EVENT_LONG_PRESSED) {
+    pokedock::DirectorInput in;
+    in.now_ms = esp_timer_get_time() / 1000;
+    in.night = g_last.night;
+    g_dir.touched(in);  // a touch wakes a sleeping partner (greet)
+  }
   if (code == LV_EVENT_SHORT_CLICKED && g_act.tap) g_act.tap();
   if (code == LV_EVENT_LONG_PRESSED && g_act.long_press) g_act.long_press();
 }
@@ -212,24 +227,89 @@ void pill_event(lv_event_t *) {
   if (!g_last.clock_trusted && g_act.menu_time) g_act.menu_time();  // "시간 맞춰줘" opens the editor
 }
 
-void sprite_tick(lv_timer_t *t) {
-  const int64_t now = esp_timer_get_time() / 1000;
-  if (g_anim != PDK_IDLE && now > g_anim_until) {
-    g_anim = PDK_IDLE;
-    g_frame = 0;
+const char *overlay_text(uint8_t ov) {
+  switch (ov) {
+    case pokedock::kOvHeart: return "\xe2\x99\xa5";    // U+2665, in pd_msg_30
+    case pokedock::kOvSparkle: return "\xe2\x98\x85";  // U+2605
+    case pokedock::kOvZzz: return "Zzz";
+    case pokedock::kOvExclaim: return "!";
+    default: return "";
   }
-  uint16_t ms = 120;
-  uint8_t n = 0;
-  const lv_img_dsc_t *d = assets_frame(uint16_t(g_last.partner), g_anim, g_frame++, &ms, &n);
+}
+
+// 30 Hz motion tick. The clip frame comes from the pack (decoded only when it changes); the pose,
+// overlay and stage come from the director. Without a pack the neutral placeholder stays.
+void sprite_tick(lv_timer_t *) {
+  const int64_t now = esp_timer_get_time() / 1000;
+  const bool focus = g_last.phase == pokedock::FocusPhase::kRunning || g_last.phase == pokedock::FocusPhase::kPaused;
+  pokedock::DirectorInput in;
+  in.now_ms = now;
+  in.dex = g_last.partner;
+  in.ringing = g_last.ringing;
+  in.focus_active = focus;
+  in.night = g_last.night;
+  const pokedock::Shot shot = g_dir.decide(in);
+  uint16_t w = 0, h = 0, ms = 100;
+  uint8_t frames = 0, clip = shot.anim;
+  const lv_img_dsc_t *d = nullptr;
+  if (assets_clip(uint16_t(g_last.partner), &clip, &w, &h, &ms, &frames)) {
+    const int idx = int((shot.t_ms / (ms ? ms : 100)) % (frames ? frames : 1));
+    if (g_frame_key.dex == g_last.partner && g_frame_key.anim == clip && g_frame_key.idx == idx) {
+      d = static_cast<const lv_img_dsc_t *>(lv_img_get_src(sprite));
+    } else {
+      const int64_t t0 = esp_timer_get_time();
+      d = assets_frame(uint16_t(g_last.partner), clip, uint32_t(idx), nullptr, nullptr);
+      const int64_t us = esp_timer_get_time() - t0;
+      g_perf.decodes++;
+      g_perf.decode_us += us;
+      if (us > g_perf.decode_max_us) g_perf.decode_max_us = us;
+      if (d) {
+        lv_img_set_src(sprite, d);
+        g_frame_key = {g_last.partner, clip, idx, w, h};
+      }
+    }
+  }
   if (d) {
-    lv_img_set_src(sprite, d);
+    lv_obj_t *parent = shot.stage == pokedock::Stage::kAlarm ? alarm_box : stage;
+    if (lv_obj_get_parent(sprite) != parent) {
+      lv_obj_set_parent(sprite, parent);
+      lv_obj_set_parent(overlay_lbl, parent);
+    }
+    const pokedock::Rect r = pokedock::place(shot.stage, w, h, shot.pose);
+    lv_img_set_zoom(sprite, uint16_t(r.zoom));
+    lv_obj_align(sprite, LV_ALIGN_CENTER, r.x + r.w / 2, r.y + r.h / 2);  // zoom pivots on the centre
     lv_obj_clear_flag(sprite, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(placeholder, LV_OBJ_FLAG_HIDDEN);
+    if (shot.stage == pokedock::Stage::kAlarm) lv_obj_add_flag(alarm_title, LV_OBJ_FLAG_HIDDEN);  // partner takes its place
+    if (shot.pose.overlay && shot.pose.overlay_opa) {
+      lv_label_set_text(overlay_lbl, overlay_text(shot.pose.overlay));
+      lv_obj_set_style_text_font(overlay_lbl, shot.pose.overlay == pokedock::kOvZzz || shot.pose.overlay == pokedock::kOvExclaim ? &pd_ui_48 : &pd_msg_30, 0);
+      lv_obj_set_style_opa(overlay_lbl, shot.pose.overlay_opa, 0);
+      lv_obj_align(overlay_lbl, LV_ALIGN_CENTER, r.x + r.w * 4 / 5, r.y + 12 + shot.pose.overlay_dy);
+      lv_obj_clear_flag(overlay_lbl, LV_OBJ_FLAG_HIDDEN);
+    } else {
+      lv_obj_add_flag(overlay_lbl, LV_OBJ_FLAG_HIDDEN);
+    }
   } else {
+    if (lv_obj_get_parent(sprite) != stage) {
+      lv_obj_set_parent(sprite, stage);
+      lv_obj_set_parent(overlay_lbl, stage);
+    }
     lv_obj_add_flag(sprite, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(overlay_lbl, LV_OBJ_FLAG_HIDDEN);
     lv_obj_clear_flag(placeholder, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_clear_flag(alarm_title, LV_OBJ_FLAG_HIDDEN);
   }
-  lv_timer_set_period(t, ms);
+  g_perf.ticks++;
+  if (!g_perf.since) g_perf.since = now;
+  if (now - g_perf.since >= 30000) {
+    printf("I (%lld) pd_anim: %lu ticks/30s (%.1f Hz), %lu decodes, avg %lld us, max %lld us, frame %ux%u zoom %d\n",
+           (long long)now, (unsigned long)g_perf.ticks, g_perf.ticks / 30.0, (unsigned long)g_perf.decodes,
+           (long long)(g_perf.decodes ? g_perf.decode_us / g_perf.decodes : 0), (long long)g_perf.decode_max_us,
+           g_frame_key.w, g_frame_key.h, d ? lv_img_get_zoom(sprite) : 0);
+    g_perf = {};
+    g_perf.since = now;
+  }
   if (g_msg_until && now > g_msg_until) {
     g_msg_until = 0;
     lv_obj_add_flag(msg_box, LV_OBJ_FLAG_HIDDEN);
@@ -267,10 +347,11 @@ void init(const Actions &a) {
   lv_obj_align(clock_lbl, LV_ALIGN_TOP_MID, 0, 48);  // +/-3 px burn-in shift stays inside the circle
 
   sprite = lv_img_create(stage);
-  lv_img_set_antialias(sprite, false);  // nearest neighbour: crisp integer pixel art
-  lv_img_set_zoom(sprite, 768);         // x3 of a 96 px frame = 288 px (22.7 mm)
-  lv_obj_align(sprite, LV_ALIGN_CENTER, 0, 30);
+  lv_img_set_antialias(sprite, false);  // nearest neighbour: crisp integer pixel art (zoom from the director)
   lv_obj_clear_flag(sprite, LV_OBJ_FLAG_CLICKABLE);
+  lv_obj_add_flag(sprite, LV_OBJ_FLAG_HIDDEN);
+  overlay_lbl = label(stage, &pd_msg_30, kAccent);  // original marks only: heart, star, Zzz, !
+  lv_obj_add_flag(overlay_lbl, LV_OBJ_FLAG_HIDDEN);
 
   placeholder = lv_obj_create(stage);  // neutral, clearly not a Pokémon
   lv_obj_set_size(placeholder, 240, 240);
@@ -297,9 +378,9 @@ void init(const Actions &a) {
   lv_obj_remove_style_all(alarm_box);
   lv_obj_set_size(alarm_box, kSize, kSize);
   lv_obj_add_flag(alarm_box, LV_OBJ_FLAG_EVENT_BUBBLE);
-  lv_obj_t *al = label(alarm_box, &pd_ui_48, kAccent);
-  lv_label_set_text(al, "일어날 시간!");
-  lv_obj_align(al, LV_ALIGN_TOP_MID, 0, 64);
+  alarm_title = label(alarm_box, &pd_ui_48, kAccent);  // hidden while the partner is shown instead
+  lv_label_set_text(alarm_title, "일어날 시간!");
+  lv_obj_align(alarm_title, LV_ALIGN_TOP_MID, 0, 64);
   alarm_time = label(alarm_box, &pd_digits_120, kInk);
   lv_obj_align(alarm_time, LV_ALIGN_CENTER, 0, -20);
   lv_obj_t *hint = label(alarm_box, &pd_ui_48, kMuted);
@@ -376,7 +457,8 @@ void init(const Actions &a) {
   lv_obj_center(msg_lbl);
   lv_obj_add_flag(msg_box, LV_OBJ_FLAG_HIDDEN);
 
-  g_sprite_timer = lv_timer_create(sprite_tick, 120, nullptr);
+  g_sprite_timer = lv_timer_create(sprite_tick, 33, nullptr);  // motion at ~30 Hz; clips decode at their own rate
+  g_dir.trigger(PDK_GREET, esp_timer_get_time() / 1000);       // appear on boot
 }
 
 bool menu_open() { return g_menu; }
@@ -421,7 +503,10 @@ void close_menu() {
 
 void set_screen_on(bool on) {
   board_display_power(on);
-  if (on) lv_obj_invalidate(scr);
+  if (on) {
+    lv_obj_invalidate(scr);
+    g_dir.trigger(PDK_GREET, esp_timer_get_time() / 1000);  // the partner says hello when the screen wakes
+  }
 }
 
 void show_message(const std::string &m) {
@@ -431,9 +516,9 @@ void show_message(const std::string &m) {
 }
 
 void react(uint8_t anim) {
-  g_anim = anim;
-  g_frame = 0;
-  g_anim_until = esp_timer_get_time() / 1000 + 1800;
+  if (anim == PDK_CHEER) anim = PDK_TOUCH;  // cheering is the focus loop; a tap there is a touch
+  if (anim == PDK_ALARM) return;            // the alarm loop follows the ringing state
+  g_dir.trigger(anim, esp_timer_get_time() / 1000);
 }
 
 void update(const View &v) {
@@ -475,8 +560,6 @@ void update(const View &v) {
     }
     lv_label_set_text(big_lbl, buf);
     lv_obj_clear_flag(unit_lbl, LV_OBJ_FLAG_HIDDEN);
-    lv_img_set_zoom(sprite, 256);  // x1 cheering partner under the number
-    lv_obj_align(sprite, LV_ALIGN_CENTER, 0, 150);
     lv_obj_align(placeholder, LV_ALIGN_CENTER, 0, 300);  // keep the placeholder off-screen in focus
   } else {
     lv_obj_clear_flag(clock_lbl, LV_OBJ_FLAG_HIDDEN);
@@ -491,8 +574,6 @@ void update(const View &v) {
     lv_arc_set_value(ring, done ? 1000 : 0);
     if (done) lv_obj_clear_flag(ring, LV_OBJ_FLAG_HIDDEN);
     else lv_obj_add_flag(ring, LV_OBJ_FLAG_HIDDEN);
-    lv_img_set_zoom(sprite, 768);
-    lv_obj_align(sprite, LV_ALIGN_CENTER, 0, 30);
     lv_obj_align(placeholder, LV_ALIGN_CENTER, 0, 30);
   }
 

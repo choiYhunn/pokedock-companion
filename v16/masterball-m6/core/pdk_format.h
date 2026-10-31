@@ -10,6 +10,11 @@
  */
 #ifndef PDK_FORMAT_H
 #define PDK_FORMAT_H
+/* Optional private message slot: the LAST 4 KiB of the assets partition (flash 0xFFF000 on the
+ * 16 MB board): char[4] "PDM1" | u16 len | UTF-8 bytes (<= 90, the device message limit). Written
+ * by tools/make_assets.py --message from a file on the owner's PC; never committed. */
+#define PDM_SLOT_BYTES 4096
+#define PDM_MAX_BYTES 90
 #include <stddef.h>
 #include <stdint.h>
 

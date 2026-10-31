@@ -1,0 +1,40 @@
+PowerShell 5.1.26100.9818 (Desktop)
+PASS Check: succeeds
+PASS Check: never writes
+PASS Check: 16 MiB full backup
+PASS Check: separate 0x6000 NVS copy
+PASS InstallGift: succeeds
+PASS InstallGift: exactly one write_flash
+PASS InstallGift: argv passed element by element (PS 5.1)
+PASS InstallGift: chip check and full backup come first
+PASS InstallGift: app at 0x10000
+PASS InstallGift: pack at 0x610000
+PASS InstallGift: message slot at 0xFFF000
+PASS InstallGift: settings NVS 0x9000-0xEFFF unchanged
+PASS InstallGift: bootloader, table, phy unchanged
+PASS InstallGift: verify_flash after write
+PASS InstallGift: nothing below 0x10000 is written
+PASS Rotate180 on a normal ball: refused before writing
+PASS Rotate180 ball + -Rotate180: rotate180 gift app written
+PASS wrong file (merged image given as app): refused, nothing sent to the ball
+PASS wrong file (app changed after SHA256SUMS): refused, nothing sent to the ball
+PASS wrong file (sprite pack is really an app): refused, nothing sent to the ball
+PASS wrong file (message slot wrong size): refused, nothing sent to the ball
+PASS wrong chip: refused, nothing written
+PASS different partition table on the ball: refused
+PASS unknown app on the ball: refused
+PASS power cut mid-write: tool stops with an error
+PASS power cut mid-write: app slot is now broken (as on a real ball)
+PASS power cut mid-write: settings were not touched
+PASS power cut mid-write: prints RestoreFull with that pre-write backup
+PASS broken app: RestoreMfgApp refused without -AllowUnknownApp
+PASS RestoreFull: whole 16 MiB identical to before
+PASS RemoveAssets: assets partition erased
+PASS RemoveAssets: gift app and settings kept
+PASS RemoveAssets: argv
+PASS RestoreMfgApp: m6-0.3.0 app back at 0x10000, settings kept
+PASS RestoreNvs: settings back exactly
+PASS RestoreNvs with a wrong file: refused
+PASS UpdateAssets: pack written, manufacturing app untouched
+PASS InstallGift without -PrivateOut: refused
+PASS: 38/38 flash tool checks (mock esptool, not a real ball)

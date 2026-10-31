@@ -23,7 +23,7 @@ bool assets_init(void) {
   if (!p) return false;
   const void *ptr;
   if (esp_partition_mmap(p, 0, p->size, ESP_PARTITION_MMAP_DATA, &ptr, &s_map) != ESP_OK) return false;
-  s_base = (const uint8_t *)ptr;
+  s_base = (const uint8_t *)ptr;  // kept mapped even without sprites: the PDM1 message slot may exist
   s_len = p->size;
   s_count = pdk_header(s_base, s_len);
   if (s_count <= 0) {
@@ -44,6 +44,32 @@ static bool find(uint16_t dex, uint8_t anim, pdk_entry_t *e) {
     if (e->dex == dex && e->anim == anim) return true;
   }
   return false;
+}
+
+bool assets_clip(uint16_t dex, uint8_t *anim, uint16_t *w, uint16_t *h, uint16_t *frame_ms, uint8_t *frames) {
+  if (s_count <= 0) return false;
+  pdk_entry_t e;
+  if (!find(dex, *anim, &e)) {
+    if (!find(dex, PDK_IDLE, &e)) return false;
+    *anim = PDK_IDLE;
+  }
+  if (e.w > PDK_MAX_W || e.h > PDK_MAX_W || !e.frames) return false;
+  *w = e.w;
+  *h = e.h;
+  *frame_ms = e.frame_ms ? e.frame_ms : 100;
+  *frames = e.frames;
+  return true;
+}
+
+bool assets_message(char *out, size_t cap) {
+  if (!s_base || s_len < PDM_SLOT_BYTES || cap < 2) return false;
+  const uint8_t *m = s_base + s_len - PDM_SLOT_BYTES;
+  if (m[0] != 'P' || m[1] != 'D' || m[2] != 'M' || m[3] != '1') return false;
+  const size_t n = pdk_u16(m + 4);
+  if (n == 0 || n >= cap || n > PDM_MAX_BYTES) return false;
+  memcpy(out, m + 6, n);
+  out[n] = 0;
+  return true;
 }
 
 const lv_img_dsc_t *assets_frame(uint16_t dex, uint8_t anim, uint32_t idx, uint16_t *frame_ms, uint8_t *frames) {

@@ -44,6 +44,9 @@ svg.ring{position:absolute;inset:10px;width:446px;height:446px;transform:rotate(
 .eb.pm i+i{left:50px;top:33px;width:10px;height:44px}
 .eb.nav{width:120px;height:64px;top:351px}
 .pill[data-p]{cursor:pointer}
+canvas.spr{position:absolute;image-rendering:pixelated;image-rendering:crisp-edges;pointer-events:none;z-index:1}
+.ov{position:absolute;pointer-events:none;color:var(--accent);font-size:48px;line-height:1;white-space:nowrap;z-index:2;transform:translate(-50%,-50%)}
+.ov.small{font-size:30px}
 .msg{position:absolute;left:53px;right:53px;top:50%;transform:translateY(-50%);background:#faf1e7;border-radius:28px;
   padding:18px;font-size:30px;line-height:1.35;color:var(--ink);text-align:center;white-space:normal}
 .ctl{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
@@ -76,9 +79,11 @@ label{display:inline-flex;gap:6px;align-items:center}
     <label>USB 전압 <input type="range" id="usb" min="3600" max="5100" step="50" value="4850"><span id="usbv"></span></label>
   </div>
   <div class="ctl"><button data-act="pair">페어링 번호 표시</button><button data-act="msg">숨은 메시지 보기</button></div>
+  <div class="ctl"><label>자산 팩(.bin, 이 PC에만) <input type="file" id="packfile" accept=".bin"></label><span id="packinfo">팩 없음: 자리표시</span></div>
   <div id="log" aria-live="polite"></div>
 </section>
 </main>
+<script src="m6_anim.js"></script>
 <script>
 'use strict';
 // --- core logic: JS mirror of v16/masterball-m6/core/pokedock_core.hpp ---------------------------
@@ -87,6 +92,8 @@ const PARTNERS=[[94,'팬텀'],[393,'팽도리'],[468,'토게키스'],[448,'루�
 const S={mono:0, utcOffsetMs:0, trusted:false, tz:540, phase:'idle', total:25*60000, end:0, rem:0, alarm:{en:false,min:450},
   lastFired:-1, armed:-1, ringing:false, ringStart:0, snoozeUntil:-1, auto:0, partner:94, bright:40, preset:1,
   usb:4850, screen:true, lastTouch:0, menu:false, passkey:0, msg:'오늘도 함께하자', taps:0, tapWin:0, react:'', msgUntil:0, completed:0};
+const A=window.M6Anim;
+S.pack=null;S.dir=new A.Director();S.perf={draws:0,decodes:0,decodeMs:0,since:performance.now(),fps:0};S.dir.trigger(A.PDK.GREET,0); // appear on boot
 const nowUtc=()=>Date.now()+S.utcOffsetMs;
 // --- clock editor: JS mirror of core/clock_set.hpp -------------------------------------------------
 const FW_DATE_UTC=1793372400, YMIN=2026, YMAX=2099, FIELDS=['year','month','day','hour','minute'], UNIT={year:'년',month:'월',day:'일',hour:'시',minute:'분'};
@@ -108,7 +115,7 @@ function editNav(dir){const e=S.edit;
   S.edit=null;
   if(e.alarm){S.alarm={en:true,min:e.t.hour*60+e.t.minute};S.armed=absMin();log(`기기에서 알람 ${e.t.hour}:${e.t.minute}`)}
   else{const u=localToUtc(e.t,S.tz);S.utcOffsetMs=u*1000-Date.now();S.trusted=true;S.lastSync=u;wallClockSet(absMin());
-    log(`기기에서 시간 설정 ${e.t.year}.${e.t.month}.${e.t.day} ${e.t.hour}:${e.t.minute}`)}
+    S.dir.trigger(A.PDK.CELEBRATE,S.mono);log(`기기에서 시간 설정 ${e.t.year}.${e.t.month}.${e.t.day} ${e.t.hour}:${e.t.minute}`)}
   render()}
 function wallClockSet(now){if(now<0)return;const today=Math.floor(now/1440);if(S.lastFired>today)S.lastFired=today-1;if(S.armed>now)S.armed=now}
 const absMin=()=>S.trusted?Math.floor((nowUtc()/1000+S.tz*60)/60):-1;
@@ -131,7 +138,10 @@ function tick(){
 const dev=document.getElementById('dev');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const name=id=>PARTNERS.find(p=>p[0]===id)[1];
-function spriteHtml(){return `<div class="sprite"><div class="ph">그림 없음</div><img alt="" hidden data-dex="${S.partner}" src="../assets/private/${S.partner}.gif" onload="this.hidden=false;this.previousElementSibling.hidden=true" onerror="this.remove()"></div>`}
+const hasClip=()=>!!A.findClip(S.pack,S.partner,A.PDK.IDLE);
+const sprCanvas=()=>`<canvas class="spr" id="spr"></canvas><div class="ov" id="ov"></div>`;
+// No pack (or no clip for this partner): the same neutral placeholder as the firmware, never Pokémon art.
+function spriteHtml(){return hasClip()?sprCanvas():`<div class="sprite"><div class="ph" data-t="placeholder">포켓몬<br>이미지 필요</div></div>`}
 function ring(p,w){const r=223-w/2,C=2*Math.PI*r;return `<svg class="ring" viewBox="0 0 446 446"><circle cx="223" cy="223" r="${r}" fill="none" stroke="var(--track)" stroke-width="${w}"/><circle cx="223" cy="223" r="${r}" fill="none" stroke="var(--accent)" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-p)}"/></svg>`}
 function render(){
   if(!S.screen){dev.className='off';dev.innerHTML='';return}
@@ -143,7 +153,7 @@ function render(){
     h+=ring(S.total?rem*1000/S.total:0,14);
     if(rem>=600)h+=`<div class="lbl big" data-t="big">${Math.ceil(rem/60)}</div><div class="lbl unit">${S.phase==='paused'?'일시정지':'분 남음'}</div>`;
     else h+=`<div class="lbl big mmss" data-t="big">${String(Math.floor(rem/60)).padStart(2,'0')}:${String(rem%60).padStart(2,'0')}</div><div class="lbl unit">${S.phase==='paused'?'일시정지':'집중'}</div>`;
-    h+=`<div class="sprite" style="transform:scale(.3333);top:260px"><img alt="" hidden src="../assets/private/${S.partner}.gif" onload="this.hidden=false" onerror="this.remove()"></div>`; // no placeholder text at x1 (unreadable)
+    if(hasClip())h+=sprCanvas(); // the cheering partner (director: focus stage); no placeholder at x1
   }else{
     const m=absMin();h+=`<div class="lbl clock" data-t="clock">${m<0?'--:--':String(Math.floor(m%1440/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}</div>`;
     h+=spriteHtml();
@@ -153,7 +163,7 @@ function render(){
   }
   h+='</div>';
   if(S.ringing&&S.edit)S.edit=null; // a ringing alarm always wins over an unfinished edit
-  if(S.ringing)h=`<div class="overlay"><div class="lbl" style="top:64px;font-size:48px;color:var(--accent)">일어날 시간!</div><div class="lbl" style="top:150px;font-size:120px;color:var(--ink)" data-t="alarm">${String(Math.floor(S.alarm.min/60)).padStart(2,'0')}:${String(S.alarm.min%60).padStart(2,'0')}</div><div class="lbl" style="top:300px;font-size:48px;color:var(--muted);line-height:1.15">탭: 5분 뒤<br>길게: 끄기</div></div>`;
+  if(S.ringing)h=`<div class="overlay">${hasClip()?sprCanvas():'<div class="lbl" style="top:64px;font-size:48px;color:var(--accent)">일어날 시간!</div>'}<div class="lbl" style="top:150px;font-size:120px;color:var(--ink)" data-t="alarm">${String(Math.floor(S.alarm.min/60)).padStart(2,'0')}:${String(S.alarm.min%60).padStart(2,'0')}</div><div class="lbl" style="top:300px;font-size:48px;color:var(--muted);line-height:1.15">탭: 5분 뒤<br>길게: 끄기</div></div>`;
   if(S.menu){const f=focus;h+=`<div class="overlay menu"><div class="b" data-m="5" style="left:138px;top:33px;width:190px;height:64px">시간</div>
     <div class="b" data-m="0" style="left:56px;top:93px">${f?'타이머<br>길게: 그만':`타이머<br>${PRESETS[S.preset]}분`}</div>
     <div class="b" data-m="1" style="left:240px;top:93px">${S.alarm.en?`알람<br>${String(Math.floor(S.alarm.min/60)).padStart(2,'0')}:${String(S.alarm.min%60).padStart(2,'0')}`:'알람<br>꺼짐'}</div>
@@ -172,17 +182,19 @@ function render(){
   if(S.passkey)h+=`<div class="overlay"><div class="lbl" style="top:90px;font-size:48px;color:var(--accent)">페어링</div><div class="lbl" style="top:190px;font-size:80px;color:var(--ink)">${String(S.passkey).padStart(6,'0')}</div><div class="lbl" style="top:330px;font-size:40px;color:var(--muted)">번호를 앱에 입력</div></div>`;
   if(S.msgUntil>S.mono)h+=`<div class="msg" data-t="msg">${esc(S.msg)}</div>`;
   dev.innerHTML=h;
+  if(typeof paintPartner==='function')paintPartner();
 }
 // --- gestures ------------------------------------------------------------------------------------
 let downAt=0,downY=0,longFired=false,lpTimer=0;
-function wake(){S.lastTouch=S.mono;if(S.screen)return false;S.screen=true;render();return true}
+function dirInput(){const m=absMin();return{now:S.mono,dex:S.partner,ringing:S.ringing,focus:S.phase==='running'||S.phase==='paused',night:m>=0&&(Math.floor(m%1440/60)>=23||Math.floor(m%1440/60)<7),lastTouch:0}}
+function wake(){S.dir.touched(dirInput());S.lastTouch=S.mono;if(S.screen)return false;S.screen=true;S.dir.trigger(A.PDK.GREET,S.mono);render();return true}
 function tap(){
   if(wake())return;
   if(S.ringing){S.ringing=false;S.snoozeUntil=S.mono+SNOOZE*60000;log('스누즈 5분');return render()}
   if(S.phase==='done'){S.phase='idle';return render()}
   if(S.mono>S.tapWin){S.taps=0;S.tapWin=S.mono+3000}
-  if(++S.taps===5){S.msgUntil=S.mono+4500;S.taps=0;log('숨은 메시지');return render()}
-  log(`${name(S.partner)} 반응`);render();
+  if(++S.taps===5){S.msgUntil=S.mono+4500;S.taps=0;S.dir.trigger(A.PDK.EGG,S.mono);log('숨은 메시지');return render()}
+  S.dir.trigger(A.PDK.TOUCH,S.mono);log(`${name(S.partner)} 반응`);render();
 }
 function longPress(){
   if(wake())return;
@@ -199,7 +211,7 @@ function menuAct(i,long){
   if(i===1&&long)return openAlarmEditor();
   if(i===5&&!long)return openClock();
   if(i===2&&!long)S.bright=BRIGHT.find(b=>b>S.bright)??BRIGHT[0];
-  if(i===3&&!long){const k=PARTNERS.findIndex(p=>p[0]===S.partner);S.partner=PARTNERS[(k+1)%8][0]}
+  if(i===3&&!long){const k=PARTNERS.findIndex(p=>p[0]===S.partner);S.partner=PARTNERS[(k+1)%8][0];S.dir.trigger(A.PDK.GREET,S.mono)}
   if(i===4&&!long){S.menu=false;S.passkey=100000+Math.floor(Math.random()*900000);setTimeout(()=>{S.passkey=0;render()},8000)}
   render();
 }
@@ -227,13 +239,45 @@ const actions={sync(){S.trusted=true;log('앱에서 시간 동기화')},ff1(){ad
   pair(){menuAct(4,false)},msg(){S.msgUntil=S.mono+4500}};
 for(const b of document.querySelectorAll('[data-act]'))b.onclick=()=>{actions[b.dataset.act]();render()};
 function advance(ms){const step=1000;for(let t=0;t<ms;t+=step){S.mono+=step;S.utcOffsetMs+=step;handle(tick())}render()}
-function handle(ev){for(const e of ev){log({ring:'알람 울림',done:'집중 완료',autosnooze:'자동 스누즈',gaveup:'알람 자동 종료'}[e]);if(e==='ring')S.screen=true}}
+function handle(ev){for(const e of ev){if(e==='done'){S.dir.trigger(A.PDK.CELEBRATE,S.mono);S.screen=true;S.lastTouch=S.mono}log({ring:'알람 울림',done:'집중 완료',autosnooze:'자동 스누즈',gaveup:'알람 자동 종료'}[e]);if(e==='ring')S.screen=true}}
 document.getElementById('phys').onchange=e=>{dev.style.transform=e.target.checked?`scale(${(36.75/25.4*96)/466})`:'';dev.parentElement.style.height=e.target.checked?'160px':''};
 let last=performance.now();
 setInterval(()=>{const n=performance.now();S.mono+=n-last;last=n;const ev=tick();handle(ev);
   const busy=S.ringing||S.phase==='running'||S.passkey;if(S.screen&&!busy&&S.mono-S.lastTouch>600000)S.screen=false;
   if(!S.edit||ev.length)render()},250); // the editor is static between touches: no DOM swap under a finger
-window.PD={S,tick,advance,tap,longPress,menuAct,render,absMin,remaining,openClock,openAlarmEditor,editStep,editNav,stepField,localToUtc};
+// --- partner animation: director pose + PDK clip, drawn every animation frame ---------------------
+let frameKey='',lastCanvas=null;
+const OVTXT=['','\u2665','\u2605','Zzz','!'];
+function drawPartner(){paintPartner();requestAnimationFrame(drawPartner)}
+function paintPartner(){  // also called right after every DOM rebuild, so a fresh canvas is never blank
+  const cv=document.getElementById('spr');
+  if(!cv||!S.pack)return;
+  if(cv!==lastCanvas){lastCanvas=cv;frameKey=''}
+  const shot=S.dir.decide(dirInput());
+  const clip=A.findClip(S.pack,S.partner,shot.anim);
+  if(clip){
+    const idx=Math.floor(shot.t/clip.ms)%clip.frames, key=`${clip.dex}/${clip.anim}/${idx}`;
+    if(cv.width!==clip.w||cv.height!==clip.h){cv.width=clip.w;cv.height=clip.h;frameKey=''}
+    if(key!==frameKey){const t0=performance.now();const px=A.decodeFrame(S.pack,clip,idx);S.perf.decodes++;S.perf.decodeMs+=performance.now()-t0;
+      if(px){cv.getContext('2d').putImageData(new ImageData(px,clip.w,clip.h),0,0);frameKey=key}}
+    const r=A.place(shot.stage,clip.w,clip.h,shot.pose);
+    Object.assign(cv.style,{left:`${233+r.x}px`,top:`${233+r.y}px`,width:`${r.w}px`,height:`${r.h}px`});
+    cv.dataset.stage=shot.stage;cv.dataset.anim=shot.anim;cv.dataset.zoom=r.zoom;
+    const ov=document.getElementById('ov'),p=shot.pose;
+    if(ov){ov.textContent=p.overlay&&p.overlayOpa?OVTXT[p.overlay]:'';ov.className='ov'+(p.overlay===A.OV.HEART||p.overlay===A.OV.SPARKLE?' small':'');
+      ov.style.opacity=p.overlayOpa/255;ov.style.left=`${233+r.x+Math.trunc(r.w*4/5)}px`;ov.style.top=`${233+r.y+12+p.overlayDy}px`}
+  }
+  S.perf.draws++;const now=performance.now();if(now-S.perf.since>=1000){S.perf.fps=S.perf.draws*1000/(now-S.perf.since);S.perf.draws=0;S.perf.since=now}
+}
+requestAnimationFrame(drawPartner);
+const b64=(s)=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+function loadPack(bytes){S.pack=A.readPack(bytes);frameKey='';document.getElementById('packinfo').textContent=S.pack?`팩 ${S.pack.clips.length}개 클립`:'팩 형식 오류';render();return !!S.pack}
+function loadMessageSlot(bytes){const b=bytes instanceof Uint8Array?bytes:new Uint8Array(bytes);
+  if(String.fromCharCode(b[0],b[1],b[2],b[3])!=='PDM1')return false;const n=b[4]|(b[5]<<8);if(!n||n>90)return false;
+  if(S.msg==='오늘도 함께하자')S.msg=new TextDecoder().decode(b.slice(6,6+n));return true}
+document.getElementById('packfile').onchange=async e=>{const f=e.target.files[0];if(f)loadPack(new Uint8Array(await f.arrayBuffer()))};
+window.PD={S,tick,advance,tap,longPress,menuAct,render,absMin,remaining,openClock,openAlarmEditor,editStep,editNav,stepField,localToUtc,
+  loadPack:(s)=>loadPack(b64(s)),loadMessageSlot:(s)=>loadMessageSlot(b64(s)),dirInput};
 render();
 </script>
 </body>

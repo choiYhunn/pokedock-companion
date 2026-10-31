@@ -162,6 +162,10 @@ def main():
                 problems.append(f"phone number in {rel}: {m}")
     fw_hdr = (stage / "firmware/source/core/protocol.hpp").read_text(encoding="utf8")
     fw_version = re.search(r'kFirmwareVersion = "([^"]+)"', fw_hdr).group(1)
+    pin = json.loads((ROOT / "vendor/MFG_PIN.json").read_text(encoding="utf8"))
+    if fw_version != pin["firmware_version"]:
+        problems.append(f"firmware {fw_version} is not the pinned manufacturing firmware {pin['firmware_version']} "
+                        f"(build the vendor ZIP from commit {pin['commit']}; gift content is a separate step)")
 
     manifest = {
         "package": name, "created_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),

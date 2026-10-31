@@ -10,12 +10,20 @@
     "role": "clock"
    },
    {
-    "text": "그림 없음",
+    "text": "포켓몬",
     "font_px": 48,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 44,
-    "overshoot_px": -127,
-    "role": "ph"
+    "overshoot_px": -163.6,
+    "role": "placeholder"
+   },
+   {
+    "text": "이미지 필요",
+    "font_px": 48,
+    "fontFamily": "Pretendard, system-ui, sans-serif",
+    "ink_px": 44,
+    "overshoot_px": -94,
+    "role": "placeholder"
    },
    {
     "text": "시간 맞춰줘",
@@ -36,12 +44,20 @@
     "role": "clock"
    },
    {
-    "text": "그림 없음",
+    "text": "포켓몬",
     "font_px": 48,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 44,
-    "overshoot_px": -127,
-    "role": "ph"
+    "overshoot_px": -163.6,
+    "role": "placeholder"
+   },
+   {
+    "text": "이미지 필요",
+    "font_px": 48,
+    "fontFamily": "Pretendard, system-ui, sans-serif",
+    "ink_px": 44,
+    "overshoot_px": -94,
+    "role": "placeholder"
    },
    {
     "text": "시간 맞춰줘",
@@ -110,12 +126,20 @@
     "role": "clock"
    },
    {
-    "text": "그림 없음",
+    "text": "포켓몬",
     "font_px": 48,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 44,
-    "overshoot_px": -127,
-    "role": "ph"
+    "overshoot_px": -163.6,
+    "role": "placeholder"
+   },
+   {
+    "text": "이미지 필요",
+    "font_px": 48,
+    "fontFamily": "Pretendard, system-ui, sans-serif",
+    "ink_px": 44,
+    "overshoot_px": -94,
+    "role": "placeholder"
    },
    {
     "text": "시간 맞춰줘",
@@ -184,12 +208,20 @@
     "role": "clock"
    },
    {
-    "text": "그림 없음",
+    "text": "포켓몬",
     "font_px": 48,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 44,
-    "overshoot_px": -127,
-    "role": "ph"
+    "overshoot_px": -163.6,
+    "role": "placeholder"
+   },
+   {
+    "text": "이미지 필요",
+    "font_px": 48,
+    "fontFamily": "Pretendard, system-ui, sans-serif",
+    "ink_px": 44,
+    "overshoot_px": -94,
+    "role": "placeholder"
    },
    {
     "text": "시간 맞춰줘",
@@ -258,12 +290,20 @@
     "role": "clock"
    },
    {
-    "text": "그림 없음",
+    "text": "포켓몬",
     "font_px": 48,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 44,
-    "overshoot_px": -127,
-    "role": "ph"
+    "overshoot_px": -163.6,
+    "role": "placeholder"
+   },
+   {
+    "text": "이미지 필요",
+    "font_px": 48,
+    "fontFamily": "Pretendard, system-ui, sans-serif",
+    "ink_px": 44,
+    "overshoot_px": -94,
+    "role": "placeholder"
    },
    {
     "text": "시간 맞춰줘",
@@ -332,12 +372,20 @@
     "role": "clock"
    },
    {
-    "text": "그림 없음",
+    "text": "포켓몬",
     "font_px": 48,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 44,
-    "overshoot_px": -125,
-    "role": "ph"
+    "overshoot_px": -161.8,
+    "role": "placeholder"
+   },
+   {
+    "text": "이미지 필요",
+    "font_px": 48,
+    "fontFamily": "Pretendard, system-ui, sans-serif",
+    "ink_px": 44,
+    "overshoot_px": -91.9,
+    "role": "placeholder"
    },
    {
     "text": "알람 시각",
@@ -398,12 +446,20 @@
     "role": "clock"
    },
    {
-    "text": "그림 없음",
+    "text": "포켓몬",
     "font_px": 48,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 44,
-    "overshoot_px": -127.2,
-    "role": "ph"
+    "overshoot_px": -163.4,
+    "role": "placeholder"
+   },
+   {
+    "text": "이미지 필요",
+    "font_px": 48,
+    "fontFamily": "Pretendard, system-ui, sans-serif",
+    "ink_px": 44,
+    "overshoot_px": -94.4,
+    "role": "placeholder"
    }
   ],
   "focus_minutes": [
@@ -426,7 +482,7 @@
   ],
   "focus_mmss": [
    {
-    "text": "09:58",
+    "text": "09:59",
     "font_px": 140,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 103,
@@ -540,32 +596,7 @@
     "role": "b"
    }
   ],
-  "focus_done": [
-   {
-    "text": "08:58",
-    "font_px": 80,
-    "fontFamily": "Pretendard, system-ui, sans-serif",
-    "ink_px": 59,
-    "overshoot_px": -9,
-    "role": "clock"
-   },
-   {
-    "text": "그림 없음",
-    "font_px": 48,
-    "fontFamily": "Pretendard, system-ui, sans-serif",
-    "ink_px": 44,
-    "overshoot_px": -125,
-    "role": "ph"
-   },
-   {
-    "text": "수고했어!",
-    "font_px": 48,
-    "fontFamily": "Pretendard, system-ui, sans-serif",
-    "ink_px": 44,
-    "overshoot_px": -34.7,
-    "role": "pill"
-   }
-  ],
+  "focus_done": [],
   "alarm": [
    {
     "text": "일어날 시간!",
@@ -610,12 +641,20 @@
     "role": "clock"
    },
    {
-    "text": "그림 없음",
+    "text": "포켓몬",
     "font_px": 48,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 44,
-    "overshoot_px": -124.4,
-    "role": "ph"
+    "overshoot_px": -160.9,
+    "role": "placeholder"
+   },
+   {
+    "text": "이미지 필요",
+    "font_px": 48,
+    "fontFamily": "Pretendard, system-ui, sans-serif",
+    "ink_px": 44,
+    "overshoot_px": -91.6,
+    "role": "placeholder"
    },
    {
     "text": "전원 약함",
@@ -636,12 +675,20 @@
     "role": "clock"
    },
    {
-    "text": "그림 없음",
+    "text": "포켓몬",
     "font_px": 48,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 44,
-    "overshoot_px": -124.4,
-    "role": "ph"
+    "overshoot_px": -160.9,
+    "role": "placeholder"
+   },
+   {
+    "text": "이미지 필요",
+    "font_px": 48,
+    "fontFamily": "Pretendard, system-ui, sans-serif",
+    "ink_px": 44,
+    "overshoot_px": -91.6,
+    "role": "placeholder"
    },
    {
     "text": "오늘도 함께하자",
@@ -662,12 +709,20 @@
     "role": "clock"
    },
    {
-    "text": "그림 없음",
+    "text": "포켓몬",
     "font_px": 48,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 44,
-    "overshoot_px": -124.4,
-    "role": "ph"
+    "overshoot_px": -160.9,
+    "role": "placeholder"
+   },
+   {
+    "text": "이미지 필요",
+    "font_px": 48,
+    "fontFamily": "Pretendard, system-ui, sans-serif",
+    "ink_px": 44,
+    "overshoot_px": -91.6,
+    "role": "placeholder"
    },
    {
     "text": "페어링",
@@ -678,11 +733,11 @@
     "role": "lbl"
    },
    {
-    "text": "166836",
+    "text": "718835",
     "font_px": 80,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 59,
-    "overshoot_px": -77.3,
+    "overshoot_px": -80.4,
     "role": "lbl"
    },
    {
@@ -787,12 +842,29 @@
    "inside_circle": true
   },
   {
-   "text": "그림 없음",
+   "text": "포켓몬",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 44,
-   "overshoot_px": -127,
-   "role": "ph",
+   "overshoot_px": -163.6,
+   "role": "placeholder",
+   "screen": "home_unsynced",
+   "ink_mm": 3.47,
+   "arcmin_30": 39.8,
+   "arcmin_50": 23.9,
+   "arcmin_70": 17.0,
+   "required_arcmin": 20.0,
+   "at_mm": 500,
+   "size_ok": true,
+   "inside_circle": true
+  },
+  {
+   "text": "이미지 필요",
+   "font_px": 48,
+   "fontFamily": "Pretendard, system-ui, sans-serif",
+   "ink_px": 44,
+   "overshoot_px": -94,
+   "role": "placeholder",
    "screen": "home_unsynced",
    "ink_mm": 3.47,
    "arcmin_30": 39.8,
@@ -838,12 +910,29 @@
    "inside_circle": true
   },
   {
-   "text": "그림 없음",
+   "text": "포켓몬",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 44,
-   "overshoot_px": -127,
-   "role": "ph",
+   "overshoot_px": -163.6,
+   "role": "placeholder",
+   "screen": "clock_edit_year",
+   "ink_mm": 3.47,
+   "arcmin_30": 39.8,
+   "arcmin_50": 23.9,
+   "arcmin_70": 17.0,
+   "required_arcmin": 16.0,
+   "at_mm": 300,
+   "size_ok": true,
+   "inside_circle": true
+  },
+  {
+   "text": "이미지 필요",
+   "font_px": 48,
+   "fontFamily": "Pretendard, system-ui, sans-serif",
+   "ink_px": 44,
+   "overshoot_px": -94,
+   "role": "placeholder",
    "screen": "clock_edit_year",
    "ink_mm": 3.47,
    "arcmin_30": 39.8,
@@ -991,12 +1080,29 @@
    "inside_circle": true
   },
   {
-   "text": "그림 없음",
+   "text": "포켓몬",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 44,
-   "overshoot_px": -127,
-   "role": "ph",
+   "overshoot_px": -163.6,
+   "role": "placeholder",
+   "screen": "clock_edit_month",
+   "ink_mm": 3.47,
+   "arcmin_30": 39.8,
+   "arcmin_50": 23.9,
+   "arcmin_70": 17.0,
+   "required_arcmin": 16.0,
+   "at_mm": 300,
+   "size_ok": true,
+   "inside_circle": true
+  },
+  {
+   "text": "이미지 필요",
+   "font_px": 48,
+   "fontFamily": "Pretendard, system-ui, sans-serif",
+   "ink_px": 44,
+   "overshoot_px": -94,
+   "role": "placeholder",
    "screen": "clock_edit_month",
    "ink_mm": 3.47,
    "arcmin_30": 39.8,
@@ -1144,12 +1250,29 @@
    "inside_circle": true
   },
   {
-   "text": "그림 없음",
+   "text": "포켓몬",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 44,
-   "overshoot_px": -127,
-   "role": "ph",
+   "overshoot_px": -163.6,
+   "role": "placeholder",
+   "screen": "clock_edit_hour",
+   "ink_mm": 3.47,
+   "arcmin_30": 39.8,
+   "arcmin_50": 23.9,
+   "arcmin_70": 17.0,
+   "required_arcmin": 16.0,
+   "at_mm": 300,
+   "size_ok": true,
+   "inside_circle": true
+  },
+  {
+   "text": "이미지 필요",
+   "font_px": 48,
+   "fontFamily": "Pretendard, system-ui, sans-serif",
+   "ink_px": 44,
+   "overshoot_px": -94,
+   "role": "placeholder",
    "screen": "clock_edit_hour",
    "ink_mm": 3.47,
    "arcmin_30": 39.8,
@@ -1297,12 +1420,29 @@
    "inside_circle": true
   },
   {
-   "text": "그림 없음",
+   "text": "포켓몬",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 44,
-   "overshoot_px": -127,
-   "role": "ph",
+   "overshoot_px": -163.6,
+   "role": "placeholder",
+   "screen": "clock_edit_minute",
+   "ink_mm": 3.47,
+   "arcmin_30": 39.8,
+   "arcmin_50": 23.9,
+   "arcmin_70": 17.0,
+   "required_arcmin": 16.0,
+   "at_mm": 300,
+   "size_ok": true,
+   "inside_circle": true
+  },
+  {
+   "text": "이미지 필요",
+   "font_px": 48,
+   "fontFamily": "Pretendard, system-ui, sans-serif",
+   "ink_px": 44,
+   "overshoot_px": -94,
+   "role": "placeholder",
    "screen": "clock_edit_minute",
    "ink_mm": 3.47,
    "arcmin_30": 39.8,
@@ -1450,12 +1590,29 @@
    "inside_circle": true
   },
   {
-   "text": "그림 없음",
+   "text": "포켓몬",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 44,
-   "overshoot_px": -125,
-   "role": "ph",
+   "overshoot_px": -161.8,
+   "role": "placeholder",
+   "screen": "alarm_edit_minute",
+   "ink_mm": 3.47,
+   "arcmin_30": 39.8,
+   "arcmin_50": 23.9,
+   "arcmin_70": 17.0,
+   "required_arcmin": 16.0,
+   "at_mm": 300,
+   "size_ok": true,
+   "inside_circle": true
+  },
+  {
+   "text": "이미지 필요",
+   "font_px": 48,
+   "fontFamily": "Pretendard, system-ui, sans-serif",
+   "ink_px": 44,
+   "overshoot_px": -91.9,
+   "role": "placeholder",
    "screen": "alarm_edit_minute",
    "ink_mm": 3.47,
    "arcmin_30": 39.8,
@@ -1586,12 +1743,29 @@
    "inside_circle": true
   },
   {
-   "text": "그림 없음",
+   "text": "포켓몬",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 44,
-   "overshoot_px": -127.2,
-   "role": "ph",
+   "overshoot_px": -163.4,
+   "role": "placeholder",
+   "screen": "home",
+   "ink_mm": 3.47,
+   "arcmin_30": 39.8,
+   "arcmin_50": 23.9,
+   "arcmin_70": 17.0,
+   "required_arcmin": 20.0,
+   "at_mm": 500,
+   "size_ok": true,
+   "inside_circle": true
+  },
+  {
+   "text": "이미지 필요",
+   "font_px": 48,
+   "fontFamily": "Pretendard, system-ui, sans-serif",
+   "ink_px": 44,
+   "overshoot_px": -94.4,
+   "role": "placeholder",
    "screen": "home",
    "ink_mm": 3.47,
    "arcmin_30": 39.8,
@@ -1637,7 +1811,7 @@
    "inside_circle": true
   },
   {
-   "text": "09:58",
+   "text": "09:59",
    "font_px": 140,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 103,
@@ -1875,57 +2049,6 @@
    "inside_circle": true
   },
   {
-   "text": "08:58",
-   "font_px": 80,
-   "fontFamily": "Pretendard, system-ui, sans-serif",
-   "ink_px": 59,
-   "overshoot_px": -9,
-   "role": "clock",
-   "screen": "focus_done",
-   "ink_mm": 4.65,
-   "arcmin_30": 53.3,
-   "arcmin_50": 32.0,
-   "arcmin_70": 22.9,
-   "required_arcmin": 30.0,
-   "at_mm": 500,
-   "size_ok": true,
-   "inside_circle": true
-  },
-  {
-   "text": "그림 없음",
-   "font_px": 48,
-   "fontFamily": "Pretendard, system-ui, sans-serif",
-   "ink_px": 44,
-   "overshoot_px": -125,
-   "role": "ph",
-   "screen": "focus_done",
-   "ink_mm": 3.47,
-   "arcmin_30": 39.8,
-   "arcmin_50": 23.9,
-   "arcmin_70": 17.0,
-   "required_arcmin": 20.0,
-   "at_mm": 500,
-   "size_ok": true,
-   "inside_circle": true
-  },
-  {
-   "text": "수고했어!",
-   "font_px": 48,
-   "fontFamily": "Pretendard, system-ui, sans-serif",
-   "ink_px": 44,
-   "overshoot_px": -34.7,
-   "role": "pill",
-   "screen": "focus_done",
-   "ink_mm": 3.47,
-   "arcmin_30": 39.8,
-   "arcmin_50": 23.9,
-   "arcmin_70": 17.0,
-   "required_arcmin": 20.0,
-   "at_mm": 500,
-   "size_ok": true,
-   "inside_circle": true
-  },
-  {
    "text": "일어날 시간!",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
@@ -2011,12 +2134,29 @@
    "inside_circle": true
   },
   {
-   "text": "그림 없음",
+   "text": "포켓몬",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 44,
-   "overshoot_px": -124.4,
-   "role": "ph",
+   "overshoot_px": -160.9,
+   "role": "placeholder",
+   "screen": "power_warning",
+   "ink_mm": 3.47,
+   "arcmin_30": 39.8,
+   "arcmin_50": 23.9,
+   "arcmin_70": 17.0,
+   "required_arcmin": 20.0,
+   "at_mm": 500,
+   "size_ok": true,
+   "inside_circle": true
+  },
+  {
+   "text": "이미지 필요",
+   "font_px": 48,
+   "fontFamily": "Pretendard, system-ui, sans-serif",
+   "ink_px": 44,
+   "overshoot_px": -91.6,
+   "role": "placeholder",
    "screen": "power_warning",
    "ink_mm": 3.47,
    "arcmin_30": 39.8,
@@ -2062,12 +2202,29 @@
    "inside_circle": true
   },
   {
-   "text": "그림 없음",
+   "text": "포켓몬",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 44,
-   "overshoot_px": -124.4,
-   "role": "ph",
+   "overshoot_px": -160.9,
+   "role": "placeholder",
+   "screen": "message",
+   "ink_mm": 3.47,
+   "arcmin_30": 39.8,
+   "arcmin_50": 23.9,
+   "arcmin_70": 17.0,
+   "required_arcmin": 16.0,
+   "at_mm": 300,
+   "size_ok": true,
+   "inside_circle": true
+  },
+  {
+   "text": "이미지 필요",
+   "font_px": 48,
+   "fontFamily": "Pretendard, system-ui, sans-serif",
+   "ink_px": 44,
+   "overshoot_px": -91.6,
+   "role": "placeholder",
    "screen": "message",
    "ink_mm": 3.47,
    "arcmin_30": 39.8,
@@ -2113,12 +2270,29 @@
    "inside_circle": true
   },
   {
-   "text": "그림 없음",
+   "text": "포켓몬",
    "font_px": 48,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 44,
-   "overshoot_px": -124.4,
-   "role": "ph",
+   "overshoot_px": -160.9,
+   "role": "placeholder",
+   "screen": "pairing",
+   "ink_mm": 3.47,
+   "arcmin_30": 39.8,
+   "arcmin_50": 23.9,
+   "arcmin_70": 17.0,
+   "required_arcmin": 16.0,
+   "at_mm": 300,
+   "size_ok": true,
+   "inside_circle": true
+  },
+  {
+   "text": "이미지 필요",
+   "font_px": 48,
+   "fontFamily": "Pretendard, system-ui, sans-serif",
+   "ink_px": 44,
+   "overshoot_px": -91.6,
+   "role": "placeholder",
    "screen": "pairing",
    "ink_mm": 3.47,
    "arcmin_30": 39.8,
@@ -2147,11 +2321,11 @@
    "inside_circle": true
   },
   {
-   "text": "166836",
+   "text": "718835",
    "font_px": 80,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 59,
-   "overshoot_px": -77.3,
+   "overshoot_px": -80.4,
    "role": "lbl",
    "screen": "pairing",
    "ink_mm": 4.65,

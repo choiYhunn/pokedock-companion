@@ -1,0 +1,205 @@
+{
+ "checks": {
+  "no pack: placeholder text": true,
+  "no pack: no partner canvas": true,
+  "pack parsed": true,
+  "pack: partner drawn": true,
+  "pack: placeholder gone": true,
+  "home 94: inside circle": true,
+  "home 94: integer zoom": true,
+  "home 94: not over the clock": true,
+  "home 393: inside circle": true,
+  "home 393: integer zoom": true,
+  "home 393: not over the clock": true,
+  "home 468: inside circle": true,
+  "home 468: integer zoom": true,
+  "home 468: not over the clock": true,
+  "home 448: inside circle": true,
+  "home 448: integer zoom": true,
+  "home 448: not over the clock": true,
+  "home 195: inside circle": true,
+  "home 195: integer zoom": true,
+  "home 195: not over the clock": true,
+  "home 175: inside circle": true,
+  "home 175: integer zoom": true,
+  "home 175: not over the clock": true,
+  "home 417: inside circle": true,
+  "home 417: integer zoom": true,
+  "home 417: not over the clock": true,
+  "home 385: inside circle": true,
+  "home 385: integer zoom": true,
+  "home 385: not over the clock": true,
+  "back to Gengar after 8 partners": true,
+  "tap plays touch": true,
+  "touch shows a heart": true,
+  "message slot accepted": true,
+  "5 taps: egg dance": true,
+  "5 taps: private message from the slot": true,
+  "focus: cheer loop on the focus stage": true,
+  "focus: inside circle": true,
+  "focus: never over the minutes or the label": true,
+  "focus complete: celebrate": true,
+  "alarm rings": true,
+  "alarm: partner on the alarm stage": true,
+  "alarm: title replaced by the partner": true,
+  "alarm: partner never over the time or hint": true,
+  "alarm: inside circle": true,
+  "night idle: sleeping": true,
+  "sleep shows Zzz": true,
+  "touch wakes the sleeping partner (greet)": true,
+  "browser draws >= 30 fps": true,
+  "no JS errors": true
+ },
+ "fail": [],
+ "private": false,
+ "browser_fps": 64.0,
+ "browser_decode_ms_avg": 0.042,
+ "home_rects": {
+  "94": {
+   "x": -110,
+   "y": -63,
+   "w": 222,
+   "h": 189,
+   "overshoot": -64.41767589690787,
+   "stage": 0,
+   "anim": 0,
+   "zoom": 768,
+   "ov": "",
+   "text": [
+    {
+     "t": "09:20",
+     "top": -124,
+     "overlap": false
+    }
+   ]
+  },
+  "393": {
+   "x": -44,
+   "y": -32,
+   "w": 90,
+   "h": 123,
+   "overshoot": -131.034319499157,
+   "stage": 0,
+   "anim": 0,
+   "zoom": 768,
+   "ov": "",
+   "text": [
+    {
+     "t": "09:20",
+     "top": -155,
+     "overlap": false
+    }
+   ]
+  },
+  "468": {
+   "x": -85,
+   "y": -18,
+   "w": 172,
+   "h": 104,
+   "overshoot": -110.6684832105806,
+   "stage": 0,
+   "anim": 0,
+   "zoom": 512,
+   "ov": "",
+   "text": [
+    {
+     "t": "09:20",
+     "top": -169,
+     "overlap": false
+    }
+   ]
+  },
+  "448": {
+   "x": -69,
+   "y": -67,
+   "w": 141,
+   "h": 189,
+   "overshoot": -91.33843146428174,
+   "stage": 0,
+   "anim": 0,
+   "zoom": 768,
+   "ov": "",
+   "text": [
+    {
+     "t": "09:20",
+     "top": -120,
+     "overlap": false
+    }
+   ]
+  },
+  "195": {
+   "x": -99,
+   "y": -57,
+   "w": 201,
+   "h": 174,
+   "overshoot": -77.78080015668166,
+   "stage": 0,
+   "anim": 0,
+   "zoom": 768,
+   "ov": "",
+   "text": [
+    {
+     "t": "09:20",
+     "top": -130,
+     "overlap": false
+    }
+   ]
+  },
+  "175": {
+   "x": -59,
+   "y": -29,
+   "w": 120,
+   "h": 114,
+   "overshoot": -128.37686680279546,
+   "stage": 0,
+   "anim": 0,
+   "zoom": 768,
+   "ov": "",
+   "text": [
+    {
+     "t": "09:20",
+     "top": -158,
+     "overlap": false
+    }
+   ]
+  },
+  "417": {
+   "x": -78,
+   "y": -56,
+   "w": 159,
+   "h": 165,
+   "overshoot": -97.19867452782356,
+   "stage": 0,
+   "anim": 0,
+   "zoom": 768,
+   "ov": "",
+   "text": [
+    {
+     "t": "09:20",
+     "top": -131,
+     "overlap": false
+    }
+   ]
+  },
+  "385": {
+   "x": -81,
+   "y": -37,
+   "w": 165,
+   "h": 141,
+   "overshoot": -99.31380026345278,
+   "stage": 0,
+   "anim": 0,
+   "zoom": 768,
+   "ov": "",
+   "text": [
+    {
+     "t": "09:20",
+     "top": -150,
+     "overlap": false
+    }
+   ]
+  }
+ },
+ "page_errors": [],
+ "verdict": "PASS"
+}

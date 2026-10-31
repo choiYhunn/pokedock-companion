@@ -67,10 +67,12 @@ PASS screen off after 10 min idle
 PASS first touch only wakes
 PASS no JS errors
 home_unsynced  --:--             80.0px ink  3.47mm 50cm  23.9' clip  -22.8  OK
-home_unsynced  그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -127.0  OK
+home_unsynced  포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -163.6  OK
+home_unsynced  이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -94.0  OK
 home_unsynced  시간 맞춰줘            48.0px ink  3.47mm 50cm  23.9' clip  -27.5  OK
 clock_edit_year --:--             80.0px ink  3.47mm 50cm  23.9' clip  -22.8  OK
-clock_edit_year 그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -127.0  OK
+clock_edit_year 포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -163.6  OK
+clock_edit_year 이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -94.0  OK
 clock_edit_year 시간 맞춰줘            48.0px ink  3.47mm 50cm  23.9' clip  -27.5  OK
 clock_edit_year 시간 맞추기            40.0px ink  2.84mm 50cm  19.5' clip  -27.7  OK
 clock_edit_year 2026.10.31        40.0px ink  2.37mm 50cm  16.3' clip  -71.7  OK
@@ -79,7 +81,8 @@ clock_edit_year 년  1/5            40.0px ink  2.92mm 50cm  20.1' clip -118.9  
 clock_edit_year 취소                40.0px ink  2.84mm 50cm  19.5' clip  -30.0  OK
 clock_edit_year 다음                40.0px ink  2.84mm 50cm  19.5' clip  -30.0  OK
 clock_edit_month --:--             80.0px ink  3.47mm 50cm  23.9' clip  -22.8  OK
-clock_edit_month 그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -127.0  OK
+clock_edit_month 포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -163.6  OK
+clock_edit_month 이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -94.0  OK
 clock_edit_month 시간 맞춰줘            48.0px ink  3.47mm 50cm  23.9' clip  -27.5  OK
 clock_edit_month 시간 맞추기            40.0px ink  2.84mm 50cm  19.5' clip  -27.7  OK
 clock_edit_month 2026.11.30        40.0px ink  2.37mm 50cm  16.3' clip  -71.8  OK
@@ -88,7 +91,8 @@ clock_edit_month 월  2/5            40.0px ink  2.92mm 50cm  20.1' clip -117.6 
 clock_edit_month 이전                40.0px ink  2.84mm 50cm  19.5' clip  -30.0  OK
 clock_edit_month 다음                40.0px ink  2.84mm 50cm  19.5' clip  -30.0  OK
 clock_edit_hour --:--             80.0px ink  3.47mm 50cm  23.9' clip  -22.8  OK
-clock_edit_hour 그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -127.0  OK
+clock_edit_hour 포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -163.6  OK
+clock_edit_hour 이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -94.0  OK
 clock_edit_hour 시간 맞춰줘            48.0px ink  3.47mm 50cm  23.9' clip  -27.5  OK
 clock_edit_hour 시간 맞추기            40.0px ink  2.84mm 50cm  19.5' clip  -27.7  OK
 clock_edit_hour 07:00             40.0px ink  2.37mm 50cm  16.3' clip  -97.1  OK
@@ -97,7 +101,8 @@ clock_edit_hour 시  4/5            40.0px ink  2.92mm 50cm  20.1' clip -117.1  
 clock_edit_hour 이전                40.0px ink  2.84mm 50cm  19.5' clip  -30.0  OK
 clock_edit_hour 다음                40.0px ink  2.84mm 50cm  19.5' clip  -30.0  OK
 clock_edit_minute --:--             80.0px ink  3.47mm 50cm  23.9' clip  -22.8  OK
-clock_edit_minute 그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -127.0  OK
+clock_edit_minute 포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -163.6  OK
+clock_edit_minute 이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -94.0  OK
 clock_edit_minute 시간 맞춰줘            48.0px ink  3.47mm 50cm  23.9' clip  -27.5  OK
 clock_edit_minute 시간 맞추기            40.0px ink  2.84mm 50cm  19.5' clip  -27.7  OK
 clock_edit_minute 07:58             40.0px ink  2.37mm 50cm  16.3' clip  -97.5  OK
@@ -106,7 +111,8 @@ clock_edit_minute 분  5/5            40.0px ink  2.84mm 50cm  19.5' clip -117.4
 clock_edit_minute 이전                40.0px ink  2.84mm 50cm  19.5' clip  -30.0  OK
 clock_edit_minute 저장                40.0px ink  2.84mm 50cm  19.5' clip  -30.0  OK
 alarm_edit_minute 07:58             80.0px ink  4.65mm 50cm  32.0' clip   -9.0  OK
-alarm_edit_minute 그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -125.0  OK
+alarm_edit_minute 포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -161.8  OK
+alarm_edit_minute 이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -91.9  OK
 alarm_edit_minute 알람 시각             40.0px ink  2.84mm 50cm  19.5' clip  -34.8  OK
 alarm_edit_minute 08:00             40.0px ink  2.37mm 50cm  16.3' clip  -96.1  OK
 alarm_edit_minute 00               120.0px ink  6.94mm 50cm  47.7' clip -126.5  OK
@@ -114,10 +120,11 @@ alarm_edit_minute 분  2/2            40.0px ink  2.84mm 50cm  19.5' clip -117.7
 alarm_edit_minute 이전                40.0px ink  2.84mm 50cm  19.5' clip  -30.0  OK
 alarm_edit_minute 저장                40.0px ink  2.84mm 50cm  19.5' clip  -30.0  OK
 home           08:20             80.0px ink  4.65mm 50cm  32.0' clip   -5.6  OK
-home           그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -127.2  OK
+home           포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -163.4  OK
+home           이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -94.4  OK
 focus_minutes  25               210.0px ink 12.07mm 50cm  83.0' clip  -40.4  OK
 focus_minutes  분 남음              48.0px ink  3.39mm 50cm  23.3' clip  -80.6  OK
-focus_mmss     09:58            140.0px ink  8.12mm 50cm  55.8' clip  -12.6  OK
+focus_mmss     09:59            140.0px ink  8.12mm 50cm  55.8' clip  -12.6  OK
 focus_mmss     집중                48.0px ink  3.47mm 50cm  23.9' clip  -89.3  OK
 menu           09:58            140.0px ink  8.12mm 50cm  55.8' clip  -12.1  OK
 menu           집중                48.0px ink  3.47mm 50cm  23.9' clip  -88.0  OK
@@ -131,23 +138,23 @@ menu           40                40.0px ink  2.37mm 50cm  16.3' clip  -79.3  OK
 menu           파트너               40.0px ink  2.84mm 50cm  19.5' clip  -79.3  OK
 menu           팬텀                40.0px ink  2.84mm 50cm  19.5' clip  -72.9  OK
 menu           페어링               40.0px ink  2.84mm 50cm  19.5' clip  -34.1  OK
-focus_done     08:58             80.0px ink  4.65mm 50cm  32.0' clip   -9.0  OK
-focus_done     그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -125.0  OK
-focus_done     수고했어!             48.0px ink  3.47mm 50cm  23.9' clip  -34.7  OK
 alarm          일어날 시간!           48.0px ink  3.47mm 50cm  23.9' clip  -23.5  OK
 alarm          09:00            120.0px ink  6.94mm 50cm  47.7' clip  -34.5  OK
 alarm          탭: 5분 뒤           48.2px ink  3.48mm 50cm  23.9' clip  -77.5  OK
 alarm          길게: 끄기            48.2px ink  3.48mm 50cm  23.9' clip  -30.9  OK
 power_warning  09:07             80.0px ink  4.65mm 50cm  32.0' clip   -6.3  OK
-power_warning  그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -124.4  OK
+power_warning  포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -160.9  OK
+power_warning  이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -91.6  OK
 power_warning  전원 약함             48.0px ink  3.47mm 50cm  23.9' clip  -36.4  OK
 message        09:07             80.0px ink  4.65mm 50cm  32.0' clip   -6.3  OK
-message        그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -124.4  OK
+message        포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -160.9  OK
+message        이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -91.6  OK
 message        오늘도 함께하자          29.8px ink  2.19mm 50cm  15.1' clip -137.0  OK
 pairing        09:07             80.0px ink  4.65mm 50cm  32.0' clip   -6.3  OK
-pairing        그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -124.4  OK
+pairing        포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -160.9  OK
+pairing        이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -91.6  OK
 pairing        페어링               48.0px ink  3.47mm 50cm  23.9' clip  -72.4  OK
-pairing        166836            80.0px ink  4.65mm 50cm  32.0' clip  -77.3  OK
+pairing        718835            80.0px ink  4.65mm 50cm  32.0' clip  -80.4  OK
 pairing        번호를 앱에 입력         40.0px ink  2.84mm 50cm  19.5' clip  -41.1  OK
 pretendard loaded: True
 VERDICT PASS []

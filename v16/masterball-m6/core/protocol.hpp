@@ -21,7 +21,8 @@ namespace pokedock {
 
 static constexpr size_t kMaxCommandBytes = 180;
 static constexpr size_t kMaxMessageBytes = 90;  // ~30 Hangul syllables
-static constexpr const char *kFirmwareVersion = "m6-0.3.0";  // 0.3: on-device clock + alarm time editor
+static constexpr const char *kFirmwareVersion = "m6-0.4.0-gift";  // 0.4: partner moods + private gift pack (0.3 = manufacturing)
+static constexpr const char *kDefaultMessage = "오늘도 함께하자";  // public default; the gift text stays private
 static constexpr int64_t kFirmwareDateUtc = 1793372400;      // 2026-10-31 00:00 KST: clock editor start floor
 // VCC (after PTC + MBR230 Schottky) can be ~4.0 V on a healthy 4.75 V adapter with a long cable, and
 // the ADC + divider read it within about +/-0.17 V. The MP1605 3.3 V buck still regulates far below,
@@ -186,7 +187,7 @@ class ProtocolEngine {
 
   Core &core_;
   DeviceEnv &env_;
-  std::string message_ = "오늘도 함께하자";
+  std::string message_ = kDefaultMessage;
   uint32_t rev_ = 1;
   std::array<CacheSlot, 8> cache_{};
   size_t cache_next_ = 0;

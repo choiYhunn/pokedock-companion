@@ -1,0 +1,24 @@
+PASS manufacturing merged image = MFG_PIN
+PASS manufacturing rotate180 image = MFG_PIN
+PASS make_app_images.py
+PASS manufacturing images untouched by make_app_images
+PASS pokedock_m6_mfg_app.bin: valid app image listed in SHA256SUMS
+PASS pokedock_m6_mfg_app.bin == pokedock_m6_merged.bin[0x10000:]
+PASS pokedock_m6_merged.bin refused as an app (merged)
+PASS pokedock_m6_mfg_app_rotate180.bin: valid app image listed in SHA256SUMS
+PASS pokedock_m6_mfg_app_rotate180.bin == pokedock_m6_merged_rotate180.bin[0x10000:]
+PASS pokedock_m6_merged_rotate180.bin refused as an app (merged)
+PASS pokedock_m6_gift_app.bin: valid app image listed in SHA256SUMS
+PASS pokedock_m6_gift_app.bin == pokedock_m6_gift.bin[0x10000:]
+PASS pokedock_m6_gift.bin refused as an app (merged)
+PASS pokedock_m6_gift_app_rotate180.bin: valid app image listed in SHA256SUMS
+PASS pokedock_m6_gift_app_rotate180.bin == pokedock_m6_gift_rotate180.bin[0x10000:]
+PASS pokedock_m6_gift_rotate180.bin refused as an app (merged)
+PASS pokedock_m6_merged.bin: partition table == firmware/partitions.csv
+PASS pokedock_m6_merged_rotate180.bin: partition table == firmware/partitions.csv
+PASS pokedock_m6_gift.bin: partition table == firmware/partitions.csv
+PASS pokedock_m6_gift_rotate180.bin: partition table == firmware/partitions.csv
+PASS all builds share one partition table (byte-identical)
+PASS all apps share flash header bytes and IDF (bootloader compatible)
+PASS non-image refused
+PASS: 23/23 real-image checks
