@@ -37,6 +37,7 @@ engagement {'check': 'plate hole vs board standoff (-15.75,-11.60)', 'offset_mm'
 engagement {'check': 'plate hole vs board standoff (-15.75,+11.60)', 'offset_mm': 0.0}
 engagement {'check': 'plate hole vs board standoff (+15.75,-11.60)', 'offset_mm': 0.1}
 engagement {'check': 'plate hole vs board standoff (+15.75,+11.60)', 'offset_mm': 0.0}
+FAIL MMC clearance upper_shell_purple x lower_shell_ivory: 0.297 < 0.3
 path 1 display module into bezel pocket from behind (+y -> final) OK
 path 2 USB-C breakout slid outward into port block OK
 path 3 buzzer pushed into pocket OK
@@ -49,4 +50,4 @@ path 8 lobe right onto seat OK
 usb plug vs desk {'plug_path_min_z': -42.7, 'desk_z': -64.0, 'clearance_mm': 21.3}
 mass/cog {'without_disc': {'mass_g': np.float64(286.4), 'cog_mm': [-0.4, -8.36, -1.5], 'tip_angle_deg': 16.5, 'push_to_tip_N': 1.55, 'push_to_slide_N_mu0.8': np.float64(2.25), 'push_to_slide_N_mu0.3': np.float64(0.84)}, 'with_steel_disc': {'mass_g': np.float64(345.6), 'cog_mm': [-0.33, -6.93, -10.67], 'tip_angle_deg': 20.5, 'push_to_tip_N': 1.79, 'push_to_slide_N_mu0.8': np.float64(2.71), 'push_to_slide_N_mu0.3': np.float64(1.02)}}
 overhang {'upper_shell_purple': {'support_area_total_mm2': 8632.5, 'support_area_on_cosmetic_faces_mm2': 0.0}, 'lower_shell_ivory': {'support_area_total_mm2': 1327.7, 'support_area_on_cosmetic_faces_mm2': 0.0}, 'belt_black': {'support_area_total_mm2': 0.0, 'support_area_on_cosmetic_faces_mm2': 0.0}, 'bezel_black': {'support_area_total_mm2': 633.1, 'support_area_on_cosmetic_faces_mm2': 0.0}, 'display_plate_petg': {'support_area_total_mm2': 0.0, 'support_area_on_cosmetic_faces_mm2': 0.0}, 'lobe_left_pink': {'support_area_total_mm2': 373.6, 'support_area_on_cosmetic_faces_mm2': 2.0}, 'lobe_right_pink': {'support_area_total_mm2': 373.6, 'support_area_on_cosmetic_faces_mm2': 2.0}, 'm_inlay_white': {'support_area_total_mm2': 0.0, 'support_area_on_cosmetic_faces_mm2': 0.0}}
-VERDICT PASS 0 failures
+VERDICT FAIL 1 failures

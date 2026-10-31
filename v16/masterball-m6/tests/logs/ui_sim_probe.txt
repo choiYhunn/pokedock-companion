@@ -131,6 +131,9 @@ menu           40                40.0px ink  2.37mm 50cm  16.3' clip  -79.3  OK
 menu           파트너               40.0px ink  2.84mm 50cm  19.5' clip  -79.3  OK
 menu           팬텀                40.0px ink  2.84mm 50cm  19.5' clip  -72.9  OK
 menu           페어링               40.0px ink  2.84mm 50cm  19.5' clip  -34.1  OK
+focus_done     08:58             80.0px ink  4.65mm 50cm  32.0' clip   -9.0  OK
+focus_done     그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -125.0  OK
+focus_done     수고했어!             48.0px ink  3.47mm 50cm  23.9' clip  -34.7  OK
 alarm          일어날 시간!           48.0px ink  3.47mm 50cm  23.9' clip  -23.5  OK
 alarm          09:00            120.0px ink  6.94mm 50cm  47.7' clip  -34.5  OK
 alarm          탭: 5분 뒤           48.2px ink  3.48mm 50cm  23.9' clip  -77.5  OK
@@ -144,7 +147,7 @@ message        오늘도 함께하자          29.8px ink  2.19mm 50cm  15.1' cl
 pairing        09:07             80.0px ink  4.65mm 50cm  32.0' clip   -6.3  OK
 pairing        그림 없음             48.0px ink  3.47mm 50cm  23.9' clip -124.4  OK
 pairing        페어링               48.0px ink  3.47mm 50cm  23.9' clip  -72.4  OK
-pairing        424400            80.0px ink  4.65mm 50cm  32.0' clip  -69.4  OK
+pairing        166836            80.0px ink  4.65mm 50cm  32.0' clip  -77.3  OK
 pairing        번호를 앱에 입력         40.0px ink  2.84mm 50cm  19.5' clip  -41.1  OK
 pretendard loaded: True
 VERDICT PASS []
