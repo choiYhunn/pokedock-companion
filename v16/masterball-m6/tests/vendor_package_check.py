@@ -82,6 +82,8 @@ for r in fat:
 
 src = (ROOT / "tools/make_vendor_package.py").read_text(encoding="utf8")
 for rel in re.findall(r'"((?:vendor|docs|procurement|electronics|tests|cad)/[^"*]+\.(?:md|csv|json|svg|png))"', src):
+    if rel.startswith(("tests/logs/", "cad/out/")):
+        continue  # generated later in the same strict run; the package builder itself refuses missing files
     if not (ROOT / rel).exists():
         fail.append(f"package builder lists missing file {rel}")
 print("PASS" if not fail else "FAIL", fail)
