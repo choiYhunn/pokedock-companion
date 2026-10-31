@@ -1,6 +1,6 @@
 # 선물 콘텐츠: 화면 속 파트너 애니메이션 (펌웨어 m6-0.4.0-gift)
 
-> **상태: 코드·도구·시뮬레이터 검증 완료, 실물 기기 미검증.** 제작업체 납품 이후 의뢰인이 USB-C 케이블로만 적용하는 별도 단계입니다.
+> **상태: 코드·도구·시뮬레이터·가짜 플래시 시험 통과, 실물 기기 미검증.** 제작업체 납품 이후 의뢰인이 USB-C 케이블로만 적용하는 별도 단계입니다.
 
 ## 1. 제조와 선물 콘텐츠의 분리
 
@@ -84,30 +84,94 @@
 
 ## 6. 기기에 넣기 (USB-C 케이블만, 납땜 없음)
 
-준비:
-- Windows PC에 Python을 설치합니다.
-- `python -m pip install esptool`을 실행합니다.
-- 볼 **뒤쪽 외부 USB-C**를 PC에 연결하고, 장치 관리자에서 COM 번호를 확인합니다. 볼을 열거나 보드 자체 포트를 쓰지 않습니다.
+> **실기기 미검증.** 아래 도구는 Windows PowerShell 5.1에서 가짜 esptool(16 MiB 가상 플래시)로 38개 항목, 실제 esptool 4.12.0 명령 해석으로 9개 명령을 시험했습니다. 실제 볼에서는 아직 한 번도 실행하지 않았습니다. G5에서 처음 실행할 때 `-Action Check`부터 합니다.
 
+### 6.1 무엇을 어디에 쓰는가
+
+| 영역 | 주소 | 이 도구가 쓰는가 |
+|---|---|---|
+| 부트로더 | 0x0 | **아니오**(`RestoreFull` 제외). 실행 후 다시 읽어 바뀌지 않았는지 비교 |
+| 파티션 테이블 | 0x8000 | **아니오**(`RestoreFull` 제외). 쓰기 전에 `firmware/partitions.csv`와 일치해야 진행 |
+| 설정 NVS(알람·밝기·파트너·BLE 메시지) | 0x9000–0xEFFF | **아니오**(`RestoreNvs`·`RestoreFull` 제외). 쓰기 전 백업, 쓴 뒤 다시 읽어 백업과 비교 |
+| 앱 | 0x10000 | `InstallGift`(선물 앱), `RestoreMfgApp`(제조 앱). **병합 이미지는 거부** |
+| 그림 팩 | 0x610000 | `InstallGift`, `UpdateAssets` |
+| 메시지 슬롯 | 0xFFF000 | `InstallGift`, `UpdateAssets`(`message_slot.bin`이 있을 때) |
+
+- 예전 방식(병합 RAW BIN을 0x0부터 기록)은 사이 공간 0xFF로 NVS 0x9000–0xEFFF를 지울 수 있어 **없앴습니다.**
+- 앱 전용 이미지는 병합 이미지의 0x10000 이후 부분과 바이트 단위로 같습니다(`tests/gift_image_check_test.py`).
+- 제조 m6-0.3.0과 선물 m6-0.4.0-gift는 다음이 모두 같습니다. 그래서 볼에 있는 부트로더와 테이블을 그대로 둔 채 앱만 바꿀 수 있습니다.
+  - 파티션 테이블(바이트 동일)
+  - 앱 헤더의 플래시 모드·속도·크기 바이트(`02 4f`)
+  - ESP-IDF v5.3.2
+
+### 6.2 모든 동작이 먼저 하는 일
+
+1. **로컬 파일 검사**:
+   - 앱 이미지는 ESP32-S3·16 MB·IDF v5.3.2인지, 세그먼트·체크섬·SHA가 맞는지, `firmware/out/SHA256SUMS.txt`에 있는지 봅니다.
+   - 팩은 PDK 형식이고 0x9EF000 이하여야 합니다.
+   - 슬롯은 4096 B, `PDM1` 형식, 1–90 B UTF-8이어야 합니다.
+   - 틀린 경로·파일은 볼에 접속하기 전에 거부합니다.
+2. `flash_id`: ESP32-S3이고 16MB가 아니면 중단합니다(잘못된 COM 포트 방지).
+3. **전체 16 MiB 백업**을 받습니다(`pokedock_full_<시각>.bin`). 그리고 NVS·부트로더·테이블·앱 머리를 따로 잘라 `pokedock_backup_<시각>.json`(SHA-256)에 기록합니다.
+   - 기본 위치: `-PrivateOut`의 상위 폴더 아래 `backups\`, 없으면 `문서\PokeDock_Backups`.
+   - **백업에는 메시지와 그림이 들어 있으니 공유하지 않습니다.**
+4. 볼의 파티션 테이블을 검사하고, 볼에 있는 앱이 무엇인지 확인합니다(제조/선물, 일반/180°).
+   - 앱을 바꾸는 동작에서는 `-Rotate180`이 볼과 다르면 중단합니다.
+   - 목록에 없는 앱이나 깨진 앱이면 중단합니다.
+5. 계획을 출력하고 `YES` 입력을 받은 뒤에만 기록합니다. 기록 후 `verify_flash`로 검증합니다.
+
+### 6.3 준비 (한 번)
+
+- Windows PC에 Python 3를 설치합니다.
+- `python -m pip install --user "esptool>=4.7,<5" pillow`를 실행합니다.
+- 볼 **뒤쪽 외부 USB-C**를 **데이터 케이블**로 PC에 연결하고, 장치 관리자에서 COM 번호를 확인합니다. 볼을 열거나 보드 자체 포트를 쓰지 않습니다.
+- 다음 파일이 필요합니다.
+  - `firmware/out/`의 제조 병합 이미지 2개: 외주 ZIP의 `firmware/` 폴더와 같은 파일이며 SHA-256은 `vendor/MFG_PIN.json`.
+  - 선물 병합 이미지 2개: `tools/idf_build_wsl.sh`, `tools/idf_build_wsl.sh rotate180`으로 만듭니다.
+- 이 파일들로 `python tools/make_app_images.py --mfg-zip <외주 ZIP>`를 실행해 앱 전용 이미지 4개와 `SHA256SUMS.txt`를 만듭니다.
+  - 핀 해시가 다르면 거부합니다.
+  - 제조 이미지와 ZIP은 읽기만 합니다.
+
+### 6.4 실행
+
+PowerShell 창에서(경로는 이 PC 기준):
+
+```powershell
+cd "$env:USERPROFILE\Documents\프로젝트\pokedock-companion-m6\v16\masterball-m6"
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+$PO = "$env:USERPROFILE\Documents\프로젝트\PokeDock_Private_Assets\out"
+python tools\make_assets.py "$env:USERPROFILE\Documents\프로젝트\PokeDock_Private_Assets\src" $PO
+.\tools\flash_gift_windows.ps1 -Port COM5 -Action Check
 ```
-cd v16\masterball-m6\tools
-python fetch_private_sprites.py C:\...\PokeDock_Private_Assets\src --personal-use    # 방법 A일 때만
-python make_assets.py C:\...\PokeDock_Private_Assets\src C:\...\PokeDock_Private_Assets\out
-.\flash_gift_windows.ps1 -Port COM5 -PrivateOut C:\...\PokeDock_Private_Assets\out -GiftFirmware ..\firmware\out\pokedock_m6_gift.bin
-```
 
-- 스크립트는 **먼저 현재 assets 파티션을 백업**합니다(`assets_backup_<날짜>.bin`). 그다음 팩(0x610000)과 메시지(0xFFF000)를 쓰고 검증합니다.
-- `-GiftFirmware`를 빼면 제조 펌웨어 m6-0.3.0을 그대로 둡니다. 이때도 팩 그림은 보이지만 ×3 고정 크기의 짧은 반응만 나오고, 잠자기·응원·알람 반응·비공개 메시지는 동작하지 않습니다.
-- 화면이 뒤집혀 `_rotate180` 제조 이미지를 받았다면, 선물 펌웨어도 `pokedock_m6_gift_rotate180.bin`을 씁니다(`idf_build_wsl.sh rotate180`으로 빌드).
-- 설정(알람·밝기·파트너, NVS 0x9000)은 이 과정에서 지워지지 않습니다.
+`Check`가 출력하는 `app on the ball:` 줄로 방향을 정합니다.
 
-## 7. 되돌리기
+| `Check` 출력 | 볼 | 선물 설치 명령 |
+|---|---|---|
+| `pokedock_m6_mfg_app.bin` | 일반 방향 | `.\tools\flash_gift_windows.ps1 -Port COM5 -Action InstallGift -PrivateOut $PO` |
+| `pokedock_m6_mfg_app_rotate180.bin` | 180° 회전 | `.\tools\flash_gift_windows.ps1 -Port COM5 -Action InstallGift -PrivateOut $PO -Rotate180` |
 
-| 원하는 것 | 명령 |
-|---|---|
-| 그림·메시지 지우고 자리표시로 | `.\flash_gift_windows.ps1 -Port COM5 -RemoveAssets` |
-| 이전 팩으로 | `python -m esptool --chip esp32s3 -p COM5 write_flash 0x610000 assets_backup_<날짜>.bin` |
-| 제조 펌웨어 m6-0.3.0으로 | `.\flash_gift_windows.ps1 -Port COM5 -RestoreFirmware <외주 ZIP>\firmware\pokedock_m6_merged.bin`(SHA-256 `3957049e…` 확인) |
+- `UpdateAssets`(앱은 그대로, 팩·메시지만)도 같은 `-PrivateOut`을 씁니다. 그림·메시지를 바꿀 때 사용합니다.
+- 제조 앱 m6-0.3.0에 팩만 넣으면 그림은 보이지만 ×3 고정 크기의 짧은 반응만 나옵니다. 잠자기·응원·알람 반응·비공개 메시지는 동작하지 않습니다.
+
+## 7. 되돌리기와 실패했을 때
+
+| 원하는 것 | 명령 (180° 볼은 앱 관련 명령에 `-Rotate180` 추가) | 쓰는 곳 |
+|---|---|---|
+| 그림·메시지 지우고 자리표시로 | `.\tools\flash_gift_windows.ps1 -Port COM5 -Action RemoveAssets` | 0x610000–0xFFFFFF 지움 |
+| 제조 앱 m6-0.3.0으로(설정 유지) | `.\tools\flash_gift_windows.ps1 -Port COM5 -Action RestoreMfgApp` | 0x10000만 |
+| 설정만 백업 시점으로 | `.\tools\flash_gift_windows.ps1 -Port COM5 -Action RestoreNvs -From <backups\pokedock_nvs_<시각>.bin>` | 0x9000–0xEFFF만(정확히 0x6000 B만 받음) |
+| 모든 것을 백업 시점으로 | `.\tools\flash_gift_windows.ps1 -Port COM5 -Action RestoreFull -From <backups\pokedock_full_<시각>.bin>` | 0x0–0xFFFFFF 전체 |
+| 백업만 | `.\tools\flash_gift_windows.ps1 -Port COM5 -Action Backup` | 쓰지 않음 |
+
+**중간에 케이블이 빠지거나 전원이 끊기면**
+- ESP32-S3의 다운로드 모드는 칩 ROM에 있습니다. 앱이 반쯤 써져도 같은 USB-C로 다시 접속할 수 있습니다(후면 포트가 칩의 USB-Serial-JTAG D+/D−에 연결된 설계 기준. G1-E7에서 확인하며 실기 미검증).
+- 도구가 출력한 `RestoreFull -From "<쓰기 직전 전체 백업>"` 명령을 그대로 실행합니다.
+- 앱을 쓰던 중이었다면 볼의 앱이 깨진 것으로 판정되어 `InstallGift`/`RestoreMfgApp`는 거부됩니다. 의도된 동작입니다.
+  - `RestoreFull`로 원래대로 돌린 뒤 다시 설치합니다.
+  - `-AllowUnknownApp`은 방향(`-Rotate180`)을 확실히 알 때만 씁니다.
+- `RestoreFull` 자체가 중단되면 **같은 `-From` 파일로** 다시 실행합니다(그 직전에 새로 받은 백업이 아님).
+- 설정 NVS는 앱·팩 쓰기 중에 건드리지 않습니다. 가짜 플래시 시험에서는 중단 후에도 NVS가 그대로였습니다.
 
 ## 8. 성능·메모리 (계산과 브라우저 측정 / 기기 미측정)
 
@@ -129,6 +193,10 @@ python make_assets.py C:\...\PokeDock_Private_Assets\src C:\...\PokeDock_Private
 | 같은 검사를 비공개 실제 스프라이트 팩으로(결과 캡처는 비공개 폴더에만) | 통과 |
 | `tests/pdk_roundtrip_test.py`, 기존 core 회귀·clock_set·protocol·BLE E2E | 통과 |
 | ESP-IDF v5.3.2 타깃 빌드(m6-0.4.0-gift) | 통과 |
+| `tests/gift_image_check_test.py`: 제조 이미지 SHA-256 = 핀(변경 없음), 앱 전용 이미지 = 병합[0x10000:], 테이블·헤더·IDF 동일, 병합 이미지 거부 | 통과 |
+| `tests/flash_gift_test.ps1`(Windows PowerShell 5.1 + 가짜 esptool 16 MiB): 정확한 인자, 백업 선행, 0x10000 미만 무기록, NVS·부트로더·테이블·phy 불변, 방향·칩·테이블·미확인 앱·잘못된 파일 거부, 중단 후 RestoreFull로 16 MiB 동일 복원, RemoveAssets·RestoreMfgApp·RestoreNvs·UpdateAssets | 통과(38) |
+| `tests/flash_cli_compat_test.py`: 위 시험이 기록한 esptool 명령을 실제 esptool 4.12.0이 해석(없는 포트에서 연결 단계까지) | 통과 |
+| **플래시 도구 실기**: 실제 볼에서 백업 속도, 앱 교체 후 설정 유지, 중단 후 복구 | **미검증**: G5에서 `Check` → `Backup` → `InstallGift` 순으로 |
 | **기기 실측**: 실제 fps·디코드 시간, AMOLED 색감, 터치 감도, 0xFFF000 슬롯 읽기, 잠자기 밤 전환 | **미검증**: 제작 완료 후 G5에서 확인 |
 
 G5 실기 확인 순서:

@@ -86,6 +86,16 @@ else
   skip firmware_build "no ESP-IDF toolchain (tools/idf_setup_wsl.sh)"
 fi
 
+# gift flash path (after the firmware build): real images, the PS 5.1 tool against a mock, real esptool argv
+run gift_image_check "$PY" -X utf8 tests/gift_image_check_test.py
+if command -v powershell.exe >/dev/null 2>&1; then
+  run flash_tool powershell.exe -NoProfile -ExecutionPolicy Bypass -File tests/flash_gift_test.ps1
+  run flash_cli_compat "$PY" -X utf8 tests/flash_cli_compat_test.py "${ESPTOOL_PY:-$PY}"
+else
+  skip flash_tool "Windows PowerShell 5.1 not available"
+  skip flash_cli_compat "needs the argv recorded by flash_tool"
+fi
+
 # manifest: what ran, against which sources
 FP=$("$PY" -X utf8 tests/source_fingerprint.py)
 RESULTS=""

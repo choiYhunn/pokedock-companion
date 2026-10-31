@@ -40,31 +40,58 @@
 
 제조용 제품은 **선물용 포켓몬 애니메이션이 없어도** G1/G2/FAT를 진행할 수 있습니다. 제조사에 포켓몬 GIF/개인 메시지를 보내지 않습니다.
 
-## D. 완제품 수령 후: 선물 콘텐츠 설치 (지금은 실행 금지)
+## D. 완제품 수령 후: 선물 콘텐츠 설치 (도구 수정 완료, 실기 미검증)
 
-1. 제조업체가 준 완제품의 정상 동작부터 확인하고, 5 V USB-C 어댑터로 시계/타이머/알람 테스트.
-2. **선물용 플래시 도구의 아래 안전 문제를 먼저 수정·재검증해야 합니다.** GitHub PR #23에 수정 요구를 기록합니다.
-3. 수정 뒤 `Documents\프로젝트\PokeDock_Private_Assets\src\`에 8종 GIF가 있는지 확인합니다. 파일명은 `94.gif`, `393.gif`, `468.gif`, `448.gif`, `195.gif`, `175.gif`, `417.gif`, `385.gif`(또는 `<번호>_idle.gif`). 없는 경우 `tools/fetch_private_sprites.py`는 제3자 공식 그림을 내려받으므로 **이용 권리 및 사적 용도 판단 후에만** 선택적으로 사용합니다.
-4. 숨겨진 메시지는 같은 `src\message.txt`에 UTF-8 텍스트로 저장합니다(90바이트 이하; 한글 약 30자). 사적인 문장은 직접 작성하고 공개 저장소에 올리지 않습니다.
-5. 해당 선물용 브랜치에서 Python과 Pillow를 준비한 뒤 `python tools/make_assets.py "<비공개 src 경로>" "<비공개 out 경로>"`로 `assets_pack.bin`과 `message_slot.bin`을 생성합니다.
-6. 수정·검증된 안전한 플래시 도구를 사용해 PC와 완성품을 후면 USB-C **데이터 케이블**로 연결하고 `COM` 번호를 확인합니다. **현재 버전의 `flash_gift_windows.ps1`을 그대로 실행하지 마세요.**
-7. 제조용 앱 m6-0.3.0은 GIF를 표시할 수 있으나 선물 동작(잠자기·♥·★·축하·알람 반응·비공개 메시지)을 모두 제공하지는 않습니다. 목표 상태가 **m6-0.4.0-gift**라면 **애플리케이션 펌웨어 + assets 팩 + 메시지 슬롯** 모두 필요합니다.
-8. 적용 후에는 실제 AMOLED에서 팬텀·팽도리 등 8종, 5탭 메시지, 25분 집중 완료, 잠자기/깨기, 알람, 화면 FPS를 시험합니다. 설정 보존과 복원까지 확인한 뒤에만 선물용으로 완성 판정합니다.
+1. 제조업체가 준 완제품부터 확인합니다. 5 V USB-C 어댑터로 시계·타이머·알람이 정상인지 봅니다.
+2. `Documents\프로젝트\PokeDock_Private_Assets\src\`에 8종 GIF가 있는지 확인합니다.
+   - 파일명: `94.gif`, `393.gif`, `468.gif`, `448.gif`, `195.gif`, `175.gif`, `417.gif`, `385.gif`(또는 `<번호>_idle.gif`).
+   - 없을 때 쓰는 `tools/fetch_private_sprites.py`는 제3자 공식 그림을 내려받습니다. **이용 권리와 사적 용도를 판단한 뒤에만** 선택적으로 사용합니다.
+3. 숨겨진 메시지는 같은 폴더의 `src\message.txt`에 UTF-8로 저장합니다(90바이트 이하, 한글 약 30자). 공개 저장소에 올리지 않습니다.
+4. PC와 완성품을 후면 USB-C **데이터 케이블**로 연결하고, 장치 관리자에서 `COM` 번호를 확인합니다.
+5. 아래 명령을 PowerShell에서 차례로 실행합니다. 예시의 `COM5`는 확인한 번호로 바꿉니다.
 
-### 선물용 플래시 도구에서 수정해야 할 두 가지 중대한 문제
+```powershell
+cd "$env:USERPROFILE\Documents\프로젝트\pokedock-companion-m6"
+git switch feature/m6-gift-content-20261031
+git pull --ff-only
+cd v16\masterball-m6
+python -m pip install --user "esptool>=4.7,<5" pillow
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+$PO = "$env:USERPROFILE\Documents\프로젝트\PokeDock_Private_Assets\out"
+python tools\make_assets.py "$env:USERPROFILE\Documents\프로젝트\PokeDock_Private_Assets\src" $PO
+python tools\make_app_images.py --mfg-zip "$env:USERPROFILE\Documents\프로젝트\PokeDock_M6_RevC_Vendor_20261031\PokeDock_M6_RevC_Vendor_Package_20261031.zip"
+.\tools\flash_gift_windows.ps1 -Port COM5 -Action Check
+```
 
-**1. 설정(NVS) 소실 위험 — 확정된 설계 결함**
+6. `Check`가 출력한 `app on the ball:` 줄을 보고 하나만 실행합니다. 도구가 계획을 보여주면 `YES`를 입력합니다.
 
-현재 `tools/flash_gift_windows.ps1`은 `-GiftFirmware` 또는 `-RestoreFirmware`에 지정된 **병합 RAW BIN을 0x0부터 연속으로** 씁니다. ESP-IDF `firmware/partitions.csv`의 `nvs`는 `0x9000~0xEFFF`입니다. Espressif 문서에 따르면 RAW merge 이미지의 사이 공간은 0xFF로 채워지고 단일 이미지를 기록할 때 해당 영역도 지워집니다. 따라서 "NVS가 보존된다"는 기존 안내는 사실이 아닙니다.
+| `Check` 출력 | 볼 | 실행할 명령 |
+|---|---|---|
+| `pokedock_m6_mfg_app.bin` | 일반 방향 | `.\tools\flash_gift_windows.ps1 -Port COM5 -Action InstallGift -PrivateOut $PO` |
+| `pokedock_m6_mfg_app_rotate180.bin` | 180° 회전 | `.\tools\flash_gift_windows.ps1 -Port COM5 -Action InstallGift -PrivateOut $PO -Rotate180` |
 
-- **권고:** 선물/복원 펌웨어는 가능하면 **앱 바이너리만 0x10000**에 플래시(부트로더·파티션 테이블 변경 없음 검증), 또는 최소한 NVS와 필요한 설정 영역을 백업/복원하는 안전 절차를 마련하세요.
-- 일단 `-GiftFirmware`와 `-RestoreFirmware`를 실행하지 않습니다. **기존 설정 보존을 실제 기기에서 시험한 뒤** 사용자에게 배포합니다.
+7. 목표 상태 **m6-0.4.0-gift**는 앱(0x10000), 팩(0x610000), 메시지 슬롯(0xFFF000) 세 가지로 이루어집니다. `InstallGift`가 셋을 한 번에 씁니다.
+   - 제조 앱 m6-0.3.0에 팩만 넣으면(`-Action UpdateAssets`) 그림은 보입니다.
+   - 하지만 잠자기·♥·★·축하·알람 반응·비공개 메시지는 동작하지 않습니다.
+8. 적용 후 실제 AMOLED에서 다음을 시험합니다.
+   - 팬텀·팽도리 등 8종, 5탭 메시지, 25분 집중 완료, 잠자기·깨기, 알람, 화면 FPS.
+   - 설치 전에 정해 둔 알람·밝기가 그대로인지(설정 보존).
+   - `RemoveAssets`·`RestoreMfgApp`로 되돌린 뒤 다시 설치되는지.
 
-**2. PowerShell 함수 인자 전달 재검증**
+   이것을 모두 확인한 뒤에만 선물용으로 완성 판정합니다.
 
-`function Esp([string[]]$ArgsList)`에 `Esp @("read_flash", ...)` 같은 **배열 splatting**을 사용합니다. PowerShell은 배열 splatting을 위치 인자로 나누므로 단일 `ArgsList` 파라미터에 인자 전부가 묶이는지 검증해야 합니다. `Esp -ArgsList @("read_flash",...)`처럼 명시적 인자 전달로 수정하고 실제 Windows PowerShell 5.1 환경의 mock/esptool 명령 출력으로 검증하세요.
+### 플래시 도구 안전 문제: 2026-11-01 PR #23에서 수정
 
-스크립트 수정은 **선물용 PR #23에서만** 진행하고 제조용 PR #21·업체 ZIP/펌웨어 PIN은 변경하지 않습니다. 코드 수정 뒤 strict 재검증을 통과해야 합니다.
+| 문제 | 수정 | 검증 수준 |
+|---|---|---|
+| 병합 RAW BIN을 0x0부터 써서 설정 NVS(0x9000–0xEFFF)를 지울 수 있음 | 앱 전용 이미지를 **0x10000에만** 씁니다. 병합 이미지는 거부합니다. 부트로더·테이블·NVS는 쓰지 않고, 쓴 뒤 다시 읽어 비교합니다. 앱 전용 이미지는 병합 이미지의 0x10000 이후와 바이트 동일하고, 제조·선물 빌드의 파티션 테이블·플래시 헤더·IDF가 같습니다 | 실제 이미지로 검사 23개, 가짜 플래시로 시험 38개 통과 |
+| NVS 백업·복원 없음 | 매번 **전체 16 MiB 백업 + NVS 별도 사본 + SHA-256 기록**을 먼저 받습니다. 복원은 `-Action RestoreNvs -From <nvs 백업>`(0x6000 B만) 또는 `-Action RestoreFull -From <전체 백업>`으로 합니다 | 가짜 플래시로 확인 |
+| `Esp @(...)` 배열 splatting | 이름 있는 인자 `Invoke-Esp -EspArgs @(...)`와 `& $exe @argList`로 고쳤습니다. 이와 함께 5.1에서 esptool의 stderr가 중단 오류가 되는 문제도 고쳤습니다 | Windows PowerShell 5.1에서 명령 문자열을 정확히 비교. 실제 esptool 4.12.0이 기록된 9개 명령을 해석함 |
+| 잘못된 파일·포트·방향, 중간 중단 | 칩·16MB·테이블·앱 종류·방향을 확인하고 틀리면 기록 전에 중단합니다. 중단되면 쓰기 직전 백업으로 `RestoreFull`하라고 정확한 명령을 출력합니다 | 가짜 플래시에서 중단 후 16 MiB 전체 동일 복원 |
+
+**실제 볼에서는 아직 한 번도 실행하지 않았습니다.** 첫 실행은 `Check` → `Backup` 순서로 합니다. 백업 파일(`PokeDock_Private_Assets\backups\`)에는 메시지와 그림이 들어 있으니 공유하지 않습니다. 되돌리기 명령 전체는 `v16/masterball-m6/docs/GIFT_CONTENT_KO.md` §7에 있습니다.
+
+제조용 PR #21, m6-0.3.0 이미지, 업체 ZIP과 그 SHA-256은 바꾸지 않았습니다(`3957049e…`, `0091aafa…`, ZIP `715d6546…`).
 
 ## E. 브랜치 운영
 

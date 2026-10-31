@@ -90,8 +90,8 @@ def build(entries):
             blob += struct.pack("<I", len(data)) + data
         rows.append(struct.pack("<HBBHHHHII", dex, anim, len(frames), w, h, ms, len(pal), pal_off, fr_off))
     out = bytes(head) + b"".join(rows) + bytes(blob)
-    if len(out) > PARTITION_BYTES:
-        raise SystemExit(f"pack {len(out)} B exceeds assets partition {PARTITION_BYTES} B")
+    if len(out) > PARTITION_BYTES - PDM_SLOT_BYTES:  # never overlap the private message slot at the end
+        raise SystemExit(f"pack {len(out)} B exceeds the assets partition minus the message slot ({PARTITION_BYTES - PDM_SLOT_BYTES} B)")
     return out
 
 
