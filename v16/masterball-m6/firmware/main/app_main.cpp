@@ -8,6 +8,7 @@
 
 #include "assets.h"
 #include "ble_gatt.h"
+#include "clock_set.hpp"
 #include "board.h"
 #include "esp_log.h"
 #include "esp_timer.h"
@@ -195,11 +196,48 @@ void menu_timer(bool long_press) {
   after_local_change();
 }
 
-void menu_alarm() {
+void menu_alarm(bool long_press) {
   Lock l;
   const auto &a = g_core.alarm();
+  if (long_press) {  // hold "알람" to set its time on the ball itself (no phone needed)
+    ui::open_alarm_editor(a.minute_of_day / 60, a.minute_of_day % 60);
+    return;
+  }
   g_core.set_alarm(a.minute_of_day / 60, a.minute_of_day % 60, !a.enabled, g_env.local_abs_minute());
   after_local_change();
+}
+
+void alarm_time_saved(int hour, int minute) {
+  Lock l;
+  g_last_touch_ms = mono_ms();
+  if (!g_core.set_alarm(hour, minute, true, g_env.local_abs_minute())) return;
+  after_local_change();
+  if (g_core.sound()) buzzer_play(PD_TUNE_CHIRP);
+}
+
+// ---- clock without a phone: after a power cut the RTC (no backup cell) is untrusted -------------------
+void menu_time() {
+  Lock l;
+  g_last_touch_ms = mono_ms();
+  const LocalDateTime start = g_clock_trusted ? local_from_utc(int64_t(time(nullptr)), g_set.tz_min)
+                                              : suggest_clock_start(g_set.last_sync_utc, kFirmwareDateUtc, g_set.tz_min);
+  ui::open_clock_editor(start);
+}
+
+void clock_saved(const LocalDateTime &local) {
+  Lock l;
+  g_last_touch_ms = mono_ms();
+  if (!valid_local(local)) return;
+  if (!g_env.set_utc(local_to_utc(local, g_set.tz_min), g_set.tz_min)) {
+    ui::show_message("시계를 저장하지 못했어요. 다시 해 주세요.");
+    return;
+  }
+  g_core.wall_clock_set(g_env.local_abs_minute());
+  ESP_LOGI(TAG, "clock set on device: %04d-%02d-%02d %02d:%02d (tz %+d min)", local.year, local.month, local.day,
+           local.hour, local.minute, g_set.tz_min);
+  after_local_change();
+  ui::react(PDK_CELEBRATE);
+  if (g_core.sound()) buzzer_play(PD_TUNE_CHIRP);
 }
 
 void menu_brightness() {
@@ -358,8 +396,8 @@ extern "C" void app_main(void) {
   ESP_LOGI(TAG, "RTC %s", trusted ? "trusted" : "NOT set (oscillator stopped / never synced)");
   assets_init();
 
-  const ui::Actions actions{on_tap, on_long_press, menu_timer, menu_alarm, menu_brightness, menu_partner, menu_pairing,
-                            menu_screen_off};
+  const ui::Actions actions{on_tap,        on_long_press, menu_timer, menu_alarm,  menu_brightness, menu_partner,
+                            menu_pairing,  menu_screen_off, menu_time, clock_saved, alarm_time_saved};
   if (board_lvgl_lock(-1)) {
     ui::init(actions);
     board_lvgl_unlock();

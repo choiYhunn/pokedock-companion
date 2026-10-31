@@ -10,3 +10,6 @@ build/
 # M6 vendor references (downloaded by tools/fetch_vendor_refs.sh, not redistributed)
 vendor_cache/
 firmware/out/
+
+# M6 vendor ZIP built by v16/masterball-m6/tools/make_vendor_package.py (firmware images inside; not in git)
+v16/masterball-m6/dist/

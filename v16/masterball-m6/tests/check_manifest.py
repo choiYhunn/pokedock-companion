@@ -12,8 +12,8 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from source_fingerprint import ROOT, fingerprint  # noqa: E402
 
-REQUIRED = ["core_regression", "protocol", "ble_e2e_bridge", "harness_check", "buzzer_consistency",
-            "schematic_netlist", "adafruit4090_netlist", "tolerance_stack", "pdk_roundtrip", "doc_consistency",
+REQUIRED = ["core_regression", "clock_set", "protocol", "ble_e2e_bridge", "harness_check", "buzzer_consistency",
+            "schematic_netlist", "adafruit4090_netlist", "tolerance_stack", "pdk_roundtrip", "doc_consistency", "vendor_package_check",
             "cad_build", "cad_fitkit", "cad_verify", "driver_board_check", "ui_sim_probe", "firmware_build"]
 fail = []
 fp = fingerprint()

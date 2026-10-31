@@ -2,6 +2,8 @@
 
 > **상태: 설계/소스 준비 완료, 실물 미검증.** 이 자료는 완제품 제조 승인서가 아닙니다.
 > 2026-10-31 점검: Draft PR #21 기준. 저장소 `main`의 이전 V14~V16 설명보다 **이 브랜치의 M6 Rev C**를 우선합니다.
+>
+> **2026-10-31 턴키 패키지 추가**: 업체에는 **ZIP 하나**만 보내면 됩니다. `v16/masterball-m6/`에서 `python tools/make_vendor_package.py`를 실행하면 `dist/PokeDock_M6_RevC_Vendor_Package_<날짜>.zip`이 생깁니다(문서·BOM·STEP/STL·조립 STEP·배선도·**빌드된 펌웨어 이미지**·검사 양식 포함, 포켓몬 자산·개인정보 자동 차단). 업체용 설명서는 ZIP 안 `00_READ_FIRST_KO.md`와 `vendor/` 폴더입니다. 아래 내용은 그 요약입니다.
 
 ## 1. 의뢰 목적과 작업 범위
 
@@ -30,7 +32,7 @@
 | 펌웨어 소스 | `firmware/` 및 `tools/idf_build_wsl.sh`, `tools/flash_windows.ps1` | ESP-IDF 5.3.2/ESP32-S3 컴파일·플래시 절차 |
 | 자동 검증 증거 | `tests/logs/RUN_MANIFEST.json`, `cad/out/verify_report.json` | strict 검증 로그, 소스 fingerprint/STL 해시. **실물 검증 아님** |
 
-**주의:** 빌드 완료한 통합 플래시 파일 `firmware/out/pokedock_m6_merged.bin`은 Git에 커밋되지 않았습니다. 업체가 제공 소스와 빌드 절차로 생성하거나 의뢰인에게 실제 빌드 산출물을 별도로 전달받아야 합니다. 공식 제조사 참조 STEP 분해본 등 `vendor_cache/`도 저장소에 없고 `tools/fetch_vendor_refs.sh`로 복구합니다. 실제 포켓몬 8종 애니메이션 자산 팩도 미완료입니다.
+**주의:** 빌드 완료한 통합 플래시 파일 `firmware/out/pokedock_m6_merged.bin`(및 `_rotate180`)은 Git에 커밋하지 않고 **턴키 ZIP 안에 SHA-256과 함께** 넣습니다. 업체는 빌드할 필요 없이 esptool로 기록합니다. 공식 제조사 참조 STEP 분해본 등 `vendor_cache/`도 저장소에 없고 `tools/fetch_vendor_refs.sh`로 복구합니다. 실제 포켓몬 8종 애니메이션 자산 팩도 미완료입니다.
 
 ## 3. 단계별 발주 승인
 
@@ -66,5 +68,5 @@
 - 자동 검증은 2026-10-24 기준이고, 실제 Waveshare 보드/구동 회로/3D 출력물/휴대폰 BLE/열·전류 실측은 수행되지 않았습니다.
 - 디스플레이의 첫 부팅·터치 컨트롤러 종류와 연결 방향은 G1에서 실측합니다.
 - 부저 MOSFET 회로는 데이터시트 계산과 자동 검사만 완료됐으며 실물은 미검증입니다.
-- 정전 후에는 시계 재동기화가 필요하며, 현재 iPhone PWA는 마스터볼에 직접 BLE 연결하지 못합니다.
+- 정전 후에는 시계를 다시 맞춰야 합니다. iPhone PWA는 마스터볼에 직접 BLE 연결하지 못하므로, 펌웨어 m6-0.3.0부터 **기기 터치로 날짜·시간·알람 시각을 설정**합니다(`v16/masterball-m6/docs/CLOCK_WITHOUT_PHONE_KO.md`, 검사 G1-E10).
 - 실제 포켓몬 M6 애니메이션 팩과 완제품 장시간 시험은 별도 검증 항목입니다.

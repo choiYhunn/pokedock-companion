@@ -73,6 +73,75 @@ with sync_playwright() as p:
     check("untrusted clock shows --:--", "--:--" in pg.inner_text("#dev"))
     check("untrusted clock pill", "시간 맞춰줘" in pg.inner_text("#dev"))
     shot("home_unsynced")
+
+    # ---- clock without a phone: tap the pill, set 2026-11-02 07:58 one field at a time ----------
+    BUTTONS_JS = """() => { const d = document.getElementById('dev').getBoundingClientRect(), cx = d.left + d.width / 2,
+      cy = d.top + d.height / 2, R = d.width / 2;
+      return [...document.querySelectorAll('#dev [data-e],#dev [data-n],#dev [data-m]')].map(b => { const r = b.getBoundingClientRect();
+        // rounded buttons: test the rounded-rectangle outline, sampled every 2 degrees
+        const rad = Math.min(r.width, r.height) / 2, pts = [];
+        for (const [ox, oy, a0] of [[r.right - rad, r.top + rad, -90], [r.right - rad, r.bottom - rad, 0], [r.left + rad, r.bottom - rad, 90], [r.left + rad, r.top + rad, 180]])
+          for (let a = a0; a <= a0 + 90; a += 2) pts.push(Math.hypot(ox + rad * Math.cos(a * Math.PI / 180) - cx, oy + rad * Math.sin(a * Math.PI / 180) - cy));
+        return {text: b.textContent.trim() || b.getAttribute('aria-label'), w: r.width, h: r.height, overshoot: +(Math.max(...pts) - R).toFixed(1)}; }); }"""
+
+    def buttons_inside(name):
+        for b in E(BUTTONS_JS):
+            check(f"{name} button '{b['text']}' inside circle", b["overshoot"] <= -2.0, str(b))
+            check(f"{name} button '{b['text']}' >= 64 px", min(b["w"], b["h"]) >= 64, str(b))
+
+    def click(sel):
+        bb = pg.locator(sel).bounding_box()
+        pg.mouse.click(bb["x"] + bb["width"] / 2, bb["y"] + bb["height"] / 2)
+        pg.wait_for_timeout(60)
+
+    click("#dev [data-p]")
+    check("pill opens clock editor", E("!!PD.S.edit && !PD.S.edit.alarm"))
+    check("editor starts at the firmware date", E("PD.S.edit.t.year===2026 && PD.S.edit.t.month===10 && PD.S.edit.t.day===31"))
+    shot("clock_edit_year")
+    buttons_inside("clock editor")
+    click("#dev [data-n='1']")                       # year ok -> month
+    click("#dev [data-e='1']")                       # 11
+    shot("clock_edit_month")
+    click("#dev [data-n='1']")
+    for _ in range(2):
+        click("#dev [data-e='1']")                   # day 31 -> 1 -> 2 (wraps inside November: 30 days)
+    check("Nov 31 impossible: day wraps", E("PD.S.edit.t.month===11 && PD.S.edit.t.day===2"), json.dumps(E("PD.S.edit.t")))
+    click("#dev [data-n='1']")
+    for _ in range(7):
+        click("#dev [data-e='1']")                   # hour 0 -> 7
+    shot("clock_edit_hour")
+    click("#dev [data-n='1']")
+    click("#dev [data-e='-1']"); click("#dev [data-e='-1']")  # minute 0 -> 58
+    check("minute wraps down without touching hour", E("PD.S.edit.t.hour===7 && PD.S.edit.t.minute===58"))
+    shot("clock_edit_minute")
+    check("last page says 저장", "저장" in pg.inner_text("#dev"))
+    click("#dev [data-n='1']")
+    check("saved clock is trusted", E("PD.S.trusted") and not E("!!PD.S.edit"))
+    check("home shows 07:58", "07:58" in pg.inner_text("#dev"), pg.inner_text("#dev"))
+    check("time pill gone", "시간 맞춰줘" not in pg.inner_text("#dev"))
+    # alarm time on the device: hold 알람 in the menu, set 08:00, it rings two minutes later
+    E("PD.S.menu=true; PD.render()")
+    buttons_inside("menu")
+    E("PD.menuAct(1,true)")
+    check("hold 알람 opens alarm editor", E("!!PD.S.edit && PD.S.edit.alarm"))
+    E("PD.S.edit.t.hour=8; PD.S.edit.t.minute=59; PD.render()")  # fields wrap on their own: 08:59 + 1 min -> 08:00
+    click("#dev [data-n='1']"); click("#dev [data-e='1']")
+    shot("alarm_edit_minute")
+    buttons_inside("alarm editor")
+    click("#dev [data-n='1']")
+    check("alarm saved 08:00 on", E("PD.S.alarm.en && PD.S.alarm.min===480"))
+    E("PD.advance(60000)")
+    check("device-set alarm not early", not E("PD.S.ringing"))
+    E("PD.advance(61000)")
+    check("device-set alarm rings at 08:00", E("PD.S.ringing"))
+    E("if (PD.S.ringing) PD.longPress(); PD.S.alarm={en:false,min:450}; PD.S.lastFired=-1; PD.S.armed=-1; PD.render()")
+    # cancel on the first page leaves the clock alone
+    before = E("PD.absMin()")
+    E("PD.openClock()")
+    click("#dev [data-e='1']"); click("#dev [data-n='-1']")
+    check("취소 keeps the clock", not E("!!PD.S.edit") and abs(E("PD.absMin()") - before) <= 1)
+    check("editing never started focus", E("PD.S.phase") == "idle")
+
     E("PD.S.trusted=true; PD.S.utcOffsetMs = Date.UTC(2026,9,24,23,20,0) - Date.now(); PD.render()")  # 08:20 KST
     shot("home")
     check("home clock 08:20", "08:20" in pg.inner_text("#dev"), pg.inner_text("#dev"))
@@ -136,8 +205,12 @@ with sync_playwright() as p:
     shot("power_warning")
     E("PD.S.usb=4850; PD.render()")
     E("PD.S.lastTouch=PD.S.mono; PD.S.screen=true; PD.render()")
-    for _ in range(5):
-        E("PD.tap()")
+    # one evaluate: a screenshot stall can otherwise let the simulator's real-time clock jump past the
+    # 3 s tap window between two separate calls (harness race, not device behaviour)
+    # start from the plain home screen: on a finished focus ("수고했어!") the first tap only clears it
+    E("if (PD.S.phase === 'done') PD.tap()")
+    check("home before the 5-tap egg", E("PD.S.phase") == "idle")
+    E("for (let i = 0; i < 5; i++) PD.tap()")
     check("5 taps show hidden message", "오늘도" in pg.inner_text("#dev"), json.dumps(E("({ring:PD.S.ringing,screen:PD.S.screen,phase:PD.S.phase,taps:PD.S.taps,msg:PD.S.msgUntil,mono:PD.S.mono,pass:PD.S.passkey,menu:PD.S.menu})")))
     shot("message")
     E("PD.S.msgUntil=0; PD.menuAct(4,false)")
@@ -160,7 +233,7 @@ for scr, glyphs in res["screens"].items():
         mm = g["ink_px"] * PX_MM
         a50 = arcmin(mm, 500)
         primary = g["role"] in PRIMARY and g["text"] != "--:--"  # dashes have no digit-height ink
-        close_range = scr in ("menu", "pairing", "message")
+        close_range = scr in ("menu", "pairing", "message") or "_edit_" in scr  # used at arm's length
         need = 30.0 if primary else (16.0 if close_range else 20.0)
         dist = 300 if close_range else 500
         a = arcmin(mm, dist)

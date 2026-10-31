@@ -7,7 +7,7 @@ import hashlib
 import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-EXCLUDE_DIRS = {"tests/logs", "cad/out", "firmware/out", "vendor_cache", "build", "docs/img"}
+EXCLUDE_DIRS = {"tests/logs", "cad/out", "firmware/out", "vendor_cache", "build", "docs/img", "dist"}
 EXCLUDE_PARTS = {"__pycache__", "node_modules", "managed_components"}
 
 

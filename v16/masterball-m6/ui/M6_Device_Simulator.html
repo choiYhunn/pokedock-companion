@@ -37,6 +37,13 @@ svg.ring{position:absolute;inset:10px;width:446px;height:446px;transform:rotate(
 .overlay{position:absolute;inset:0;background:var(--ivory)}
 .menu .b{position:absolute;width:170px;height:120px;border-radius:40px;background:var(--pill);color:var(--ink);
   display:flex;align-items:center;justify-content:center;text-align:center;font-size:40px;line-height:1.1}
+.eb{position:absolute;border-radius:999px;background:var(--pill);color:var(--ink);display:flex;align-items:center;
+  justify-content:center;font-size:40px;line-height:1}
+.eb.pm{width:110px;height:110px;top:178px}
+.eb.pm i{position:absolute;left:33px;top:50px;width:44px;height:10px;border-radius:5px;background:var(--ink)}
+.eb.pm i+i{left:50px;top:33px;width:10px;height:44px}
+.eb.nav{width:120px;height:64px;top:351px}
+.pill[data-p]{cursor:pointer}
 .msg{position:absolute;left:53px;right:53px;top:50%;transform:translateY(-50%);background:#faf1e7;border-radius:28px;
   padding:18px;font-size:30px;line-height:1.35;color:var(--ink);text-align:center;white-space:normal}
 .ctl{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
@@ -50,7 +57,7 @@ label{display:inline-flex;gap:6px;align-items:center}
 <main>
 <section class="card">
   <h1>M6 원형 화면 시뮬레이터</h1>
-  <div class="note">466×466 px = Ø36.75 mm. 펌웨어 ui.cpp와 같은 배치·폰트 크기·제스처: 탭 = 반응, 길게(0.6초) = 시작/일시정지, 아래로 끌기 = 메뉴. 포켓몬 이미지는 개인 파일이 있을 때만 표시하고, 없으면 중립 자리표시를 보여 줍니다.</div>
+  <div class="note">466×466 px = Ø36.75 mm. 펌웨어 ui.cpp와 같은 배치·폰트 크기·제스처: 탭 = 반응, 길게(0.6초) = 시작/일시정지, 아래로 끌기 = 메뉴. 메뉴 위쪽 “시간” 또는 “시간 맞춰줘”를 누르면 휴대폰 없이 날짜·시간을 맞추고, 메뉴의 “알람”을 길게 누르면 알람 시각을 바꿉니다. 포켓몬 이미지는 개인 파일이 있을 때만 표시하고, 없으면 중립 자리표시를 보여 줍니다.</div>
   <div class="ctl"><label><input type="checkbox" id="phys"> 실제 크기(96 dpi 기준)</label></div>
   <div class="holder"><div id="dev" role="button" tabindex="0" aria-label="기기 화면"></div></div>
 </section>
@@ -81,6 +88,29 @@ const S={mono:0, utcOffsetMs:0, trusted:false, tz:540, phase:'idle', total:25*60
   lastFired:-1, armed:-1, ringing:false, ringStart:0, snoozeUntil:-1, auto:0, partner:94, bright:40, preset:1,
   usb:4850, screen:true, lastTouch:0, menu:false, passkey:0, msg:'오늘도 함께하자', taps:0, tapWin:0, react:'', msgUntil:0, completed:0};
 const nowUtc=()=>Date.now()+S.utcOffsetMs;
+// --- clock editor: JS mirror of core/clock_set.hpp -------------------------------------------------
+const FW_DATE_UTC=1793372400, YMIN=2026, YMAX=2099, FIELDS=['year','month','day','hour','minute'], UNIT={year:'년',month:'월',day:'일',hour:'시',minute:'분'};
+const leap=y=>(y%4===0&&y%100!==0)||y%400===0, dim=(y,m)=>m===2&&leap(y)?29:[31,28,31,30,31,30,31,31,30,31,30,31][m-1];
+const wrapv=(v,lo,hi)=>{const n=hi-lo+1;return lo+(((v-lo)%n)+n)%n};
+function stepField(t,f,d){t={...t};
+  if(f==='year')t.year=wrapv(t.year+d,YMIN,YMAX);if(f==='month')t.month=wrapv(t.month+d,1,12);
+  if(f==='day')t.day=wrapv(t.day+d,1,dim(t.year,t.month));if(f==='hour')t.hour=wrapv(t.hour+d,0,23);if(f==='minute')t.minute=wrapv(t.minute+d,0,59);
+  t.day=Math.min(t.day,dim(t.year,t.month));return t}
+const localToUtc=(t,tz)=>Date.UTC(t.year,t.month-1,t.day,t.hour,t.minute)/1000-tz*60;
+function localFromUtc(u,tz){const d=new Date((u+tz*60)*1000);return{year:d.getUTCFullYear(),month:d.getUTCMonth()+1,day:d.getUTCDate(),hour:d.getUTCHours(),minute:d.getUTCMinutes()}}
+function openClock(){const base=S.trusted?Math.floor(nowUtc()/1000):Math.max(S.lastSync||0,FW_DATE_UTC);
+  S.menu=false;S.edit={alarm:false,fields:FIELDS,fi:0,t:localFromUtc(base,S.tz)};render()}
+function openAlarmEditor(){S.menu=false;S.edit={alarm:true,fields:['hour','minute'],fi:0,t:{year:YMIN,month:1,day:1,hour:Math.floor(S.alarm.min/60),minute:S.alarm.min%60}};render()}
+function editStep(d){const e=S.edit;e.t=stepField(e.t,e.fields[e.fi],d);render()}
+function editNav(dir){const e=S.edit;
+  if(dir<0){if(e.fi===0)S.edit=null;else e.fi--;return render()}
+  if(e.fi<e.fields.length-1){e.fi++;return render()}
+  S.edit=null;
+  if(e.alarm){S.alarm={en:true,min:e.t.hour*60+e.t.minute};S.armed=absMin();log(`기기에서 알람 ${e.t.hour}:${e.t.minute}`)}
+  else{const u=localToUtc(e.t,S.tz);S.utcOffsetMs=u*1000-Date.now();S.trusted=true;S.lastSync=u;wallClockSet(absMin());
+    log(`기기에서 시간 설정 ${e.t.year}.${e.t.month}.${e.t.day} ${e.t.hour}:${e.t.minute}`)}
+  render()}
+function wallClockSet(now){if(now<0)return;const today=Math.floor(now/1440);if(S.lastFired>today)S.lastFired=today-1;if(S.armed>now)S.armed=now}
 const absMin=()=>S.trusted?Math.floor((nowUtc()/1000+S.tz*60)/60):-1;
 const log=t=>{const l=document.getElementById('log');l.textContent=`${new Date(nowUtc()).toISOString().slice(11,19)} ${t}\n`+l.textContent};
 function remaining(){return S.phase==='running'?Math.max(0,S.end-S.mono):S.phase==='paused'?S.rem:0}
@@ -119,16 +149,26 @@ function render(){
     h+=spriteHtml();
     if(S.phase==='done')h+=ring(1,6);
     const st=S.usb<3800?'전원 약함':!S.trusted?'시간 맞춰줘':S.phase==='done'?'수고했어!':'';
-    if(st)h+=`<div class="pill" data-t="pill">${st}</div>`;
+    if(st)h+=`<div class="pill" data-t="pill"${!S.trusted&&S.usb>=3800?' data-p="1"':''}>${st}</div>`;
   }
   h+='</div>';
+  if(S.ringing&&S.edit)S.edit=null; // a ringing alarm always wins over an unfinished edit
   if(S.ringing)h=`<div class="overlay"><div class="lbl" style="top:64px;font-size:48px;color:var(--accent)">일어날 시간!</div><div class="lbl" style="top:150px;font-size:120px;color:var(--ink)" data-t="alarm">${String(Math.floor(S.alarm.min/60)).padStart(2,'0')}:${String(S.alarm.min%60).padStart(2,'0')}</div><div class="lbl" style="top:300px;font-size:48px;color:var(--muted);line-height:1.15">탭: 5분 뒤<br>길게: 끄기</div></div>`;
-  if(S.menu){const f=focus;h+=`<div class="overlay menu"><div class="lbl" style="top:40px;font-size:40px;color:var(--muted)">뒤로</div>
+  if(S.menu){const f=focus;h+=`<div class="overlay menu"><div class="b" data-m="5" style="left:138px;top:33px;width:190px;height:64px">시간</div>
     <div class="b" data-m="0" style="left:56px;top:93px">${f?'타이머<br>길게: 그만':`타이머<br>${PRESETS[S.preset]}분`}</div>
     <div class="b" data-m="1" style="left:240px;top:93px">${S.alarm.en?`알람<br>${String(Math.floor(S.alarm.min/60)).padStart(2,'0')}:${String(S.alarm.min%60).padStart(2,'0')}`:'알람<br>꺼짐'}</div>
     <div class="b" data-m="2" style="left:56px;top:225px">밝기<br>${S.bright}</div>
     <div class="b" data-m="3" style="left:240px;top:225px">파트너<br>${name(S.partner)}</div>
     <div class="b" data-m="4" style="left:138px;top:369px;width:190px;height:64px">페어링</div></div>`}
+  if(S.edit){const e=S.edit,f=e.fields[e.fi],t=e.t,p2=n=>String(n).padStart(2,'0');
+    const ctx=f==='hour'||f==='minute'?`${p2(t.hour)}:${p2(t.minute)}`:`${t.year}.${p2(t.month)}.${p2(t.day)}`;
+    const big=f==='year'?String(t.year):p2(t[f]), fs=f==='year'?80:120;
+    h+=`<div class="overlay edit"><div class="lbl" style="top:53px;font-size:40px;color:var(--muted)">${e.alarm?'알람 시각':'시간 맞추기'}</div>
+    <div class="lbl" style="top:113px;font-size:40px;color:var(--accent)" data-t="ctx">${ctx}</div>
+    <div class="lbl" style="top:${233-fs/2}px;font-size:${fs}px;color:var(--ink);font-variant-numeric:tabular-nums" data-t="edit">${big}</div>
+    <div class="lbl" style="top:291px;font-size:40px;color:var(--muted)">${UNIT[f]}  ${e.fi+1}/${e.fields.length}</div>
+    <div class="eb pm" data-e="-1" style="left:13px" aria-label="빼기"><i></i></div><div class="eb pm" data-e="1" style="left:343px" aria-label="더하기"><i></i><i></i></div>
+    <div class="eb nav" data-n="-1" style="left:103px">${e.fi===0?'취소':'이전'}</div><div class="eb nav" data-n="1" style="left:243px">${e.fi===e.fields.length-1?'저장':'다음'}</div></div>`}
   if(S.passkey)h+=`<div class="overlay"><div class="lbl" style="top:90px;font-size:48px;color:var(--accent)">페어링</div><div class="lbl" style="top:190px;font-size:80px;color:var(--ink)">${String(S.passkey).padStart(6,'0')}</div><div class="lbl" style="top:330px;font-size:40px;color:var(--muted)">번호를 앱에 입력</div></div>`;
   if(S.msgUntil>S.mono)h+=`<div class="msg" data-t="msg">${esc(S.msg)}</div>`;
   dev.innerHTML=h;
@@ -156,14 +196,23 @@ function menuAct(i,long){
   const f=S.phase==='running'||S.phase==='paused';
   if(i===0){if(f){if(long){S.phase='idle';S.menu=false;log('집중 취소')}}else S.preset=(S.preset+1)%4}
   if(i===1&&!long){S.alarm.en=!S.alarm.en;S.armed=absMin()}
+  if(i===1&&long)return openAlarmEditor();
+  if(i===5&&!long)return openClock();
   if(i===2&&!long)S.bright=BRIGHT.find(b=>b>S.bright)??BRIGHT[0];
   if(i===3&&!long){const k=PARTNERS.findIndex(p=>p[0]===S.partner);S.partner=PARTNERS[(k+1)%8][0]}
   if(i===4&&!long){S.menu=false;S.passkey=100000+Math.floor(Math.random()*900000);setTimeout(()=>{S.passkey=0;render()},8000)}
   render();
 }
-dev.addEventListener('pointerdown',e=>{downAt=performance.now();downY=e.clientY;longFired=false;
+let rep=0,repeated=false;
+dev.addEventListener('pointerdown',e=>{downAt=performance.now();downY=e.clientY;longFired=false;repeated=false;
+  const eb=e.target.closest('[data-e]');
+  if(S.edit){if(eb){const d=+eb.dataset.e;clearInterval(rep);lpTimer=setTimeout(()=>{repeated=true;rep=setInterval(()=>editStep(d),100)},400)}return}
   const m=e.target.closest('[data-m]');lpTimer=setTimeout(()=>{longFired=true;if(m)menuAct(+m.dataset.m,true);else if(!S.menu)longPress()},600)});
-dev.addEventListener('pointerup',e=>{clearTimeout(lpTimer);if(longFired)return;const dy=e.clientY-downY;
+dev.addEventListener('pointerup',e=>{clearTimeout(lpTimer);clearInterval(rep);
+  if(S.edit){if(repeated)return;const eb=e.target.closest('[data-e]'),nb=e.target.closest('[data-n]');
+    if(eb)editStep(+eb.dataset.e);else if(nb)editNav(+nb.dataset.n);return}
+  if(longFired)return;const dy=e.clientY-downY;
+  if(e.target.closest('[data-p]')&&!S.menu&&Math.abs(dy)<20){if(!wake())openClock();return}
   if(dy>60&&!S.menu){if(!wake()){S.menu=true;render()}return}
   if(dy<-60&&S.menu){S.menu=false;render();return}
   const m=e.target.closest('[data-m]');if(S.menu){if(m)menuAct(+m.dataset.m,false);return}tap()});
@@ -182,8 +231,9 @@ function handle(ev){for(const e of ev){log({ring:'알람 울림',done:'집중 �
 document.getElementById('phys').onchange=e=>{dev.style.transform=e.target.checked?`scale(${(36.75/25.4*96)/466})`:'';dev.parentElement.style.height=e.target.checked?'160px':''};
 let last=performance.now();
 setInterval(()=>{const n=performance.now();S.mono+=n-last;last=n;const ev=tick();handle(ev);
-  const busy=S.ringing||S.phase==='running'||S.passkey;if(S.screen&&!busy&&S.mono-S.lastTouch>600000)S.screen=false;render()},250);
-window.PD={S,tick,advance,tap,longPress,menuAct,render,absMin,remaining};
+  const busy=S.ringing||S.phase==='running'||S.passkey;if(S.screen&&!busy&&S.mono-S.lastTouch>600000)S.screen=false;
+  if(!S.edit||ev.length)render()},250); // the editor is static between touches: no DOM swap under a finger
+window.PD={S,tick,advance,tap,longPress,menuAct,render,absMin,remaining,openClock,openAlarmEditor,editStep,editNav,stepField,localToUtc};
 render();
 </script>
 </body>

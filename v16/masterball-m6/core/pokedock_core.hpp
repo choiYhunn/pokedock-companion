@@ -145,6 +145,21 @@ class Core {
     persist_dirty_ = false;
     return d;
   }
+  // The user set the wall clock by hand on the device. Alarm bookkeeping recorded under a later,
+  // wrong date must not silence the corrected clock for days; the same-day record is kept so a
+  // dismissed alarm never rings twice. Targets at or before now_abs are never fired afterwards.
+  void wall_clock_set(int64_t now_abs) {
+    if (now_abs < 0) return;
+    const int today = abs_day(now_abs);
+    if (persisted_.last_fired_day > today) {
+      persisted_.last_fired_day = today - 1;
+      persist_dirty_ = true;
+    }
+    if (persisted_.armed_after_abs > now_abs) {
+      persisted_.armed_after_abs = now_abs;
+      persist_dirty_ = true;
+    }
+  }
   bool alarm_ringing() const { return ringing_; }
   bool snooze_pending() const { return snooze_until_ms_ >= 0; }
 

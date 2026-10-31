@@ -25,12 +25,22 @@ const lv_color_t kIvory = lv_color_hex(0xFBF8F1), kInk = lv_color_hex(0x4A356D),
 
 Actions g_act{};
 lv_obj_t *scr, *stage, *clock_lbl, *sprite, *placeholder, *ring, *big_lbl, *unit_lbl, *status_lbl;
-lv_obj_t *alarm_box, *alarm_time, *menu, *menu_btn[5], *pair_box, *pair_digits, *msg_box, *msg_lbl;
+lv_obj_t *alarm_box, *alarm_time, *menu, *menu_btn[6], *pair_box, *pair_digits, *msg_box, *msg_lbl;
+lv_obj_t *edit_box, *edit_title, *edit_ctx, *edit_value, *edit_unit, *edit_prev, *edit_next;
 View g_last;
 bool g_menu = false;
 uint8_t g_anim = PDK_IDLE;
 uint32_t g_frame = 0;
 int64_t g_anim_until = 0, g_msg_until = 0;
+
+using pokedock::ClockField;
+constexpr ClockField kClockFields[] = {ClockField::kYear, ClockField::kMonth, ClockField::kDay, ClockField::kHour,
+                                       ClockField::kMinute};
+constexpr ClockField kAlarmFields[] = {ClockField::kHour, ClockField::kMinute};
+pokedock::LocalDateTime g_edit;
+const ClockField *g_fields = kClockFields;
+int g_nfields = 5, g_fi = 0;
+bool g_edit_open = false, g_edit_alarm = false;
 lv_timer_t *g_sprite_timer;
 
 const char *partner_name(int dex) {
@@ -88,10 +98,11 @@ void menu_event(lv_event_t *e) {
   const bool lp = lv_event_get_code(e) == LV_EVENT_LONG_PRESSED;
   switch (id) {
     case 0: g_act.menu_timer(lp); break;
-    case 1: if (!lp) g_act.menu_alarm(); break;
+    case 1: g_act.menu_alarm(lp); break;
     case 2: if (!lp) g_act.menu_brightness(); break;
     case 3: if (!lp) g_act.menu_partner(); break;
     case 4: if (!lp) g_act.menu_pairing(); break;
+    case 5: if (!lp) g_act.menu_time(); break;
     default: break;
   }
 }
@@ -111,6 +122,95 @@ lv_obj_t *menu_button(lv_obj_t *parent, int id, lv_coord_t x, lv_coord_t y, lv_c
 }
 
 void set_menu_text(int i, const char *t) { lv_label_set_text(lv_obj_get_child(menu_btn[i], 0), t); }
+
+// ---- touch editor: one field per page. The panel is only 36.75 mm wide (1 px = 0.079 mm), so the
+// -/+ targets are 110 px (8.7 mm) circles and the page buttons 120 x 64 px; no text below 40 px.
+const char *field_unit(ClockField f) {
+  switch (f) {
+    case ClockField::kYear: return "년";
+    case ClockField::kMonth: return "월";
+    case ClockField::kDay: return "일";
+    case ClockField::kHour: return "시";
+    default: return "분";
+  }
+}
+
+void edit_refresh() {
+  char buf[40];
+  const ClockField f = g_fields[g_fi];
+  lv_label_set_text(edit_title, g_edit_alarm ? "알람 시각" : "시간 맞추기");
+  if (f == ClockField::kHour || f == ClockField::kMinute)
+    snprintf(buf, sizeof buf, "%02d:%02d", g_edit.hour, g_edit.minute);
+  else
+    snprintf(buf, sizeof buf, "%04d.%02d.%02d", g_edit.year, g_edit.month, g_edit.day);
+  lv_label_set_text(edit_ctx, buf);
+  const int v = pokedock::field_value(g_edit, f);
+  lv_obj_set_style_text_font(edit_value, f == ClockField::kYear ? &pd_digits_80 : &pd_digits_120, 0);
+  snprintf(buf, sizeof buf, f == ClockField::kYear ? "%04d" : "%02d", v);
+  lv_label_set_text(edit_value, buf);
+  snprintf(buf, sizeof buf, "%s  %d/%d", field_unit(f), g_fi + 1, g_nfields);
+  lv_label_set_text(edit_unit, buf);
+  lv_label_set_text(lv_obj_get_child(edit_prev, 0), g_fi == 0 ? "취소" : "이전");
+  lv_label_set_text(lv_obj_get_child(edit_next, 0), g_fi == g_nfields - 1 ? "저장" : "다음");
+}
+
+void edit_step_event(lv_event_t *e) {
+  const int delta = int(reinterpret_cast<intptr_t>(lv_event_get_user_data(e)));
+  g_edit = pokedock::step_field(g_edit, g_fields[g_fi], delta);
+  edit_refresh();
+}
+
+void edit_prev_event(lv_event_t *) {
+  if (g_fi == 0) return close_editor();
+  --g_fi;
+  edit_refresh();
+}
+
+void edit_next_event(lv_event_t *) {
+  if (g_fi < g_nfields - 1) {
+    ++g_fi;
+    return edit_refresh();
+  }
+  const pokedock::LocalDateTime t = g_edit;
+  const bool alarm = g_edit_alarm;
+  close_editor();
+  if (alarm) g_act.alarm_time_saved(t.hour, t.minute);
+  else g_act.clock_saved(t);
+}
+
+lv_obj_t *edit_button(lv_obj_t *parent, const char *text, lv_coord_t x, lv_coord_t y, lv_coord_t w, lv_coord_t h,
+                      const lv_font_t *font) {
+  lv_obj_t *b = lv_btn_create(parent);
+  lv_obj_set_size(b, w, h);
+  lv_obj_align(b, LV_ALIGN_CENTER, x, y);
+  lv_obj_set_style_radius(b, h / 2, 0);
+  lv_obj_set_style_bg_color(b, kPill, 0);
+  lv_obj_set_style_shadow_width(b, 0, 0);
+  lv_obj_t *l = label(b, font, kInk);
+  lv_label_set_text(l, text);
+  lv_obj_center(l);
+  return b;
+}
+
+// -/+ drawn as solid bars (a "-" glyph is only a few px tall on this panel): 44 x 10 px = 3.5 x 0.8 mm
+lv_obj_t *sign_button(lv_obj_t *parent, lv_coord_t x, bool plus) {
+  lv_obj_t *b = edit_button(parent, "", x, 0, 110, 110, &pd_ui_40);
+  for (int i = 0; i < (plus ? 2 : 1); i++) {
+    lv_obj_t *bar = lv_obj_create(b);
+    lv_obj_remove_style_all(bar);
+    lv_obj_set_size(bar, i ? 10 : 44, i ? 44 : 10);
+    lv_obj_set_style_radius(bar, 5, 0);
+    lv_obj_set_style_bg_color(bar, kInk, 0);
+    lv_obj_set_style_bg_opa(bar, LV_OPA_COVER, 0);
+    lv_obj_clear_flag(bar, LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_center(bar);
+  }
+  return b;
+}
+
+void pill_event(lv_event_t *) {
+  if (!g_last.clock_trusted && g_act.menu_time) g_act.menu_time();  // "시간 맞춰줘" opens the editor
+}
 
 void sprite_tick(lv_timer_t *t) {
   const int64_t now = esp_timer_get_time() / 1000;
@@ -189,6 +289,9 @@ void init(const Actions &a) {
   lv_obj_align(unit_lbl, LV_ALIGN_CENTER, 0, 110);
   status_lbl = pill(stage);
   lv_obj_align(status_lbl, LV_ALIGN_BOTTOM_MID, 0, -46);
+  lv_obj_add_flag(status_lbl, LV_OBJ_FLAG_CLICKABLE);
+  lv_obj_set_ext_click_area(status_lbl, 16);
+  lv_obj_add_event_cb(status_lbl, pill_event, LV_EVENT_SHORT_CLICKED, nullptr);
 
   alarm_box = lv_obj_create(scr);
   lv_obj_remove_style_all(alarm_box);
@@ -215,10 +318,35 @@ void init(const Actions &a) {
   menu_btn[2] = menu_button(menu, 2, -92, 62, 170, 120);
   menu_btn[3] = menu_button(menu, 3, 92, 62, 170, 120);
   menu_btn[4] = menu_button(menu, 4, 0, 168, 190, 64);
-  lv_obj_t *back = label(menu, &pd_ui_40, kMuted);
-  lv_label_set_text(back, "뒤로");
-  lv_obj_align(back, LV_ALIGN_TOP_MID, 0, 40);
+  menu_btn[5] = menu_button(menu, 5, 0, -168, 190, 64);  // took the place of the hint label; swipe up still closes
+  set_menu_text(5, "시간");
   lv_obj_add_flag(menu, LV_OBJ_FLAG_HIDDEN);
+
+  edit_box = lv_obj_create(scr);  // above the menu, below pairing and the message
+  lv_obj_remove_style_all(edit_box);
+  lv_obj_set_size(edit_box, kSize, kSize);
+  lv_obj_set_style_bg_color(edit_box, kIvory, 0);
+  lv_obj_set_style_bg_opa(edit_box, LV_OPA_COVER, 0);
+  lv_obj_clear_flag(edit_box, LV_OBJ_FLAG_SCROLLABLE);
+  edit_title = label(edit_box, &pd_ui_40, kMuted);
+  lv_obj_align(edit_title, LV_ALIGN_CENTER, 0, -160);
+  edit_ctx = label(edit_box, &pd_ui_40, kAccent);
+  lv_obj_align(edit_ctx, LV_ALIGN_CENTER, 0, -100);
+  edit_value = label(edit_box, &pd_digits_120, kInk);
+  lv_obj_align(edit_value, LV_ALIGN_CENTER, 0, 0);
+  edit_unit = label(edit_box, &pd_ui_40, kMuted);
+  lv_obj_align(edit_unit, LV_ALIGN_CENTER, 0, 78);
+  lv_obj_t *minus = sign_button(edit_box, -165, false);  // outer edge 220 px < 233 px radius; "2026" fits between
+  lv_obj_t *plus = sign_button(edit_box, 165, true);
+  lv_obj_add_event_cb(minus, edit_step_event, LV_EVENT_SHORT_CLICKED, reinterpret_cast<void *>(intptr_t(-1)));
+  lv_obj_add_event_cb(minus, edit_step_event, LV_EVENT_LONG_PRESSED_REPEAT, reinterpret_cast<void *>(intptr_t(-1)));
+  lv_obj_add_event_cb(plus, edit_step_event, LV_EVENT_SHORT_CLICKED, reinterpret_cast<void *>(intptr_t(1)));
+  lv_obj_add_event_cb(plus, edit_step_event, LV_EVENT_LONG_PRESSED_REPEAT, reinterpret_cast<void *>(intptr_t(1)));
+  edit_prev = edit_button(edit_box, "취소", -70, 150, 120, 64, &pd_ui_40);
+  edit_next = edit_button(edit_box, "다음", 70, 150, 120, 64, &pd_ui_40);
+  lv_obj_add_event_cb(edit_prev, edit_prev_event, LV_EVENT_SHORT_CLICKED, nullptr);
+  lv_obj_add_event_cb(edit_next, edit_next_event, LV_EVENT_SHORT_CLICKED, nullptr);
+  lv_obj_add_flag(edit_box, LV_OBJ_FLAG_HIDDEN);
 
   pair_box = lv_obj_create(scr);
   lv_obj_remove_style_all(pair_box);
@@ -253,6 +381,39 @@ void init(const Actions &a) {
 
 bool menu_open() { return g_menu; }
 
+void open_clock_editor(const pokedock::LocalDateTime &start) {
+  g_edit = pokedock::valid_local(start) ? start : pokedock::LocalDateTime{};
+  g_fields = kClockFields;
+  g_nfields = 5;
+  g_fi = 0;
+  g_edit_alarm = false;
+  g_edit_open = true;
+  close_menu();
+  edit_refresh();
+  lv_obj_clear_flag(edit_box, LV_OBJ_FLAG_HIDDEN);
+}
+
+void open_alarm_editor(int hour, int minute) {
+  g_edit = pokedock::LocalDateTime{};
+  g_edit.hour = hour;
+  g_edit.minute = minute;
+  g_fields = kAlarmFields;
+  g_nfields = 2;
+  g_fi = 0;
+  g_edit_alarm = true;
+  g_edit_open = true;
+  close_menu();
+  edit_refresh();
+  lv_obj_clear_flag(edit_box, LV_OBJ_FLAG_HIDDEN);
+}
+
+bool editor_open() { return g_edit_open; }
+
+void close_editor() {
+  g_edit_open = false;
+  lv_obj_add_flag(edit_box, LV_OBJ_FLAG_HIDDEN);
+}
+
 void close_menu() {
   g_menu = false;
   lv_obj_add_flag(menu, LV_OBJ_FLAG_HIDDEN);
@@ -286,6 +447,7 @@ void update(const View &v) {
   lv_obj_set_pos(stage, kShift[s][0], kShift[s][1]);
 
   lv_obj_add_flag(alarm_box, LV_OBJ_FLAG_HIDDEN);
+  if (v.ringing && g_edit_open) close_editor();  // a ringing alarm always wins over an unfinished edit
   if (v.ringing) {
     snprintf(buf, sizeof buf, "%02d:%02d", v.alarm_h, v.alarm_m);
     lv_label_set_text(alarm_time, buf);
