@@ -27,6 +27,8 @@ ASSETS_OFFSET = 0x610000  # firmware/partitions.csv: assets partition (Pokémon 
 TEXT_EXT = {".md", ".csv", ".json", ".txt", ".svg", ".c", ".cpp", ".h", ".hpp", ".py", ".sh", ".ps1", ".cmake", ".yml",
             ".lock", ".defaults", ".html", ".projbuild"}
 FORBIDDEN_EXT = {".gif", ".ogg", ".mp3", ".wav", ".pdk", ".apng", ".webm", ".mp4"}
+# GIF, Ogg, MP3 (ID3 / frame sync), FLAC, PDK sprite pack: refused whatever the file is named
+MEDIA_MAGIC = (b"GIF87a", b"GIF89a", b"OggS", b"ID3", bytes([0xFF, 0xFB]), b"fLaC", b"PDK1")
 FORBIDDEN_PATH = re.compile(r"(assets/private|vendor_cache|/sprites?/|vendor_schematic_|pokeapi)", re.I)
 EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 PHONE = re.compile(r"(?<!\d)01[016789][- ]?\d{3,4}[- ]?\d{4}(?!\d)")
@@ -146,6 +148,9 @@ def main():
         rel = p.relative_to(stage).as_posix()
         if p.suffix.lower() in FORBIDDEN_EXT:
             problems.append(f"forbidden media type in package: {rel}")
+        head = p.read_bytes()[:12]
+        if head.startswith(MEDIA_MAGIC) or (head[:4] == b"RIFF" and head[8:12] in (b"WAVE", b"WEBP", b"AVI ")):
+            problems.append(f"animation/audio/sprite content (by file signature) in package: {rel}")
         if FORBIDDEN_PATH.search(rel):
             problems.append(f"forbidden path in package: {rel}")
         if (p.suffix.lower() in TEXT_EXT or p.name == "CMakeLists.txt") and not p.name.upper().startswith(("OFL", "LICENSE")):
