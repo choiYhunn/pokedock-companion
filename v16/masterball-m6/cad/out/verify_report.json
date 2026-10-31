@@ -230,7 +230,7 @@
     "a": "bezel_black",
     "b": "lower_shell_ivory",
     "why": "button in lower opening",
-    "min_clearance_mm": 0.579,
+    "min_clearance_mm": 0.58,
     "mmc_required_mm": 0.3,
     "designed_contact": false,
     "mmc_ok": true
@@ -239,7 +239,7 @@
     "a": "bezel_black",
     "b": "belt_black",
     "why": "button in belt gap",
-    "min_clearance_mm": 0.584,
+    "min_clearance_mm": 0.583,
     "mmc_required_mm": 0.3,
     "designed_contact": false,
     "mmc_ok": true
@@ -266,7 +266,7 @@
     "a": "upper_shell_purple",
     "b": "lower_shell_ivory",
     "why": "upper counterbore on spigot / boss gap",
-    "min_clearance_mm": 0.44,
+    "min_clearance_mm": 0.392,
     "mmc_required_mm": 0.3,
     "designed_contact": false,
     "mmc_ok": true
@@ -302,7 +302,7 @@
     "a": "socket_right",
     "b": "upper_shell_purple",
     "why": "socket vs upper rib",
-    "min_clearance_mm": 0.543,
+    "min_clearance_mm": 0.541,
     "mmc_required_mm": 0.35,
     "designed_contact": false,
     "mmc_ok": true
@@ -320,7 +320,7 @@
     "a": "lobe_left_pink",
     "b": "m_inlay_white",
     "why": "decor spacing",
-    "min_clearance_mm": 11.125,
+    "min_clearance_mm": 11.133,
     "mmc_required_mm": 0.3,
     "designed_contact": false,
     "mmc_ok": true
@@ -455,7 +455,7 @@
     "a": "bezel_black",
     "b": "board_283_MICRO_SD_SOCKET_PU",
     "why": "bezel vs board part",
-    "min_clearance_mm": 2.972,
+    "min_clearance_mm": 2.973,
     "mmc_required_mm": 0.25,
     "designed_contact": false,
     "mmc_ok": true
@@ -491,7 +491,7 @@
     "a": "bezel_black",
     "b": "board_286_1_27MM-2X7PIN-MALE",
     "why": "bezel vs board part",
-    "min_clearance_mm": 4.542,
+    "min_clearance_mm": 4.543,
     "mmc_required_mm": 0.25,
     "designed_contact": false,
     "mmc_ok": true
@@ -647,7 +647,7 @@
   }
  },
  "fail": [],
- "source_fingerprint": "add09a8f3686a24141146a95cc7c9bc8e37f7bb416fb98201b0234cb282af38a",
+ "source_fingerprint": "77166b9f453552ae2deb4cbbe55c1276733c3ab1fe88234e86d6305f888f1092",
  "stl_sha256": {
   "fitkit/fitkit_belt_segment.stl": "d8a2e817492303be51f18477f131d1005daa9494ab47b5a6ce2e484d34cec29d",
   "fitkit/fitkit_joint_coupon.stl": "13cd12660d1431acaae550455f9d0992a33df547b798bb634a186aea441db296",

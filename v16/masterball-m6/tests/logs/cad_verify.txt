@@ -1,6 +1,6 @@
-C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\e5703c39-80f0-418a-b2aa-c03f2c0a3466\scratchpad\venv\Lib\site-packages\trimesh\triangles.py:302: RuntimeWarning: invalid value encountered in divide
+C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\3fe2777c-12dd-4bb0-a404-1b7806b6387c\scratchpad\m6venv\Lib\site-packages\trimesh\triangles.py:302: RuntimeWarning: invalid value encountered in divide
   center_mass = integrated[1:4] / volume
-C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\e5703c39-80f0-418a-b2aa-c03f2c0a3466\scratchpad\venv\Lib\site-packages\trimesh\triangles.py:302: RuntimeWarning: divide by zero encountered in divide
+C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\3fe2777c-12dd-4bb0-a404-1b7806b6387c\scratchpad\m6venv\Lib\site-packages\trimesh\triangles.py:302: RuntimeWarning: divide by zero encountered in divide
   center_mass = integrated[1:4] / volume
 interference pairs reported: 7
 engagement {'check': 'M3 insert wall in upper boss', 'material_fraction': 1.0}

@@ -1,4 +1,4 @@
-C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\e5703c39-80f0-418a-b2aa-c03f2c0a3466\scratchpad\venv\Lib\site-packages\fitz\__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\3fe2777c-12dd-4bb0-a404-1b7806b6387c\scratchpad\m6venv\Lib\site-packages\fitz\__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
   warnings.warn(
 PASS J1-4 = USB_5V = Type-C VBUS = ETA6098 VIN: labels=['USB_5V'] mates_ok=True
 PASS J1-6 = GND: labels=['GND'] mates_ok=True

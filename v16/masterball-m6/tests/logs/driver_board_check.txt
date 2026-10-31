@@ -1,21 +1,21 @@
-C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\e5703c39-80f0-418a-b2aa-c03f2c0a3466\scratchpad\venv\Lib\site-packages\trimesh\triangles.py:302: RuntimeWarning: invalid value encountered in divide
+C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\3fe2777c-12dd-4bb0-a404-1b7806b6387c\scratchpad\m6venv\Lib\site-packages\trimesh\triangles.py:302: RuntimeWarning: invalid value encountered in divide
   center_mass = integrated[1:4] / volume
 {
  "clearance_mm": {
   "lower_shell_ivory": 0.8,
   "upper_shell_purple": 24.48,
-  "bezel_black": 68.08,
-  "display_plate_petg": 65.63,
-  "buzzer": 9.83,
+  "bezel_black": 68.06,
+  "display_plate_petg": 65.62,
+  "buzzer": 9.86,
   "usb_breakout": 33.82,
-  "steel_disc": 29.83,
-  "socket_left": 65.57,
-  "socket_right": 83.93,
-  "m3x50_0": 34.9,
-  "m3x50_1": 26.09,
+  "steel_disc": 29.81,
+  "socket_left": 65.55,
+  "socket_right": 83.98,
+  "m3x50_0": 34.93,
+  "m3x50_1": 26.11,
   "m3x50_2": 66.6,
-  "usb_screw_l": 38.61,
-  "usb_screw_r": 50.61
+  "usb_screw_l": 38.53,
+  "usb_screw_r": 50.65
  },
  "insertion_path_hits": [],
  "display_subassembly_xy_overlap": false,
@@ -46,7 +46,7 @@ C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\e5703c39-80f0-
    "harness": 80
   }
  },
- "source_fingerprint": "add09a8f3686a24141146a95cc7c9bc8e37f7bb416fb98201b0234cb282af38a",
+ "source_fingerprint": "77166b9f453552ae2deb4cbbe55c1276733c3ab1fe88234e86d6305f888f1092",
  "verdict": "PASS",
  "fail": []
 }
