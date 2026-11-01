@@ -284,3 +284,58 @@ draw_section(f"{IMG}/section_display_x0.png", "디스플레이 단면 x = 0: 유
              notes=[("립 0.6 mm 간극", (c[1] - 1, c[2] + 19, -48, 40)), ("M2 스탠드오프 → 플레이트", (-3, 0, 5, 35)),
                     ("USB-C ㄱ자 어댑터", (-25, -12, -45, -25))])
 draw_section(f"{IMG}/section_display_x16_header.png", "x = 16 단면: 2×7 헤더 창과 배선 구멍", 16.0, None, xlim=(-50, 30), ylim=(-30, 45))
+
+
+# ---------------------------------------------------------------- wiring / layout plan (top view, under the deck)
+def wiring_plan(path):
+    fig, ax = plt.subplots(figsize=(10, 10), dpi=130)
+    th = np.linspace(0, 2 * np.pi, 200)
+    ax.plot(P.R * np.cos(th), P.R * np.sin(th), color="#999", lw=1)
+    rd = math.sqrt(P.RI_LOW ** 2 - (P.DECK_TOP_Z - P.DECK_T) ** 2) - 0.5
+    ax.plot(rd * np.cos(th), rd * np.sin(th), color="#b9a3e0", lw=1, ls="--")
+    boxes = {"buzzer_wt1205": "부저 WT-1205", "buzzer_driver_board": "부저 구동 기판\n(덱 아래 폼테이프)",
+             "usb_right_angle_adapter": "USB-C ㄱ자 어댑터\n(Adafruit 4432)", "usb_extension_plug": "연장 케이블 플러그",
+             "usb_panel_port_body": "후면 USB-C 패널\n(Adafruit 4218)", "reed_sensor_59155": "리드 센서 59155\n(벨트 왼쪽)",
+             "steel_weight": "와셔 3장 Ø60", "dowel_pin_3x30": "힌지 핀"}
+    cen = {}
+    for k, lab in boxes.items():
+        m = purch[k]
+        lo, hi = m.bounds
+        ax.add_patch(plt.Rectangle((lo[0], lo[1]), hi[0] - lo[0], hi[1] - lo[1], fc=PCOL.get(k, "#888"), alpha=0.55, ec="#222"))
+        c = m.centroid
+        cen[k] = c
+        ax.text(c[0], c[1], lab, ha="center", va="center", fontsize=8)
+    pod = printed["display_bezel_plum"].bounds
+    ax.add_patch(plt.Rectangle((pod[0][0], pod[0][1]), pod[1][0] - pod[0][0], pod[1][1] - pod[0][1], fc="#4d3b6e", alpha=0.25, ec="#4d3b6e"))
+    ax.text(0, (pod[0][1] + pod[1][1]) / 2, "화면 포드 (50°)", ha="center", fontsize=9)
+    j1 = np.array([-16.0, 6.5])     # deck cable hole behind the plate (J1 side chosen at assembly: +/-16)
+    ax.plot(*j1, "ks")
+    ax.text(j1[0], j1[1] + 3, "J1 소켓 → 덱 구멍", ha="center", fontsize=8)
+    sx, sy, _ = P.unit(P.SENSOR_AZ, 0)
+    notch = np.array([sx * (rd - 1.2), sy * (rd - 1.2)])
+    drv = cen["buzzer_driver_board"][:2]
+    routes = [("B1/B2/B3 (5 V, GND, IO16)", [j1, drv], "#d62728"), ("S1 (IO17) / S2 (GND)", [cen["reed_sensor_59155"][:2], notch, drv, j1], "#1f77b4"),
+              ("B4/B5 부저", [drv, cen["buzzer_wt1205"][:2]], "#2ca02c"),
+              ("USB 연장 케이블", [cen["usb_extension_plug"][:2], np.array([30.0, 30.0]), cen["usb_panel_port_body"][:2]], "#555")]
+    for lab, pts, col in routes:
+        pts = np.array(pts)
+        ax.plot(pts[:, 0], pts[:, 1], color=col, lw=2.2, label=lab)
+    for ang in P.DECK_SCREW_ANG:
+        x, y = P.DECK_SCREW_R * math.cos(math.radians(ang)), P.DECK_SCREW_R * math.sin(math.radians(ang))
+        ax.plot(x, y, "o", color="#777")
+    ax.text(0, 74, "뒤 (힌지)", ha="center")
+    ax.text(0, -76, "앞 (사용자, 정면 버튼)", ha="center")
+    ax.set_aspect("equal")
+    ax.set_xlim(-80, 80)
+    ax.set_ylim(-82, 82)
+    ax.legend(loc="lower right", fontsize=8)
+    ax.set_title("내부 배치·배선도 (위에서, 덱 아래) — 모든 선은 덱 아래·뚜껑 스윕 밖")
+    ax.set_xlabel("x (mm)")
+    ax.set_ylabel("y (mm, + = 뒤)")
+    fig.tight_layout()
+    fig.savefig(path)
+    plt.close(fig)
+    print("wrote", path)
+
+
+wiring_plan(f"{IMG}/layout_wiring_top.png")

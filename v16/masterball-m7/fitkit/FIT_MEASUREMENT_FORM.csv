@@ -1,0 +1,17 @@
+id,coupon_or_part,what to measure,how,CAD value,accept,measured,pass(Y/N),if fail change (cad/m7_params.py)
+B1,real board,cover glass diameter,caliper 3 directions,46.00,45.9-46.1,,,GLASS_R / BEZEL_BORE_R
+B2,real board,standoff centre spacing (x / z),caliper hole to hole,31.50 x 23.20,+-0.15,,,STANDOFFS_XZ
+B3,real board,glass top to standoff end,caliper depth,10.22,10.0-10.4,,,GLASS_TO_STANDOFF (lip gap 0.6 must stay >= 0.4)
+B4,real board,USB-C mouth from glass top,caliper depth,5.4-9.45,+-0.3,,,USB_YU
+F1,FK1 bezel,board drops in; glass does NOT touch the lip (0.6 mm),feeler 0.4 mm fits between glass and lip,0.6,0.4-0.8,,,LIP_GAP / BEZEL_BORE_R
+F2,FK1 plate,4 x M2x6 into the board standoffs without force; board flat,screw by hand,clear 2.3,all 4 start by hand,,,M2_CLEAR
+F3,FK1 plate,header windows and BOOT/RESET access,look + press BOOT with a pin,13.2-19.3 / 7x12.5,no contact,,,HEADER_WIN / KEY_WIN
+F4,FK2 belt,d3 pin pressed into both outer knuckles,by hand + soft mallet,hole 2.90,firm press no crack,,,PIN_PRESS_D
+F5,FK2 lid,lid knuckle turns freely on the pin,rotate by hand,hole 3.30,free no wobble > 0.2 mm,,,PIN_RUN_D
+F6,FK2 stop,stop block screwed; lug stops at 110 deg,protractor / phone app,110,105-115,,,STOP_FACE_DEG / OPEN_DEG
+F7,FK2,200 open/close cycles then play at the front rim,count + caliper,—,play < 1.0 mm at 138 mm,,,PIN_RUN_D / material
+F8,FK3,belt spigot into lower shell rim,push fit,0.35 radial,slides in no rock,,,SPIGOT_R_OUT
+F9,FK3,magnets 6x2 into pockets flush; pull force by hand,press + glue,6.2 x 2.1,flush +-0.2,,,MAG_POCKET_D / MAG_POCKET_H
+F10,FK4,57155 actuator real size fits the lid pocket,caliper + fit,12.7 x 9.0 x 3.0 (assumed),fits flush,,,ACTUATOR_BOX
+F11,FK4,reed closes with the coupons stacked; opens with 5 mm lift,multimeter on the leads,gap 0.7,closed <= 1 mm gap / open at >= 5 mm,,,SENSOR_SKIN / SENSOR_R
+F12,FK5,ear on its seat + orientation pin; button and ring on the shell patch,dry fit,0.3 seat clear,no gap > 0.3,,,EAR_SEAT_CLEAR / BTN_*
