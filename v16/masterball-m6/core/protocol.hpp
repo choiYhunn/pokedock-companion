@@ -21,7 +21,7 @@ namespace pokedock {
 
 static constexpr size_t kMaxCommandBytes = 180;
 static constexpr size_t kMaxMessageBytes = 90;  // ~30 Hangul syllables
-static constexpr const char *kFirmwareVersion = "m7-0.5.0-gift";  // 0.5: M7 lid reed sensor (no sensor = 0.4 behaviour); 0.4: moods + gift pack; 0.3 = manufacturing
+static constexpr const char *kFirmwareVersion = "m7-0.5.1-gift";  // 0.5.1: night theme; 0.5: M7 lid reed sensor (no sensor = 0.4 behaviour); 0.4: moods + gift pack; 0.3 = manufacturing
 static constexpr const char *kDefaultMessage = "오늘도 함께하자";  // public default; the gift text stays private
 static constexpr int64_t kFirmwareDateUtc = 1793372400;      // 2026-10-31 00:00 KST: clock editor start floor
 // VCC (after PTC + MBR230 Schottky) can be ~4.0 V on a healthy 4.75 V adapter with a long cable, and

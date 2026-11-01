@@ -93,7 +93,7 @@ app.onState((s) => seen.push(s));
 await test('connect reads initial state (device standalone defaults)', async () => {
   const s = await app.connect();
   assert.equal(s.partner, 94);
-  assert.equal(s.firmware, 'm7-0.5.0-gift');
+  assert.equal(s.firmware, 'm7-0.5.1-gift');
   assert.equal(s.clock.trusted, false);
 });
 
