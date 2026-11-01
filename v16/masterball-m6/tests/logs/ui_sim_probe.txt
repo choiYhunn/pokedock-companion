@@ -124,7 +124,7 @@ home           포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -163.
 home           이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -94.4  OK
 focus_minutes  25               210.0px ink 12.07mm 50cm  83.0' clip  -40.4  OK
 focus_minutes  분 남음              48.0px ink  3.39mm 50cm  23.3' clip  -80.6  OK
-focus_mmss     09:58            140.0px ink  8.12mm 50cm  55.8' clip  -12.6  OK
+focus_mmss     09:59            140.0px ink  8.12mm 50cm  55.8' clip  -12.6  OK
 focus_mmss     집중                48.0px ink  3.47mm 50cm  23.9' clip  -89.3  OK
 menu           09:58            140.0px ink  8.12mm 50cm  55.8' clip  -12.1  OK
 menu           집중                48.0px ink  3.47mm 50cm  23.9' clip  -88.0  OK
@@ -158,7 +158,7 @@ pairing        09:07             80.0px ink  4.65mm 50cm  32.0' clip   -6.3  OK
 pairing        포켓몬               48.0px ink  3.47mm 50cm  23.9' clip -160.9  OK
 pairing        이미지 필요            48.0px ink  3.47mm 50cm  23.9' clip  -91.6  OK
 pairing        페어링               48.0px ink  3.47mm 50cm  23.9' clip  -72.4  OK
-pairing        767051            80.0px ink  4.65mm 50cm  32.0' clip  -83.3  OK
+pairing        775908            80.0px ink  4.65mm 50cm  32.0' clip  -75.2  OK
 pairing        번호를 앱에 입력         40.0px ink  2.84mm 50cm  19.5' clip  -41.1  OK
 pretendard loaded: True
 VERDICT PASS []
