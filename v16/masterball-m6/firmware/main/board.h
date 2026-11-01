@@ -27,6 +27,9 @@ extern "C" {
 // M6 harness on header J1 (1.27 mm 2x7): pin 8 = IO16 -> 100R -> AO3400A gate (100k to GND) -> low-side switch
 // for the passive buzzer (Soberton WT-1205) on USB_5V; 1N4148 across the coil
 #define PD_PIN_BUZZER 16
+// M7 lid sensor on J1 pin 10 = IO17: Littelfuse 59155 reed (NO) to GND, internal pull-up.
+// Lid closed = 0. Nothing connected (M6) or a broken wire = 1 = "open" (screen behaves as before).
+#define PD_PIN_LID 17
 
 #define PD_LCD_RES 466
 
@@ -47,6 +50,9 @@ bool board_touch_read(uint16_t *x, uint16_t *y);
 uint8_t board_touch_chip(void);  // FocalTech chip ID (reg 0xA3), logged at boot for G1
 
 int board_vcc_mv(void);  // VCC = USB 5 V - cable - PTC - MBR230: ~4.0-4.8 V when healthy
+
+void board_lid_init(void);
+bool board_lid_closed(void);
 
 void buzzer_init(void);
 typedef enum { PD_TUNE_CHIRP, PD_TUNE_ALARM, PD_TUNE_DONE, PD_TUNE_PAIR } pd_tune_t;

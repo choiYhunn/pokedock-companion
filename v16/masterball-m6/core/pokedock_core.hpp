@@ -82,6 +82,12 @@ class Core {
     return true;
   }
   bool sound() const { return sound_; }
+  // M7 lid reed sensor: on = closing the lid turns the display off (clock/alarm/timer keep running)
+  bool set_lid_sensor(bool on) {
+    lid_sensor_ = on;
+    return true;
+  }
+  bool lid_sensor() const { return lid_sensor_; }
 
   // ---- focus timer ----------------------------------------------------------------------
   // Starting while a session runs or is paused is refused; the UI must cancel explicitly.
@@ -229,6 +235,7 @@ class Core {
   int partner_ = 94;
   int brightness_ = 40;
   bool sound_ = true;
+  bool lid_sensor_ = true;
   FocusPhase phase_ = FocusPhase::kIdle;
   int64_t focus_total_ms_ = 25 * 60000, focus_end_ms_ = 0, focus_remaining_ms_ = 0;
   int focus_completed_ = 0;

@@ -9,6 +9,7 @@
 #include "assets.h"
 #include "ble_gatt.h"
 #include "clock_set.hpp"
+#include "lid_sensor.hpp"
 #include "board.h"
 #include "esp_log.h"
 #include "esp_timer.h"
@@ -50,7 +51,9 @@ std::atomic<uint32_t> g_passkey{0};
 std::atomic<bool> g_ble_connected{false};
 std::atomic<int> g_vcc_mv{5000};
 int64_t g_last_touch_ms = 0;
-bool g_screen_on = true;
+bool g_screen_on = true;       // wanted by the UI (idle timeout, manual screen-off, wake on touch)
+bool g_display_shown = true;   // what the panel actually shows (g_screen_on AND the lid allows it)
+LidSensor g_lid;
 int g_tap_count = 0;
 int64_t g_tap_window_ms = 0;
 
@@ -90,6 +93,7 @@ void Env::persist() {
   nvs_set_i32(h, "partner", g_core.partner());
   nvs_set_i32(h, "bright", g_core.brightness());
   nvs_set_u8(h, "sound", g_core.sound());
+  nvs_set_u8(h, "lid", g_core.lid_sensor());
   nvs_set_u8(h, "al_en", g_core.alarm().enabled);
   nvs_set_i32(h, "al_min", g_core.alarm().minute_of_day);
   nvs_set_i32(h, "al_last", g_core.persisted().last_fired_day);
@@ -111,6 +115,7 @@ void load_settings() {
   if (nvs_get_i32(h, "partner", &i) == ESP_OK) g_core.set_partner(i);
   if (nvs_get_i32(h, "bright", &i) == ESP_OK) g_core.set_brightness(i);
   if (nvs_get_u8(h, "sound", &u) == ESP_OK) g_core.set_sound(u);
+  if (nvs_get_u8(h, "lid", &u) == ESP_OK) g_core.set_lid_sensor(u);
   AlarmConfig cfg;
   PersistedAlarmState st;
   if (nvs_get_u8(h, "al_en", &u) == ESP_OK) cfg.enabled = u;
@@ -135,10 +140,12 @@ void after_local_change() {  // user acted on the device: persist and tell the p
 
 // ---- touch actions (LVGL task, LVGL lock held) ------------------------------------------------------
 bool wake_if_off() {
-  g_last_touch_ms = mono_ms();
-  if (g_screen_on) return false;
+  const int64_t now = mono_ms();
+  g_last_touch_ms = now;
+  g_lid.touched(now);  // a touch cannot reach the glass through a closed lid: overrides a wrong "closed"
+  if (g_screen_on && g_display_shown) return false;
   g_screen_on = true;
-  ui::set_screen_on(true);
+  ui::set_screen_on(g_display_shown = true);
   return true;  // the waking touch does nothing else
 }
 
@@ -336,12 +343,23 @@ void main_loop(void *) {
     if (g_screen_on && !busy && now - g_last_touch_ms > kScreenOffMs) g_screen_on = false;
     const bool night = v.clock_trusted && (v.hh >= 23 || v.hh < 7);
     if (board_lvgl_lock(100)) {
+      // lid sensor: closing turns only the display off; the core (clock, alarm, focus timer) keeps running
+      g_lid.set_enabled(g_core.lid_sensor());
+      const LidEvent lid = g_lid.update(board_lid_closed(), now);
+      if (lid == LidEvent::kOpened) {
+        g_screen_on = true;   // set_screen_on(true) below plays the partner's entrance (PDK_GREET)
+        g_last_touch_ms = now;
+        ESP_LOGI(TAG, "lid opened");
+      } else if (lid == LidEvent::kClosed) {
+        g_screen_on = false;
+        ESP_LOGI(TAG, "lid closed: display off, clock/alarm/timer keep running");
+      }
       if (ev & kEvFocusComplete) ui::react(PDK_CELEBRATE);
       if (ev & kEvAlarmRing) ui::react(PDK_ALARM);
       if (g_env.pending_reaction) ui::react(PDK_DANCE), g_env.pending_reaction = false;
       ui::update(v);
-      static bool shown = true;
-      if (shown != g_screen_on) ui::set_screen_on(shown = g_screen_on);
+      const bool want = g_screen_on && g_lid.screen_allowed(now);
+      if (g_display_shown != want) ui::set_screen_on(g_display_shown = want);
       board_display_brightness(uint8_t(night && !v.ringing ? (v.brightness < 15 ? v.brightness : 15) : v.brightness));
       board_lvgl_unlock();
     }
@@ -390,6 +408,7 @@ extern "C" void app_main(void) {
   board_i2c_init();
   board_touch_init();
   buzzer_init();
+  board_lid_init();
   const pd_panel_t panel = board_display_init(nullptr);
   ESP_LOGI(TAG, "PokeDock %s panel=%s", kFirmwareVersion, panel == PD_PANEL_SH8601 ? "SH8601" : "CO5300");
 

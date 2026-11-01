@@ -3,7 +3,7 @@
 //
 // Command  {"v":2,"s":<session u32>,"q":<seq u32>,"c":"<cmd>", ...args}   (<= 180 bytes UTF-8)
 // ACK      {"q":<seq>,"ok":1,"r":<state_rev>}  |  {"q":<seq>,"ok":0,"e":"<code>"}
-// State    {"r":rev,"p":partner,"b":bright,"snd":0|1,"f":[phase,rem_s,total_s],
+// State    {"r":rev,"p":partner,"b":bright,"snd":0|1,"lid":0|1,"f":[phase,rem_s,total_s],
 //           "a":[en,h,m,ringing],"clk":[trusted,sync_age_min],"pwr":[usb_mv,ok],"msg":len,"fw":"..."}
 //
 // Rules: writes are refused unless the link is encrypted + authenticated (bonded owner);
@@ -21,7 +21,7 @@ namespace pokedock {
 
 static constexpr size_t kMaxCommandBytes = 180;
 static constexpr size_t kMaxMessageBytes = 90;  // ~30 Hangul syllables
-static constexpr const char *kFirmwareVersion = "m6-0.4.0-gift";  // 0.4: partner moods + private gift pack (0.3 = manufacturing)
+static constexpr const char *kFirmwareVersion = "m7-0.5.0-gift";  // 0.5: M7 lid reed sensor (no sensor = 0.4 behaviour); 0.4: moods + gift pack; 0.3 = manufacturing
 static constexpr const char *kDefaultMessage = "오늘도 함께하자";  // public default; the gift text stays private
 static constexpr int64_t kFirmwareDateUtc = 1793372400;      // 2026-10-31 00:00 KST: clock editor start floor
 // VCC (after PTC + MBR230 Schottky) can be ~4.0 V on a healthy 4.75 V adapter with a long cable, and
@@ -81,7 +81,7 @@ class ProtocolEngine {
     int mv = env_.usb_mv();
     std::string pwr = "[" + std::to_string(mv) + "," + std::to_string(mv >= kUsbLowMv ? 1 : 0) + "]";
     return JsonWriter()
-        .kv("r", rev_).kv("p", core_.partner()).kv("b", core_.brightness()).kv("snd", core_.sound() ? 1 : 0)
+        .kv("r", rev_).kv("p", core_.partner()).kv("b", core_.brightness()).kv("snd", core_.sound() ? 1 : 0).kv("lid", core_.lid_sensor() ? 1 : 0)
         .raw("f", f).raw("a", a).raw("clk", clk).raw("pwr", pwr).kv("msg", int64_t(message_.size()))
         .kv("fw", std::string(kFirmwareVersion))
         .str();
@@ -141,6 +141,12 @@ class ProtocolEngine {
       bool on;
       if (!has_only(o, {"on"}) || !getb(o, "on", on)) return nack(seq, "args");
       core_.set_sound(on);
+      return ok(seq, true);
+    }
+    if (c == "lid_sensor") {
+      bool on;
+      if (!has_only(o, {"on"}) || !getb(o, "on", on)) return nack(seq, "args");
+      core_.set_lid_sensor(on);
       return ok(seq, true);
     }
     if (c == "focus_start") {
