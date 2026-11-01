@@ -52,8 +52,8 @@
  },
  "fail": [],
  "private": false,
- "browser_fps": 64.0,
- "browser_decode_ms_avg": 0.07,
+ "browser_fps": 63.9,
+ "browser_decode_ms_avg": 0.04,
  "home_rects": {
   "94": {
    "x": -110,
@@ -183,10 +183,10 @@
   },
   "385": {
    "x": -81,
-   "y": -37,
+   "y": -39,
    "w": 165,
    "h": 141,
-   "overshoot": -99.31380026345278,
+   "overshoot": -100.86370672672854,
    "stage": 0,
    "anim": 0,
    "zoom": 768,
@@ -194,7 +194,7 @@
    "text": [
     {
      "t": "09:20",
-     "top": -150,
+     "top": -148,
      "overlap": false
     }
    ]

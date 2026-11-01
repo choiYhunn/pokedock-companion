@@ -24,7 +24,7 @@
 | 화면 위치 최적화 | 높이·앞뒤 25개 후보 비교 | `cad/optimize_pod.py` → `logs/pod_sweep.json` |
 | 출력 파일 | 시험편 5판(지금 출력 가능) + 색상별 본 출력 7판(**잠금**) + 귀 B안 뚜껑·귀 | `print/` |
 | 전자 | 전원 B안(보드 자체 USB-C), 부저 IO16, 뚜껑 리드 센서 IO17 | `electronics/`, `docs/04_ELECTRONICS_KO.md`, `bom/ELECTRONICS_CONFIRMED_KO.md` |
-| 펌웨어 | m7-0.5.0-gift: 닫힘 = 화면 끔, 열림 = 화면 켬 + 팬텀 등장. 새 보드용 FirstInstall | `../masterball-m6/core/lid_sensor.hpp`, `docs/05_FIRMWARE_INSTALL_KO.md` |
+| 펌웨어 | m7-0.5.1-gift: 닫힘 = 화면 끔, 열림 = 화면 켬 + 팬텀 등장. 새 보드용 FirstInstall | `../masterball-m6/core/lid_sensor.hpp`, `docs/05_FIRMWARE_INSTALL_KO.md` |
 | 렌더링 | 실제 메시 렌더(열림, 닫힘, 사용자 눈높이, 측면, 사진 유사 카메라). 화면은 실제 Ø36.75 mm. AI 이미지 아님 | `img/`, `appearance/variant_B/` |
 
 전체 검사 다시 돌리기: `PY=<python> bash tests/run_m7.sh` (결과 `logs/RUN_MANIFEST.json`).

@@ -55,7 +55,7 @@
 | 애니메이션 상태 전환, C++–JS 일치 | PASS(호스트) | 같은 곳 |
 | 뚜껑 센서 디바운스, 이벤트, 고장 대비 | PASS(호스트) 14/14 | `logs/lid_sensor_firmware.txt` |
 | 화면 좌표, 회전 (일반형 그대로) | PASS(설계 논리), **UNVERIFIED(실기 터치)** | `docs/05` |
-| ESP-IDF 타깃 빌드 m7-0.5.0-gift | PASS(빌드) | M6 strict `firmware_build` |
+| ESP-IDF 타깃 빌드 m7-0.5.1-gift | PASS(빌드) | M6 strict `firmware_build` |
 | firmware/assets 주소, NVS 보존, 백업·복원, FirstInstall | PASS(가짜 플래시 50/50, 실제 esptool 4.12.0 인자 11/11) | M6 strict `flash_tool`, `flash_cli_compat` |
 | 제조용 기존 시험과 호환 | PASS(M6 strict 전체) | `../masterball-m6/tests/logs/RUN_MANIFEST.json` |
 | 실제 보드 플래시, 터치 감도, fps | **UNVERIFIED** | |

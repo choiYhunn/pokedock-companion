@@ -4,18 +4,18 @@ C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\3fe2777c-12dd-
  "clearance_mm": {
   "lower_shell_ivory": 0.8,
   "upper_shell_purple": 24.48,
-  "bezel_black": 68.06,
-  "display_plate_petg": 65.64,
-  "buzzer": 9.84,
-  "usb_breakout": 33.81,
-  "steel_disc": 29.83,
-  "socket_left": 65.54,
-  "socket_right": 83.98,
-  "m3x50_0": 34.93,
-  "m3x50_1": 26.03,
-  "m3x50_2": 66.61,
-  "usb_screw_l": 38.51,
-  "usb_screw_r": 50.7
+  "bezel_black": 68.13,
+  "display_plate_petg": 65.65,
+  "buzzer": 9.82,
+  "usb_breakout": 33.78,
+  "steel_disc": 29.8,
+  "socket_left": 65.53,
+  "socket_right": 83.94,
+  "m3x50_0": 34.89,
+  "m3x50_1": 26.12,
+  "m3x50_2": 66.63,
+  "usb_screw_l": 38.63,
+  "usb_screw_r": 50.57
  },
  "insertion_path_hits": [],
  "display_subassembly_xy_overlap": false,
@@ -46,7 +46,7 @@ C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\3fe2777c-12dd-
    "harness": 80
   }
  },
- "source_fingerprint": "c94c7bc077a9a1323cfb72b6df142f2d91dfc735c404731f6280dfdc4d2970fe",
+ "source_fingerprint": "8d159738b3b569b5f0d1169f89381bdd3d85388b4a2195e4efb4d2c2f47db695",
  "verdict": "PASS",
  "fail": []
 }

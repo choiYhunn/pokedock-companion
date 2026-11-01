@@ -1,4 +1,4 @@
-{"mode":"strict","started_utc":"2026-11-01T16:10:20Z","finished_utc":"2026-11-01T16:19:00Z",
- "git_head":"084940785312a598f598015f234551e34364292c","uncommitted_source_files":0,"source_fingerprint":"c94c7bc077a9a1323cfb72b6df142f2d91dfc735c404731f6280dfdc4d2970fe",
+{"mode":"strict","started_utc":"2026-11-01T21:29:41Z","finished_utc":"2026-11-01T21:38:34Z",
+ "git_head":"2cf7ca75a93a81a95d84a9853e08569d274ca27b","uncommitted_source_files":0,"source_fingerprint":"8d159738b3b569b5f0d1169f89381bdd3d85388b4a2195e4efb4d2c2f47db695",
  "results":{"core_regression":"PASS","clock_set":"PASS","anim_director":"PASS","anim_parity":"PASS","protocol":"PASS","ble_e2e_bridge":"PASS","lid_sensor":"PASS","harness_check":"PASS","buzzer_consistency":"PASS","doc_consistency":"PASS","vendor_package_check":"PASS","private_asset_guard":"PASS","schematic_netlist":"PASS","adafruit4090_netlist":"PASS","tolerance_stack":"PASS","pdk_roundtrip":"PASS","cad_build":"PASS","cad_fitkit":"PASS","cad_verify":"PASS","driver_board_check":"PASS","ui_sim_probe":"PASS","gift_sim_probe":"PASS","firmware_build":"PASS","gift_image_check":"PASS","flash_tool":"PASS","flash_cli_compat":"PASS"},
  "tools":{"gpp":"g++.exe (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r2) 15.2.0","node":"v24.22.1","python":"Python 3.13.8"}}

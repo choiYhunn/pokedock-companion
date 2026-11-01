@@ -10,6 +10,7 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/firmware/main/app_main.cpp
     v16/masterball-m6/firmware/main/board.h
     v16/masterball-m6/firmware/main/board_io.c
+    v16/masterball-m6/firmware/main/ui.cpp
     v16/masterball-m6/tests/ble_e2e_bridge_test.mjs
     v16/masterball-m6/tests/check_manifest.py
     v16/masterball-m6/tests/flash_gift_test.ps1
@@ -21,6 +22,8 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/tests/logs/firmware_build.txt
     v16/masterball-m6/tests/logs/flash_cli_compat.txt
     v16/masterball-m6/tests/logs/flash_tool.txt
+    v16/masterball-m6/tests/logs/gift/gift_00_no_pack_placeholder.png
+    v16/masterball-m6/tests/logs/gift/gift_01_home_gengar.png
     v16/masterball-m6/tests/logs/gift/gift_02_home_175.png
     v16/masterball-m6/tests/logs/gift/gift_02_home_195.png
     v16/masterball-m6/tests/logs/gift/gift_02_home_385.png
@@ -28,11 +31,13 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/tests/logs/gift/gift_02_home_417.png
     v16/masterball-m6/tests/logs/gift/gift_02_home_448.png
     v16/masterball-m6/tests/logs/gift/gift_02_home_468.png
+    v16/masterball-m6/tests/logs/gift/gift_02_home_94.png
     v16/masterball-m6/tests/logs/gift/gift_03_touch_heart.png
     v16/masterball-m6/tests/logs/gift/gift_04_egg_message.png
     v16/masterball-m6/tests/logs/gift/gift_05_focus_cheer.png
     v16/masterball-m6/tests/logs/gift/gift_06_celebrate.png
     v16/masterball-m6/tests/logs/gift/gift_07_alarm.png
+    v16/masterball-m6/tests/logs/gift/gift_08_sleep.png
     v16/masterball-m6/tests/logs/gift/gift_sim_probe.json
     v16/masterball-m6/tests/logs/gift_image_check.txt
     v16/masterball-m6/tests/logs/gift_sim_probe.txt
@@ -40,8 +45,19 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/tests/logs/lid_sensor.txt
     v16/masterball-m6/tests/logs/manifest_check.txt
     v16/masterball-m6/tests/logs/protocol.txt
+    v16/masterball-m6/tests/logs/ui/m6_alarm.png
+    v16/masterball-m6/tests/logs/ui/m6_alarm_edit_minute.png
+    v16/masterball-m6/tests/logs/ui/m6_clock_edit_hour.png
+    v16/masterball-m6/tests/logs/ui/m6_clock_edit_minute.png
+    v16/masterball-m6/tests/logs/ui/m6_clock_edit_month.png
+    v16/masterball-m6/tests/logs/ui/m6_clock_edit_year.png
     v16/masterball-m6/tests/logs/ui/m6_focus_done.png
+    v16/masterball-m6/tests/logs/ui/m6_focus_minutes.png
     v16/masterball-m6/tests/logs/ui/m6_focus_mmss.png
+    v16/masterball-m6/tests/logs/ui/m6_home.png
+    v16/masterball-m6/tests/logs/ui/m6_home_unsynced.png
+    v16/masterball-m6/tests/logs/ui/m6_menu.png
+    v16/masterball-m6/tests/logs/ui/m6_message.png
     v16/masterball-m6/tests/logs/ui/m6_pairing.png
     v16/masterball-m6/tests/logs/ui/m6_power_warning.png
     v16/masterball-m6/tests/logs/ui/ui_sim_probe.json
@@ -49,4 +65,5 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/tests/run_all.sh
     v16/masterball-m6/tools/flash_gift_windows.ps1
     v16/masterball-m6/tools/gift_image_check.py
+    v16/masterball-m6/ui/M6_Device_Simulator.html
 PASS: 5/5 frozen-M6 checks

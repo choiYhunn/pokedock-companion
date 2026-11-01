@@ -766,11 +766,11 @@
     "role": "lbl"
    },
    {
-    "text": "775908",
+    "text": "294033",
     "font_px": 80,
     "fontFamily": "Pretendard, system-ui, sans-serif",
     "ink_px": 59,
-    "overshoot_px": -75.2,
+    "overshoot_px": -70.9,
     "role": "lbl"
    },
    {
@@ -2422,11 +2422,11 @@
    "inside_circle": true
   },
   {
-   "text": "775908",
+   "text": "294033",
    "font_px": 80,
    "fontFamily": "Pretendard, system-ui, sans-serif",
    "ink_px": 59,
-   "overshoot_px": -75.2,
+   "overshoot_px": -70.9,
    "role": "lbl",
    "screen": "pairing",
    "ink_mm": 4.65,
