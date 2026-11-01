@@ -29,11 +29,12 @@ PLATES = {
     "02_final": {            # one plate per colour: no AMS needed
         "C1_purple_lid": ["lid_lavender"],
         "C2_ivory_lower_shell": ["lower_shell_ivory"],
-        "C3_black_belt_ring_stop": ["belt_black", "button_ring_black", "stop_block_black"],
+        "C3_black_belt_stop": ["belt_black", "stop_block_black"],
         "C4_pink_ears": ["ear_left_pink", "ear_right_pink"],
         "C5_white_button": ["button_white"],
-        "C6_inner_cover_lavender": ["inner_cover_lavender", "lid_liner_lavender"],
-        "C7_plum_display": ["display_bezel_plum", "display_cradle_plum"],
+        "C6_inner_cover_lavender": ["inner_cover_lavender"],
+        "C6b_lavender_rim_ring_liner": ["rim_ring_lavender", "lid_liner_lavender"],
+        "C7_plum_display_button_ring": ["display_bezel_plum", "display_cradle_plum", "button_ring_plum"],
     },
 }
 manifest = {}

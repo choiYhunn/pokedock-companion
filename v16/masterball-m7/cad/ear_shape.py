@@ -1,7 +1,7 @@
 """Ear profile of the M7 lid (shared by build_m7.py and appearance_gate.py)."""
 import m7_params as P
 
-EAR_SHAPE = (1.6, 0.6)      # r = r0 * (1 - (z/H)^a)^b : convex flank, smooth round tip, no joints (photo gumdrop ear)
+EAR_SHAPE = (1.7, 0.6)      # r = r0 * (1 - (z/H)^a)^b : plump convex flank, soft round tip (tip radius 0.58 r0, photo ~0.45-0.6)
 
 
 def ear_profile():

@@ -7,9 +7,9 @@
    13.8
   ],
   "watertight": true,
-  "volume_cm3": 17.7,
-  "part_mass_g_100pct": 22.0,
-  "overhang_gt45_mm2": 565.0,
+  "volume_cm3": 16.9,
+  "part_mass_g_100pct": 21.0,
+  "overhang_gt45_mm2": 148.0,
   "fits_A1mini_180": true
  },
  "fit1_display_plate": {
@@ -42,8 +42,8 @@
    22.5
   ],
   "watertight": true,
-  "volume_cm3": 5.4,
-  "part_mass_g_100pct": 6.7,
+  "volume_cm3": 5.2,
+  "part_mass_g_100pct": 6.5,
   "overhang_gt45_mm2": 380.0,
   "fits_A1mini_180": true
  },
@@ -90,8 +90,8 @@
    14.5
   ],
   "watertight": true,
-  "volume_cm3": 3.5,
-  "part_mass_g_100pct": 4.3,
+  "volume_cm3": 3.3,
+  "part_mass_g_100pct": 4.1,
   "overhang_gt45_mm2": 146.0,
   "fits_A1mini_180": true
  },
@@ -129,8 +129,8 @@
    14.5
   ],
   "watertight": true,
-  "volume_cm3": 3.5,
-  "part_mass_g_100pct": 4.3,
+  "volume_cm3": 3.3,
+  "part_mass_g_100pct": 4.1,
   "overhang_gt45_mm2": 163.0,
   "fits_A1mini_180": true
  },
@@ -151,8 +151,8 @@
    14.5
   ],
   "watertight": true,
-  "volume_cm3": 3.4,
-  "part_mass_g_100pct": 4.2,
+  "volume_cm3": 3.2,
+  "part_mass_g_100pct": 3.9,
   "overhang_gt45_mm2": 362.0,
   "fits_A1mini_180": true
  },
@@ -195,12 +195,12 @@
   "plate": "FK5_ear_button",
   "extent_mm": [
    23.8,
-   27.1,
+   27.2,
    17.6
   ],
   "watertight": true,
-  "volume_cm3": 5.2,
-  "part_mass_g_100pct": 6.5,
+  "volume_cm3": 5.3,
+  "part_mass_g_100pct": 6.6,
   "overhang_gt45_mm2": 12.0,
   "fits_A1mini_180": true
  },
@@ -271,33 +271,20 @@
   "fits_256": true
  },
  "belt_black": {
-  "plate": "C3_black_belt_ring_stop",
+  "plate": "C3_black_belt_stop",
   "extent_mm": [
    137.9,
    144.5,
    22.5
   ],
   "watertight": true,
-  "volume_cm3": 37.6,
-  "part_mass_g_100pct": 46.6,
+  "volume_cm3": 35.7,
+  "part_mass_g_100pct": 44.3,
   "overhang_gt45_mm2": 2024.0,
   "fits_A1mini_180": true
  },
- "button_ring_black": {
-  "plate": "C3_black_belt_ring_stop",
-  "extent_mm": [
-   34.0,
-   34.0,
-   7.7
-  ],
-  "watertight": true,
-  "volume_cm3": 1.8,
-  "part_mass_g_100pct": 2.2,
-  "overhang_gt45_mm2": 0.0,
-  "fits_A1mini_180": true
- },
  "stop_block_black": {
-  "plate": "C3_black_belt_ring_stop",
+  "plate": "C3_black_belt_stop",
   "extent_mm": [
    13.2,
    6.9,
@@ -309,25 +296,25 @@
   "overhang_gt45_mm2": 5.0,
   "fits_A1mini_180": true
  },
- "PLATE C3_black_belt_ring_stop": {
+ "PLATE C3_black_belt_stop": {
   "plate_extent_mm": [
-   201.1,
+   159.1,
    144.5,
    22.5
   ],
-  "fits_A1mini_180": false,
+  "fits_A1mini_180": true,
   "fits_256": true
  },
  "ear_left_pink": {
   "plate": "C4_pink_ears",
   "extent_mm": [
    23.8,
-   27.1,
+   27.2,
    17.6
   ],
   "watertight": true,
-  "volume_cm3": 5.2,
-  "part_mass_g_100pct": 6.5,
+  "volume_cm3": 5.3,
+  "part_mass_g_100pct": 6.6,
   "overhang_gt45_mm2": 12.0,
   "fits_A1mini_180": true
  },
@@ -335,19 +322,19 @@
   "plate": "C4_pink_ears",
   "extent_mm": [
    23.8,
-   27.1,
+   27.2,
    17.6
   ],
   "watertight": true,
-  "volume_cm3": 5.2,
-  "part_mass_g_100pct": 6.5,
+  "volume_cm3": 5.3,
+  "part_mass_g_100pct": 6.6,
   "overhang_gt45_mm2": 12.0,
   "fits_A1mini_180": true
  },
  "PLATE C4_pink_ears": {
   "plate_extent_mm": [
-   55.6,
-   27.1,
+   55.7,
+   27.2,
    17.6
   ],
   "fits_A1mini_180": true,
@@ -361,9 +348,9 @@
    8.1
   ],
   "watertight": true,
-  "volume_cm3": 2.0,
-  "part_mass_g_100pct": 2.5,
-  "overhang_gt45_mm2": 340.0,
+  "volume_cm3": 1.9,
+  "part_mass_g_100pct": 2.3,
+  "overhang_gt45_mm2": 389.0,
   "fits_A1mini_180": true
  },
  "PLATE C5_white_button": {
@@ -388,43 +375,65 @@
   "overhang_gt45_mm2": 10257.0,
   "fits_A1mini_180": true
  },
+ "PLATE C6_inner_cover_lavender": {
+  "plate_extent_mm": [
+   122.8,
+   122.8,
+   18.7
+  ],
+  "fits_A1mini_180": true,
+  "fits_256": true
+ },
+ "rim_ring_lavender": {
+  "plate": "C6b_lavender_rim_ring_liner",
+  "extent_mm": [
+   131.2,
+   131.1,
+   1.2
+  ],
+  "watertight": true,
+  "volume_cm3": 1.9,
+  "part_mass_g_100pct": 2.3,
+  "overhang_gt45_mm2": 0.0,
+  "fits_A1mini_180": true
+ },
  "lid_liner_lavender": {
-  "plate": "C6_inner_cover_lavender",
+  "plate": "C6b_lavender_rim_ring_liner",
   "extent_mm": [
    96.2,
    96.2,
    1.6
   ],
   "watertight": true,
-  "volume_cm3": 11.6,
-  "part_mass_g_100pct": 14.4,
-  "overhang_gt45_mm2": 1.0,
+  "volume_cm3": 11.5,
+  "part_mass_g_100pct": 14.3,
+  "overhang_gt45_mm2": 0.0,
   "fits_A1mini_180": true
  },
- "PLATE C6_inner_cover_lavender": {
+ "PLATE C6b_lavender_rim_ring_liner": {
   "plate_extent_mm": [
-   227.0,
-   122.8,
-   18.7
+   235.4,
+   131.1,
+   1.6
   ],
   "fits_A1mini_180": false,
   "fits_256": true
  },
  "display_bezel_plum": {
-  "plate": "C7_plum_display",
+  "plate": "C7_plum_display_button_ring",
   "extent_mm": [
    62.0,
    62.0,
    13.8
   ],
   "watertight": true,
-  "volume_cm3": 17.7,
-  "part_mass_g_100pct": 22.0,
-  "overhang_gt45_mm2": 565.0,
+  "volume_cm3": 16.9,
+  "part_mass_g_100pct": 21.0,
+  "overhang_gt45_mm2": 148.0,
   "fits_A1mini_180": true
  },
  "display_cradle_plum": {
-  "plate": "C7_plum_display",
+  "plate": "C7_plum_display_button_ring",
   "extent_mm": [
    76.8,
    63.9,
@@ -436,13 +445,26 @@
   "overhang_gt45_mm2": 473.0,
   "fits_A1mini_180": true
  },
- "PLATE C7_plum_display": {
+ "button_ring_plum": {
+  "plate": "C7_plum_display_button_ring",
+  "extent_mm": [
+   34.0,
+   34.0,
+   7.7
+  ],
+  "watertight": true,
+  "volume_cm3": 1.8,
+  "part_mass_g_100pct": 2.2,
+  "overhang_gt45_mm2": 0.0,
+  "fits_A1mini_180": true
+ },
+ "PLATE C7_plum_display_button_ring": {
   "plate_extent_mm": [
-   146.8,
+   188.8,
    63.9,
    42.5
   ],
-  "fits_A1mini_180": true,
+  "fits_A1mini_180": false,
   "fits_256": true
  },
  "APPEARANCE_GATE": "PENDING_OWNER_VISUAL_APPROVAL"

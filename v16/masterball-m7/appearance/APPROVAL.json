@@ -4,5 +4,5 @@
  "date": null,
  "how_to_approve": "Look at review_sheet.png and img/*.png. If the look is accepted, set approved=true with your name/date and commit.",
  "chosen_ear_variant": "A",
- "ear_choice_note": "Owner chose A (ears on top of the lid) on 2026-11-02. Overall look NOT yet approved."
+ "ear_choice_note": "Owner fixed variant A (ears on top of the lid) on 2026-11-02; B kept only as a reference. Overall look NOT yet approved."
 }

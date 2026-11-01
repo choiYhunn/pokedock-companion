@@ -14,12 +14,13 @@ ROT = {
     "lid_lavender": None,               # rim on the bed; inside dome above the liner needs tree support
     "lower_shell_ivory": None,          # flat base on the bed
     "belt_black": None,                 # spigot bottom on the bed; ledge ring needs support (hidden face)
-    "lid_liner_lavender": None,
+    "lid_liner_lavender": ("x", 180),   # engraved visible face on the bed
     "display_cradle_plum": None,        # foot slab on the bed
     "stop_block_black": None,           # shelf face on the bed, heel sector up
+    "rim_ring_lavender": None,          # flat ring
     "inner_cover_lavender": ("x", 180),        # visible top face on the bed (smooth PEI finish)
     "display_bezel_plum": ("normal_down", None),   # front face on the bed
-    "button_ring_black": ("x", 90),     # front face on the bed
+    "button_ring_plum": ("x", 90),     # front face on the bed
     "button_white": ("x", 90),
     "ear_left_pink": ("ear", -1),       # flat base on the bed
     "ear_right_pink": ("ear", 1),
@@ -33,7 +34,7 @@ ROT = {
 MATERIAL = {
     "lid_lavender": "PLA matte lavender", "lid_liner_lavender": "PLA matte lavender",
     "ear_left_pink": "PLA matte pink", "ear_right_pink": "PLA matte pink",
-    "belt_black": "PLA matte black", "button_ring_black": "PLA matte black",
+    "belt_black": "PLA matte black", "button_ring_plum": "PLA matte black",
     "lower_shell_ivory": "PLA matte ivory", "button_white": "PLA matte white",
     "inner_cover_lavender": "PLA matte lavender (lighter shade ok)", "display_bezel_plum": "PLA matte dark purple",
     "display_cradle_plum": "PLA matte dark purple (PETG optional, not required)", "stop_block_black": "PLA matte black",

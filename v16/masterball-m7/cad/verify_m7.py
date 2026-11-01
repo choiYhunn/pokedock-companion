@@ -92,11 +92,13 @@ CONTACT = {frozenset(p) for p in [
     ("lid_lavender", "belt_black"), ("lid_lavender", "lid_liner_lavender"), ("lid_lavender", "ear_left_pink"),
     ("lid_lavender", "ear_right_pink"), ("belt_black", "lower_shell_ivory"), ("inner_cover_lavender", "lower_shell_ivory"),
     ("display_cradle_plum", "inner_cover_lavender"), ("display_cradle_plum", "display_bezel_plum"),
-    ("button_ring_black", "lower_shell_ivory"), ("button_ring_black", "belt_black"), ("button_white", "lower_shell_ivory"),
+    ("button_ring_plum", "lower_shell_ivory"), ("button_ring_plum", "belt_black"), ("button_white", "lower_shell_ivory"),
     ("steel_weight", "lower_shell_ivory"), ("usb_panel_port_body", "lower_shell_ivory"),
     ("magnet_lid_0", "lid_lavender"), ("magnet_lid_1", "lid_lavender"), ("magnet_belt_0", "belt_black"),
     ("magnet_belt_1", "belt_black"), ("buzzer_wt1205", "lower_shell_ivory"), ("usb_right_angle_adapter", "usb_extension_plug"),
-    ("stop_block_black", "belt_black"), ("reed_sensor_59155", "belt_black"), ("reed_actuator_57155", "lid_lavender")]}
+    ("stop_block_black", "belt_black"), ("rim_ring_lavender", "belt_black"), ("rim_ring_lavender", "lid_lavender"),
+    ("rim_ring_lavender", "magnet_belt_0"), ("rim_ring_lavender", "magnet_belt_1"), ("rim_ring_lavender", "magnet_lid_0"),
+    ("rim_ring_lavender", "magnet_lid_1"), ("rim_ring_lavender", "reed_actuator_57155"), ("rim_ring_lavender", "inner_cover_lavender"), ("reed_sensor_59155", "belt_black"), ("reed_actuator_57155", "lid_lavender")]}
 PRESS = {frozenset(("dowel_pin_3x30", "belt_black"))}       # d3.0 pin in d2.9 holes: designed overlap
 
 

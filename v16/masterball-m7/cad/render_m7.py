@@ -30,7 +30,7 @@ FONT = "C:/Windows/Fonts/malgun.ttf" if os.path.exists("C:/Windows/Fonts/malgun.
 COL = {"lid_lavender": "#a58bd6", "lid_liner_lavender": "#b9a3e0", "ear_left_pink": "#f2a7c3",
        "ear_right_pink": "#f2a7c3", "belt_black": "#3a3640", "lower_shell_ivory": "#f3eee4",
        "inner_cover_lavender": "#c8b6ea", "display_bezel_plum": "#4d3b6e", "display_cradle_plum": "#463664",
-       "button_ring_black": "#3a3640", "button_white": "#fbfaf7", "stop_block_black": "#3a3640"}
+       "button_ring_plum": "#5a4380", "button_white": "#fbfaf7", "stop_block_black": "#3a3640", "rim_ring_lavender": "#cdbdf0"}
 PCOL = {"dowel_pin_3x30": "#b8bcc4", "magnet_lid_0": "#9aa0a8", "magnet_lid_1": "#9aa0a8", "magnet_belt_0": "#9aa0a8",
         "magnet_belt_1": "#9aa0a8", "steel_weight": "#8d939b", "buzzer_wt1205": "#2b2b2b",
         "buzzer_driver_board": "#2f7d4f", "usb_right_angle_adapter": "#1f1f1f", "usb_extension_plug": "#262626",
@@ -207,12 +207,13 @@ render(scene(P.OPEN_DEG), 0, 34, f"{IMG}/render_open110_user_view.png", target=(
 render(scene(P.OPEN_DEG), -90, 8, f"{IMG}/render_open110_side.png", target=(0, 25, 15), dist=700)
 render(scene(P.OPEN_DEG), -14, 20, f"{IMG}/render_open110_photo_matched.png", target=(0, 22, 32), dist=560, fov=30)
 render(scene(0), 150, 20, f"{IMG}/render_closed_back_hinge.png")
+render(scene(P.OPEN_DEG), 155, 24, f"{IMG}/render_open110_rear.png", target=(0, 20, 20), dist=650)
 render(scene(0, hide=LID_GROUP | {"inner_cover_lavender"}, with_purch=True), -20, 62, f"{IMG}/render_internal_no_lid_no_deck.png",
        target=(0, 5, -20), dist=560)
 render(scene(P.OPEN_DEG, explode={"lid_lavender": (0, 40, 70), "lid_liner_lavender": (0, 40, 40), "ear_left_pink": (-12, 40, 92),
                                   "ear_right_pink": (12, 40, 92), "belt_black": (0, 0, 0), "lower_shell_ivory": (0, 0, -55),
                                   "inner_cover_lavender": (0, 0, -22), "display_bezel_plum": (0, -45, 20), "display_cradle_plum": (0, 0, 10),
-                                  "button_ring_black": (0, -25, -10), "button_white": (0, -38, -10), "pod": (0, -45, 20)}),
+                                  "button_ring_plum": (0, -25, -10), "button_white": (0, -38, -10), "pod": (0, -45, 20)}),
        -35, 22, f"{IMG}/render_exploded.png", dist=900, target=(0, 10, 10))
 
 

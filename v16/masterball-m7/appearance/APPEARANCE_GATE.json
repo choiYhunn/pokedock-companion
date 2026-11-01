@@ -1,6 +1,6 @@
 {
  "gate": "PENDING_OWNER_VISUAL_APPROVAL",
- "metrics_pass": "17/17",
+ "metrics_pass": "19/19",
  "metrics": [
   {
    "metric": "glass_over_D",
@@ -103,7 +103,7 @@
   },
   {
    "metric": "ear_tip_radius_over_base_radius",
-   "cad": 0.547,
+   "cad": 0.577,
    "photo_target": 0.45,
    "tol": 0.15,
    "unit": "",
@@ -112,7 +112,7 @@
   },
   {
    "metric": "ear_above_ball_top_mm",
-   "cad": 3.786,
+   "cad": 3.844,
    "photo_target": 4.0,
    "tol": 3.0,
    "unit": "mm",
@@ -154,6 +154,24 @@
    "unit": "mm",
    "pass": true,
    "how": "lavender interior wall visible when open"
+  },
+  {
+   "metric": "black_band_top_visible_mm",
+   "cad": 3.4,
+   "photo_target": 3.0,
+   "tol": 2.0,
+   "unit": "mm",
+   "pass": true,
+   "how": "photo: light rim above a dark band"
+  },
+  {
+   "metric": "black_glass_ring_shown_over_D",
+   "cad": 0.325,
+   "photo_target": 0.33,
+   "tol": 0.03,
+   "unit": "",
+   "pass": true,
+   "how": "photo shows the glass's black ring (~0.33 D disc)"
   }
  ],
  "structural_deviations": [
@@ -169,8 +187,8 @@
   },
   {
    "item": "띠 윗면",
-   "detail": "사진은 띠 위에 밝은 테두리. 뚜껑이 앉는 면이라 검정 띠 윗면(약 7.6 mm)이 보임. 안쪽은 라벤더 테두리로 대체",
-   "class": "부분 일치"
+   "detail": "사진은 띠 위가 밝은 테두리. 뚜껑 테두리가 앉는 바깥 3.4 mm는 검정으로 남고, 안쪽 4 mm는 라벤더 림 링으로 바꿈",
+   "class": "대부분 일치"
   },
   {
    "item": "화면 각도",
@@ -179,8 +197,8 @@
   },
   {
    "item": "귀 위치",
-   "detail": "사진(열린 뚜껑)의 귀 위치는 물리적으로 앞-위쪽(고도 약 35°)에 해당해 생성 이미지 특유의 불일치가 있음. 닫힌 모습에서 고양이 귀로 보이도록 고도 58°에 둠",
-   "class": "해석 차이"
+   "detail": "의뢰인이 A(뚜껑 위, 고양이 머리) 확정. 열린 사진처럼 뚜껑 위로 귀가 보이지는 않음 → 열린 상태는 라벤더 림 링, 각인 라이너, 넓은 화면 창, 보라 버튼 링으로 보완",
+   "class": "의뢰인 선택"
   },
   {
    "item": "배선",
@@ -199,7 +217,7 @@
   "date": null,
   "how_to_approve": "Look at review_sheet.png and img/*.png. If the look is accepted, set approved=true with your name/date and commit.",
   "chosen_ear_variant": "A",
-  "ear_choice_note": "Owner chose A (ears on top of the lid) on 2026-11-02. Overall look NOT yet approved."
+  "ear_choice_note": "Owner fixed variant A (ears on top of the lid) on 2026-11-02; B kept only as a reference. Overall look NOT yet approved."
  },
  "final_print_unlocked": false
 }

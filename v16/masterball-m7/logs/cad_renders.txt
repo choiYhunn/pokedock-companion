@@ -1,11 +1,12 @@
-wrote img/render_closed_front34.png 190976 triangles
-wrote img/render_open110_front34.png 194207 triangles
-wrote img/render_open110_user_view.png 191661 triangles
-wrote img/render_open110_side.png 202225 triangles
-wrote img/render_open110_photo_matched.png 192368 triangles
-wrote img/render_closed_back_hinge.png 201188 triangles
-wrote img/render_internal_no_lid_no_deck.png 154583 triangles
-wrote img/render_exploded.png 194779 triangles
+wrote img/render_closed_front34.png 192186 triangles
+wrote img/render_open110_front34.png 195797 triangles
+wrote img/render_open110_user_view.png 193353 triangles
+wrote img/render_open110_side.png 203681 triangles
+wrote img/render_open110_photo_matched.png 194045 triangles
+wrote img/render_closed_back_hinge.png 202270 triangles
+wrote img/render_open110_rear.png 210027 triangles
+wrote img/render_internal_no_lid_no_deck.png 155631 triangles
+wrote img/render_exploded.png 196308 triangles
 wrote img/section_full_x0_closed_and_open110.png
 wrote img/section_hinge_x0_lug_heel.png
 wrote img/section_hinge_x11_knuckle.png

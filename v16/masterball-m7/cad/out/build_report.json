@@ -2,7 +2,7 @@
  "parts": {
   "lid_lavender": {
    "valid": true,
-   "volume_mm3": 58247.2,
+   "volume_mm3": 58253.7,
    "stl": "repaired",
    "bbox": [
     -68.8,
@@ -15,7 +15,7 @@
   },
   "lid_liner_lavender": {
    "valid": true,
-   "volume_mm3": 11612.5,
+   "volume_mm3": 11519.7,
    "stl": "ok",
    "bbox": [
     -48.11,
@@ -28,33 +28,33 @@
   },
   "ear_left_pink": {
    "valid": true,
-   "volume_mm3": 5246.0,
+   "volume_mm3": 5384.8,
    "stl": "repaired",
    "bbox": [
-    -39.82,
-    -37.01,
+    -40.0,
+    -37.07,
     51.07,
     -14.71,
-    -11.74,
-    72.79
+    -11.69,
+    72.84
    ]
   },
   "ear_right_pink": {
    "valid": true,
-   "volume_mm3": 5246.1,
+   "volume_mm3": 5384.8,
    "stl": "repaired",
    "bbox": [
     14.71,
-    -37.01,
+    -37.07,
     51.07,
-    39.82,
-    -11.74,
-    72.79
+    40.0,
+    -11.69,
+    72.84
    ]
   },
   "belt_black": {
    "valid": true,
-   "volume_mm3": 37813.3,
+   "volume_mm3": 35927.7,
    "stl": "ok",
    "bbox": [
     -69.0,
@@ -93,7 +93,7 @@
   },
   "display_bezel_plum": {
    "valid": true,
-   "volume_mm3": 17753.3,
+   "volume_mm3": 16937.6,
    "stl": "ok",
    "bbox": [
     -31.0,
@@ -130,7 +130,20 @@
     5.99
    ]
   },
-  "button_ring_black": {
+  "rim_ring_lavender": {
+   "valid": true,
+   "volume_mm3": 1866.9,
+   "stl": "ok",
+   "bbox": [
+    -65.6,
+    -65.6,
+    4.05,
+    65.6,
+    65.6,
+    5.25
+   ]
+  },
+  "button_ring_plum": {
    "valid": true,
    "volume_mm3": 1775.1,
    "stl": "ok",
@@ -145,7 +158,7 @@
   },
   "button_white": {
    "valid": true,
-   "volume_mm3": 2025.9,
+   "volume_mm3": 1857.1,
    "stl": "ok",
    "bbox": [
     -11.8,
@@ -160,7 +173,7 @@
  "fitkit": {
   "fit1_display_bezel": {
    "valid": true,
-   "volume_mm3": 17753.3,
+   "volume_mm3": 16937.6,
    "stl": "ok",
    "bbox": [
     -31.0,
@@ -186,7 +199,7 @@
   },
   "fit2_hinge_belt": {
    "valid": true,
-   "volume_mm3": 5420.8,
+   "volume_mm3": 5235.3,
    "stl": "ok",
    "bbox": [
     -20.0,
@@ -212,7 +225,7 @@
   },
   "fit3_joint_belt": {
    "valid": true,
-   "volume_mm3": 3480.4,
+   "volume_mm3": 3294.9,
    "stl": "ok",
    "bbox": [
     -20.0,
@@ -251,7 +264,7 @@
   },
   "fit4_magnet_belt": {
    "valid": true,
-   "volume_mm3": 3491.9,
+   "volume_mm3": 3324.0,
    "stl": "ok",
    "bbox": [
     18.0,
@@ -264,7 +277,7 @@
   },
   "fit6_sensor_belt": {
    "valid": true,
-   "volume_mm3": 3392.1,
+   "volume_mm3": 3170.9,
    "stl": "ok",
    "bbox": [
     -69.0,
@@ -303,7 +316,7 @@
   },
   "fit5_ear_seat_lid": {
    "valid": true,
-   "volume_mm3": 3720.7,
+   "volume_mm3": 3723.7,
    "stl": "ok",
    "bbox": [
     10.17,
@@ -316,15 +329,15 @@
   },
   "fit5_ear_right": {
    "valid": true,
-   "volume_mm3": 5246.1,
+   "volume_mm3": 5384.8,
    "stl": "repaired",
    "bbox": [
     14.71,
-    -37.01,
+    -37.07,
     51.07,
-    39.82,
-    -11.74,
-    72.79
+    40.0,
+    -11.69,
+    72.84
    ]
   },
   "fit5_button_patch_lower": {

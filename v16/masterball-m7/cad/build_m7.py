@@ -209,6 +209,18 @@ def build_liner():
         x = s * P.LINER_SCREW_X
         liner = liner - cyl_z(P.M2_CLEAR / 2, z0 - 1, z1 + 1, x, 0)
         liner = liner - (Pos(x, 0, z0 - 0.01) * Cone(2.2, 1.15, 1.05, align=None))
+    # moon + three stars engraved in the visible face (generic motif, matches the night UI)
+    e = P.LINER_ENGRAVE
+    moon = cyl_z(9.0, z0 - 0.01, z0 + e, -10.0, 6.0) - cyl_z(8.0, z0 - 1, z0 + 1, -6.2, 8.4)
+    liner = liner - moon
+    for cx, cy, rs in ((13.0, 12.0, 4.6), (16.0, -6.0, 3.2), (-2.0, -16.0, 2.6)):
+        pts = []
+        for k in range(10):
+            rr = rs if k % 2 == 0 else rs * 0.45
+            a = math.radians(90 + 36 * k)
+            pts.append((cx + rr * math.cos(a), cy + rr * math.sin(a)))
+        star = Pos(0, 0, z0 - 0.01) * extrude(make_face(Polyline(*pts, close=True)), e + 0.01)
+        liner = liner - star
     return liner
 
 
@@ -242,8 +254,18 @@ def build_belt():
     ztop = P.BH - P.SENSOR_SKIN
     belt = belt - (pl.location * box(-t / 2 - P.SENSOR_FIT, t / 2 + P.SENSOR_FIT, P.SENSOR_R - rr / 2 - 8,
                                      P.SENSOR_R + rr / 2 + P.SENSOR_FIT, ztop - hh - 0.3, ztop))
-    # the spigot must not hit the hinge block from inside
+    # 1.2 mm step on the top face for the lavender rim ring
+    belt = belt - (cyl_z(P.RIM_RING_R[1] + 0.2, P.BH - P.RIM_RING_T, P.BH + 0.5) - cyl_z(P.RIM_RING_R[0] - 3, P.BH - 5, P.BH + 1))
     return belt
+
+
+def build_rim_ring():
+    """Lavender rim ring glued in the belt-top step: the open ball shows a light rim like the photo."""
+    ring = cyl_z(P.RIM_RING_R[1], P.BH - P.RIM_RING_T, P.BH) - cyl_z(P.RIM_RING_R[0], P.BH - 5, P.BH + 1)
+    for az in P.MAG_AZ:                         # latch magnets pass through (glued flush with the ring top)
+        x, y, _ = P.unit(az, 0)
+        ring = ring - cyl_z(P.MAG_POCKET_D / 2, P.BH - 5, P.BH + 1, x * P.MAG_R, y * P.MAG_R)
+    return ring
 
 
 def build_stop_block():
@@ -520,7 +542,7 @@ def purchased():
     env["buzzer_wt1205"] = along(d, P.BUZ_D / 2 + 0.25, P.RI_LOW - P.BUZ_H - 0.25, P.RI_LOW - 0.05)
     # buzzer driver perfboard taped under the deck (left-front, away from the pod and USB route)
     zd = P.DECK_TOP_Z - P.DECK_T
-    env["buzzer_driver_board"] = box(-46, -22, -12, 6, zd - P.DRV_BOARD[2] - 1.0, zd - 1.0)
+    env["buzzer_driver_board"] = box(-48, -48 + P.DRV_BOARD[0], -14, -14 + P.DRV_BOARD[1], zd - P.DRV_BOARD[2] - 1.0, zd - 1.0)
     # right-angle USB-C adapter (Adafruit 4432 envelope, turning to +x_u) + extension plug
     y0, y1 = P.USB_YU
     m = P.USB_MOUTH_ZU
@@ -553,13 +575,15 @@ deck = build_tray()
 bezel = build_bezel()
 cradle = build_cradle()
 stop_block = build_stop_block()
+rim_ring = build_rim_ring()
 ring = build_button_ring()
 btn = build_button()
 
 PARTS = {"lid_lavender": lid, "lid_liner_lavender": liner, "ear_left_pink": ear_l, "ear_right_pink": ear_r,
          "belt_black": belt, "lower_shell_ivory": lower, "inner_cover_lavender": deck,
          "display_bezel_plum": bezel, "display_cradle_plum": cradle, "stop_block_black": stop_block,
-         "button_ring_black": ring, "button_white": btn}
+         "rim_ring_lavender": rim_ring,
+         "button_ring_plum": ring, "button_white": btn}
 for k, v in PARTS.items():
     export(k, v)
 

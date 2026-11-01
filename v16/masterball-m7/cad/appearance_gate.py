@@ -56,6 +56,8 @@ M = {  # name: (CAD value, target, tol, unit, how the target was read from the p
     "screen_tilt_deg": (P.SCREEN_TILT_DEG, 60.0, 6.0, "deg", "photo reads ~60-65 from a low camera; owner spec caps it at 55"),
     "lid_over_lower_height": ((P.R - P.BH) / (P.BH - P.BASE_Z), 1.0, 0.08, "", "two near-equal halves"),
     "lavender_inner_wall_mm": (P.TRAY_LIP_TOP - P.DECK_TOP_Z, 12.0, 4.0, "mm", "lavender interior wall visible when open"),
+    "black_band_top_visible_mm": (P.R - P.RIM_RING_R[1], 3.0, 2.0, "mm", "photo: light rim above a dark band"),
+    "black_glass_ring_shown_over_D": (2 * P.WINDOW_R / D, 0.33, 0.03, "", "photo shows the glass's black ring (~0.33 D disc)"),
 }
 rows, npass = [], 0
 for k, (v, t, tol, u, note) in M.items():
@@ -65,9 +67,9 @@ for k, (v, t, tol, u, note) in M.items():
 DEVIATIONS = [
     ("힌지", "사진은 안쪽에 보이는 브래킷 힌지. 그 구조로는 110°가 나오지 않고 화면과 겹침 → 뒷면 바깥 축(앞에서 안 보임)", "구조상 불가"),
     ("바닥", "사진은 완전한 구. 열린 뚜껑에서 넘어지지 않으려면 평면 Ø75 + 발 8개 필요", "구조상 불가"),
-    ("띠 윗면", "사진은 띠 위에 밝은 테두리. 뚜껑이 앉는 면이라 검정 띠 윗면(약 7.6 mm)이 보임. 안쪽은 라벤더 테두리로 대체", "부분 일치"),
+    ("띠 윗면", "사진은 띠 위가 밝은 테두리. 뚜껑 테두리가 앉는 바깥 3.4 mm는 검정으로 남고, 안쪽 4 mm는 라벤더 림 링으로 바꿈", "대부분 일치"),
     ("화면 각도", "사진은 낮은 카메라라 화면이 60–65°처럼 보임. 사용자 지정 50° 유지", "사양 우선"),
-    ("귀 위치", "사진(열린 뚜껑)의 귀 위치는 물리적으로 앞-위쪽(고도 약 35°)에 해당해 생성 이미지 특유의 불일치가 있음. 닫힌 모습에서 고양이 귀로 보이도록 고도 58°에 둠", "해석 차이"),
+    ("귀 위치", "의뢰인이 A(뚜껑 위, 고양이 머리) 확정. 열린 사진처럼 뚜껑 위로 귀가 보이지는 않음 → 열린 상태는 라벤더 림 링, 각인 라이너, 넓은 화면 창, 보라 버튼 링으로 보완", "의뢰인 선택"),
     ("배선", "사진에는 전선과 보드가 보임. 요구사항(배선 숨김)에 따라 모두 덕 아래로", "의도적 차이"),
     ("화면 크기", "사진의 유리 비율 0.34 ≈ 실제 0.333. 사진이 커 보이는 건 카메라가 가깝고 받침대가 크기 때문 → 받침대 Ø62 + 측면 브래킷으로 반영", "일치"),
 ]
@@ -86,16 +88,17 @@ out = {"gate": gate, "metrics_pass": f"{npass}/{len(rows)}", "metrics": rows,
 json.dump(out, open(os.path.join(APP, "APPEARANCE_GATE.json"), "w", encoding="utf8"), indent=1, ensure_ascii=False)
 
 # review sheet -------------------------------------------------------------------------------------
-views = [("render_open110_front34.png", "열림 110° (3/4)"), ("render_closed_front34.png", "닫힘 (3/4)"),
-         ("render_open110_user_view.png", "사용자 눈높이 (정면 34°)"), ("render_open110_side.png", "측면")]
+views = [("render_closed_front34.png", "닫힘 (3/4)"), ("render_open110_photo_matched.png", "열림 정면 (사진과 비슷한 카메라)"),
+         ("render_open110_user_view.png", "착석 시점 (정면 34°)"), ("render_open110_side.png", "측면"),
+         ("render_closed_back_hinge.png", "후면 (닫힘)"), ("render_open110_rear.png", "후면 (열림)")]
 W, H = 1300, 1100
-sheet = Image.new("RGB", (W * 2 // 2, H * 2 // 2 + 520), (250, 249, 246))
+sheet = Image.new("RGB", (W * 3 // 2, H * 2 // 2 + 560), (250, 249, 246))
 font = "C:/Windows/Fonts/malgun.ttf"
 ft = ImageFont.truetype(font, 22) if os.path.exists(font) else ImageFont.load_default()
 fs = ImageFont.truetype(font, 17) if os.path.exists(font) else ImageFont.load_default()
 for i, (f, cap) in enumerate(views):
     im = Image.open(os.path.join(IMG, f)).convert("RGB").resize((W // 2, H // 2))
-    x, y = (i % 2) * (W // 2), (i // 2) * (H // 2)
+    x, y = (i % 3) * (W // 2), (i // 3) * (H // 2)
     sheet.paste(im, (x, y))
     ImageDraw.Draw(sheet).text((x + 16, y + 40), cap, fill=(30, 30, 40), font=ft)
 dr = ImageDraw.Draw(sheet)

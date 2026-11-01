@@ -58,7 +58,7 @@ SENSOR_AZ = -90.0                        # left side; 55 deg from the nearest la
 SENSOR_BOX = (12.7, 9.0, 3.0)            # tangential, radial, height (datasheet 12.70 x 9.00 x 3.00)
 ACTUATOR_BOX = (12.7, 9.0, 3.0)          # assumed same envelope: CHECK on the fit-6 coupon before the final print
 SENSOR_R = 62.0                          # radial centre of both pockets
-SENSOR_SKIN = 0.6                        # belt top skin over the sensor -> ~0.6-1 mm gap closed (operate ~4 mm)
+SENSOR_SKIN = 1.6                        # belt skin 0.4 + lavender rim ring 1.2 over the sensor -> ~1.7 mm gap closed (operate ~4 mm)
 SENSOR_FIT = 0.25
 
 # --- magnets (closing latch): N35 disc 6 x 2, two pairs ------------------------------------
@@ -72,7 +72,7 @@ MAG_BOSS_D = 10.0
 BTN_RING_OD, BTN_RING_ID = 34.0, 24.4     # photo: ring ~34 mm, white button ~23.6 mm
 BTN_Z = BH - BTN_RING_OD / 2 - 0.1        # ring top just under the lid rim (photo), no lid notch
 BTN_D, BTN_PROUD = 23.6, 5.0              # white button, domed, front 5.0 mm proud of the sphere (photo: clearly 3D)
-BTN_DOME = 1.8                            # dome rise of the button face
+BTN_DOME = 2.6                            # dome rise of the button face (plump, photo)
 BTN_RING_PROUD = 2.4
 BTN_RING_PEG_R = 14.6
 
@@ -91,7 +91,7 @@ EAR_BASE_D, EAR_H, EAR_TIP_R = 28.0, 18.0, 8.0   # gumdrop cat ear (profile buil
 EAR_FLAT = 0.82                          # cross-section flattened along the meridian -> reads as an ear, not a cone
 EAR_TILT_OUT = 12.0                      # tilted outward from the surface normal
 EAR_PEG_D, EAR_PEG_L = 6.0, 5.0
-EAR_SEAT_CLEAR = 0.3
+EAR_SEAT_CLEAR = 0.2                     # tighter seat line (reads as a moulded joint)
 
 # --- lid liner (hides the support-scarred dome top; 2 visible M2 screws as in the photo) ---
 LINER_Z = (44.4, 46.0)                   # 1.6 mm
@@ -112,7 +112,7 @@ LIP_GAP = 0.6                            # glass top -> bezel lip (no load on th
 LIP_T = 2.0
 BEZEL_OR = 31.0                          # d62 stepped bezel (photo surround ~62 mm + side brackets ~70 mm)
 BEZEL_BORE_R = GLASS_R + 0.5
-WINDOW_R = 19.3
+WINDOW_R = 22.4                          # shows the glass's own black ring (photo): the screen reads as a d45 black disc
 PLATE_T = 2.5
 PLATE_Y0 = GLASS_TO_STANDOFF             # plate front face = standoff ends
 BEZEL_SCREW_R = 26.1
@@ -156,12 +156,19 @@ PORT_FLAT_D = 34.0                        # flat spot-face for the nut
 BUZ_AZ, BUZ_EL = 140.0, -24.0
 BUZ_D, BUZ_H, BUZ_FIT = 12.0, 9.5, 0.6
 DRV_AZ, DRV_EL = -110.0, -30.0
-DRV_BOARD = (24.0, 18.0, 10.0)
+DRV_BOARD = (30.0, 24.0, 12.0)           # M7 interface module (perfboard + 2 screw terminals), taped under the inner cover
 
 # --- weight -------------------------------------------------------------------------------
 WEIGHT_D, WEIGHT_H = 60.0, 12.0           # 3 x ISO 7093-1 M20 large washers (d60 x 4, ~78 g each), glued in the floor pocket
 
 FIT_PRINT = 0.35
+
+# --- lavender rim ring on the band top (open state reads like the photo's light rim) ---------
+RIM_RING_R = (61.6, 65.6)                 # sits in a 1.2 mm step of the belt top; the lid rim (r 67-69) stays on black
+RIM_RING_T = 1.2
+
+# --- lid liner decoration (open lid finish with ears hidden in variant A) --------------------
+LINER_ENGRAVE = 0.6                       # moon + stars engraved in the visible face
 
 
 def unit(az_from_front_deg, el_deg):

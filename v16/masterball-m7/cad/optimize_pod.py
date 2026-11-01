@@ -25,7 +25,7 @@ ld = {os.path.basename(f)[:-4]: trimesh.load(f) for f in glob.glob(f"{CAD}/stl/*
 LID = ["lid_lavender", "lid_liner_lavender", "ear_left_pink", "ear_right_pink"]
 M = trimesh.transformations.rotation_matrix(math.radians(-P.OPEN_DEG), [1, 0, 0], [0, P.PIVOT_Y, P.PIVOT_Z])
 fixed_occ = []
-for k in ("lower_shell_ivory", "belt_black", "button_ring_black", "button_white"):
+for k in ("lower_shell_ivory", "belt_black", "button_ring_plum", "button_white"):
     fixed_occ.append(ld[k])
 for k in LID:
     m = ld[k].copy()

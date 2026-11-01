@@ -23,14 +23,13 @@ run cad_verify "$PY" -X utf8 cad/verify_m7.py cad/out "$M6/vendor_cache/parts" c
 run pod_position_sweep "$PY" -X utf8 cad/optimize_pod.py cad/out "$M6/vendor_cache/parts" cad/out/pod_sweep.json
 run cad_renders "$PY" -X utf8 cad/render_m7.py cad/out "$M6/vendor_cache/parts" "$M6/tests/logs/gift/gift_01_home_gengar.png" img
 run appearance_gate_metrics "$PY" -X utf8 cad/appearance_gate.py cad/out img appearance
-run variant_B_build env M7_EAR_VARIANT=B "$PY" -X utf8 cad/build_m7.py cad/out_variant_B
-run variant_B_verify env M7_EAR_VARIANT=B "$PY" -X utf8 cad/verify_m7.py cad/out_variant_B "$M6/vendor_cache/parts" cad/out_variant_B/verify_report.json
-run variant_B_renders env M7_EAR_VARIANT=B "$PY" -X utf8 cad/render_m7.py cad/out_variant_B "$M6/vendor_cache/parts" "$M6/tests/logs/gift/gift_01_home_gengar.png" appearance/variant_B
+# variant B (photo ear position) is archived as a reference since the owner chose A (2026-11-02):
+# its last verified files stay in cad/out_variant_B and appearance/variant_B; rebuild with M7_EAR_VARIANT=B
 run electrical "$PY" -X utf8 tests/m7_electrical_check.py "$M6/vendor_cache/schematic.pdf" electronics/harness_m7.json
+run interface_module "$PY" -X utf8 electronics/interface_module_m7.py img electronics/interface_module_m7.json
 mkdir -p "$M6/build"
 run lid_sensor_firmware bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror -I $M6 $M6/tests/lid_sensor_test.cpp -o $M6/build/lid_sensor_test && $M6/build/lid_sensor_test"
 run print_package bash -c "rm -rf print && $PY -X utf8 cad/make_print_package.py cad/out print"
-run print_package_variant_B env M7_EAR_VARIANT=B "$PY" -X utf8 cad/make_print_package.py cad/out_variant_B print/variant_B_ears_photo_position --only C1_purple_lid,C4_pink_ears
 run m6_frozen "$PY" -X utf8 tests/m6_frozen_check.py
 cp cad/out/verify_report.json cad/out/pod_sweep.json cad/out/build_report.json print/print_manifest.json "$LOG/" 2>/dev/null
 status=0

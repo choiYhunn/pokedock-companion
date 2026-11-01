@@ -1,0 +1,209 @@
+{
+ "board": "2.54 mm perfboard 12 x 9 holes (~30 x 23 mm), height <= 12 mm incl. terminals (CAD envelope 30 x 24 x 12)",
+ "parts": {
+  "TB1": {
+   "desc": "부저 단자 (나사식 2P, 5.00 mm)",
+   "mpn": "Phoenix Contact 1935161",
+   "pins": {
+    "BZ+": [
+     1,
+     0
+    ],
+    "BZ-": [
+     3,
+     0
+    ]
+   }
+  },
+  "TB2": {
+   "desc": "뚜껑 리드 센서 단자 (나사식 2P)",
+   "mpn": "Phoenix Contact 1935161",
+   "pins": {
+    "LID": [
+     7,
+     0
+    ],
+    "GND": [
+     9,
+     0
+    ]
+   }
+  },
+  "D1": {
+   "desc": "플라이백 다이오드 (띠 = 캐소드 = +5 V 쪽)",
+   "mpn": "onsemi 1N4148",
+   "pins": {
+    "K": [
+     1,
+     2
+    ],
+    "A": [
+     4,
+     2
+    ]
+   }
+  },
+  "Q1": {
+   "desc": "N-MOSFET on SOT-23 브레이크아웃 (실크 1=G 2=S 3=D)",
+   "mpn": "AOS AO3400A + Adafruit 1230",
+   "pins": {
+    "G": [
+     5,
+     4
+    ],
+    "S": [
+     6,
+     4
+    ],
+    "D": [
+     7,
+     4
+    ]
+   }
+  },
+  "R1": {
+   "desc": "게이트 저항 100 Ω",
+   "mpn": "Yageo CFR-25JT-52-100R",
+   "pins": {
+    "1": [
+     2,
+     6
+    ],
+    "2": [
+     5,
+     6
+    ]
+   }
+  },
+  "R2": {
+   "desc": "게이트 풀다운 100 kΩ",
+   "mpn": "Yageo CFR-25JT-52-100K",
+   "pins": {
+    "1": [
+     6,
+     6
+    ],
+    "2": [
+     9,
+     6
+    ]
+   }
+  },
+  "F1": {
+   "desc": "PTC 0.75 A (극성 없음)",
+   "mpn": "Bourns MF-R075",
+   "pins": {
+    "1": [
+     0,
+     4
+    ],
+    "2": [
+     2,
+     4
+    ]
+   }
+  },
+  "P1": {
+   "desc": "배선 패드: J1 소켓으로 가는 4가닥",
+   "mpn": "-",
+   "pins": {
+    "+5V_IN": [
+     1,
+     8
+    ],
+    "GND": [
+     4,
+     8
+    ],
+    "IO16": [
+     7,
+     8
+    ],
+    "LID_IN": [
+     10,
+     8
+    ]
+   }
+  }
+ },
+ "nets": {
+  "+5V_IN (J1-4)": [
+   "P1.+5V_IN",
+   "F1.1"
+  ],
+  "+5V": [
+   "F1.2",
+   "TB1.BZ+",
+   "D1.K"
+  ],
+  "BZ_DRAIN": [
+   "Q1.D",
+   "TB1.BZ-",
+   "D1.A"
+  ],
+  "GATE": [
+   "R1.2",
+   "Q1.G",
+   "R2.1"
+  ],
+  "IO16 (J1-8)": [
+   "P1.IO16",
+   "R1.1"
+  ],
+  "GND (J1-6)": [
+   "P1.GND",
+   "Q1.S",
+   "R2.2",
+   "TB2.GND"
+  ],
+  "LID / IO17 (J1-10)": [
+   "P1.LID_IN",
+   "TB2.LID"
+  ]
+ },
+ "pigtail_to_J1": [
+  {
+   "pad": "+5V_IN",
+   "j1_pin": "J1-4",
+   "wire": "빨강 28 AWG",
+   "len_mm": 160
+  },
+  {
+   "pad": "GND",
+   "j1_pin": "J1-6",
+   "wire": "검정 28 AWG",
+   "len_mm": 160
+  },
+  {
+   "pad": "IO16",
+   "j1_pin": "J1-8",
+   "wire": "노랑 28 AWG",
+   "len_mm": 160
+  },
+  {
+   "pad": "LID_IN",
+   "j1_pin": "J1-10",
+   "wire": "흰색 28 AWG",
+   "len_mm": 160
+  }
+ ],
+ "owner_side_terminals": [
+  {
+   "what": "WT-1205 부저 +/− 리드 (도우미가 부저에 납땜, 수축튜브)",
+   "terminal": "TB1",
+   "len_mm": 140
+  },
+  {
+   "what": "Littelfuse 59155 리드 2가닥 (리드선 그대로, 끝 5 mm 피복 벗김)",
+   "terminal": "TB2",
+   "len_mm": 220
+  }
+ ],
+ "checks": {
+  "harness_pins": true,
+  "every_part_connected": true,
+  "ptc_in_5v_path": true,
+  "diode_cathode_to_5v": true,
+  "gate_pulldown": true
+ }
+}
