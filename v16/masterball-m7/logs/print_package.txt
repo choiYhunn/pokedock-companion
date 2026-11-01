@@ -1,0 +1,13 @@
+FK1_display_cradle {'plate_extent_mm': [122.0, 57.0, 37.3], 'fits_A1mini_180': True, 'fits_256': True}
+FK2_hinge_stop {'plate_extent_mm': [109.2, 16.9, 19.0], 'fits_A1mini_180': True, 'fits_256': True}
+FK3_closing_magnet_joint {'plate_extent_mm': [172.0, 26.6, 12.5], 'fits_A1mini_180': True, 'fits_256': True}
+FK4_lid_sensor {'plate_extent_mm': [34.0, 32.0, 12.5], 'fits_A1mini_180': True, 'fits_256': True}
+FK5_ear_button {'plate_extent_mm': [132.8, 43.2, 24.5], 'fits_A1mini_180': True, 'fits_256': True}
+C1_purple_lid {'plate_extent_mm': [137.8, 142.9, 65.5], 'fits_A1mini_180': True, 'fits_256': True}
+C2_ivory_lower_shell {'plate_extent_mm': [137.8, 137.8, 56.5], 'fits_A1mini_180': True, 'fits_256': True}
+C3_black_belt_ring_stop {'plate_extent_mm': [195.2, 144.5, 19.0], 'fits_A1mini_180': False, 'fits_256': True}
+C4_pink_ears {'plate_extent_mm': [59.5, 25.6, 16.6], 'fits_A1mini_180': True, 'fits_256': True}
+C5_white_button {'plate_extent_mm': [22.0, 22.0, 4.8], 'fits_A1mini_180': True, 'fits_256': True}
+C6_inner_cover_lavender {'plate_extent_mm': [234.1, 129.9, 11.0], 'fits_A1mini_180': False, 'fits_256': True}
+C7_plum_display {'plate_extent_mm': [122.0, 57.0, 37.3], 'fits_A1mini_180': True, 'fits_256': True}
+parts not watertight or too big: []

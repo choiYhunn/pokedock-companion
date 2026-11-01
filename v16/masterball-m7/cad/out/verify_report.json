@@ -228,7 +228,7 @@
    "lat+150_d700_h500 (el 31)": 1.0
   },
   "6b_lowest_full_view_eye_height_mm_at_550": 190,
-  "6b_closed_min_gap_pod_to_lid_mm": 7.6,
+  "6b_closed_min_gap_pod_to_lid_mm": 7.61,
   "8_lid_sensor": {
    "closed_gap_mm": 0.7,
    "operate_mm_datasheet_approx": 4.0,

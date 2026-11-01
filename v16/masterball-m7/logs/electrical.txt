@@ -1,0 +1,24 @@
+C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\3fe2777c-12dd-4bb0-a404-1b7806b6387c\scratchpad\m6venv\Lib\site-packages\fitz\__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  warnings.warn(
+PASS J4 VBUS (A4/B9) is net USB_5V
+PASS J4 VBUS (A9/B4) on the same net
+PASS J1-4 is on USB_5V with J4 VBUS (buzzer 5 V tap = board USB input)
+PASS D2 anode on USB_5V
+PASS D2 cathode = VCC (board power path after the Schottky)
+PASS J4 D+ (A6/B6) = U_P = J1-1
+PASS J4 D- (A7/B7) = U_N = J1-3
+PASS R4 / R5 one end on GND
+PASS R4 R5 5.1K printed next to J4 CC1/CC2 (sink Rd: any USB-C charger gives 5 V)
+PASS J1 pin 04 = USB_5V
+PASS J1 pin 06 = GND
+PASS J1 pin 08 = IO16
+PASS J1 pin 010 = IO17
+PASS buzzer GPIO 16 and lid GPIO 17 are different
+PASS neither GPIO is used by the board or a strapping pin
+PASS harness: J1-4 USB_5V, J1-6 GND, J1-8 IO16, J1-10 IO17
+PASS harness: nothing on J1-1 / J1-3 (USB data stays on the board's own USB-C)
+PASS harness: PTC in series with the buzzer 5 V tap
+PASS buzzer peak 131 mA < AO3400A 5.8 A and 1N4148 300 mA (flyback)
+PASS USB budget 431 mA < 500 mA (USB 2.0 port) and < MF-R075 hold 0.75 A
+PASS lid input: internal pull-up ~73 uA through the reed (rated 10 W / 0.5 A class)
+PASS: 21/21 electrical checks

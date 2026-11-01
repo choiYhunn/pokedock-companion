@@ -1,0 +1,244 @@
+{
+ "pod_c": [
+  0.0,
+  -12.0,
+  14.0
+ ],
+ "candidates": [
+  {
+   "dy": -6.0,
+   "dz": -6.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 210,
+   "closed_gap_mm": 13.67,
+   "usb_mouth_minus_deck_mm": -6.0,
+   "ok": true
+  },
+  {
+   "dy": -3.0,
+   "dz": -6.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 200,
+   "closed_gap_mm": 13.59,
+   "usb_mouth_minus_deck_mm": -6.0,
+   "ok": true
+  },
+  {
+   "dy": 0.0,
+   "dz": -6.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 13.62,
+   "usb_mouth_minus_deck_mm": -6.0,
+   "ok": true
+  },
+  {
+   "dy": 3.0,
+   "dz": -6.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 13.6,
+   "usb_mouth_minus_deck_mm": -6.0,
+   "ok": true
+  },
+  {
+   "dy": 6.0,
+   "dz": -6.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 13.75,
+   "usb_mouth_minus_deck_mm": -6.0,
+   "ok": true
+  },
+  {
+   "dy": -6.0,
+   "dz": -3.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 10.62,
+   "usb_mouth_minus_deck_mm": -3.0,
+   "ok": true
+  },
+  {
+   "dy": -3.0,
+   "dz": -3.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 10.7,
+   "usb_mouth_minus_deck_mm": -3.0,
+   "ok": true
+  },
+  {
+   "dy": 0.0,
+   "dz": -3.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 10.64,
+   "usb_mouth_minus_deck_mm": -3.0,
+   "ok": true
+  },
+  {
+   "dy": 3.0,
+   "dz": -3.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 10.62,
+   "usb_mouth_minus_deck_mm": -3.0,
+   "ok": true
+  },
+  {
+   "dy": 6.0,
+   "dz": -3.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 10.73,
+   "usb_mouth_minus_deck_mm": -3.0,
+   "ok": true
+  },
+  {
+   "dy": -6.0,
+   "dz": 0.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 7.63,
+   "usb_mouth_minus_deck_mm": 0.0,
+   "ok": true
+  },
+  {
+   "dy": -3.0,
+   "dz": 0.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 7.71,
+   "usb_mouth_minus_deck_mm": 0.0,
+   "ok": true
+  },
+  {
+   "dy": 0.0,
+   "dz": 0.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 7.62,
+   "usb_mouth_minus_deck_mm": 0.0,
+   "ok": true
+  },
+  {
+   "dy": 3.0,
+   "dz": 0.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 7.65,
+   "usb_mouth_minus_deck_mm": 0.0,
+   "ok": true
+  },
+  {
+   "dy": 6.0,
+   "dz": 0.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 7.68,
+   "usb_mouth_minus_deck_mm": 0.0,
+   "ok": true
+  },
+  {
+   "dy": -6.0,
+   "dz": 3.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 4.68,
+   "usb_mouth_minus_deck_mm": 3.0,
+   "ok": false
+  },
+  {
+   "dy": -3.0,
+   "dz": 3.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 190,
+   "closed_gap_mm": 4.73,
+   "usb_mouth_minus_deck_mm": 3.0,
+   "ok": false
+  },
+  {
+   "dy": 0.0,
+   "dz": 3.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 200,
+   "closed_gap_mm": 4.66,
+   "usb_mouth_minus_deck_mm": 3.0,
+   "ok": false
+  },
+  {
+   "dy": 3.0,
+   "dz": 3.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 200,
+   "closed_gap_mm": 4.63,
+   "usb_mouth_minus_deck_mm": 3.0,
+   "ok": false
+  },
+  {
+   "dy": 6.0,
+   "dz": 3.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 200,
+   "closed_gap_mm": 4.69,
+   "usb_mouth_minus_deck_mm": 3.0,
+   "ok": false
+  },
+  {
+   "dy": -6.0,
+   "dz": 6.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 200,
+   "closed_gap_mm": 1.63,
+   "usb_mouth_minus_deck_mm": 6.0,
+   "ok": false
+  },
+  {
+   "dy": -3.0,
+   "dz": 6.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 200,
+   "closed_gap_mm": 1.59,
+   "usb_mouth_minus_deck_mm": 6.0,
+   "ok": false
+  },
+  {
+   "dy": 0.0,
+   "dz": 6.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 200,
+   "closed_gap_mm": 1.61,
+   "usb_mouth_minus_deck_mm": 6.0,
+   "ok": false
+  },
+  {
+   "dy": 3.0,
+   "dz": 6.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 200,
+   "closed_gap_mm": 1.65,
+   "usb_mouth_minus_deck_mm": 6.0,
+   "ok": false
+  },
+  {
+   "dy": 6.0,
+   "dz": 6.0,
+   "worst_visible": 1.0,
+   "lowest_full_view_h_mm": 200,
+   "closed_gap_mm": 1.64,
+   "usb_mouth_minus_deck_mm": 6.0,
+   "ok": false
+  }
+ ],
+ "chosen_offset": {
+  "dy": 0.0,
+  "dz": 0.0,
+  "worst_visible": 1.0,
+  "lowest_full_view_h_mm": 190,
+  "closed_gap_mm": 7.62,
+  "usb_mouth_minus_deck_mm": 0.0,
+  "ok": true
+ },
+ "rule": "feasible = all 6 hardest eyes >= 99.5 % visible, closed gap >= 3 mm, USB mouth <= deck + 2 mm"
+}
