@@ -1,0 +1,18 @@
+{
+  "_source": "M7 wiring. Power/USB option B: the board's own USB-C (J4) via an Adafruit 4432 right-angle adapter and an Adafruit 4218 panel-mount extension to the rear of the lower shell: no solder joint in the power or USB data path. Board facts are checked by tests/m7_electrical_check.py against the official Waveshare schematic.",
+  "gpio": {"buzzer": 16, "lid_sensor": 17},
+  "connector": "1.27 mm 2x7 female socket on header J1 (category B: pick after measuring the real board; never solder to the board's own pins)",
+  "harness": [
+    {"wire": "B1", "from": "buzzer driver +5 V node", "via": "Bourns MF-R075 PTC (inline, heat-shrink)", "to_pin": "J1-4", "net": "USB_5V", "awg": 28, "colour": "red", "len_mm": 160},
+    {"wire": "B2", "from": "buzzer driver GND (AO3400A source, 100k)", "to_pin": "J1-6", "net": "GND", "awg": 28, "colour": "black", "len_mm": 160},
+    {"wire": "B3", "from": "buzzer driver 100R gate resistor", "to_pin": "J1-8", "net": "IO16", "awg": 28, "colour": "yellow", "len_mm": 160},
+    {"wire": "S1", "from": "Littelfuse 59155 lead 1 (either lead, the reed is not polarised)", "to_pin": "J1-10", "net": "IO17", "awg": "sensor lead + 28", "colour": "white", "len_mm": 220},
+    {"wire": "S2", "from": "Littelfuse 59155 lead 2", "to": "driver GND node (shares B2)", "net": "GND", "awg": "sensor lead + 28", "colour": "black", "len_mm": 120},
+    {"wire": "B4", "from": "driver +5 V node", "to": "WT-1205 +", "net": "USB_5V", "awg": 28, "colour": "red", "len_mm": 140},
+    {"wire": "B5", "from": "AO3400A drain", "to": "WT-1205 -", "net": "BZ_DRAIN", "awg": 28, "colour": "blue", "len_mm": 140}
+  ],
+  "buzzer_driver": "M6 circuit unchanged: IO16 -> 100R -> AO3400A gate, 100k gate-source, source GND, drain -> buzzer -, buzzer + -> +5 V, 1N4148 across the coil (cathode +5 V). Taped (1 mm foam) under the deck, left-front.",
+  "lid_sensor": "Reed NO between IO17 and GND, ESP32 internal pull-up (no extra parts). Lid closed = 0. Firmware: core/lid_sensor.hpp (120 ms debounce, touch override, ignored after 3 contradicting touches, BLE command lid_sensor on/off).",
+  "routing": "J1 socket leaves the board back through the cradle header window, down through the deck cable hole behind the plate (hidden by the screen), then along the floor. Sensor leads run down the left inner wall through the deck notch at az -90. USB extension: right-angle adapter under the pod -> along the floor -> rear panel port. Cable ties on adhesive mounts; no wire crosses the lid sweep (all below the deck or inside the belt bore).",
+  "strain_relief": "Right-angle adapter rests on the cradle/deck edge; extension cable tied to the floor 20 mm after the adapter so a pull on the rear plug never reaches the board's USB-C."
+}
