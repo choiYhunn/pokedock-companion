@@ -1,0 +1,6 @@
+{
+ "approved": false,
+ "approved_by": null,
+ "date": null,
+ "how_to_approve": "Look at review_sheet.png and img/*.png. If the look is accepted, set approved=true with your name/date and commit."
+}

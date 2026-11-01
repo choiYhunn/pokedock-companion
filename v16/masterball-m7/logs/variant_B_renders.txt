@@ -1,0 +1,14 @@
+wrote appearance/variant_B/render_closed_front34.png 195895 triangles
+wrote appearance/variant_B/render_open110_front34.png 201050 triangles
+wrote appearance/variant_B/render_open110_user_view.png 199414 triangles
+wrote appearance/variant_B/render_open110_side.png 202640 triangles
+wrote appearance/variant_B/render_open110_photo_matched.png 199665 triangles
+wrote appearance/variant_B/render_closed_back_hinge.png 196945 triangles
+wrote appearance/variant_B/render_internal_no_lid_no_deck.png 154583 triangles
+wrote appearance/variant_B/render_exploded.png 200766 triangles
+wrote appearance/variant_B/section_full_x0_closed_and_open110.png
+wrote appearance/variant_B/section_hinge_x0_lug_heel.png
+wrote appearance/variant_B/section_hinge_x11_knuckle.png
+wrote appearance/variant_B/section_display_x0.png
+wrote appearance/variant_B/section_display_x16_header.png
+wrote appearance/variant_B/layout_wiring_top.png

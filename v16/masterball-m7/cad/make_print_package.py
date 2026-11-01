@@ -17,6 +17,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import print_orient as PO  # noqa: E402
 
 CAD, OUTD = sys.argv[1:3]
+ONLY = sys.argv[sys.argv.index("--only") + 1].split(",") if "--only" in sys.argv else None   # e.g. variant B lid/ears
 PLATES = {
     "01_fitkit_first": {     # any PLA colour, same printer / profile as the final parts
         "FK1_display_cradle": ["fit1_display_bezel", "fit1_display_plate"],
@@ -31,7 +32,7 @@ PLATES = {
         "C3_black_belt_ring_stop": ["belt_black", "button_ring_black", "stop_block_black"],
         "C4_pink_ears": ["ear_left_pink", "ear_right_pink"],
         "C5_white_button": ["button_white"],
-        "C6_inner_cover_lavender": ["deck_lavender", "lid_liner_lavender"],
+        "C6_inner_cover_lavender": ["inner_cover_lavender", "lid_liner_lavender"],
         "C7_plum_display": ["display_bezel_plum", "display_cradle_plum"],
     },
 }
@@ -46,6 +47,14 @@ def src(name):
     raise FileNotFoundError(name)
 
 
+# The final print stays locked until the owner approves the look (appearance/APPROVAL.json, gate APPROVED).
+gate_file = os.path.join(os.path.dirname(os.path.abspath(OUTD)), "appearance", "APPEARANCE_GATE.json")
+gate = json.load(open(gate_file, encoding="utf8"))["gate"] if os.path.exists(gate_file) else "MISSING"
+if gate != "APPROVED":
+    PLATES["02_final_LOCKED_until_appearance_approval"] = PLATES.pop("02_final")
+if ONLY:
+    PLATES = {f: {k: v for k, v in pl.items() if k in ONLY} for f, pl in PLATES.items()}
+    PLATES = {f: pl for f, pl in PLATES.items() if pl}
 for folder, plates in PLATES.items():
     os.makedirs(os.path.join(OUTD, folder), exist_ok=True)
     for plate, names in plates.items():
@@ -79,7 +88,14 @@ for folder, plates in PLATES.items():
                                       "fits_256": bool(np.all((hi - lo)[:2] <= 250))}
         sc.export(os.path.join(OUTD, folder, f"{plate}.3mf"))
         print(plate, manifest[f"PLATE {plate}"])
+manifest["APPEARANCE_GATE"] = gate
+if gate != "APPROVED":
+    msg = ["본 출력 잠금: 외관 승인 게이트가 " + gate + " 상태입니다.",
+           "appearance/review_sheet.png, img/, appearance/variant_B/ 를 보고 귀 위치(A/B)를 고른 뒤",
+           "appearance/APPROVAL.json 에 approved=true, chosen_ear_variant, 이름, 날짜를 적고 tests/run_m7.sh 를 다시 실행하면 잠금이 풀립니다.",
+           "이 폴더의 파일은 검토용입니다. 승인 전에는 출력하지 마세요."]
+    open(os.path.join(OUTD, "02_final_LOCKED_until_appearance_approval", "README_LOCKED_KO.txt"), "w", encoding="utf8").write("\n".join(msg) + "\n")
 json.dump(manifest, open(os.path.join(OUTD, "print_manifest.json"), "w"), indent=1)
-bad = [k for k, v in manifest.items() if not k.startswith("PLATE") and (not v["watertight"] or not v["fits_A1mini_180"])]
+bad = [k for k, v in manifest.items() if isinstance(v, dict) and "watertight" in v and (not v["watertight"] or not v["fits_A1mini_180"])]
 print("parts not watertight or too big:", bad)
 sys.exit(1 if bad else 0)

@@ -4,6 +4,15 @@
 - G1 하드웨어, 실제 FDM 맞춤, 장시간 구동은 실물 전에는 PASS로 표시하지 않습니다.
 - 다시 돌리기: `PY=<python> bash tests/run_m7.sh` (결과 `logs/RUN_MANIFEST.json`). 펌웨어 회귀는 `../masterball-m6/tests/run_all.sh --strict`입니다.
 
+## 외관 (독립 승인 게이트)
+
+| 항목 | 결과 | 근거 |
+|---|---|---|
+| 사진 비율 지표 17개 | PASS (CAD, 사진에서 읽은 목표값 기준) | `appearance/APPEARANCE_GATE.json` |
+| 의뢰인 외관 승인, 귀 위치 A/B 선택 | **PENDING**: 승인 전 본 출력 잠금 | `appearance/APPROVAL.json`, `APPEARANCE_REVIEW_KO.md` |
+| 귀 B안 전체 기구 검증 | PASS (CAD) | `cad/out_variant_B/verify_report.json` |
+| 4면 CAD 렌더 (열림, 닫힘, 사용자 눈높이, 측면) + 사진 유사 카메라 | 생성됨 | `img/`, `appearance/review_sheet.png` |
+
 ## 기구
 
 | 항목 | 결과 | 근거 |

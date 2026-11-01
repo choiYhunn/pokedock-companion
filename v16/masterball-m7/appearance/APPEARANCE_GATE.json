@@ -1,0 +1,203 @@
+{
+ "gate": "PENDING_OWNER_VISUAL_APPROVAL",
+ "metrics_pass": "17/17",
+ "metrics": [
+  {
+   "metric": "glass_over_D",
+   "cad": 0.333,
+   "photo_target": 0.34,
+   "tol": 0.02,
+   "unit": "",
+   "pass": true,
+   "how": "photo glass ring ~233 px / ball 652 px (real board: 0.333)"
+  },
+  {
+   "metric": "active_over_D",
+   "cad": 0.266,
+   "photo_target": 0.27,
+   "tol": 0.02,
+   "unit": "",
+   "pass": true,
+   "how": "true size kept (official STEP); photo ~0.27"
+  },
+  {
+   "metric": "bezel_over_D",
+   "cad": 0.449,
+   "photo_target": 0.45,
+   "tol": 0.04,
+   "unit": "",
+   "pass": true,
+   "how": "dark surround around the glass ~62 mm"
+  },
+  {
+   "metric": "pod_width_over_D",
+   "cad": 0.557,
+   "photo_target": 0.51,
+   "tol": 0.06,
+   "unit": "",
+   "pass": true,
+   "how": "cradle incl. side brackets ~70 mm"
+  },
+  {
+   "metric": "band_height_over_D",
+   "cad": 0.076,
+   "photo_target": 0.076,
+   "tol": 0.012,
+   "unit": "",
+   "pass": true,
+   "how": "dark band ~47 px at the front, perspective-corrected ~10.5 mm"
+  },
+  {
+   "metric": "button_over_D",
+   "cad": 0.171,
+   "photo_target": 0.171,
+   "tol": 0.02,
+   "unit": "",
+   "pass": true,
+   "how": "white button ~112 px"
+  },
+  {
+   "metric": "ring_over_D",
+   "cad": 0.246,
+   "photo_target": 0.246,
+   "tol": 0.025,
+   "unit": "",
+   "pass": true,
+   "how": "dark ring ~160 px"
+  },
+  {
+   "metric": "ring_top_to_band_top_mm",
+   "cad": 0.1,
+   "photo_target": 0.0,
+   "tol": 1.5,
+   "unit": "mm",
+   "pass": true,
+   "how": "ring top meets the band top / rim"
+  },
+  {
+   "metric": "button_proud_mm",
+   "cad": 5.0,
+   "photo_target": 5.0,
+   "tol": 1.5,
+   "unit": "mm",
+   "pass": true,
+   "how": "button clearly 3D, domed"
+  },
+  {
+   "metric": "ear_base_over_D",
+   "cad": 0.203,
+   "photo_target": 0.2,
+   "tol": 0.03,
+   "unit": "",
+   "pass": true,
+   "how": "ear base ~125 px on the (smaller-scale) lid"
+  },
+  {
+   "metric": "ear_height_over_base",
+   "cad": 0.643,
+   "photo_target": 0.7,
+   "tol": 0.15,
+   "unit": "",
+   "pass": true,
+   "how": "ear ~0.6-0.85 of its base (foreshortened)"
+  },
+  {
+   "metric": "ear_tip_radius_over_base_radius",
+   "cad": 0.547,
+   "photo_target": 0.45,
+   "tol": 0.15,
+   "unit": "",
+   "pass": true,
+   "how": "round gumdrop tip, not a point"
+  },
+  {
+   "metric": "ear_above_ball_top_mm",
+   "cad": 3.786,
+   "photo_target": 4.0,
+   "tol": 3.0,
+   "unit": "mm",
+   "pass": true,
+   "how": "ears rise above the silhouette"
+  },
+  {
+   "metric": "screen_centre_above_rim_mm",
+   "cad": 8.75,
+   "photo_target": 11.0,
+   "tol": 4.0,
+   "unit": "mm",
+   "pass": true,
+   "how": "screen centre clearly above the rim"
+  },
+  {
+   "metric": "screen_tilt_deg",
+   "cad": 55.0,
+   "photo_target": 60.0,
+   "tol": 6.0,
+   "unit": "deg",
+   "pass": true,
+   "how": "photo reads ~60-65 from a low camera; owner spec caps it at 55"
+  },
+  {
+   "metric": "lid_over_lower_height",
+   "cad": 0.977,
+   "photo_target": 1.0,
+   "tol": 0.08,
+   "unit": "",
+   "pass": true,
+   "how": "two near-equal halves"
+  },
+  {
+   "metric": "lavender_inner_wall_mm",
+   "cad": 13.65,
+   "photo_target": 12.0,
+   "tol": 4.0,
+   "unit": "mm",
+   "pass": true,
+   "how": "lavender interior wall visible when open"
+  }
+ ],
+ "structural_deviations": [
+  {
+   "item": "힌지",
+   "detail": "사진은 안쪽에 보이는 브래킷 힌지. 그 구조로는 110°가 나오지 않고 화면과 겹침 → 뒷면 바깥 축(앞에서 안 보임)",
+   "class": "구조상 불가"
+  },
+  {
+   "item": "바닥",
+   "detail": "사진은 완전한 구. 열린 뚜껑에서 넘어지지 않으려면 평면 Ø75 + 발 8개 필요",
+   "class": "구조상 불가"
+  },
+  {
+   "item": "띠 윗면",
+   "detail": "사진은 띠 위에 밝은 테두리. 뚜껑이 앉는 면이라 검정 띠 윗면(약 7.6 mm)이 보임. 안쪽은 라벤더 테두리로 대체",
+   "class": "부분 일치"
+  },
+  {
+   "item": "화면 각도",
+   "detail": "사진은 낮은 카메라라 화면이 60–65°처럼 보임. 사용자 지정 50° 유지",
+   "class": "사양 우선"
+  },
+  {
+   "item": "귀 위치",
+   "detail": "사진(열린 뚜껑)의 귀 위치는 물리적으로 앞-위쪽(고도 약 35°)에 해당해 생성 이미지 특유의 불일치가 있음. 닫힌 모습에서 고양이 귀로 보이도록 고도 58°에 둠",
+   "class": "해석 차이"
+  },
+  {
+   "item": "배선",
+   "detail": "사진에는 전선과 보드가 보임. 요구사항(배선 숨김)에 따라 모두 덕 아래로",
+   "class": "의도적 차이"
+  },
+  {
+   "item": "화면 크기",
+   "detail": "사진의 유리 비율 0.34 ≈ 실제 0.333. 사진이 커 보이는 건 카메라가 가깝고 받침대가 크기 때문 → 받침대 Ø62 + 측면 브래킷으로 반영",
+   "class": "일치"
+  }
+ ],
+ "owner_approval": {
+  "approved": false,
+  "approved_by": null,
+  "date": null,
+  "how_to_approve": "Look at review_sheet.png and img/*.png. If the look is accepted, set approved=true with your name/date and commit."
+ },
+ "final_print_unlocked": false
+}

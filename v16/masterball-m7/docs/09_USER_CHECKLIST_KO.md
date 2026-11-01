@@ -13,6 +13,12 @@
 - [ ] `docs/05` §2의 FirstInstall을 실행합니다. **공장 백업 파일을 비공개 폴더에 보관합니다.**
 - [ ] 팬텀(비공개 팩)과 시계가 보입니다.
 
+## 외관 승인 (본 출력 전 필수)
+
+- [ ] `appearance/review_sheet.png`, `img/render_open110_photo_matched.png`, `appearance/variant_B/`, 그리고 PC 전용 비교 그림 `Documents\프로젝트\PokeDock_Private_Assets\review\M7_photo_vs_cad_A_B_20261102.png`을 봅니다.
+- [ ] 귀 위치 A(위쪽) 또는 B(사진 위치)를 고르고, 외관이 마음에 들면 `appearance/APPROVAL.json`에 approved=true, chosen_ear_variant, 이름, 날짜를 적습니다.
+- [ ] 마음에 들지 않는 부분은 그대로 적어 다시 설계를 요청합니다(승인하지 않음).
+
 ## 학교 출력
 
 - [ ] 시험편 FK1–FK5를 출력합니다(`docs/06` 순서) → 측정 양식 F1–F12를 채웁니다.

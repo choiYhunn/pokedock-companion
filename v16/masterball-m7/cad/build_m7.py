@@ -13,7 +13,7 @@ import os
 import sys
 
 from build123d import (Box, Compound, Cone, Cylinder, Location, Plane, Polyline, Pos, Rot, Sphere,
-                       Vector, export_step, export_stl, extrude, make_face, revolve, Axis)
+                       Vector, export_step, export_stl, extrude, make_face, revolve, scale, Axis)
 
 sys.path.insert(0, os.path.dirname(__file__))
 import m7_params as P  # noqa: E402
@@ -134,10 +134,15 @@ def build_lid():
                                    P.SENSOR_R + rr / 2 + P.SENSOR_FIT, P.BH - 1, P.BH + hh + 0.2))
     # ear seats: flat spot-face + inner boss + screw from inside + orientation bump
     for s in (-1, 1):
-        d = P.unit(s * P.EAR_AZ, P.EAR_EL)
+        d, side, base_c, loc = ear_frame(s)
         seat = P.R - P.EAR_SEAT_DEPTH
-        lid = lid + (along(d, P.EAR_BASE_D / 2, 63.8, P.RI_LID + 0.5))      # boss under the whole seat, above the liner
-        lid = lid - along(d, P.EAR_BASE_D / 2 + P.EAR_SEAT_CLEAR, seat, P.R + 5)
+        if P.EAR_VARIANT == "B":   # below the liner: a 1.8 mm inner pad following the dome (no support needed)
+            pad = (Sphere(P.RI_LID + 0.2) - Sphere(P.RI_LID - 1.8)) & (Plane(origin=(0, 0, 0), z_dir=V(*d)).location * Cone(0.01, 15.5, P.R, align=None)) & zslab(P.BH + 1.0, P.R)
+            lid = lid + pad
+        else:
+            lid = lid + (along(d, P.EAR_BASE_D / 2, 63.8, P.RI_LID + 0.5))      # boss under the whole seat, above the liner
+        r0 = P.EAR_BASE_D / 2
+        lid = lid - loc * ellipse_cyl(r0 + P.EAR_SEAT_CLEAR, r0 * P.EAR_FLAT + P.EAR_SEAT_CLEAR, 0, 10)
         lid = lid - along(d, P.M2_CLEAR / 2 + 0.05, 55, seat + 0.1)
         bump = ear_bump_centre(d, seat)
         lid = lid + cyl_between(1.5, bump, tuple(b + c * 1.6 for b, c in zip(bump, d)))
@@ -160,27 +165,36 @@ def ear_axis(d, s):
 
 def ear_bump_centre(d, seat):
     side = V(-d[1], d[0], 0).normalized()
-    p = V(*d) * seat + side * 7.0
+    p = V(*d) * seat + side * 8.0
     return (p.X, p.Y, p.Z)
 
 
-EAR_PROFILE = [(1.0, 0.0), (0.95, 0.14), (0.85, 0.32), (0.71, 0.52), (0.55, 0.69), (0.39, 0.82), (0.24, 0.92), (0.11, 0.98)]
+from ear_shape import EAR_SHAPE, ear_profile  # noqa: E402,F401  (shared with appearance_gate.py)
+
+
+def ear_frame(s):
+    d = P.unit(s * P.EAR_AZ, P.EAR_EL)
+    side = V(-d[1], d[0], 0).normalized()
+    if side.dot(V(s, 0, 0)) < 0:
+        side = side * -1                            # local x = outward horizontal tangent
+    base_c = V(*d) * (P.R - P.EAR_SEAT_DEPTH)
+    return d, side, base_c, Plane(origin=base_c, x_dir=side, z_dir=V(*d)).location
+
+
+def ellipse_cyl(rx, ry, z0, z1):
+    return scale(Pos(0, 0, (z0 + z1) / 2) * Cylinder(rx, z1 - z0), by=(1, ry / rx, 1))
 
 
 def build_ear(s):
-    d = P.unit(s * P.EAR_AZ, P.EAR_EL)
-    a = ear_axis(d, s)
+    d, side, base_c, loc = ear_frame(s)
     seat = P.R - P.EAR_SEAT_DEPTH
-    base_c = V(*d) * seat
-    r0, h = P.EAR_BASE_D / 2, P.EAR_H
-    # soft "bullet" profile (rounded cat ear), revolved about the tilted axis; extends 3 mm below the seat
-    prof = [(0, -3.0), (r0 + 0.6, -3.0)] + [(r0 * f, h * t) for f, t in EAR_PROFILE] + [(0, h)]
-    face = make_face(Polyline(*prof, close=True))
-    body = revolve(face, Axis.Y, 360)                       # local: y = ear axis
-    ear = Plane(origin=base_c, x_dir=V(1, 0, 0).cross(a).normalized() if abs(a.X) < 0.9 else V(0, 1, 0), z_dir=a).location         * Rot(X=90) * body
-    half = Plane(origin=base_c, z_dir=V(*d)).location * Pos(0, 0, 50) * Box(100, 100, 100)
-    ear = ear & half
-    ear = ear & (Plane(origin=base_c, z_dir=V(*d)).location * Pos(0, 0, 50) * Cylinder(r0, 100))
+    r0 = P.EAR_BASE_D / 2
+    face = make_face(Polyline(*ear_profile(), close=True))
+    body = Rot(X=90) * revolve(face, Axis.Y, 360)           # local z = ear axis
+    body = scale(body, by=(1, P.EAR_FLAT, 1))                 # flattened along the meridian
+    body = Rot(Y=P.EAR_TILT_OUT) * body                       # lean outward
+    ear = body & (Pos(0, 0, 50) * Box(100, 100, 100))
+    ear = loc * (ear & ellipse_cyl(r0, r0 * P.EAR_FLAT, -1, 60))
     ear = ear - cyl_between(P.M2_PT_PILOT / 2, tuple(base_c - V(*d) * 1), tuple(base_c + V(*d) * 9))
     bump = ear_bump_centre(d, seat)
     ear = ear - cyl_between(1.75, tuple(V(*bump) - V(*d) * 0.5), tuple(V(*bump) + V(*d) * 2.0))
@@ -285,7 +299,7 @@ def build_lower():
     yb = -math.sqrt(P.R ** 2 - bz ** 2)
     low = low - cyl_between(2.15, (0, yb - 1, bz), (0, yb + 2.0, bz))
     for s in (-1, 1):
-        x = s * 12.6
+        x = s * P.BTN_RING_PEG_R
         y = -math.sqrt(P.R ** 2 - bz ** 2 - x ** 2)
         low = low - cyl_between(1.6, (x, y - 1, bz), (x, y + 1.9, bz))
     return low
@@ -294,8 +308,9 @@ def build_lower():
 def pod_cup_u():
     """Bezel cup in the U frame (front lip with window, bore for the glass)."""
     y_front = -(P.LIP_GAP + P.LIP_T)
-    prof = [(P.WINDOW_R + 0.6, y_front), (P.BEZEL_OR - 1.6, y_front), (P.BEZEL_OR - 0.47, y_front + 0.47),
-            (P.BEZEL_OR, y_front + 1.6), (P.BEZEL_OR, P.PLATE_Y0), (P.BEZEL_BORE_R, P.PLATE_Y0),
+    yr = y_front - 1.0                                   # raised outer rim (stepped bezel, photo)
+    prof = [(P.WINDOW_R + 0.6, y_front), (24.0, y_front), (25.0, yr), (P.BEZEL_OR - 1.6, yr), (P.BEZEL_OR - 0.47, yr + 0.47),
+            (P.BEZEL_OR, yr + 1.6), (P.BEZEL_OR, P.PLATE_Y0), (P.BEZEL_BORE_R, P.PLATE_Y0),
             (P.BEZEL_BORE_R, -P.LIP_GAP), (P.WINDOW_R, -P.LIP_GAP), (P.WINDOW_R, y_front + 0.6)]
     face = make_face(Polyline(*prof, close=True))         # XY plane: x = radius, y = axial
     cup = revolve(face, Axis.Y, 360)
@@ -306,6 +321,7 @@ def build_bezel():
     cup = pod_cup_u()
     ox, oy0, oy1 = P.USB_OPEN
     cup = cup - box(-ox, ox, oy0, oy1, -40, -18)
+    cup = cup - box(-ox, -6 + P.USB_ADAPTER[1] + 1.0, oy0, oy1, -40, P.USB_MOUTH_ZU - P.USB_ADAPTER[0] + 12.8)   # adapter side leg (hidden under the floor)
     for ang in P.BEZEL_SCREW_ANG:
         x, z = polar_xy(P.BEZEL_SCREW_R, ang)
         cup = cup - cyl_u(P.M2_PT_PILOT / 2, P.PLATE_Y0 - 8, P.PLATE_Y0 + 1, x, z)
@@ -347,14 +363,29 @@ def build_cradle():
         x0, x1 = sorted((s * 21.0, s * 24.0))
         g = yz_prism(pts, x0, x1)
         gus = g if gus is None else gus + g
+    # side brackets beside the bezel, reaching the tray floor (photo: chunky cradle with corner screws)
+    w0, w1 = P.WING_X
+    for s in (-1, 1):
+        x0, x1 = sorted((s * w0, s * w1))
+        wing = yz_prism([(-1.5, -50.0), (P.PLATE_Y0 + P.PLATE_T, -50.0), (P.PLATE_Y0 + P.PLATE_T, 6.0), (5.0, 9.0), (-1.5, 4.0)], x0, x1)
+        tx0, tx1 = sorted((s * 29.0, s * w1))
+        tab_u = box(tx0, tx1, P.PLATE_Y0, P.PLATE_Y0 + P.PLATE_T, -30.0, 6.0)
+        gus = gus + (POD * (wing + tab_u))
+        fx0, fx1 = sorted((s * w0, s * (P.WING_SCREW[0] + 3.4)))
+        gus = gus + box(fx0, fx1, P.WING_TAB_Y[0], P.WING_TAB_Y[1], P.DECK_TOP_Z, P.DECK_TOP_Z + 3.0)
+    shroud = cyl_u(P.BEZEL_OR, P.PLATE_Y0 + P.PLATE_T - 0.01, P.SHROUD_Y1) - cyl_u(P.BEZEL_OR - P.SHROUD_T, P.PLATE_Y0, P.SHROUD_Y1 + 1)
+    gus = gus + (POD * shroud)
     cr = plate + foot + gus
     # the slab must stay behind the plate front (it would show under the screen otherwise)
-    front_cut = POD * box(-60, 60, -60, P.PLATE_Y0 + 0.01, -80, 80)
+    front_cut = POD * box(-P.WING_X[0] + 0.01, P.WING_X[0] - 0.01, -60, P.PLATE_Y0 + 0.01, -80, 80)
     cr = cr - (front_cut - plate)
     for s in (-1, 1):
         x = s * P.FOOT_SCREW_X
         cr = cr - cyl_z(P.M3_CLEAR / 2, P.DECK_TOP_Z - 1, P.DECK_TOP_Z + P.FOOT_T + 1, x, 18.0)
         cr = cr - cyl_z(3.2, P.DECK_TOP_Z + P.FOOT_T - 1.6, P.DECK_TOP_Z + P.FOOT_T + 5, x, 18.0)
+        wx, wy = s * P.WING_SCREW[0], P.WING_SCREW[1]
+        cr = cr - cyl_z(P.M3_CLEAR / 2, P.DECK_TOP_Z - 1, P.DECK_TOP_Z + 4, wx, wy)
+        cr = cr - (Pos(wx, wy, P.DECK_TOP_Z + 3.0 - 1.75) * Cone(1.7, 3.2, 1.76, align=None))
         cx, cy = P.CABLE_HOLE
         cr = cr - box(s * 16 - cx / 2 - 0.6, s * 16 + cx / 2 + 0.6, 2.0 - 0.6, 2.0 + cy + 0.6, P.DECK_TOP_Z - 1, P.DECK_TOP_Z + 6)
     # board standoff holes must stay open through the slab region (screwdriver access from behind)
@@ -368,45 +399,72 @@ def pod_envelope_u(grow):
     return cyl_u(P.BEZEL_OR + grow, -(P.LIP_GAP + P.LIP_T) - grow, P.PLATE_Y0 + P.PLATE_T + grow)
 
 
-def build_deck():
+def hex_z(af, z0, z1, x, y):
+    r = af / math.sqrt(3)
+    pts = [(x + r * math.cos(math.radians(60 * k)), y + r * math.sin(math.radians(60 * k))) for k in range(6)]
+    return Pos(0, 0, z0) * extrude(make_face(Polyline(*pts, close=True)), z1 - z0)
+
+
+def build_tray():
+    """Lavender inner cover: floor + wall + rim lip. Hides all wiring; goes in through the belt bore (r <= 61.4)."""
     z0, z1 = P.DECK_TOP_Z - P.DECK_T, P.DECK_TOP_Z
-    r = math.sqrt(P.RI_LOW ** 2 - z0 ** 2) - 0.5
-    deck = cyl_z(r, z0, z1)
-    deck = deck - (POD * pod_envelope_u(P.DECK_CLEAR))
+    wi, wo = P.TRAY_WALL_R
+    top, lt = P.TRAY_LIP_TOP, P.TRAY_LIP_T
+    tray = cyl_z(P.TRAY_R, z0, z1)
+    tray = tray + (cyl_z(wo, z1 - 0.01, top) - cyl_z(wi, z0 - 1, top + 1))
+    tray = tray + (cyl_z(P.TRAY_R, top - lt, top) - cyl_z(wi, z0, top + 1))
+    cone_h = P.TRAY_R - wo                                # 45 deg chamfer under the lip: printable floor-down
+    tray = tray + ((Pos(0, 0, top - lt - cone_h) * Cone(wo, P.TRAY_R, cone_h, align=None)) - cyl_z(wi, z0, top + 1))
+    # clear the belt bosses (latch magnets, reed sensor) that hang inside the bore
+    for az in P.MAG_AZ:
+        x, y, _ = P.unit(az, 0)
+        tray = tray - cyl_z(P.MAG_BOSS_D / 2 + 0.6, z1 + 0.5, top + 1, x * P.MAG_R, y * P.MAG_R)
+    sx, sy, _ = P.unit(P.SENSOR_AZ, 0)
+    pl = Plane(origin=(0, 0, 0), x_dir=(sy, -sx, 0), z_dir=(0, 0, 1))
+    tray = tray - (pl.location * box(-9.6, 9.6, P.SENSOR_R - 6.6, P.R, z1 + 0.5, top + 1))
+    tray = tray - (POD * pod_envelope_u(P.DECK_CLEAR))
     for ang in P.DECK_SCREW_ANG:
         x, y = polar_xy(P.DECK_SCREW_R, ang)
-        deck = deck - cyl_z(P.M3_CLEAR / 2, z0 - 1, z1 + 1, x, y)
-        deck = deck - (Pos(x, y, z1 - 1.75) * Cone(1.7, 3.2, 1.76, align=None))
-    sx, sy, _ = P.unit(P.SENSOR_AZ, 0)
-    deck = deck - cyl_z(2.2, z0 - 1, z1 + 1, sx * (r - 1.2), sy * (r - 1.2))      # reed sensor leads
+        tray = tray - cyl_z(P.M3_CLEAR / 2, z0 - 1, z1 + 1, x, y)
+        tray = tray - (Pos(x, y, z1 - 1.75) * Cone(1.7, 3.2, 1.76, align=None))
+    nuts = [(s * P.FOOT_SCREW_X, 18.0) for s in (-1, 1)] + [(s * P.WING_SCREW[0], P.WING_SCREW[1]) for s in (-1, 1)]
+    for x, y in nuts:                                     # M3 machine screw from the top + nut underneath
+        tray = tray + cyl_z(4.6, z0 - 3.0, z0 + 0.01, x, y)
+        tray = tray - cyl_z(P.M3_CLEAR / 2, z0 - 4, z1 + 1, x, y)
+        tray = tray - hex_z(5.7, z0 - 3.01, z0 - 0.6, x, y)
     for s in (-1, 1):
-        x = s * P.FOOT_SCREW_X
-        deck = deck + cyl_z(4.0, z0 - 9, z0 + 0.01, x, 18.0)
-        deck = deck - cyl_z(P.M3_PT_PILOT / 2, z0 - 10, z1 + 1, x, 18.0)
         cx, cy = P.CABLE_HOLE
-        deck = deck - box(s * 16 - cx / 2, s * 16 + cx / 2, 2.0, 2.0 + cy, z0 - 1, z1 + 1)
-    return deck
+        tray = tray - box(s * 16 - cx / 2, s * 16 + cx / 2, 2.0, 2.0 + cy, z0 - 1, z1 + 1)
+    return tray
 
 
 def build_button_ring():
     bz = P.BTN_Z
     ax_y = -math.sqrt(P.R ** 2 - bz ** 2)
     front = ax_y - P.BTN_RING_PROUD
-    ring = cyl_between(P.BTN_RING_OD / 2, (0, front, bz), (0, ax_y + 6, bz)) - Sphere(P.R)
-    ring = ring - cyl_between(P.BTN_RING_ID / 2, (0, front - 1, bz), (0, ax_y + 7, bz))
+    ring = cyl_between(P.BTN_RING_OD / 2, (0, front, bz), (0, ax_y + 8, bz)) - Sphere(P.R)
+    ring = ring - cyl_between(P.BTN_RING_ID / 2, (0, front - 1, bz), (0, ax_y + 9, bz))
+    # soft outer edge: 0.8 mm 45 deg chamfer on the front rim
+    edge = cyl_between(P.BTN_RING_OD / 2 + 1, (0, front - 1, bz), (0, front + 0.8, bz)) - \
+        (Pos(0, front + 0.8, bz) * Rot(X=90) * Cone(P.BTN_RING_OD / 2, P.BTN_RING_OD / 2 - 1.8, 1.8, align=None))
+    ring = ring - edge
     for s in (-1, 1):
-        x = s * 12.6
+        x = s * P.BTN_RING_PEG_R
         y = -math.sqrt(P.R ** 2 - bz ** 2 - x ** 2)
         ring = ring + cyl_between(1.45, (x, y - 0.5, bz), (x, y + 1.7, bz))
-    # soften the front outer edge
     return ring
 
 
 def build_button():
+    """White button: cylinder from the shell to the rim plane + a shallow dome (photo: clearly 3D, rounded)."""
     bz = P.BTN_Z
     ax_y = -math.sqrt(P.R ** 2 - bz ** 2)
-    front = ax_y - P.BTN_PROUD
-    btn = cyl_between(P.BTN_D / 2, (0, front, bz), (0, ax_y + 6, bz)) - Sphere(P.R + 0.05)
+    r = P.BTN_D / 2
+    rim = ax_y - (P.BTN_PROUD - P.BTN_DOME)
+    btn = cyl_between(r, (0, rim, bz), (0, ax_y + 8, bz)) - Sphere(P.R + 0.05)
+    rc = (r ** 2 + P.BTN_DOME ** 2) / (2 * P.BTN_DOME)
+    dome = (Pos(0, rim - P.BTN_DOME + rc, bz) * Sphere(rc)) & cyl_between(r, (0, rim - P.BTN_DOME - 1, bz), (0, rim + 0.01, bz))
+    btn = btn + dome
     btn = btn + cyl_between(2.0, (0, ax_y - 0.5, bz), (0, ax_y + 1.8, bz))
     return btn
 
@@ -491,7 +549,7 @@ ear_l, ear_r = build_ear(-1), build_ear(1)
 liner = build_liner()
 belt = build_belt()
 lower = build_lower()
-deck = build_deck()
+deck = build_tray()
 bezel = build_bezel()
 cradle = build_cradle()
 stop_block = build_stop_block()
@@ -499,7 +557,7 @@ ring = build_button_ring()
 btn = build_button()
 
 PARTS = {"lid_lavender": lid, "lid_liner_lavender": liner, "ear_left_pink": ear_l, "ear_right_pink": ear_r,
-         "belt_black": belt, "lower_shell_ivory": lower, "deck_lavender": deck,
+         "belt_black": belt, "lower_shell_ivory": lower, "inner_cover_lavender": deck,
          "display_bezel_plum": bezel, "display_cradle_plum": cradle, "stop_block_black": stop_block,
          "button_ring_black": ring, "button_white": btn}
 for k, v in PARTS.items():

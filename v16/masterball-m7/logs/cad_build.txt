@@ -1,27 +1,27 @@
-lid_lavender {'valid': True, 'volume_mm3': 59567.1, 'stl': 'repaired', 'bbox': [-68.91, -68.91, 3.5, 68.91, 74.0, 69.0]}
+lid_lavender {'valid': True, 'volume_mm3': 58247.2, 'stl': 'repaired', 'bbox': [-68.8, -68.8, 5.25, 68.8, 74.0, 69.0]}
 lid_liner_lavender {'valid': True, 'volume_mm3': 11612.5, 'stl': 'ok', 'bbox': [-48.11, -48.11, 44.4, 48.11, 48.11, 46.0]}
-ear_left_pink {'valid': True, 'volume_mm3': 4582.0, 'stl': 'repaired', 'bbox': [-39.08, -36.69, 50.35, -14.63, -12.15, 71.96]}
-ear_right_pink {'valid': True, 'volume_mm3': 4582.0, 'stl': 'repaired', 'bbox': [14.63, -36.69, 50.35, 39.08, -12.15, 71.96]}
-belt_black {'valid': True, 'volume_mm3': 27495.7, 'stl': 'ok', 'bbox': [-69.0, -69.0, -7.5, 69.0, 75.6, 11.5]}
-lower_shell_ivory {'valid': True, 'volume_mm3': 86227.3, 'stl': 'ok', 'bbox': [-68.91, -68.91, -60.0, 68.91, 68.91, -3.5]}
-deck_lavender {'valid': True, 'volume_mm3': 25690.1, 'stl': 'ok', 'bbox': [-64.91, -64.94, -19.0, 64.94, 64.94, -8.0]}
-display_bezel_plum {'valid': True, 'volume_mm3': 10908.4, 'stl': 'ok', 'bbox': [-28.5, -31.65, -13.73, 28.5, 14.15, 36.84]}
-display_cradle_plum {'valid': True, 'volume_mm3': 12270.9, 'stl': 'ok', 'bbox': [-28.5, -17.12, -8.0, 28.5, 34.0, 29.26]}
-stop_block_black {'valid': True, 'volume_mm3': 376.0, 'stl': 'ok', 'bbox': [-6.6, 68.74, -1.5, 6.6, 75.6, 4.24]}
-button_ring_black {'valid': True, 'volume_mm3': 626.1, 'stl': 'ok', 'bbox': [-14.05, -69.78, -24.6, 14.05, -64.47, 3.4]}
-button_white {'valid': True, 'volume_mm3': 1011.5, 'stl': 'ok', 'bbox': [-11.0, -70.38, -21.6, 11.0, -65.58, 0.4]}
-fit fit1_display_bezel {'valid': True, 'volume_mm3': 10908.4, 'stl': 'ok', 'bbox': [-28.5, -31.65, -13.73, 28.5, 14.15, 36.84]}
-fit fit1_display_plate {'valid': True, 'volume_mm3': 5293.7, 'stl': 'ok', 'bbox': [-28.5, -17.12, -8.0, 28.5, 16.06, 29.26]}
-fit fit2_hinge_belt {'valid': True, 'volume_mm3': 4135.5, 'stl': 'ok', 'bbox': [-20.0, 58.69, -7.5, 20.0, 75.6, 11.5]}
-fit fit2_hinge_lid {'valid': True, 'volume_mm3': 2129.5, 'stl': 'ok', 'bbox': [-20.0, 60.04, 3.5, 20.0, 74.0, 22.0]}
-fit fit3_joint_belt {'valid': True, 'volume_mm3': 2540.7, 'stl': 'ok', 'bbox': [-20.0, -69.0, -7.5, 20.0, -58.69, 3.5]}
-fit fit3_joint_lower {'valid': True, 'volume_mm3': 1732.1, 'stl': 'ok', 'bbox': [-20.0, -68.91, -16.0, 20.0, -51.5, -3.5]}
-fit fit4_magnet_lid {'valid': True, 'volume_mm3': 1168.0, 'stl': 'ok', 'bbox': [18.0, -66.52, 3.5, 52.0, -40.0, 14.0]}
-fit fit4_magnet_belt {'valid': True, 'volume_mm3': 2518.1, 'stl': 'ok', 'bbox': [18.0, -66.61, -7.5, 52.0, -40.0, 3.5]}
-fit fit6_sensor_belt {'valid': True, 'volume_mm3': 2280.6, 'stl': 'ok', 'bbox': [-69.0, -16.0, -7.5, -56.0, 16.0, 3.5]}
-fit fit6_sensor_lid {'valid': True, 'volume_mm3': 1296.5, 'stl': 'ok', 'bbox': [-68.91, -16.0, 3.5, -55.9, 16.0, 16.0]}
-fit fit2_stop_block {'valid': True, 'volume_mm3': 376.0, 'stl': 'ok', 'bbox': [-6.6, 68.74, -1.5, 6.6, 75.6, 4.24]}
-fit fit5_ear_seat_lid {'valid': True, 'volume_mm3': 3607.5, 'stl': 'ok', 'bbox': [10.17, -41.47, 41.52, 44.17, -7.47, 67.84]}
-fit fit5_ear_right {'valid': True, 'volume_mm3': 4582.0, 'stl': 'repaired', 'bbox': [14.63, -36.69, 50.35, 39.08, -12.15, 71.96]}
-fit fit5_button_patch_lower {'valid': True, 'volume_mm3': 3796.2, 'stl': 'ok', 'bbox': [-22.0, -68.91, -28.0, 22.0, -55.0, -3.5]}
+ear_left_pink {'valid': True, 'volume_mm3': 5246.0, 'stl': 'repaired', 'bbox': [-39.82, -37.01, 51.07, -14.71, -11.74, 72.79]}
+ear_right_pink {'valid': True, 'volume_mm3': 5246.1, 'stl': 'repaired', 'bbox': [14.71, -37.01, 51.07, 39.82, -11.74, 72.79]}
+belt_black {'valid': True, 'volume_mm3': 37813.3, 'stl': 'ok', 'bbox': [-69.0, -69.0, -9.25, 69.0, 75.6, 13.25]}
+lower_shell_ivory {'valid': True, 'volume_mm3': 85996.2, 'stl': 'ok', 'bbox': [-68.8, -68.8, -60.0, 68.8, 68.8, -5.25]}
+inner_cover_lavender {'valid': True, 'volume_mm3': 43613.2, 'stl': 'ok', 'bbox': [-61.4, -61.4, -14.0, 61.4, 61.4, 4.65]}
+display_bezel_plum {'valid': True, 'volume_mm3': 17753.3, 'stl': 'ok', 'bbox': [-31.0, -32.08, -16.6, 31.0, 14.15, 40.8]}
+display_cradle_plum {'valid': True, 'volume_mm3': 18803.8, 'stl': 'ok', 'bbox': [-38.4, -29.94, -9.0, 38.4, 34.0, 33.53]}
+stop_block_black {'valid': True, 'volume_mm3': 681.3, 'stl': 'ok', 'bbox': [-6.6, 68.66, -3.25, 6.6, 75.6, 5.99]}
+button_ring_black {'valid': True, 'volume_mm3': 1775.1, 'stl': 'ok', 'bbox': [-17.0, -70.37, -28.85, 17.0, -62.68, 5.15]}
+button_white {'valid': True, 'volume_mm3': 2025.9, 'stl': 'ok', 'bbox': [-11.8, -72.97, -23.65, 11.8, -64.87, -0.05]}
+fit fit1_display_bezel {'valid': True, 'volume_mm3': 17753.3, 'stl': 'ok', 'bbox': [-31.0, -32.08, -16.6, 31.0, 14.15, 40.8]}
+fit fit1_display_plate {'valid': True, 'volume_mm3': 7211.3, 'stl': 'ok', 'bbox': [-38.4, -16.85, -9.0, 38.4, 17.02, 33.53]}
+fit fit2_hinge_belt {'valid': True, 'volume_mm3': 5420.8, 'stl': 'ok', 'bbox': [-20.0, 58.69, -9.25, 20.0, 75.6, 13.25]}
+fit fit2_hinge_lid {'valid': True, 'volume_mm3': 2006.4, 'stl': 'ok', 'bbox': [-20.0, 60.04, 5.25, 20.0, 74.0, 22.0]}
+fit fit3_joint_belt {'valid': True, 'volume_mm3': 3480.4, 'stl': 'ok', 'bbox': [-20.0, -69.0, -9.25, 20.0, -58.69, 5.25]}
+fit fit3_joint_lower {'valid': True, 'volume_mm3': 1439.2, 'stl': 'ok', 'bbox': [-20.0, -68.8, -16.0, 20.0, -45.0, -5.25]}
+fit fit4_magnet_lid {'valid': True, 'volume_mm3': 1013.3, 'stl': 'ok', 'bbox': [18.0, -66.4, 5.25, 52.0, -40.0, 14.0]}
+fit fit4_magnet_belt {'valid': True, 'volume_mm3': 3491.9, 'stl': 'ok', 'bbox': [18.0, -66.61, -9.25, 52.0, -40.0, 5.25]}
+fit fit6_sensor_belt {'valid': True, 'volume_mm3': 3392.1, 'stl': 'ok', 'bbox': [-69.0, -16.0, -9.25, -56.0, 16.0, 5.25]}
+fit fit6_sensor_lid {'valid': True, 'volume_mm3': 1168.7, 'stl': 'ok', 'bbox': [-68.8, -16.0, 5.25, -55.9, 16.0, 16.0]}
+fit fit2_stop_block {'valid': True, 'volume_mm3': 681.3, 'stl': 'ok', 'bbox': [-6.6, 68.66, -3.25, 6.6, 75.6, 5.99]}
+fit fit5_ear_seat_lid {'valid': True, 'volume_mm3': 3720.7, 'stl': 'ok', 'bbox': [10.17, -41.47, 41.52, 44.17, -7.47, 67.84]}
+fit fit5_ear_right {'valid': True, 'volume_mm3': 5246.1, 'stl': 'repaired', 'bbox': [14.71, -37.01, 51.07, 39.82, -11.74, 72.79]}
+fit fit5_button_patch_lower {'valid': True, 'volume_mm3': 2908.7, 'stl': 'ok', 'bbox': [-22.0, -68.8, -28.0, 22.0, -55.81, -5.25]}
 done

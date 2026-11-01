@@ -59,7 +59,8 @@ for dz in (-6.0, -3.0, 0.0, 3.0, 6.0):
 ok_rows = [r for r in rows if r["ok"]]
 # preference among feasible positions: highest screen (photo: screen fills the opening), then lowest
 # cut-off eye height, then the larger closed-lid gap
-best = max(ok_rows, key=lambda r: (r["dz"], -(r["lowest_full_view_h_mm"] or 999), round(r["closed_gap_mm"]), -abs(r["dy"]))) if ok_rows else None
+best = max(ok_rows, key=lambda r: (r["dz"], -max(r["lowest_full_view_h_mm"] or 999, 250), round(r["closed_gap_mm"]), -abs(r["dy"]))) if ok_rows else None
+# (any cut-off below 250 mm eye height counts as equal: a seated eye is 350-500 mm above the desk)
 # (gap rounded to 1 mm: surface sampling noise is ~0.2 mm, so a 0.1 mm "gain" is not a reason to move the pod)
 json.dump({"pod_c": P.POD_C, "candidates": rows, "chosen_offset": best,
            "rule": "feasible = all 6 hardest eyes >= 99.5 % visible, closed gap >= 3 mm, USB mouth <= deck + 2 mm"},

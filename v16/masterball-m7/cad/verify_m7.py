@@ -90,8 +90,8 @@ rep["checks"]["1_step_valid"] = {k: v["valid"] for k, v in build["parts"].items(
 # 2 closed-state interference ----------------------------------------------------------------------
 CONTACT = {frozenset(p) for p in [
     ("lid_lavender", "belt_black"), ("lid_lavender", "lid_liner_lavender"), ("lid_lavender", "ear_left_pink"),
-    ("lid_lavender", "ear_right_pink"), ("belt_black", "lower_shell_ivory"), ("deck_lavender", "lower_shell_ivory"),
-    ("display_cradle_plum", "deck_lavender"), ("display_cradle_plum", "display_bezel_plum"),
+    ("lid_lavender", "ear_right_pink"), ("belt_black", "lower_shell_ivory"), ("inner_cover_lavender", "lower_shell_ivory"),
+    ("display_cradle_plum", "inner_cover_lavender"), ("display_cradle_plum", "display_bezel_plum"),
     ("button_ring_black", "lower_shell_ivory"), ("button_ring_black", "belt_black"), ("button_white", "lower_shell_ivory"),
     ("steel_weight", "lower_shell_ivory"), ("usb_panel_port_body", "lower_shell_ivory"),
     ("magnet_lid_0", "lid_lavender"), ("magnet_lid_1", "lid_lavender"), ("magnet_belt_0", "belt_black"),
@@ -186,6 +186,10 @@ for deg in angles:
         if first_hit is None and deg <= P.OPEN_DEG - 0.5:
             first_hit = (deg, hits)
 rep["checks"]["3_sweep_hits"] = sweep
+low_z = min(float(trimesh.transform_points(m.vertices, rot(dg))[:, 2].min()) for dg in angles[::5] for m in moving.values())
+rep["checks"]["3_lid_group_lowest_z_mm"] = round(low_z, 1)
+if low_z < P.BASE_Z + 2.0:
+    fail(f"opened lid / ears reach the desk (lowest z {low_z:.1f}, desk {P.BASE_Z})")
 rep["checks"]["3_sweep_angles"] = [angles[0], angles[-1], len(angles)]
 if first_hit:
     fail(f"sweep: collision at {first_hit[0]} deg: {first_hit[1]}")

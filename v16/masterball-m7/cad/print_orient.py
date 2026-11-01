@@ -17,7 +17,7 @@ ROT = {
     "lid_liner_lavender": None,
     "display_cradle_plum": None,        # foot slab on the bed
     "stop_block_black": None,           # shelf face on the bed, heel sector up
-    "deck_lavender": ("x", 180),        # visible top face on the bed (smooth PEI finish)
+    "inner_cover_lavender": ("x", 180),        # visible top face on the bed (smooth PEI finish)
     "display_bezel_plum": ("normal_down", None),   # front face on the bed
     "button_ring_black": ("x", 90),     # front face on the bed
     "button_white": ("x", 90),
@@ -35,7 +35,7 @@ MATERIAL = {
     "ear_left_pink": "PLA matte pink", "ear_right_pink": "PLA matte pink",
     "belt_black": "PLA matte black", "button_ring_black": "PLA matte black",
     "lower_shell_ivory": "PLA matte ivory", "button_white": "PLA matte white",
-    "deck_lavender": "PLA matte lavender (lighter shade ok)", "display_bezel_plum": "PLA matte dark purple",
+    "inner_cover_lavender": "PLA matte lavender (lighter shade ok)", "display_bezel_plum": "PLA matte dark purple",
     "display_cradle_plum": "PLA matte dark purple (PETG optional, not required)", "stop_block_black": "PLA matte black",
 }
 

@@ -37,6 +37,7 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/tests/logs/gift_image_check.txt
     v16/masterball-m6/tests/logs/gift_sim_probe.txt
     v16/masterball-m6/tests/logs/harness_check.txt
+    v16/masterball-m6/tests/logs/lid_sensor.txt
     v16/masterball-m6/tests/logs/manifest_check.txt
     v16/masterball-m6/tests/logs/protocol.txt
     v16/masterball-m6/tests/logs/ui/m6_focus_done.png

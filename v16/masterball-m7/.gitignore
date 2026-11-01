@@ -1,0 +1,12 @@
+# variant B (photo ear position) shares every part with A except the lid and the ears
+cad/out_variant_B/**
+!cad/out_variant_B/**/
+!cad/out_variant_B/step/lid_lavender.step
+!cad/out_variant_B/step/ear_left_pink.step
+!cad/out_variant_B/step/ear_right_pink.step
+!cad/out_variant_B/stl/lid_lavender.stl
+!cad/out_variant_B/stl/ear_left_pink.stl
+!cad/out_variant_B/stl/ear_right_pink.stl
+!cad/out_variant_B/verify_report.json
+!cad/out_variant_B/build_report.json
+cad/__pycache__/
