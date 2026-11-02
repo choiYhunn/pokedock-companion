@@ -9,7 +9,7 @@
 | 항목 | 결과 | 근거 |
 |---|---|---|
 | 사진 비율 지표 17개 | PASS (CAD, 사진에서 읽은 목표값 기준) | `appearance/APPEARANCE_GATE.json` |
-| 의뢰인 외관 승인, 귀 위치 A/B 선택 | **PENDING**: 승인 전 본 출력 잠금 | `appearance/APPROVAL.json`, `APPEARANCE_REVIEW_KO.md` |
+| 의뢰인 외관 승인, 귀 위치 A/B 선택 | **APPROVED (의뢰인, 2026-11-02, 귀 A)**: 본 출력 잠금 해제. 실물 맞춤과는 별개 | `appearance/APPROVAL.json`, `APPEARANCE_REVIEW_KO.md` |
 | 귀 B안 전체 기구 검증 | PASS (CAD) | `cad/out_variant_B/verify_report.json` |
 | 4면 CAD 렌더 (열림, 닫힘, 사용자 눈높이, 측면) + 사진 유사 카메라 | 생성됨 | `img/`, `appearance/review_sheet.png` |
 

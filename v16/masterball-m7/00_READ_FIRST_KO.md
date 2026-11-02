@@ -1,6 +1,6 @@
 # PokéDock M7 — 열리는 마스터볼 데스크 펫: 처음 읽는 제작 안내서
 
-> **상태 (2026-11-02): CAD·호스트 검증 PASS / 외관 승인 대기 (본 출력 잠금) / 실물 미검증 / 제작 NO-GO 항목 남음.**
+> **상태 (2026-11-02): CAD·호스트 검증 PASS / 외관 승인 완료 (귀 A안, 본 출력 잠금 해제) / 실물 미검증 / 제작 NO-GO 항목 남음.**
 >
 > - 이 폴더의 PASS는 모두 컴퓨터 안의 결과입니다.
 >   - CAD 형상, 메시, 광선 추적
@@ -8,7 +8,8 @@
 >   - 호스트 펌웨어 시험
 >   - 가짜 플래시 시험
 > - 아직 아무것도 출력하지 않았고, 실제 보드에 조립하거나 플래시하지도 않았습니다.
-> - **외관은 의뢰인이 직접 승인해야 확정됩니다**(`appearance/`). 승인 전에는 `print/02_final_LOCKED_until_appearance_approval/`을 출력하지 않습니다.
+> - **외관은 의뢰인이 2026-11-02에 승인했습니다**(`appearance/APPROVAL.json`, 귀 A안 + 밤 테마). 본 출력 `print/02_final/`이 열렸습니다.
+> - 단, 외관 승인은 맞춤 검증이 아닙니다. 시험편 FK1–FK5를 먼저 출력·측정해 합격한 뒤에 본 출력을 합니다(`docs/07` S2 → S3).
 > - 실물 시험(§6)을 통과하기 전에는 "제조 가능"으로 확정하지 않습니다.
 >
 > 브랜치: `design/m7-openable-20261101` (Draft PR #24, base = PR #23 브랜치). 제조용 PR #21, 선물용 PR #23, 제조 ZIP과 고정 해시는 바꾸지 않았습니다(`tests/m6_frozen_check.py`).
@@ -22,7 +23,7 @@
 | 기구 검증 | 간섭, 0–110° 연속 스윕, 스토퍼, 전도, 시야 광선, 닫힘 간극, 센서, 출력성. 귀 A·B 모두 | `cad/verify_m7.py` → `logs/verify_report.json` |
 | **외관 승인 게이트** | 사진 비율 지표 17개, 구조상 불가 항목, 4면 리뷰 시트, 의뢰인 승인 파일 | `appearance/` |
 | 화면 위치 최적화 | 높이·앞뒤 25개 후보 비교 | `cad/optimize_pod.py` → `logs/pod_sweep.json` |
-| 출력 파일 | 시험편 5판(지금 출력 가능) + 색상별 본 출력 7판(**잠금**) + 귀 B안 뚜껑·귀 | `print/` |
+| 출력 파일 | 시험편 5판(지금 출력 가능) + 색상별 본 출력 8판(**외관 승인으로 잠금 해제, 시험편 합격 후 출력**) | `print/` |
 | 전자 | 전원 B안(보드 자체 USB-C), 부저 IO16, 뚜껑 리드 센서 IO17 | `electronics/`, `docs/04_ELECTRONICS_KO.md`, `bom/ELECTRONICS_CONFIRMED_KO.md` |
 | 펌웨어 | m7-0.5.1-gift: 닫힘 = 화면 끔, 열림 = 화면 켬 + 팬텀 등장. 새 보드용 FirstInstall | `../masterball-m6/core/lid_sensor.hpp`, `docs/05_FIRMWARE_INSTALL_KO.md` |
 | 렌더링 | 실제 메시 렌더(열림, 닫힘, 사용자 눈높이, 측면, 사진 유사 카메라). 화면은 실제 Ø36.75 mm. AI 이미지 아님 | `img/`, `appearance/variant_B/` |
@@ -83,8 +84,7 @@ docs/01..09_*.md               요구사항·감사·기구·전자·펌웨어·
 bom/                           ELECTRONICS_CONFIRMED_KO.md, BOM_M7.csv, PURCHASE_PLAN_KO.md
 cad/                           생성·검증·외관·렌더 코드;  out/ (A), out_variant_B/ (B 뚜껑·귀)
 print/01_fitkit_first/         시험 출력 (지금 가능)
-print/02_final_LOCKED_until_appearance_approval/   본 출력 (외관 승인 후)
-print/variant_B_ears_photo_position/              귀 B안 뚜껑·귀
+print/02_final/                본 출력 (외관 승인 완료, 시험편 합격 후 출력)
 electronics/, fitkit/, img/, logs/, tests/
 ```
 

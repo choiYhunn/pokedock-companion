@@ -1,4 +1,4 @@
-{"gate": "PENDING_OWNER_VISUAL_APPROVAL", "metrics_pass": "19/19"}
+{"gate": "APPROVED", "metrics_pass": "19/19"}
 PASS glass_over_D: 0.333 (target 0.34 +-0.02)
 PASS active_over_D: 0.266 (target 0.27 +-0.02)
 PASS bezel_over_D: 0.449 (target 0.45 +-0.04)
