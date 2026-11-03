@@ -67,7 +67,7 @@
   },
   "lower_shell_ivory": {
    "valid": true,
-   "volume_mm3": 85996.2,
+   "volume_mm3": 86761.6,
    "stl": "ok",
    "bbox": [
     -68.8,
@@ -93,12 +93,12 @@
   },
   "display_bezel_plum": {
    "valid": true,
-   "volume_mm3": 16937.6,
+   "volume_mm3": 16380.4,
    "stl": "ok",
    "bbox": [
     -31.0,
     -32.08,
-    -16.6,
+    -15.37,
     31.0,
     14.15,
     40.8
@@ -168,17 +168,30 @@
     -64.87,
     -0.05
    ]
+  },
+  "sound_bracket_black": {
+   "valid": true,
+   "volume_mm3": 2147.3,
+   "stl": "ok",
+   "bbox": [
+    -60.63,
+    -23.79,
+    -49.69,
+    -36.55,
+    15.25,
+    -16.32
+   ]
   }
  },
  "fitkit": {
   "fit1_display_bezel": {
    "valid": true,
-   "volume_mm3": 16937.6,
+   "volume_mm3": 16380.4,
    "stl": "ok",
    "bbox": [
     -31.0,
     -32.08,
-    -16.6,
+    -15.37,
     31.0,
     14.15,
     40.8
@@ -351,6 +364,32 @@
     22.0,
     -55.81,
     -5.25
+   ]
+  },
+  "fit7_speaker_seat_lower": {
+   "valid": true,
+   "volume_mm3": 8511.1,
+   "stl": "ok",
+   "bbox": [
+    -67.09,
+    -29.42,
+    -56.59,
+    -31.7,
+    20.95,
+    -12.03
+   ]
+  },
+  "fit7_sound_bracket": {
+   "valid": true,
+   "volume_mm3": 2147.3,
+   "stl": "ok",
+   "bbox": [
+    -60.63,
+    -23.79,
+    -49.69,
+    -36.55,
+    15.25,
+    -16.32
    ]
   }
  }

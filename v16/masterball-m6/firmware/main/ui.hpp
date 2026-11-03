@@ -32,7 +32,7 @@ struct Actions {  // called from the LVGL task with the LVGL lock held
   void (*long_press)();
   void (*menu_timer)(bool long_press);
   void (*menu_alarm)(bool long_press);  // short: on/off, long: open the alarm time editor
-  void (*menu_brightness)();
+  void (*menu_brightness)(bool long_press);  // short: brightness step, long: sound level (M7)
   void (*menu_partner)();
   void (*menu_pairing)();
   void (*menu_screen_off)();

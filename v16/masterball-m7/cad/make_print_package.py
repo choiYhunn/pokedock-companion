@@ -5,8 +5,10 @@ Writes <print_dir>/01_fitkit_first/*.stl, <print_dir>/02_final/*.stl, one .3mf p
 orientation only: layer height, walls, supports are set in Bambu Studio per PRINT_SETTINGS_KO.md) and
 print_manifest.json (extent, volume, mass estimate, overhang area per part).
 """
+import hashlib
 import json
 import math
+import shutil
 import os
 import sys
 
@@ -25,6 +27,7 @@ PLATES = {
         "FK3_closing_magnet_joint": ["fit3_joint_belt", "fit3_joint_lower", "fit4_magnet_lid", "fit4_magnet_belt"],
         "FK4_lid_sensor": ["fit6_sensor_belt", "fit6_sensor_lid"],
         "FK5_ear_button": ["fit5_ear_seat_lid", "fit5_ear_right", "fit5_button_patch_lower"],
+        "FK6_sound_seat_bracket": ["fit7_speaker_seat_lower", "fit7_sound_bracket"],   # v0.6 speaker + DFR0534
     },
     "02_final": {            # one plate per colour: no AMS needed
         "C1_purple_lid": ["lid_lavender"],
@@ -35,6 +38,7 @@ PLATES = {
         "C6_inner_cover_lavender": ["inner_cover_lavender"],
         "C6b_lavender_rim_ring_liner": ["rim_ring_lavender", "lid_liner_lavender"],
         "C7_plum_display_button_ring": ["display_bezel_plum", "display_cradle_plum", "button_ring_plum"],
+        "C8_internal_sound_bracket": ["sound_bracket_black"],   # hidden inside: any PLA colour
     },
 }
 manifest = {}
@@ -90,6 +94,43 @@ for folder, plates in PLATES.items():
         sc.export(os.path.join(OUTD, folder, f"{plate}.3mf"))
         print(plate, manifest[f"PLATE {plate}"])
 manifest["APPEARANCE_GATE"] = gate
+
+# Per-part approval: a final plate stays in 02_final only while every exterior part on it is byte-identical
+# to the owner-approved print file (appearance/APPROVAL.json approved_print_sha256). Changed parts move
+# the whole plate to 02_final_PENDING_owner_approval (never silently replaced).
+appr = json.load(open(os.path.join(os.path.dirname(gate_file), "APPROVAL.json"), encoding="utf8")) if os.path.exists(gate_file) else {}
+hashes, internal = appr.get("approved_print_sha256", {}), set(appr.get("internal_parts_no_appearance_approval", []))
+pending = {}
+final = os.path.join(OUTD, "02_final")
+if gate == "APPROVED" and hashes and os.path.isdir(final):
+    for plate, names in PLATES.get("02_final", {}).items():
+        changed = []
+        for nm in names:
+            sha = hashlib.sha256(open(os.path.join(final, f"{nm}.stl"), "rb").read()).hexdigest()
+            manifest[nm]["sha256"] = sha
+            if nm in internal:
+                manifest[nm]["appearance"] = "internal (no appearance approval needed)"
+            elif hashes.get(nm) == sha:
+                manifest[nm]["appearance"] = "approved " + appr.get("date", "")
+            else:
+                manifest[nm]["appearance"] = "CHANGED since the approved print file: owner approval pending"
+                changed.append(nm)
+        if changed:
+            pending[plate] = changed
+    if pending:
+        pend = os.path.join(OUTD, "02_final_PENDING_owner_approval")
+        os.makedirs(pend, exist_ok=True)
+        for plate in pending:
+            for f in [f"{plate}.3mf"] + [f"{nm}.stl" for nm in PLATES["02_final"][plate]]:
+                shutil.move(os.path.join(final, f), os.path.join(pend, f))
+        msg = ["승인 대기: 아래 판의 부품이 의뢰인이 승인한 출력 파일(" + appr.get("approved_commit", "?") + ")과 다릅니다.",
+               "출력하지 마세요. 승인 전에는 승인본(git " + appr.get("approved_commit", "?") + " 의 print/02_final)도 새 전자 구성과 맞지 않습니다.", ""]
+        for plate, names in pending.items():
+            msg.append(f"{plate}: " + ", ".join(names))
+        msg += ["", "바뀐 곳 비교: img/v06_appearance_changes_before_after.png, img/render_closed_left_low_speaker.png",
+                "승인하면: python appearance/record_approval.py 를 실행해 새 해시를 기록하고 tests/run_m7.sh 를 다시 돌립니다."]
+        open(os.path.join(pend, "README_PENDING_KO.txt"), "w", encoding="utf8").write("\n".join(msg) + "\n")
+manifest["APPEARANCE_PENDING_PLATES"] = pending
 if gate != "APPROVED":
     msg = ["본 출력 잠금: 외관 승인 게이트가 " + gate + " 상태입니다.",
            "appearance/review_sheet.png, img/, appearance/variant_B/ 를 보고 귀 위치(A/B)를 고른 뒤",

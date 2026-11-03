@@ -1,12 +1,1 @@
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after no_reset flash_id
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after no_reset read_flash 0x0 0x1000000 <file>
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after no_reset write_flash 0x0 <file> 0x610000 <file> 0xFFF000 <file>
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after no_reset verify_flash 0x0 <file> 0x610000 <file> 0xFFF000 <file>
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after no_reset read_flash 0x8000 0xC00 <file>
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after hard_reset chip_id
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after no_reset write_flash 0x10000 <file> 0x610000 <file> 0xFFF000 <file>
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after no_reset verify_flash 0x10000 <file> 0x610000 <file> 0xFFF000 <file>
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after no_reset read_flash 0x0 0x8000 <file>
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after no_reset read_flash 0x9000 0x6000 <file>
-PASS --chip esp32s3 --port COM199 --baud 460800 --before default_reset --after no_reset erase_region 0x610000 0x9F0000
-PASS: 11/11 distinct argument lists accepted by esptool 4.12.0
+FAIL: esptool not installed for C:/Users/yhch0/AppData/Local/Temp/claude/C--Users-yhch0-Documents/3fe2777c-12dd-4bb0-a404-1b7806b6387c/scratchpad/m6venv/Scripts/python.exe (python -m pip install "esptool>=4.7,<5")

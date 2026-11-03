@@ -1,2 +1,2 @@
-source fingerprint 8d159738b3b569b5f0d1169f89381bdd3d85388b4a2195e4efb4d2c2f47db695
-PASS []
+source fingerprint dc40dab415d76c07b5f701fd8d7140ec9b55b913259fe5e02ab4eab22b5c152a
+FAIL ['required step flash_cli_compat: FAIL']

@@ -152,11 +152,34 @@ PORT_EL = -28.0                           # elevation at the back (az 180)
 PORT_HOLE_D = 22.0                        # Adafruit 4218 needs 21.5..27 mm
 PORT_FLAT_D = 34.0                        # flat spot-face for the nut
 
-# --- buzzer and driver (M6 values reused) ---------------------------------------------------
-BUZ_AZ, BUZ_EL = 140.0, -24.0
-BUZ_D, BUZ_H, BUZ_FIT = 12.0, 9.5, 0.6
-DRV_AZ, DRV_EL = -110.0, -30.0
-DRV_BOARD = (30.0, 24.0, 12.0)           # M7 interface module (perfboard + 2 screw terminals), taped under the inner cover
+# --- sound (v0.6): DFRobot DFR0534 MP3 module + PUI Audio AS02808MR-LW152-R speaker -----------------
+# Replaces the v0.5 WT-1205 buzzer, its AO3400A driver and the perfboard interface module.
+# The rear is full (hinge-side tray pillars at az +/-120, USB panel port at az 180), so the speaker
+# sits low on the left side: its surface normal faces away from the seated user (hidden).
+SPK_AZ, SPK_EL = -85.0, -34.0
+SPK_D, SPK_H = 28.0, 5.5                  # datasheet: d28.0, mounting height 5.5 max
+SPK_FIT = 0.4
+SPK_SEAT_S = 65.6                         # speaker front face plane (distance from the ball centre along the axis)
+SPK_BOSS_R = 19.5                         # local flat boss inside the wall: pocket + clamp screws
+SPK_BOSS_S0 = SPK_SEAT_S - SPK_H          # 60.1: boss face flush with the speaker back
+SPK_CLAMP_T = 2.0                         # printed "sound bracket": clamp ring over the speaker back...
+SPK_CLAMP_OD, SPK_CLAMP_ID = 39.0, 18.0   # ...pressing the frame rim; the magnet cup and tabs stay free
+SPK_CLAMP_SCREW_T = 17.0                  # 2 x M2 PT x 6 at t = +/-17 (tangential), m = 0
+SPK_GRILLE_D, SPK_GRILLE_R = 1.6, 10.5    # hex hole pattern in front of the cone (cone ~d22)
+# ...and two standoffs on the same ring carry the DFR0534 parallel to the speaker, component side inward.
+# Frame (t, m): t = horizontal tangent, m = up along the sphere; +t points to the front.
+DFR_BOARD = (30.0, 22.0, 1.6)             # DFRobot dimension drawing V1.0
+DFR_HOLES_B = ((11.6, -7.5), (11.6, 7.5)) # mounting holes in the board frame (from the centre; 15 mm apart)
+DFR_HOLE_D = 3.1                          # CHECK on the real module (drawing has no drill size); M3 x 8 PT
+DFR_STANDOFF_L, DFR_STANDOFF_D = 8.0, 6.0 # the pads around the holes are d6 and free of parts
+DFR_HOLE_T = -12.0                        # hole line on the ring at t = -12: speaker end toward the back (-t),
+                                          # Gravity end toward the front (+t), clear of the az -120 tray pillar
+DFR_ABOVE, DFR_BELOW = 5.5, 4.0           # parts above (inward) / below (toward the ring) the PCB
+DFR_GRAVITY_BEND = 12.0                   # Gravity plug + cable bend beyond the +t short edge
+J10_PLUG_U = (-16.4, -7.0, 7.05, 9.9, -27.0, -18.6)   # SH1.0 plug + cable exit at J10, U frame box
+J1_SOCKET_U = (14.45, 18.05, 8.8, 13.2, -4.85, 4.85)   # Harwin M50-3000745 on header J1 (U frame; vendor STEP header at
+                                          # STEP x +/-4.6, y -18.5..-14) + 2 tails/wires to y_u 20 (H2)
+USB_OPEN_X0 = -16.8                       # bezel cup opening: -x_u end now clears the J10 plug (v0.5: -7.0)
 
 # --- weight -------------------------------------------------------------------------------
 WEIGHT_D, WEIGHT_H = 60.0, 12.0           # 3 x ISO 7093-1 M20 large washers (d60 x 4, ~78 g each), glued in the floor pocket

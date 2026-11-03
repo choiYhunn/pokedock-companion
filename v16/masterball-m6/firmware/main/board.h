@@ -2,6 +2,7 @@
 // Pin map verified against the official schematic (2024) and the vendor ESP-IDF demo V3.
 #pragma once
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 #include "driver/i2c_master.h"
@@ -30,6 +31,10 @@ extern "C" {
 // M7 lid sensor on J1 pin 10 = IO17: Littelfuse 59155 reed (NO) to GND, internal pull-up.
 // Lid closed = 0. Nothing connected (M6) or a broken wire = 1 = "open" (screen behaves as before).
 #define PD_PIN_LID 17
+// M7 sound module DFR0534 on header J10 (SH1.0 4P): pin 1 = GPIO44 -> module R (UART1 TX, 9600 8N1),
+// pin 3 = 3V3 -> module +, pin 4 = GND -> module -. Pin 2 (GPIO43, ROM boot log) is not wired.
+#define PD_PIN_AUDIO_TX 44
+#define PD_AUDIO_UART 1
 
 #define PD_LCD_RES 466
 
@@ -54,7 +59,11 @@ int board_vcc_mv(void);  // VCC = USB 5 V - cable - PTC - MBR230: ~4.0-4.8 V whe
 void board_lid_init(void);
 bool board_lid_closed(void);
 
-void buzzer_init(void);
+void board_audio_init(void);                        // M7: DFR0534 UART (CONFIG_PD_AUDIO_DFR0534)
+void board_audio_write(const uint8_t *bytes, size_t n);
+void board_audio_line_test(bool hold_low);          // wiring check: J10-1 held at 0 V
+
+void buzzer_init(void);                             // M6: passive buzzer (CONFIG_PD_AUDIO_BUZZER)
 typedef enum { PD_TUNE_CHIRP, PD_TUNE_ALARM, PD_TUNE_DONE, PD_TUNE_PAIR } pd_tune_t;
 void buzzer_play(pd_tune_t tune);
 void buzzer_stop(void);

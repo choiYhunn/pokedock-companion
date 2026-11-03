@@ -1,15 +1,22 @@
-wrote img/render_closed_front34.png 192186 triangles
-wrote img/render_open110_front34.png 195797 triangles
-wrote img/render_open110_user_view.png 193353 triangles
-wrote img/render_open110_side.png 203681 triangles
-wrote img/render_open110_photo_matched.png 194045 triangles
-wrote img/render_closed_back_hinge.png 202270 triangles
-wrote img/render_open110_rear.png 210027 triangles
-wrote img/render_internal_no_lid_no_deck.png 155631 triangles
-wrote img/render_exploded.png 196308 triangles
+wrote img/render_closed_front34.png 206560 triangles
+wrote img/render_open110_front34.png 207460 triangles
+wrote img/render_open110_user_view.png 207987 triangles
+wrote img/render_open110_side.png 218066 triangles
+wrote img/render_open110_photo_matched.png 209700 triangles
+wrote img/render_closed_back_hinge.png 217022 triangles
+wrote img/render_open110_rear.png 224820 triangles
+wrote img/render_internal_no_lid_no_deck.png 170303 triangles
+wrote img/render_exploded.png 210645 triangles
 wrote img/section_full_x0_closed_and_open110.png
 wrote img/section_hinge_x0_lug_heel.png
 wrote img/section_hinge_x11_knuckle.png
 wrote img/section_display_x0.png
 wrote img/section_display_x16_header.png
 wrote img/layout_wiring_top.png
+wrote img/render_closed_left_low_speaker.png 216847 triangles
+wrote img/render_internal_sound_unit.png 170500 triangles
+wrote img/_chg_lower_shell_ivory_0.png 8842 triangles
+wrote img/_chg_display_bezel_plum_1.png 2078 triangles
+wrote img/_chg_lower_shell_ivory_2.png 22026 triangles
+wrote img/_chg_display_bezel_plum_3.png 2082 triangles
+wrote img/v06_appearance_changes_before_after.png

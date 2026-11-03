@@ -3,7 +3,7 @@
 //
 // Command  {"v":2,"s":<session u32>,"q":<seq u32>,"c":"<cmd>", ...args}   (<= 180 bytes UTF-8)
 // ACK      {"q":<seq>,"ok":1,"r":<state_rev>}  |  {"q":<seq>,"ok":0,"e":"<code>"}
-// State    {"r":rev,"p":partner,"b":bright,"snd":0|1,"lid":0|1,"f":[phase,rem_s,total_s],
+// State    {"r":rev,"p":partner,"b":bright,"snd":0|1,"lid":0|1,"vol":0..30,"cls":0|1,"f":[phase,rem_s,total_s],
 //           "a":[en,h,m,ringing],"clk":[trusted,sync_age_min],"pwr":[usb_mv,ok],"msg":len,"fw":"..."}
 //
 // Rules: writes are refused unless the link is encrypted + authenticated (bonded owner);
@@ -21,7 +21,7 @@ namespace pokedock {
 
 static constexpr size_t kMaxCommandBytes = 180;
 static constexpr size_t kMaxMessageBytes = 90;  // ~30 Hangul syllables
-static constexpr const char *kFirmwareVersion = "m7-0.5.1-gift";  // 0.5.1: night theme; 0.5: M7 lid reed sensor (no sensor = 0.4 behaviour); 0.4: moods + gift pack; 0.3 = manufacturing
+static constexpr const char *kFirmwareVersion = "m7-0.6.0-gift";  // 0.6: DFR0534 sound module (no module = silent); 0.5.1: night theme; 0.5: M7 lid reed sensor (no sensor = 0.4 behaviour); 0.4: moods + gift pack; 0.3 = manufacturing
 static constexpr const char *kDefaultMessage = "오늘도 함께하자";  // public default; the gift text stays private
 static constexpr int64_t kFirmwareDateUtc = 1793372400;      // 2026-10-31 00:00 KST: clock editor start floor
 // VCC (after PTC + MBR230 Schottky) can be ~4.0 V on a healthy 4.75 V adapter with a long cable, and
@@ -40,6 +40,10 @@ class DeviceEnv {
   virtual int usb_mv() = 0;
   virtual void persist() = 0;                           // settings / alarm / message to NVS
   virtual void reaction() = 0;                          // partner happy animation + chirp
+  virtual bool audio_preview(int cue) {                 // M7: play one sound cue now (false = not supported)
+    (void)cue;
+    return false;
+  }
 };
 
 class ProtocolEngine {
@@ -82,6 +86,7 @@ class ProtocolEngine {
     std::string pwr = "[" + std::to_string(mv) + "," + std::to_string(mv >= kUsbLowMv ? 1 : 0) + "]";
     return JsonWriter()
         .kv("r", rev_).kv("p", core_.partner()).kv("b", core_.brightness()).kv("snd", core_.sound() ? 1 : 0).kv("lid", core_.lid_sensor() ? 1 : 0)
+        .kv("vol", core_.volume()).kv("cls", core_.close_sound() ? 1 : 0)
         .raw("f", f).raw("a", a).raw("clk", clk).raw("pwr", pwr).kv("msg", int64_t(message_.size()))
         .kv("fw", std::string(kFirmwareVersion))
         .str();
@@ -148,6 +153,25 @@ class ProtocolEngine {
       if (!has_only(o, {"on"}) || !getb(o, "on", on)) return nack(seq, "args");
       core_.set_lid_sensor(on);
       return ok(seq, true);
+    }
+    if (c == "audio") {  // M7 sound module: {"vol":0..30} and/or {"close":bool}; checked before anything changes
+      if (!has_only(o, {"vol", "close"})) return nack(seq, "args");
+      auto iv = o.find("vol");
+      const bool have_v = iv != o.end(), have_c = o.count("close") > 0;
+      bool close = core_.close_sound();
+      if (!have_v && !have_c) return nack(seq, "args");
+      if (have_v && iv->second.kind != JsonValue::kInt) return nack(seq, "args");
+      if (have_c && !getb(o, "close", close)) return nack(seq, "args");
+      if (have_v && (iv->second.i < 0 || iv->second.i > 30)) return nack(seq, "range");
+      if (have_v) core_.set_volume(int(iv->second.i));
+      if (have_c) core_.set_close_sound(close);
+      return ok(seq, true);
+    }
+    if (c == "audio_test") {  // play one cue (0..8, audio_director.hpp order) at the current volume
+      if (!has_only(o, {"cue"})) return nack(seq, "args");
+      const int64_t cue = geti(o, "cue", -1);
+      if (cue < 0 || cue > 8) return nack(seq, "range");
+      return env_.audio_preview(int(cue)) ? ok(seq, false) : nack(seq, "state");
     }
     if (c == "focus_start") {
       if (!has_only(o, {"min"})) return nack(seq, "args");

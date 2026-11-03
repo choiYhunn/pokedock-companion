@@ -118,7 +118,7 @@ void menu_event(lv_event_t *e) {
   switch (id) {
     case 0: g_act.menu_timer(lp); break;
     case 1: g_act.menu_alarm(lp); break;
-    case 2: if (!lp) g_act.menu_brightness(); break;
+    case 2: g_act.menu_brightness(lp); break;
     case 3: if (!lp) g_act.menu_partner(); break;
     case 4: if (!lp) g_act.menu_pairing(); break;
     case 5: if (!lp) g_act.menu_time(); break;

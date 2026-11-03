@@ -12,6 +12,12 @@ F6,FK2 stop,stop block screwed; lug stops at 110 deg,protractor / phone app,110,
 F7,FK2,200 open/close cycles then play at the front rim,count + caliper,—,play < 1.0 mm at 138 mm,,,PIN_RUN_D / material
 F8,FK3,belt spigot into lower shell rim,push fit,0.35 radial,slides in no rock,,,SPIGOT_R_OUT
 F9,FK3,magnets 6x2 into pockets flush; pull force by hand,press + glue,6.2 x 2.1,flush +-0.2,,,MAG_POCKET_D / MAG_POCKET_H
-F10,FK4,57155 actuator real size fits the lid pocket,caliper + fit,12.7 x 9.0 x 3.0 (assumed),fits flush,,,ACTUATOR_BOX
-F11,FK4,reed closes with the coupons stacked; opens with 5 mm lift,multimeter on the leads,gap 0.7,closed <= 1 mm gap / open at >= 5 mm,,,SENSOR_SKIN / SENSOR_R
+F10,FK4,57155 actuator real size fits the lid pocket,caliper + fit,12.7 x 9.0 x 3.0 (datasheet),fits flush,,,ACTUATOR_BOX
+F11,FK4,reed closes with the coupons stacked; opens with 5 mm lift,multimeter on the leads,gap 1.7,closed at 1.7 mm / open at >= 5 mm,,,SENSOR_SKIN / SENSOR_R
 F12,FK5,ear on its seat + orientation pin; button and ring on the shell patch,dry fit,0.3 seat clear,no gap > 0.3,,,EAR_SEAT_CLEAR / BTN_*
+F13,FK6 seat,PUI AS02808MR speaker drops into the d28.4 seat front-first; no rattle,dry fit + shake,d28.4 x 5.5,no rock / face on the seat,,,SPK_D / SPK_FIT / SPK_SEAT_S
+F14,FK6 seat,all grille holes open (light through each),hold to a lamp,d1.6 hex,all open,,,SPK_GRILLE_D
+F15,FK6 bracket,clamp ring on the seat with 2 x M2 PT x 6; speaker held; leads not pinched,screw by hand,clear 2.3 / pilot 1.7,firm no crack,,,SPK_CLAMP_* / M2_PT_PILOT
+F16,FK6 bracket + DFR0534,module holes over both standoffs (15 mm apart); M3 PT x 8 bites,caliper + screw,15.0 / pilot 2.5 / hole d3.1?,both start by hand,,,DFR_HOLES_B / DFR_HOLE_D / M3_PT_PILOT
+B5,real DFR0534,mounting hole diameter,drill-bit gauge,3.1 (assumed),>= 3.0 -> M3 PT; < 3.0 -> M2.5 PT,,,DFR_HOLE_D (BOM M8 / M12)
+B6,real board,which 2x7 header is silk-marked J1 (USB-C side to the left: left or right header),look at the silk,either,record,,,cable route (both deck holes exist)

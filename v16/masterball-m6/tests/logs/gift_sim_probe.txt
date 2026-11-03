@@ -56,5 +56,5 @@ PASS no JS errors
   175: 120x114 px = 9.5x9.0 mm, zoom 3x
   417: 159x165 px = 12.5x13.0 mm, zoom 3x
   385: 165x141 px = 13.0x11.1 mm, zoom 3x
-browser fps 63.9 decode ms 0.04
+browser fps 64.0 decode ms 0.037
 VERDICT PASS []

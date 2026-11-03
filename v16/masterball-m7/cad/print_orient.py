@@ -30,6 +30,8 @@ ROT = {
     "fit4_magnet_lid": None, "fit4_magnet_belt": None, "fit5_ear_seat_lid": ("ear", 1),
     "fit6_sensor_belt": None, "fit6_sensor_lid": None, "fit2_stop_block": None,
     "fit5_ear_right": ("ear", 1), "fit5_button_patch_lower": None,
+    "sound_bracket_black": ("spk", None),   # ring face (toward the speaker) on the bed, standoffs up
+    "fit7_sound_bracket": ("spk", None), "fit7_speaker_seat_lower": None,
 }
 MATERIAL = {
     "lid_lavender": "PLA matte lavender", "lid_liner_lavender": "PLA matte lavender",
@@ -38,6 +40,7 @@ MATERIAL = {
     "lower_shell_ivory": "PLA matte ivory", "button_white": "PLA matte white",
     "inner_cover_lavender": "PLA matte lavender (lighter shade ok)", "display_bezel_plum": "PLA matte dark purple",
     "display_cradle_plum": "PLA matte dark purple (PETG optional, not required)", "stop_block_black": "PLA matte black",
+    "sound_bracket_black": "PLA any colour (hidden inside)",
 }
 
 
@@ -49,6 +52,9 @@ def orient(name, m):
             m.apply_transform(trimesh.transformations.rotation_matrix(math.radians(r[1]), [1, 0, 0]))
         elif r[0] == "normal_down":
             m.apply_transform(trimesh.geometry.align_vectors(N, [0, 0, -1]))
+        elif r[0] == "spk":
+            d = np.array(P.unit(P.SPK_AZ, P.SPK_EL))
+            m.apply_transform(trimesh.geometry.align_vectors(d, [0, 0, -1]))
         elif r[0] == "ear":
             d = np.array(P.unit(r[1] * P.EAR_AZ, P.EAR_EL))
             m.apply_transform(trimesh.geometry.align_vectors(d, [0, 0, 1]))

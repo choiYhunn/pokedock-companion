@@ -7,10 +7,13 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/core/lid_sensor.hpp
     v16/masterball-m6/core/pokedock_core.hpp
     v16/masterball-m6/core/protocol.hpp
+    v16/masterball-m6/firmware/main/CMakeLists.txt
+    v16/masterball-m6/firmware/main/Kconfig.projbuild
     v16/masterball-m6/firmware/main/app_main.cpp
     v16/masterball-m6/firmware/main/board.h
     v16/masterball-m6/firmware/main/board_io.c
     v16/masterball-m6/firmware/main/ui.cpp
+    v16/masterball-m6/firmware/main/ui.hpp
     v16/masterball-m6/tests/ble_e2e_bridge_test.mjs
     v16/masterball-m6/tests/check_manifest.py
     v16/masterball-m6/tests/flash_gift_test.ps1
@@ -62,6 +65,7 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/tests/logs/ui/m6_power_warning.png
     v16/masterball-m6/tests/logs/ui/ui_sim_probe.json
     v16/masterball-m6/tests/logs/ui_sim_probe.txt
+    v16/masterball-m6/tests/protocol_test.cpp
     v16/masterball-m6/tests/run_all.sh
     v16/masterball-m6/tools/flash_gift_windows.ps1
     v16/masterball-m6/tools/gift_image_check.py

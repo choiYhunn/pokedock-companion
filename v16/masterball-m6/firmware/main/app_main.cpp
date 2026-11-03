@@ -7,6 +7,7 @@
 #include <ctime>
 
 #include "assets.h"
+#include "audio_director.hpp"
 #include "ble_gatt.h"
 #include "clock_set.hpp"
 #include "lid_sensor.hpp"
@@ -21,6 +22,7 @@
 #include "pdk_format.h"
 #include "protocol.hpp"
 #include "rtc_pcf85063.h"
+#include "sdkconfig.h"
 #include "ui.hpp"
 
 using namespace pokedock;
@@ -54,6 +56,12 @@ int64_t g_last_touch_ms = 0;
 bool g_screen_on = true;       // wanted by the UI (idle timeout, manual screen-off, wake on touch)
 bool g_display_shown = true;   // what the panel actually shows (g_screen_on AND the lid allows it)
 LidSensor g_lid;
+#if CONFIG_PD_AUDIO_DFR0534
+AudioDirector g_audio;        // guarded by g_mux like the core
+int64_t g_line_test_until = 0;
+constexpr int kVolumeSteps[] = {0, 10, 18, 24};
+#endif
+int64_t g_boot_ms = 0;
 int g_tap_count = 0;
 int64_t g_tap_window_ms = 0;
 
@@ -79,6 +87,7 @@ class Env final : public DeviceEnv {
   int usb_mv() override { return g_vcc_mv; }
   void persist() override;
   void reaction() override { pending_reaction = true; }
+  bool audio_preview(int cue) override;
   bool pending_reaction = false;
 };
 
@@ -94,6 +103,8 @@ void Env::persist() {
   nvs_set_i32(h, "bright", g_core.brightness());
   nvs_set_u8(h, "sound", g_core.sound());
   nvs_set_u8(h, "lid", g_core.lid_sensor());
+  nvs_set_u8(h, "vol", uint8_t(g_core.volume()));
+  nvs_set_u8(h, "cls", g_core.close_sound());
   nvs_set_u8(h, "al_en", g_core.alarm().enabled);
   nvs_set_i32(h, "al_min", g_core.alarm().minute_of_day);
   nvs_set_i32(h, "al_last", g_core.persisted().last_fired_day);
@@ -106,6 +117,64 @@ void Env::persist() {
   nvs_close(h);
 }
 
+// ---- sound: DFR0534 cues (M7) or the M6 buzzer tunes, both silent when "sound" is off --------------------
+int partner_index() {
+  for (size_t i = 0; i < kPokemonIds.size(); ++i)
+    if (kPokemonIds[i] == g_core.partner()) return int(i);
+  return 0;
+}
+
+void audio_sync() {  // g_mux held: apply settings and send what is due (never waits for the module)
+#if CONFIG_PD_AUDIO_DFR0534
+  g_audio.configure(g_core.sound(), g_core.volume(), g_core.close_sound(), CONFIG_PD_AUDIO_MAX_VOLUME);
+  if (g_line_test_until) return;  // the line is held low for the wiring check: frames wait
+  uint8_t buf[48];
+  const size_t n = g_audio.drain(mono_ms(), buf, sizeof buf);
+  if (n) board_audio_write(buf, n);
+#endif
+}
+
+void sfx(Cue c, int64_t delay_ms = 0) {
+  Lock l;
+  if (!g_core.sound()) return;
+#if CONFIG_PD_AUDIO_DFR0534
+  audio_sync();  // a volume / sound change made just before (e.g. unmute) must apply to this cue
+  g_audio.play(c, mono_ms(), partner_index(), delay_ms);
+  audio_sync();
+#else  // M6 buzzer: the original four tunes; boot, lid and cry cues stay silent
+  (void)delay_ms;
+  switch (c) {
+    case Cue::kTap:
+    case Cue::kConfirm: buzzer_play(PD_TUNE_CHIRP); break;
+    case Cue::kPair: buzzer_play(PD_TUNE_PAIR); break;
+    case Cue::kTimerDone: buzzer_play(PD_TUNE_DONE); break;
+    case Cue::kAlarm: buzzer_play(PD_TUNE_ALARM); break;
+    default: break;
+  }
+#endif
+}
+
+void sfx_stop(Cue c) {
+  Lock l;
+#if CONFIG_PD_AUDIO_DFR0534
+  g_audio.stop(c);
+  audio_sync();
+#else
+  if (c == Cue::kAlarm) buzzer_stop();
+#endif
+}
+
+bool Env::audio_preview(int cue) {
+#if CONFIG_PD_AUDIO_DFR0534
+  if (cue < 0 || cue >= int(Cue::kCount)) return false;
+  sfx(Cue(cue));
+  return true;
+#else
+  (void)cue;
+  return false;
+#endif
+}
+
 void load_settings() {
   nvs_handle_t h;
   if (nvs_open("pd", NVS_READONLY, &h) != ESP_OK) return;
@@ -116,6 +185,8 @@ void load_settings() {
   if (nvs_get_i32(h, "bright", &i) == ESP_OK) g_core.set_brightness(i);
   if (nvs_get_u8(h, "sound", &u) == ESP_OK) g_core.set_sound(u);
   if (nvs_get_u8(h, "lid", &u) == ESP_OK) g_core.set_lid_sensor(u);
+  if (nvs_get_u8(h, "vol", &u) == ESP_OK) g_core.set_volume(u);
+  if (nvs_get_u8(h, "cls", &u) == ESP_OK) g_core.set_close_sound(u);
   AlarmConfig cfg;
   PersistedAlarmState st;
   if (nvs_get_u8(h, "al_en", &u) == ESP_OK) cfg.enabled = u;
@@ -154,7 +225,7 @@ void on_tap() {
   Lock l;
   if (g_core.alarm_ringing()) {
     g_core.snooze_alarm(mono_ms());
-    buzzer_stop();
+    sfx_stop(Cue::kAlarm);
     after_local_change();
     return;
   }
@@ -171,18 +242,35 @@ void on_tap() {
   if (++g_tap_count == 5) {  // hidden message easter egg
     ui::show_message(g_engine.message());
     ui::react(PDK_EGG);
+    sfx(Cue::kCry);
     g_tap_count = 0;
     return;
   }
   ui::react(g_core.focus_phase() == FocusPhase::kRunning ? PDK_CHEER : PDK_TOUCH);
-  if (g_core.sound()) buzzer_play(PD_TUNE_CHIRP);
+  sfx(Cue::kTap);
 }
+
+#if CONFIG_PD_AUDIO_DFR0534
+std::string line_test_text() {
+  return std::string("배선 시험 60초\nJ10 신호선(1번) = 0 V\n뚜껑 센서: ") + (board_lid_closed() ? "닫힘" : "열림");
+}
+#endif
 
 void on_long_press() {
   if (wake_if_off()) return;
   Lock l;
   const int64_t now = mono_ms();
-  if (g_core.alarm_ringing()) g_core.dismiss_alarm(), buzzer_stop();
+#if CONFIG_PD_AUDIO_DFR0534
+  if (now - g_boot_ms < 10000 && !g_core.alarm_ringing()) {  // docs/07: long press right after power-up
+    g_audio.stop_all();
+    g_line_test_until = now + 60000;
+    board_audio_line_test(true);
+    ui::show_message(line_test_text());
+    ESP_LOGI(TAG, "wiring test: J10-1 (GPIO44) held at 0 V for 60 s, lid raw %s", board_lid_closed() ? "closed" : "open");
+    return;
+  }
+#endif
+  if (g_core.alarm_ringing()) g_core.dismiss_alarm(), sfx_stop(Cue::kAlarm);
   else if (g_core.focus_phase() == FocusPhase::kRunning) g_core.pause_focus(now);
   else if (g_core.focus_phase() == FocusPhase::kPaused) g_core.resume_focus(now);
   else {
@@ -219,7 +307,7 @@ void alarm_time_saved(int hour, int minute) {
   g_last_touch_ms = mono_ms();
   if (!g_core.set_alarm(hour, minute, true, g_env.local_abs_minute())) return;
   after_local_change();
-  if (g_core.sound()) buzzer_play(PD_TUNE_CHIRP);
+  sfx(Cue::kConfirm);
 }
 
 // ---- clock without a phone: after a power cut the RTC (no backup cell) is untrusted -------------------
@@ -244,11 +332,29 @@ void clock_saved(const LocalDateTime &local) {
            local.hour, local.minute, g_set.tz_min);
   after_local_change();
   ui::react(PDK_CELEBRATE);
-  if (g_core.sound()) buzzer_play(PD_TUNE_CHIRP);
+  sfx(Cue::kConfirm);
 }
 
-void menu_brightness() {
+void menu_brightness(bool long_press) {
   Lock l;
+  if (long_press) {  // M7: hold "밝기" to step the sound level (off, small, normal, loud)
+#if CONFIG_PD_AUDIO_DFR0534
+    int next = kVolumeSteps[0];
+    for (int v : kVolumeSteps)
+      if (v > g_core.volume()) {
+        next = v;
+        break;
+      }
+    g_core.set_volume(next);
+    static const char *const kNames[] = {"끔", "작게", "보통", "크게"};
+    int k = 0;
+    while (k < 3 && kVolumeSteps[k] != next) ++k;
+    ui::show_message(std::string("소리: ") + kNames[k]);
+    after_local_change();
+    sfx(Cue::kConfirm);
+#endif
+    return;
+  }
   int next = kBrightSteps[0];
   for (int b : kBrightSteps)
     if (b > g_core.brightness()) {
@@ -266,11 +372,12 @@ void menu_partner() {
   g_core.set_partner(kPokemonIds[(i + 1) % kPokemonIds.size()]);
   ui::react(PDK_GREET);
   after_local_change();
+  sfx(Cue::kCry);
 }
 
 void menu_pairing() {
   ble_open_pairing_window(120);
-  if (g_core.sound()) buzzer_play(PD_TUNE_PAIR);
+  sfx(Cue::kPair);
   ui::close_menu();
 }
 
@@ -327,15 +434,15 @@ void main_loop(void *) {
     }
     if (ev & kEvAlarmRing) {
       g_screen_on = true;
-      if (g_core.sound()) buzzer_play(PD_TUNE_ALARM);
+      sfx(Cue::kAlarm);
     }
-    if (ev & (kEvAlarmAutoSnooze | kEvAlarmGaveUp)) buzzer_stop();
+    if (ev & (kEvAlarmAutoSnooze | kEvAlarmGaveUp)) sfx_stop(Cue::kAlarm);
     if (ev & kEvFocusComplete) {
       // a long focus without touches would otherwise hit the 10 min screen-off exactly now and hide
       // the celebration: wake the screen and restart the idle timer
       g_screen_on = true;
       g_last_touch_ms = now;
-      if (g_core.sound()) buzzer_play(PD_TUNE_DONE);
+      sfx(Cue::kTimerDone);
     }
     if (ev) ble_notify_state();
 
@@ -350,9 +457,12 @@ void main_loop(void *) {
         g_screen_on = true;   // set_screen_on(true) below plays the partner's entrance (PDK_GREET)
         g_last_touch_ms = now;
         ESP_LOGI(TAG, "lid opened");
+        sfx(Cue::kLidOpen);
+        sfx(Cue::kCry, 700);  // the partner's cry follows its entrance
       } else if (lid == LidEvent::kClosed) {
         g_screen_on = false;
         ESP_LOGI(TAG, "lid closed: display off, clock/alarm/timer keep running");
+        sfx(Cue::kLidClose);
       }
       if (ev & kEvFocusComplete) ui::react(PDK_CELEBRATE);
       if (ev & kEvAlarmRing) ui::react(PDK_ALARM);
@@ -362,6 +472,18 @@ void main_loop(void *) {
       if (g_display_shown != want) ui::set_screen_on(g_display_shown = want);
       board_display_brightness(uint8_t(night && !v.ringing ? (v.brightness < 15 ? v.brightness : 15) : v.brightness));
       board_lvgl_unlock();
+    }
+    {
+      Lock l;
+#if CONFIG_PD_AUDIO_DFR0534
+      if (g_line_test_until && now >= g_line_test_until) {
+        g_line_test_until = 0;
+        board_audio_line_test(false);
+        ESP_LOGI(TAG, "wiring test finished");
+      }
+      g_audio.tick(now);
+#endif
+      audio_sync();
     }
     vTaskDelay(pdMS_TO_TICKS(250));
   }
@@ -407,7 +529,12 @@ extern "C" void app_main(void) {
 
   board_i2c_init();
   board_touch_init();
+#if CONFIG_PD_AUDIO_DFR0534
+  board_audio_init();
+  g_audio.begin(mono_ms());
+#else
   buzzer_init();
+#endif
   board_lid_init();
   const pd_panel_t panel = board_display_init(nullptr);
   ESP_LOGI(TAG, "PokeDock %s panel=%s", kFirmwareVersion, panel == PD_PANEL_SH8601 ? "SH8601" : "CO5300");
@@ -438,6 +565,8 @@ extern "C" void app_main(void) {
     board_lvgl_unlock();
   }
   g_last_touch_ms = mono_ms();
+  g_boot_ms = mono_ms();
+  sfx(Cue::kBoot, 1200);
   ble_start();
   xTaskCreatePinnedToCore(main_loop, "pd_main", 6144, nullptr, 4, nullptr, 0);
 }

@@ -5,4 +5,25 @@ menu "PokeDock M6"
         help
             The board is mounted with its USB-C pointing down. If the native panel origin
             ends up upside-down on the real unit, enable this; touch is rotated to match.
+
+    choice PD_AUDIO
+        prompt "Sound output"
+        default PD_AUDIO_DFR0534
+        help
+            M7 uses the DFRobot DFR0534 MP3 module on header J10 (GPIO44 TX only, board 3V3).
+            M6 hardware has the passive buzzer on header J1-8 (IO16, AO3400A driver).
+        config PD_AUDIO_DFR0534
+            bool "M7: DFRobot DFR0534 MP3 module on J10"
+        config PD_AUDIO_BUZZER
+            bool "M6: passive buzzer on J1-8 (IO16)"
+    endchoice
+
+    config PD_AUDIO_MAX_VOLUME
+        int "Highest DFR0534 volume (0-30) allowed by this build"
+        depends on PD_AUDIO_DFR0534
+        range 0 30
+        default 24
+        help
+            The module runs from the board 3V3 rail (MP1605 buck). Keep 24 until the rail has been
+            measured at full volume on the real unit (docs/08, HARDWARE UNVERIFIED).
 endmenu

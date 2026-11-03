@@ -56,6 +56,7 @@ def step_to_ball(m):
 
 
 vendor = {}
+HEADERS = set()            # the two 1.27 mm 2x7 male headers: the J1 socket mates over their pins
 rows = json.load(open(f"{VEND}/parts.json"))
 for f in sorted(glob.glob(f"{VEND}/*.stl")):
     m = load(f)
@@ -69,6 +70,8 @@ for f in sorted(glob.glob(f"{VEND}/*.stl")):
     if "TF_CARD" in path:
         continue          # no microSD card is fitted (assets live in flash)
     vendor[f"board_{idx + 1:03d}"] = step_to_ball(h)
+    if "2X7PIN" in path:
+        HEADERS.add(f"board_{idx + 1:03d}")
 board_all = trimesh.util.concatenate(list(vendor.values()))
 
 LID_GROUP = ["lid_lavender", "lid_liner_lavender", "ear_left_pink", "ear_right_pink", "magnet_lid_0", "magnet_lid_1",
@@ -95,7 +98,9 @@ CONTACT = {frozenset(p) for p in [
     ("button_ring_plum", "lower_shell_ivory"), ("button_ring_plum", "belt_black"), ("button_white", "lower_shell_ivory"),
     ("steel_weight", "lower_shell_ivory"), ("usb_panel_port_body", "lower_shell_ivory"),
     ("magnet_lid_0", "lid_lavender"), ("magnet_lid_1", "lid_lavender"), ("magnet_belt_0", "belt_black"),
-    ("magnet_belt_1", "belt_black"), ("buzzer_wt1205", "lower_shell_ivory"), ("usb_right_angle_adapter", "usb_extension_plug"),
+    ("magnet_belt_1", "belt_black"), ("speaker_as02808", "lower_shell_ivory"), ("usb_right_angle_adapter", "usb_extension_plug"),
+    ("sound_bracket_black", "lower_shell_ivory"), ("sound_bracket_black", "speaker_as02808"), ("sound_bracket_black", "dfr0534_module"),
+    ("dfr0534_gravity_plug", "dfr0534_module"),
     ("stop_block_black", "belt_black"), ("rim_ring_lavender", "belt_black"), ("rim_ring_lavender", "lid_lavender"),
     ("rim_ring_lavender", "magnet_belt_0"), ("rim_ring_lavender", "magnet_belt_1"), ("rim_ring_lavender", "magnet_lid_0"),
     ("rim_ring_lavender", "magnet_lid_1"), ("rim_ring_lavender", "reed_actuator_57155"), ("rim_ring_lavender", "inner_cover_lavender"), ("reed_sensor_59155", "belt_black"), ("reed_actuator_57155", "lid_lavender")]}
@@ -110,7 +115,7 @@ def is_contact(a, b):
         return True       # standoff ends seat on the plate
     if a.startswith("board_") and b.startswith("board_"):
         return True
-    if {a, b} & {"usb_right_angle_adapter"} and (a.startswith("board_") or b.startswith("board_")):
+    if {a, b} & {"usb_right_angle_adapter", "j10_sh_plug", "j1_socket_m50"} and (a.startswith("board_") or b.startswith("board_")):
         return True       # the plug sits in the board's receptacle
     return False
 
@@ -151,6 +156,8 @@ for a, b in itertools.combinations(names, 2):
     s = frozenset((a, b))
     if s in PRESS:
         continue
+    if {a, b} & {"j1_socket_m50"} and ({a, b} & HEADERS):
+        continue           # header pins inside the socket = the mating itself
     lim = 2.0 if is_contact(a, b) else 0.05
     if not (v <= lim):
         fail(f"closed: {a} x {b} overlap {v:.3f} mm3 (limit {lim})")
@@ -218,8 +225,8 @@ mass["dowel_pin_3x30"] = (STEEL * float(purch["dowel_pin_3x30"].volume), purch["
 for k in ("magnet_lid_0", "magnet_lid_1", "magnet_belt_0", "magnet_belt_1"):
     mass[k] = (7.5e-3 * float(purch[k].volume), purch[k].center_mass)
 EST = {  # purchased parts without a datasheet mass: estimates, flagged as such in the report
-    "board": (20.0, board_all.centroid), "buzzer_wt1205": (2.0, purch["buzzer_wt1205"].centroid),
-    "buzzer_driver_board": (3.0, purch["buzzer_driver_board"].centroid),
+    "board": (20.0, board_all.centroid), "speaker_as02808": (5.0, purch["speaker_as02808"].centroid),
+    "dfr0534_module": (5.0, purch["dfr0534_module"].centroid), "sound_cables": (4.0, purch["dfr0534_gravity_plug"].centroid),
     "usb_right_angle_adapter": (4.0, purch["usb_right_angle_adapter"].centroid),
     "usb_extension_cable_4218": (25.0, purch["usb_panel_port_body"].centroid * 0.6),
     "screws_feet_wire": (8.0, np.array([0.0, 0.0, -30.0])),
@@ -413,6 +420,41 @@ if rel is None or rel > 8:
     fail(f"sensor releases only at {rel} deg")
 if stray < 30:
     fail(f"latch magnet {stray:.1f} mm from the reed (stray actuation)")
+# v0.6: the speaker magnet (pot-shielded, d28 frame) must stay far from the reed as well
+spk_mm = float(np.linalg.norm(sen.centroid - purch["speaker_as02808"].centroid))
+rep["checks"]["8_lid_sensor"]["speaker_magnet_mm"] = round(spk_mm, 1)
+if spk_mm < 25:
+    fail(f"speaker magnet {spk_mm:.1f} mm from the reed (stray actuation)")
+
+# 9 sound unit (v0.6) -------------------------------------------------------------------------------
+import view_check as VC2  # noqa: E402
+
+snd = {}
+d_s = np.array(P.unit(P.SPK_AZ, P.SPK_EL))
+grille_c = d_s * P.R
+seen = []
+for lat, dist, h in VC2.EYES:          # outward surface normal must face away from every seated eye
+    e = VC2.eye_point(lat, dist, h)
+    seen.append(float(np.dot(d_s, e - grille_c)) > 0)
+snd["grille_visible_from_seated_eyes"] = f"{sum(seen)}/{len(seen)}"
+if any(seen):
+    fail(f"speaker grille faces {sum(seen)} of {len(seen)} seated eye points")
+low = bodies["lower_shell_ivory"]
+spk = bodies["speaker_as02808"]
+snd["speaker_seat_overlap_mm3"] = round(overlap(spk, low), 3)
+snd["j10_plug_vs_bezel_mm3"] = round(overlap(bodies["j10_sh_plug"], bodies["display_bezel_plum"]), 3)
+snd["j10_plug_vs_cradle_mm3"] = round(overlap(bodies["j10_sh_plug"], bodies["display_cradle_plum"]), 3)
+if snd["j10_plug_vs_bezel_mm3"] > 0.05 or snd["j10_plug_vs_cradle_mm3"] > 0.05:
+    fail(f"J10 sound plug collides with the pod: {snd}")
+zt = float(max(bodies[k].bounds[1][2] for k in ("dfr0534_module", "dfr0534_gravity_plug", "sound_bracket_black", "speaker_as02808")))
+snd["sound_unit_top_z_mm"] = round(zt, 1)
+snd["clearance_to_inner_cover_floor_mm"] = round(P.DECK_TOP_Z - P.DECK_T - zt, 1)
+if zt > P.DECK_TOP_Z - P.DECK_T - 1.0:
+    fail(f"sound unit reaches the inner cover floor (top z {zt:.1f})")
+snd["speaker_inside_outer_sphere"] = bool(np.all(np.linalg.norm(spk.vertices, axis=1) < P.R - 0.5))
+if not snd["speaker_inside_outer_sphere"]:
+    fail("speaker envelope pokes through the outer surface")
+rep["checks"]["9_sound_unit"] = snd
 
 # 7 printability ----------------------------------------------------------------------------------
 import print_orient as PO  # noqa: E402

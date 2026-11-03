@@ -3,15 +3,16 @@ lid_liner_lavender {'valid': True, 'volume_mm3': 11519.7, 'stl': 'ok', 'bbox': [
 ear_left_pink {'valid': True, 'volume_mm3': 5384.8, 'stl': 'repaired', 'bbox': [-40.0, -37.07, 51.07, -14.71, -11.69, 72.84]}
 ear_right_pink {'valid': True, 'volume_mm3': 5384.8, 'stl': 'repaired', 'bbox': [14.71, -37.07, 51.07, 40.0, -11.69, 72.84]}
 belt_black {'valid': True, 'volume_mm3': 35927.7, 'stl': 'ok', 'bbox': [-69.0, -69.0, -9.25, 69.0, 75.6, 13.25]}
-lower_shell_ivory {'valid': True, 'volume_mm3': 85996.2, 'stl': 'ok', 'bbox': [-68.8, -68.8, -60.0, 68.8, 68.8, -5.25]}
+lower_shell_ivory {'valid': True, 'volume_mm3': 86761.6, 'stl': 'ok', 'bbox': [-68.8, -68.8, -60.0, 68.8, 68.8, -5.25]}
 inner_cover_lavender {'valid': True, 'volume_mm3': 43613.2, 'stl': 'ok', 'bbox': [-61.4, -61.4, -14.0, 61.4, 61.4, 4.65]}
-display_bezel_plum {'valid': True, 'volume_mm3': 16937.6, 'stl': 'ok', 'bbox': [-31.0, -32.08, -16.6, 31.0, 14.15, 40.8]}
+display_bezel_plum {'valid': True, 'volume_mm3': 16380.4, 'stl': 'ok', 'bbox': [-31.0, -32.08, -15.37, 31.0, 14.15, 40.8]}
 display_cradle_plum {'valid': True, 'volume_mm3': 18803.8, 'stl': 'ok', 'bbox': [-38.4, -29.94, -9.0, 38.4, 34.0, 33.53]}
 stop_block_black {'valid': True, 'volume_mm3': 681.3, 'stl': 'ok', 'bbox': [-6.6, 68.66, -3.25, 6.6, 75.6, 5.99]}
 rim_ring_lavender {'valid': True, 'volume_mm3': 1866.9, 'stl': 'ok', 'bbox': [-65.6, -65.6, 4.05, 65.6, 65.6, 5.25]}
 button_ring_plum {'valid': True, 'volume_mm3': 1775.1, 'stl': 'ok', 'bbox': [-17.0, -70.37, -28.85, 17.0, -62.68, 5.15]}
 button_white {'valid': True, 'volume_mm3': 1857.1, 'stl': 'ok', 'bbox': [-11.8, -72.97, -23.65, 11.8, -64.87, -0.05]}
-fit fit1_display_bezel {'valid': True, 'volume_mm3': 16937.6, 'stl': 'ok', 'bbox': [-31.0, -32.08, -16.6, 31.0, 14.15, 40.8]}
+sound_bracket_black {'valid': True, 'volume_mm3': 2147.3, 'stl': 'ok', 'bbox': [-60.63, -23.79, -49.69, -36.55, 15.25, -16.32]}
+fit fit1_display_bezel {'valid': True, 'volume_mm3': 16380.4, 'stl': 'ok', 'bbox': [-31.0, -32.08, -15.37, 31.0, 14.15, 40.8]}
 fit fit1_display_plate {'valid': True, 'volume_mm3': 7211.3, 'stl': 'ok', 'bbox': [-38.4, -16.85, -9.0, 38.4, 17.02, 33.53]}
 fit fit2_hinge_belt {'valid': True, 'volume_mm3': 5235.3, 'stl': 'ok', 'bbox': [-20.0, 58.69, -9.25, 20.0, 75.6, 13.25]}
 fit fit2_hinge_lid {'valid': True, 'volume_mm3': 2006.4, 'stl': 'ok', 'bbox': [-20.0, 60.04, 5.25, 20.0, 74.0, 22.0]}
@@ -25,4 +26,6 @@ fit fit2_stop_block {'valid': True, 'volume_mm3': 681.3, 'stl': 'ok', 'bbox': [-
 fit fit5_ear_seat_lid {'valid': True, 'volume_mm3': 3723.7, 'stl': 'ok', 'bbox': [10.17, -41.47, 41.52, 44.17, -7.47, 67.84]}
 fit fit5_ear_right {'valid': True, 'volume_mm3': 5384.8, 'stl': 'repaired', 'bbox': [14.71, -37.07, 51.07, 40.0, -11.69, 72.84]}
 fit fit5_button_patch_lower {'valid': True, 'volume_mm3': 2908.7, 'stl': 'ok', 'bbox': [-22.0, -68.8, -28.0, 22.0, -55.81, -5.25]}
+fit fit7_speaker_seat_lower {'valid': True, 'volume_mm3': 8511.1, 'stl': 'ok', 'bbox': [-67.09, -29.42, -56.59, -31.7, 20.95, -12.03]}
+fit fit7_sound_bracket {'valid': True, 'volume_mm3': 2147.3, 'stl': 'ok', 'bbox': [-60.63, -23.79, -49.69, -36.55, 15.25, -16.32]}
 done

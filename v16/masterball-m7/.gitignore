@@ -10,3 +10,6 @@ cad/out_variant_B/**
 !cad/out_variant_B/verify_report.json
 !cad/out_variant_B/build_report.json
 cad/__pycache__/
+audio/__pycache__/
+tests/__pycache__/
+electronics/__pycache__/

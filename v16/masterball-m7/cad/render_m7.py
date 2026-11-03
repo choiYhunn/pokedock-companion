@@ -30,10 +30,12 @@ FONT = "C:/Windows/Fonts/malgun.ttf" if os.path.exists("C:/Windows/Fonts/malgun.
 COL = {"lid_lavender": "#a58bd6", "lid_liner_lavender": "#b9a3e0", "ear_left_pink": "#f2a7c3",
        "ear_right_pink": "#f2a7c3", "belt_black": "#3a3640", "lower_shell_ivory": "#f3eee4",
        "inner_cover_lavender": "#c8b6ea", "display_bezel_plum": "#4d3b6e", "display_cradle_plum": "#463664",
-       "button_ring_plum": "#5a4380", "button_white": "#fbfaf7", "stop_block_black": "#3a3640", "rim_ring_lavender": "#cdbdf0"}
+       "button_ring_plum": "#5a4380", "button_white": "#fbfaf7", "stop_block_black": "#3a3640", "rim_ring_lavender": "#cdbdf0",
+       "sound_bracket_black": "#2c2a30"}
 PCOL = {"dowel_pin_3x30": "#b8bcc4", "magnet_lid_0": "#9aa0a8", "magnet_lid_1": "#9aa0a8", "magnet_belt_0": "#9aa0a8",
-        "magnet_belt_1": "#9aa0a8", "steel_weight": "#8d939b", "buzzer_wt1205": "#2b2b2b",
-        "buzzer_driver_board": "#2f7d4f", "usb_right_angle_adapter": "#1f1f1f", "usb_extension_plug": "#262626",
+        "magnet_belt_1": "#9aa0a8", "steel_weight": "#8d939b", "speaker_as02808": "#3b3f46",
+        "dfr0534_module": "#1d3f8f", "dfr0534_gravity_plug": "#e6e6e6", "j10_sh_plug": "#f2f2f2",
+        "usb_right_angle_adapter": "#1f1f1f", "usb_extension_plug": "#262626",
         "usb_panel_port_body": "#555a60", "reed_sensor_59155": "#d9c36a", "reed_actuator_57155": "#5a5f66"}
 LID_GROUP = {"lid_lavender", "lid_liner_lavender", "ear_left_pink", "ear_right_pink", "magnet_lid_0", "magnet_lid_1",
              "reed_actuator_57155"}
@@ -295,7 +297,7 @@ def wiring_plan(path):
     ax.plot(P.R * np.cos(th), P.R * np.sin(th), color="#999", lw=1)
     rd = math.sqrt(P.RI_LOW ** 2 - (P.DECK_TOP_Z - P.DECK_T) ** 2) - 0.5
     ax.plot(rd * np.cos(th), rd * np.sin(th), color="#b9a3e0", lw=1, ls="--")
-    boxes = {"buzzer_wt1205": "부저 WT-1205", "buzzer_driver_board": "부저 구동 기판\n(덱 아래 폼테이프)",
+    boxes = {"speaker_as02808": "스피커 Ø28\n(왼쪽 아래 벽)", "dfr0534_module": "DFR0534\n(사운드 브래킷)",
              "usb_right_angle_adapter": "USB-C ㄱ자 어댑터\n(Adafruit 4432)", "usb_extension_plug": "연장 케이블 플러그",
              "usb_panel_port_body": "후면 USB-C 패널\n(Adafruit 4218)", "reed_sensor_59155": "리드 센서 59155\n(벨트 왼쪽)",
              "steel_weight": "와셔 3장 Ø60", "dowel_pin_3x30": "힌지 핀"}
@@ -309,15 +311,19 @@ def wiring_plan(path):
         ax.text(c[0], c[1], lab, ha="center", va="center", fontsize=8)
     pod = printed["display_bezel_plum"].bounds
     ax.add_patch(plt.Rectangle((pod[0][0], pod[0][1]), pod[1][0] - pod[0][0], pod[1][1] - pod[0][1], fc="#4d3b6e", alpha=0.25, ec="#4d3b6e"))
-    ax.text(0, (pod[0][1] + pod[1][1]) / 2, "화면 포드 (50°)", ha="center", fontsize=9)
-    j1 = np.array([-16.0, 6.5])     # deck cable hole behind the plate (J1 side chosen at assembly: +/-16)
-    ax.plot(*j1, "ks")
-    ax.text(j1[0], j1[1] + 3, "J1 소켓 → 덱 구멍", ha="center", fontsize=8)
+    ax.text(0, (pod[0][1] + pod[1][1]) / 2, f"화면 포드 ({P.SCREEN_TILT_DEG:.0f}°)", ha="center", fontsize=9)
+    j1 = np.array([16.0, 6.5])      # deck cable hole under header J1 (board +x_u side)
+    jg = np.array([-16.0, 6.5])     # deck cable hole on the J10 side (sound cable)
+    for q, lab in ((j1, "J1 소켓(리드 센서)\n→ 오른쪽 덱 구멍"), (jg, "J10 소리 케이블\n→ 왼쪽 덱 구멍")):
+        ax.plot(*q, "ks")
+        ax.text(q[0], q[1] + 4, lab, ha="center", fontsize=8)
     sx, sy, _ = P.unit(P.SENSOR_AZ, 0)
     notch = np.array([sx * (rd - 1.2), sy * (rd - 1.2)])
-    drv = cen["buzzer_driver_board"][:2]
-    routes = [("B1/B2/B3 (5 V, GND, IO16)", [j1, drv], "#d62728"), ("S1 (IO17) / S2 (GND)", [cen["reed_sensor_59155"][:2], notch, drv, j1], "#1f77b4"),
-              ("B4/B5 부저", [drv, cen["buzzer_wt1205"][:2]], "#2ca02c"),
+    mod = cen["dfr0534_module"][:2]
+    grav = purch["dfr0534_gravity_plug"].centroid[:2]
+    routes = [("소리 케이블 J10 → DFR0534 (3V3, GND, GPIO44)", [jg, np.array([-24.0, -8.0]), grav], "#d62728"),
+              ("리드 센서 2선 → J1-10 / J1-6", [cen["reed_sensor_59155"][:2], notch, np.array([-30.0, -2.0]), np.array([10.0, -2.0]), j1], "#1f77b4"),
+              ("스피커 리드 → DFR0534 SP+/SP-", [mod, cen["speaker_as02808"][:2]], "#2ca02c"),
               ("USB 연장 케이블", [cen["usb_extension_plug"][:2], np.array([30.0, 30.0]), cen["usb_panel_port_body"][:2]], "#555")]
     for lab, pts, col in routes:
         pts = np.array(pts)
@@ -341,3 +347,49 @@ def wiring_plan(path):
 
 
 wiring_plan(f"{IMG}/layout_wiring_top.png")
+
+# ---------------------------------------------------------------- v0.6 sound revision: what changed outside
+render(scene(0), -85, -18, f"{IMG}/render_closed_left_low_speaker.png", target=(0, 0, -20), dist=480)
+render(scene(0, hide=LID_GROUP | {"inner_cover_lavender"}, with_purch=True), -60, 40, f"{IMG}/render_internal_sound_unit.png",
+       target=(-30, 5, -25), dist=330)
+
+
+def changes_sheet(path):
+    """Before (owner-approved commit) / after views of the parts the sound revision changed."""
+    import subprocess
+    import tempfile
+    rev = json.load(open(os.path.join(os.path.dirname(os.path.abspath(IMG)), "appearance", "APPROVAL.json"),
+                         encoding="utf8")).get("approved_commit")
+    if not rev:
+        print("no approved_commit: changes sheet skipped")
+        return
+    old = {}
+    for k in ("lower_shell_ivory", "display_bezel_plum"):
+        blob = subprocess.run(["git", "show", f"{rev}:v16/masterball-m7/cad/out/stl/{k}.stl"], capture_output=True, check=True,
+                              cwd=os.path.dirname(os.path.abspath(__file__))).stdout
+        with tempfile.NamedTemporaryFile(suffix=".stl", delete=False) as f:
+            f.write(blob)
+        old[k] = trimesh.load(f.name)
+        os.unlink(f.name)
+    tiles = []
+    for tag, meshes in (("승인본 " + rev, old), ("v0.6 (소리)", {k: printed[k] for k in old})):
+        for k, az, el, tgt, dist, cap in (("lower_shell_ivory", -85, -18, (0, 0, -30), 330, "하단 쉘 왼쪽 아래: 스피커 그릴"),
+                                          ("display_bezel_plum", 0, -60, (0, -15, 0), 240, "베젤 아래: USB-C + J10 플러그 구멍")):
+            fp = f"{IMG}/_chg_{k}_{len(tiles)}.png"
+            render([(meshes[k], COL[k], None)], az, el, fp, size=(700, 600), dist=dist, target=tgt)
+            body = Image.open(fp).convert("RGB")
+            im = Image.new("RGB", (body.width, body.height + 56), (236, 230, 248))
+            im.paste(body, (0, 56))
+            fnt = ImageFont.truetype(FONT, 26) if FONT else None
+            ImageDraw.Draw(im).text((16, 12), f"{tag} - {cap}", fill=(40, 30, 60), font=fnt)
+            tiles.append(im)
+            os.unlink(fp)
+    W, H = tiles[0].size
+    sheet = Image.new("RGB", (W * 2, H * 2), "white")
+    for i, im in enumerate(tiles):
+        sheet.paste(im, ((i // 2) * W, (i % 2) * H))
+    sheet.save(path)
+    print("wrote", path)
+
+
+changes_sheet(f"{IMG}/v06_appearance_changes_before_after.png")

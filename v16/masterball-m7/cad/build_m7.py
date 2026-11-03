@@ -89,6 +89,38 @@ def polar_xy(r, ang):
 POD = Pos(*P.POD_C) * Rot(X=P.POD_ROT_DEG)        # U frame -> ball frame
 
 
+def spk_frame():
+    """Speaker axis d (outward), horizontal tangent t and meridian m (up along the sphere)."""
+    d = V(*P.unit(P.SPK_AZ, P.SPK_EL))
+    t = V(-d.Y, d.X, 0).normalized()
+    m = d.cross(t).normalized()
+    if m.Z < 0:
+        t, m = -t, -m
+    return d, t, m
+
+
+def spk_point(s, tt, mm):
+    d, t, m = spk_frame()
+    return d * s + t * tt + m * mm
+
+
+def spk_cyl(r, s0, s1, tt=0.0, mm=0.0):
+    """Cylinder along the speaker axis, offset (tt, mm) in the (t, m) plane."""
+    return cyl_between(r, tuple(spk_point(s0, tt, mm)), tuple(spk_point(s1, tt, mm)))
+
+
+def spk_box(t0, t1, m0, m1, s0, s1):
+    """Box in the speaker frame (t, m, s along the axis)."""
+    d, t, m = spk_frame()
+    pl = Plane(origin=tuple(spk_point((s0 + s1) / 2, (t0 + t1) / 2, (m0 + m1) / 2)), x_dir=tuple(t), z_dir=tuple(d))
+    return pl.location * Box(t1 - t0, m1 - m0, s1 - s0)
+
+
+def dfr_holes():
+    """DFR0534 mounting holes on the sound bracket ring, (t, m) in the speaker frame."""
+    return [(P.DFR_HOLE_T, mb) for _, mb in P.DFR_HOLES_B]
+
+
 def cyl_u(r, y0, y1, x=0.0, z=0.0):
     """Cylinder along the U-frame screen axis (y_u)."""
     return cyl_between(r, (x, y0, z), (x, y1, z))
@@ -281,6 +313,20 @@ def build_stop_block():
     return blk
 
 
+def build_sound_bracket():
+    """Clamp ring over the speaker back (2 x M2 PT into the shell boss) + 2 standoffs for the DFR0534."""
+    s1 = P.SPK_BOSS_S0
+    s0 = s1 - P.SPK_CLAMP_T
+    ring = spk_cyl(P.SPK_CLAMP_OD / 2, s0, s1) - spk_cyl(P.SPK_CLAMP_ID / 2, s0 - 1, s1 + 1)
+    ring = ring - spk_box(-2.0, 2.0, -P.SPK_CLAMP_OD / 2 - 1, -P.SPK_CLAMP_ID / 2 + 0.5, s0 - 1, s1 + 1)   # lead slot
+    for sgn in (-1, 1):
+        ring = ring - spk_cyl(P.M2_CLEAR / 2, s0 - 1, s1 + 1, sgn * P.SPK_CLAMP_SCREW_T, 0.0)
+    for tt, mm in dfr_holes():
+        ring = ring + spk_cyl(P.DFR_STANDOFF_D / 2, s0 - P.DFR_STANDOFF_L, s0 + 0.01, tt, mm)
+        ring = ring - spk_cyl(P.M3_PT_PILOT / 2, s0 - P.DFR_STANDOFF_L - 1, s0 + 0.6, tt, mm)
+    return ring
+
+
 def build_lower():
     foot = Pos(0, 0, (P.BASE_Z + P.FOOT_TANGENT_Z) / 2) * Cone(P.FOOT_R_AT_BASE, -P.FOOT_TANGENT_Z, P.FOOT_TANGENT_Z - P.BASE_Z)
     outer = (Sphere(P.R) + foot) & zslab(P.BASE_Z, -P.BH)
@@ -295,17 +341,18 @@ def build_lower():
     # steel weight pocket (glued)
     fz = P.BASE_Z + P.FLOOR_T
     low = low + (cyl_z(P.WEIGHT_D / 2 + 0.3 + 1.6, fz - 0.5, fz + P.WEIGHT_H) - cyl_z(P.WEIGHT_D / 2 + 0.3, fz - 0.01, fz + P.WEIGHT_H + 1))
-    # buzzer pocket + 7 sound holes through the wall
-    d = P.unit(P.BUZ_AZ, P.BUZ_EL)
-    br = P.BUZ_D / 2 + P.BUZ_FIT / 2
-    low = low + (along(d, br + 2.0, P.RI_LOW - P.BUZ_H - 1.2, P.R - 0.5) & Sphere(P.R - 0.3))
-    low = low - along(d, br, P.RI_LOW - P.BUZ_H - 3, P.RI_LOW + 0.2)
-    side = V(-d[1], d[0], 0).normalized()
-    up = V(*d).cross(side).normalized()
-    for k in range(7):
-        off = V(0, 0, 0) if k == 0 else (side * math.cos(k * math.pi / 3) + up * math.sin(k * math.pi / 3)) * 3.2
-        p0, p1 = V(*d) * (P.RI_LOW - 1) + off, V(*d) * (P.R + 2) + off
-        low = low - cyl_between(0.8, tuple(p0), tuple(p1))
+    # speaker seat (v0.6): flat boss inside the left lower wall, d28 pocket, hex grille, clamp screw pilots
+    low = low + (spk_cyl(P.SPK_BOSS_R, P.SPK_BOSS_S0, P.R - 0.5) & Sphere(P.R - 0.3))
+    low = low - spk_cyl(P.SPK_D / 2 + P.SPK_FIT / 2, P.SPK_BOSS_S0 - 1.0, P.SPK_SEAT_S)
+    pitch = P.SPK_GRILLE_D + 1.0
+    for i in range(-6, 7):
+        for j in range(-6, 7):
+            tt, mm = (i + 0.5 * (j % 2)) * pitch, j * pitch * math.sqrt(3) / 2
+            if math.hypot(tt, mm) <= P.SPK_GRILLE_R:
+                low = low - spk_cyl(P.SPK_GRILLE_D / 2, P.SPK_SEAT_S - 0.3, P.R + 2.0, tt, mm)
+    for sgn in (-1, 1):
+        low = low - spk_cyl(P.M2_PT_PILOT / 2, P.SPK_BOSS_S0 - 0.5, P.SPK_BOSS_S0 + 5.0, sgn * P.SPK_CLAMP_SCREW_T, 0.0)
+    low = low - spk_box(-2.0, 2.0, -P.SPK_BOSS_R - 1, -P.SPK_D / 2, P.SPK_BOSS_S0 - 1.0, P.SPK_BOSS_S0 + 2.0)   # lead slot (down)
     # rear USB-C panel port: flat spot-face outside, flat boss inside, hole
     pd = P.unit(180, P.PORT_EL)
     low = low + (along(pd, P.PORT_FLAT_D / 2 + 1.5, P.R - 3.6, P.R - 1.0) & Sphere(P.R - 0.2))
@@ -342,7 +389,7 @@ def pod_cup_u():
 def build_bezel():
     cup = pod_cup_u()
     ox, oy0, oy1 = P.USB_OPEN
-    cup = cup - box(-ox, ox, oy0, oy1, -40, -18)
+    cup = cup - box(P.USB_OPEN_X0, ox, oy0, oy1, -40, -18)   # USB-C plug + the J10 sound plug beside it (v0.6)
     cup = cup - box(-ox, -6 + P.USB_ADAPTER[1] + 1.0, oy0, oy1, -40, P.USB_MOUTH_ZU - P.USB_ADAPTER[0] + 12.8)   # adapter side leg (hidden under the floor)
     for ang in P.BEZEL_SCREW_ANG:
         x, z = polar_xy(P.BEZEL_SCREW_R, ang)
@@ -538,11 +585,24 @@ def purchased():
         env[f"magnet_belt_{i}"] = cyl_z(P.MAG_D / 2, P.BH - P.MAG_H, P.BH - 0.05, cx, cy)
     fz = P.BASE_Z + P.FLOOR_T
     env["steel_weight"] = cyl_z(P.WEIGHT_D / 2, fz + 0.05, fz + P.WEIGHT_H)
-    d = P.unit(P.BUZ_AZ, P.BUZ_EL)
-    env["buzzer_wt1205"] = along(d, P.BUZ_D / 2 + 0.25, P.RI_LOW - P.BUZ_H - 0.25, P.RI_LOW - 0.05)
-    # buzzer driver perfboard taped under the deck (left-front, away from the pod and USB route)
-    zd = P.DECK_TOP_Z - P.DECK_T
-    env["buzzer_driver_board"] = box(-48, -48 + P.DRV_BOARD[0], -14, -14 + P.DRV_BOARD[1], zd - P.DRV_BOARD[2] - 1.0, zd - 1.0)
+    # sound (v0.6): speaker in its seat, DFR0534 on the bracket standoffs, Gravity plug bend zone, J10 plug
+    env["speaker_as02808"] = spk_cyl(P.SPK_D / 2 - 0.05, P.SPK_BOSS_S0 + 0.05, P.SPK_SEAT_S - 0.05)
+    L, W, T = P.DFR_BOARD
+    sg = 1.0 if P.DFR_HOLE_T > 0 else -1.0                # board +x (speaker end) points along sg * t
+    tc = P.DFR_HOLE_T - sg * P.DFR_HOLES_B[0][0]           # board centre on t
+    pcb_s1 = P.SPK_BOSS_S0 - P.SPK_CLAMP_T - P.DFR_STANDOFF_L - 0.05
+    e_spk, e_grv = tc + sg * L / 2, tc - sg * L / 2       # speaker-end and Gravity-end edges on t
+    p0, p1 = sorted((e_spk, e_spk - sg * 6.5))            # strip around the hole pads: no parts under the PCB
+    env["dfr0534_module"] = spk_box(tc - L / 2, tc + L / 2, -W / 2, W / 2, pcb_s1 - T - P.DFR_ABOVE, pcb_s1 + P.DFR_BELOW - 0.1) - \
+        spk_box(p0 - 0.5, p1 + 0.5, -W / 2 - 1, W / 2 + 1, pcb_s1 + 0.01, pcb_s1 + P.DFR_BELOW + 1)
+    g0, g1 = sorted((e_grv, e_grv - sg * P.DFR_GRAVITY_BEND))
+    env["dfr0534_gravity_plug"] = spk_box(g0, g1, -5.5, 5.5, pcb_s1 - T - 6.0, pcb_s1 - T)
+    x0, x1, y0, y1, z0, z1 = P.J10_PLUG_U
+    env["j10_sh_plug"] = POD * box(x0, x1, y0, y1, z0, z1)
+    x0, x1, y0, y1, z0, z1 = P.J1_SOCKET_U
+    sock = box(x0, x1, y0, y1, z0, z1) + box(x0 + 0.6, x1 - 0.6, y1 - 0.01, 20.0, -2.0, 2.0)
+    # which 2x7 header is J1 is read from the board silk at assembly: both positions must be clear
+    env["j1_socket_m50"] = POD * (sock + box(-x1, -x0, y0, y1, z0, z1) + box(-x1 + 0.6, -x0 - 0.6, y1 - 0.01, 20.0, -2.0, 2.0))
     # right-angle USB-C adapter (Adafruit 4432 envelope, turning to +x_u) + extension plug
     y0, y1 = P.USB_YU
     m = P.USB_MOUTH_ZU
@@ -578,12 +638,13 @@ stop_block = build_stop_block()
 rim_ring = build_rim_ring()
 ring = build_button_ring()
 btn = build_button()
+sound_bracket = build_sound_bracket()
 
 PARTS = {"lid_lavender": lid, "lid_liner_lavender": liner, "ear_left_pink": ear_l, "ear_right_pink": ear_r,
          "belt_black": belt, "lower_shell_ivory": lower, "inner_cover_lavender": deck,
          "display_bezel_plum": bezel, "display_cradle_plum": cradle, "stop_block_black": stop_block,
          "rim_ring_lavender": rim_ring,
-         "button_ring_plum": ring, "button_white": btn}
+         "button_ring_plum": ring, "button_white": btn, "sound_bracket_black": sound_bracket}
 for k, v in PARTS.items():
     export(k, v)
 
@@ -610,12 +671,16 @@ c_r = V(*d_r) * P.R
 fit["fit5_ear_seat_lid"] = lid & (Pos(c_r.X, c_r.Y, c_r.Z) * Box(34, 34, 34))
 fit["fit5_ear_right"] = ear_r
 fit["fit5_button_patch_lower"] = lower & box(-22, 22, -BIG, -55, -28, 0)
+# FK6 (new, v0.6): speaker seat + grille patch of the lower shell and the real sound bracket
+fit["fit7_speaker_seat_lower"] = lower & spk_box(-24, 24, -24, 24, P.SPK_BOSS_S0 - 3.0, P.R + 1.0)
+fit["fit7_sound_bracket"] = sound_bracket
 for k, v in fit.items():
     export_fit(k, v)
 
 # assemblies (printed parts + simplified envelopes)
 asm_keys = list(PARTS) + ["dowel_pin_3x30", "magnet_lid_0", "magnet_lid_1", "magnet_belt_0", "magnet_belt_1",
-                          "steel_weight", "board_envelope", "reed_sensor_59155", "reed_actuator_57155"]
+                          "steel_weight", "board_envelope", "reed_sensor_59155", "reed_actuator_57155",
+                          "speaker_as02808", "dfr0534_module"]
 LID_GROUP = {"lid_lavender", "lid_liner_lavender", "ear_left_pink", "ear_right_pink", "magnet_lid_0", "magnet_lid_1",
              "reed_actuator_57155"}
 for name, deg in (("m7_assembly_closed", 0.0), ("m7_assembly_open110", P.OPEN_DEG)):

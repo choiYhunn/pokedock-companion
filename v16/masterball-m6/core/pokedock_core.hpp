@@ -88,6 +88,18 @@ class Core {
     return true;
   }
   bool lid_sensor() const { return lid_sensor_; }
+  // M7 sound module (DFR0534): volume 0..30 (0 = silent) and whether closing the lid plays a sound
+  bool set_volume(int v) {
+    if (v < 0 || v > 30) return false;
+    volume_ = v;
+    return true;
+  }
+  int volume() const { return volume_; }
+  bool set_close_sound(bool on) {
+    close_sound_ = on;
+    return true;
+  }
+  bool close_sound() const { return close_sound_; }
 
   // ---- focus timer ----------------------------------------------------------------------
   // Starting while a session runs or is paused is refused; the UI must cancel explicitly.
@@ -236,6 +248,8 @@ class Core {
   int brightness_ = 40;
   bool sound_ = true;
   bool lid_sensor_ = true;
+  int volume_ = 20;
+  bool close_sound_ = true;
   FocusPhase phase_ = FocusPhase::kIdle;
   int64_t focus_total_ms_ = 25 * 60000, focus_end_ms_ = 0, focus_remaining_ms_ = 0;
   int focus_completed_ = 0;
