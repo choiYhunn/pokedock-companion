@@ -15,8 +15,8 @@ wrote img/section_display_x16_header.png
 wrote img/layout_wiring_top.png
 wrote img/render_closed_left_low_speaker.png 216847 triangles
 wrote img/render_internal_sound_unit.png 170500 triangles
-wrote img/_chg_lower_shell_ivory_0.png 8842 triangles
-wrote img/_chg_display_bezel_plum_1.png 2078 triangles
+wrote img/_chg_lower_shell_ivory_0.png 22026 triangles
+wrote img/_chg_display_bezel_plum_1.png 2082 triangles
 wrote img/_chg_lower_shell_ivory_2.png 22026 triangles
 wrote img/_chg_display_bezel_plum_3.png 2082 triangles
 wrote img/v06_appearance_changes_before_after.png

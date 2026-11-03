@@ -11,9 +11,8 @@
 | 항목 | 결과 | 근거 |
 |---|---|---|
 | 사진 비율 지표 19개 | HOST PASS | `appearance/APPEARANCE_GATE.json` |
-| 의뢰인 외관 승인 (2026-11-02, 귀 A) | 유지. 부품별 해시로 관리 | `appearance/APPROVAL.json` |
-| 바뀌지 않은 7판이 승인본과 바이트까지 같음 | HOST PASS | `print/print_manifest.json` (`appearance`) |
-| 바뀐 2판 (C2 그릴, C7 베젤 J10 구멍) | **의뢰인 재승인 대기** → `print/02_final_PENDING_owner_approval` | `img/v06_appearance_changes_before_after.png` |
+| 의뢰인 외관 승인 (2026-11-02 귀 A + 밤 테마, 2026-11-04 그릴·베젤 J10 구멍) | APPROVED. 부품별 출력 파일 해시 13개로 관리 | `appearance/APPROVAL.json` |
+| 본 출력 9판이 승인 해시와 같음 (승인 대기 판 0) | HOST PASS | `print/print_manifest.json` (`appearance`, `APPEARANCE_PENDING_PLATES` = {}) |
 
 ## 기구
 

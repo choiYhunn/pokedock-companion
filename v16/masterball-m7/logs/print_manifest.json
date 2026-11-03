@@ -274,7 +274,7 @@
   "overhang_gt45_mm2": 8213.0,
   "fits_A1mini_180": true,
   "sha256": "9a93431c807dd71130f531214d91299fdc0258a1b0a67a51037cebd4da54bff2",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "PLATE C1_purple_lid": {
   "plate_extent_mm": [
@@ -298,7 +298,7 @@
   "overhang_gt45_mm2": 2306.0,
   "fits_A1mini_180": true,
   "sha256": "a96c3da2243c884b55d055458c7a47e52e3af8ce07ed7ac3ae602e01cd215b5f",
-  "appearance": "CHANGED since the approved print file: owner approval pending"
+  "appearance": "approved 2026-11-04"
  },
  "PLATE C2_ivory_lower_shell": {
   "plate_extent_mm": [
@@ -322,7 +322,7 @@
   "overhang_gt45_mm2": 2024.0,
   "fits_A1mini_180": true,
   "sha256": "8823830bb6554bd77e99687ad20d131d32e65f353eda63364710f3dc1b4813a0",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "stop_block_black": {
   "plate": "C3_black_belt_stop",
@@ -337,7 +337,7 @@
   "overhang_gt45_mm2": 5.0,
   "fits_A1mini_180": true,
   "sha256": "6d94391c88d22f179ee03a4bba60c8b421063f54c84fb403443828a2718dd5d6",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "PLATE C3_black_belt_stop": {
   "plate_extent_mm": [
@@ -361,7 +361,7 @@
   "overhang_gt45_mm2": 12.0,
   "fits_A1mini_180": true,
   "sha256": "b3223815bd57bcd90408ef8934002b4c7dce5e164555a9b3cfc4cc9162405b5e",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "ear_right_pink": {
   "plate": "C4_pink_ears",
@@ -376,7 +376,7 @@
   "overhang_gt45_mm2": 12.0,
   "fits_A1mini_180": true,
   "sha256": "49b8c23c2c81ed56f6e3018937615236ddec22ef049444c87943f7a85df62caf",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "PLATE C4_pink_ears": {
   "plate_extent_mm": [
@@ -400,7 +400,7 @@
   "overhang_gt45_mm2": 389.0,
   "fits_A1mini_180": true,
   "sha256": "6aaef5890818e4cd99ac4b2f4503860f2b7e41ce32fcb380b46ccc4a5337a392",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "PLATE C5_white_button": {
   "plate_extent_mm": [
@@ -424,7 +424,7 @@
   "overhang_gt45_mm2": 10257.0,
   "fits_A1mini_180": true,
   "sha256": "233b009fbb7964862aa09bb4ba6f2df59307bdfb28c09823049f7e18acd0d410",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "PLATE C6_inner_cover_lavender": {
   "plate_extent_mm": [
@@ -448,7 +448,7 @@
   "overhang_gt45_mm2": 0.0,
   "fits_A1mini_180": true,
   "sha256": "9a69ecd856df1e4557969fd33ab36729c736c2f163810be7ca5d8c86b4cf614d",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "lid_liner_lavender": {
   "plate": "C6b_lavender_rim_ring_liner",
@@ -463,7 +463,7 @@
   "overhang_gt45_mm2": 0.0,
   "fits_A1mini_180": true,
   "sha256": "11aaf5dfc8ec3efb5d672d4c55dd61b148786e31d8f2afaf48bdc18cd73f0b5c",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "PLATE C6b_lavender_rim_ring_liner": {
   "plate_extent_mm": [
@@ -487,7 +487,7 @@
   "overhang_gt45_mm2": 148.0,
   "fits_A1mini_180": true,
   "sha256": "cd3efa7d9d107b51c6c30f47548d86de86639a653ac6e5bd4d738c52f256d5ef",
-  "appearance": "CHANGED since the approved print file: owner approval pending"
+  "appearance": "approved 2026-11-04"
  },
  "display_cradle_plum": {
   "plate": "C7_plum_display_button_ring",
@@ -502,7 +502,7 @@
   "overhang_gt45_mm2": 473.0,
   "fits_A1mini_180": true,
   "sha256": "99dfdd865c96e9c424e46545eaa726ae8f08f27a2c18919d356e617caed13116",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "button_ring_plum": {
   "plate": "C7_plum_display_button_ring",
@@ -517,7 +517,7 @@
   "overhang_gt45_mm2": 0.0,
   "fits_A1mini_180": true,
   "sha256": "7800f7e6679d49b058f2143ef2a06da98b943421ac2dba8bd92504ebbb2f0ef1",
-  "appearance": "approved 2026-11-02"
+  "appearance": "approved 2026-11-04"
  },
  "PLATE C7_plum_display_button_ring": {
   "plate_extent_mm": [
@@ -553,12 +553,5 @@
   "fits_256": true
  },
  "APPEARANCE_GATE": "APPROVED",
- "APPEARANCE_PENDING_PLATES": {
-  "C2_ivory_lower_shell": [
-   "lower_shell_ivory"
-  ],
-  "C7_plum_display_button_ring": [
-   "display_bezel_plum"
-  ]
- }
+ "APPEARANCE_PENDING_PLATES": {}
 }

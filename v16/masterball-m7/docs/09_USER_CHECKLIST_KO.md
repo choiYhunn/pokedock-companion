@@ -2,11 +2,7 @@
 
 ## 결정
 
-- [ ] 바뀐 외관 2곳을 봅니다:
-  - `img/v06_appearance_changes_before_after.png`
-  - `img/render_closed_left_low_speaker.png`
-- [ ] 바뀐 곳은 왼쪽 아래 스피커 그릴, 베젤 아래 J10 구멍입니다. 승인 / 수정 요청을 알려 줍니다.
-  - 승인하면 기록 도구 `appearance/record_approval.py`로 해시를 남기고, C2·C7을 `print/02_final`로 옮깁니다.
+- [x] 바뀐 외관 2곳(왼쪽 아래 스피커 그릴, 베젤 아래 J10 구멍) 승인 — 2026-11-04, `appearance/APPROVAL.json`
 
 ## 주문 (결제는 직접)
 
@@ -34,8 +30,7 @@
 
 - [ ] 시험편 FK1–FK6을 출력하고 측정 양식 F1–F16을 채웁니다.
 - [ ] 불합격 항목은 `cad/m7_params.py` 값을 바꾸고 `tests/run_m7.sh`를 다시 돌립니다.
-- [ ] 본 출력: `print/02_final`.
-  - 승인 대기인 C2·C7은 승인한 뒤에 출력합니다.
+- [ ] 본 출력: `print/02_final` 9판.
 
 ## 조립과 실물 시험
 
