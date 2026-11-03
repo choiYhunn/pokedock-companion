@@ -1,0 +1,16 @@
+PASS cue table has one row per Cue (kCount excluded)
+PASS cue rows in enum order
+PASS manifest has 8 cues + one cry per partner
+PASS tracks numbered 1..N without gaps
+PASS kBoot: track 1 = 'boot', max 2500 ms, loop False
+PASS kLidOpen: track 2 = 'lid_open', max 1500 ms, loop False
+PASS kLidClose: track 3 = 'lid_close', max 1500 ms, loop False
+PASS kTap: track 4 = 'tap', max 600 ms, loop False
+PASS kConfirm: track 5 = 'confirm', max 1000 ms, loop False
+PASS kPair: track 6 = 'pair', max 1500 ms, loop False
+PASS kTimerDone: track 7 = 'timer_done', max 4000 ms, loop False
+PASS kAlarm: track 8 = 'alarm', max 3000 ms, loop True
+PASS kCry: track 9 = 'cry', max 3000 ms, loop False
+PASS cry tracks follow kPokemonIds order
+PASS firmware kCryTracks = number of partners
+PASS: 15/15 sound manifest checks

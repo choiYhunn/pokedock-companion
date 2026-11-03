@@ -1,0 +1,47 @@
+{
+ "_source": "M7 v0.6 wiring (sound module + lid sensor). Board facts are checked by tests/m7_electrical_check.py against the official Waveshare schematic text layer; the drawing and pin tables come from electronics/m7_wiring_v06.py. v0.5 (buzzer + perfboard interface module) is archived in electronics/archive_v0.5/.",
+ "version": "0.6",
+ "gpio": {"lid_sensor": 17, "audio_tx": 44, "audio_rx_unused": 43},
+ "board_connectors": {
+  "J10": {"type": "1.0 mm pitch 4-pin SMT horizontal (vendor STEP PITCH1MM-4PIN-SMT-HORIZONTAL, SH1.0 class)",
+          "pins": {"1": "RXD = GPIO44 (UART0 RX pad, used as UART1 TX by M7)", "2": "TXD = GPIO43 (ROM boot log: NOT wired)",
+                   "3": "3V3 (MP1605 buck, 2 A)", "4": "GND"}},
+  "J1": {"type": "1.27 mm 2x7 male header (vendor STEP 1_27MM-2X7PIN-MALE)",
+         "pins_used": {"6": "GND", "10": "IO17"}, "pins_not_used": {"1": "U_P (USB D+)", "3": "U_N (USB D-)", "4": "USB_5V", "8": "IO16 (v0.5 buzzer)"}},
+  "J4": {"type": "USB-C receptacle", "use": "power + flashing via Adafruit 4432 right-angle adapter and Adafruit 4218 panel extension (no solder)"}
+ },
+ "module_connectors": {
+  "DFR0534_gravity": {"type": "JST PH 2.0 mm 4-pin (Gravity UART), silk order T, R, -, +",
+                      "pins": {"T": "module TX - NOT wired", "R": "module RX <- GPIO44", "-": "GND", "+": "VCC 3.3-5 V (here 3V3)"}},
+  "DFR0534_pads": {"SP+": "speaker +", "SP-": "speaker -", "note": "2.54 mm through-hole pads next to the 2-pin SPK connector"}
+ },
+ "harnesses": [
+  {"id": "H1", "name": "sound cable J10 -> DFR0534", "build": "commercial cables only: no solder, no crimp tool",
+   "parts": [{"mfr": "Adafruit", "mpn": "4397", "what": "JST SH 4-pin plug -> 4 premium female sockets, 150 mm, 28 AWG (STEMMA QT / Qwiic cable)"},
+             {"mfr": "Adafruit", "mpn": "3955", "what": "JST PH 4-pin plug -> 4 premium male pins, 200 mm, 26 AWG (STEMMA cable)"}],
+   "joints": [
+    {"j10_pin": 1, "net": "GPIO44", "module_pin": "R", "how": "4397 socket of J10-1 onto the 3955 pin that rings out to the module RX pad"},
+    {"j10_pin": 3, "net": "3V3", "module_pin": "+", "how": "4397 socket of J10-3 onto the 3955 pin that rings out to the module VCC pad"},
+    {"j10_pin": 4, "net": "GND", "module_pin": "-", "how": "4397 socket of J10-4 onto the 3955 pin that rings out to the module GND pad"},
+    {"j10_pin": 2, "net": "GPIO43", "module_pin": null, "how": "4397 socket of J10-2 stays empty: cover it with tape"},
+    {"j10_pin": null, "net": "module T", "module_pin": "T", "how": "3955 pin of the module T stays unused: cover it with tape"}],
+   "identify": "Never trust wire colours: the Qwiic colour code (black GND, red 3V3, blue SDA, yellow SCL) does not describe the Waveshare J10 order. J10 side: board powered, GND = socket with continuity to the USB-C shell, 3V3 = 3.25-3.35 V, GPIO44 = the socket that drops to 0 V during the firmware wiring test (long press within 10 s of power-up). Module side: module unplugged from everything, continuity from each 3955 pin to the labelled VCC / GND / RX / TX pads.",
+   "length_mm": 350, "strain_relief": "the 3 joined pin pairs side by side under 30 mm of 3:1 heat-shrink (or two wraps of electrical tape), tied to an adhesive cable-tie mount on the lower shell floor; the Gravity plug latches in the module",
+   "reverse_risk": "JST SH and PH plugs are keyed; the only mistake possible is in the pin-to-socket join, which the multimeter steps rule out before the module is powered"},
+  {"id": "H2", "name": "lid sensor lead -> J1", "build": "helper / school: 2 solder joints (the 59155 has tinned leads only; no connector option exists)",
+   "parts": [{"mfr": "Littelfuse", "mpn": "59155-1-S-02-A", "what": "reed sensor, NO, 300 mm 26 AWG PVC UL1569 leads, tinned 6.4 mm"},
+             {"mfr": "Harwin", "mpn": "M50-3000745", "what": "1.27 mm 2x7 through-hole female socket, gold"}],
+   "joints": [{"socket_pin": 10, "net": "IO17", "from": "either reed lead (not polarised)"},
+              {"socket_pin": 6, "net": "GND", "from": "the other reed lead"}],
+   "length_mm": 300, "strain_relief": "1.5 mm heat-shrink over each soldered tail, a small bead of hot glue on the socket back only (not between pins); pin-1 corner marked with a white dot",
+   "reverse_risk": "socket keyed only by the pin-1 dot: plugged 180 deg the reed lands on J1-5 (IO6) and J1-9 (IO3) = no lid events, no damage (no power pins in use)"},
+  {"id": "H3", "name": "speaker leads -> DFR0534", "build": "helper / school: 2 solder joints on the module pads",
+   "parts": [{"mfr": "PUI Audio", "mpn": "AS02808MR-LW152-R", "what": "28 mm 8 ohm 1 W (1.5 W max) speaker, 152 mm leads"}],
+   "joints": [{"pad": "SP+", "from": "speaker + lead (red / marked +)"}, {"pad": "SP-", "from": "speaker - lead"}],
+   "length_mm": 152, "strain_relief": "leads looped once and held by the sound bracket lead slot"},
+  {"id": "P1", "name": "USB-C power and data", "build": "commercial, plug-in", "parts": [{"mfr": "Adafruit", "mpn": "4432"}, {"mfr": "Adafruit", "mpn": "4218"}]}
+ ],
+ "removed_since_v05": ["Soberton WT-1205 buzzer", "AO3400A", "1N4148", "100 ohm", "100 kohm", "Bourns MF-R075 PTC", "Phoenix 1935161 terminals", "Adafruit 1230 SOT-23 boards", "perfboard", "28 AWG wire kit"],
+ "protection_note": "v0.5 needed the PTC because the buzzer tapped USB_5V directly (J1-4, no current limit but the adapter). v0.6 takes no power from J1-4 at all: the sound module hangs on the board 3V3 rail, which the MP1605 buck already limits, so no extra fuse is needed. A short in H1 drops the 3V3 rail and resets the ESP32 until it is removed (HARDWARE UNVERIFIED: not tested on a real board).",
+ "routing": "H1: J10 plug beside the USB-C plug at the bottom edge of the board, out through the widened bezel cup opening, down the left deck cable hole (x -16), across the lower shell to the sound bracket (left side). H2: reed in the belt pocket (az -90), leads down outside the inner cover wall, under the floor to the right deck cable hole (x +16), up to J1 behind the cradle plate. H3: inside the sound bracket. Nothing crosses the lid sweep."
+}

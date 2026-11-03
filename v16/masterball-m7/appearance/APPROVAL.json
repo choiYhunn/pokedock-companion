@@ -1,0 +1,30 @@
+{
+ "approved": true,
+ "approved_by": "owner (choiYhunn)",
+ "date": "2026-11-04",
+ "approved_revision": "v0.6 sound revision: left-low speaker grille (C2 lower shell) + bezel cup opening for the J10 plug (C7), on top of the 2026-11-02 approval (variant A + night theme)",
+ "approved_commit": "6242433",
+ "how_to_approve": "Look at review_sheet.png and img/*.png. If the look is accepted, set approved=true with your name/date and commit.",
+ "chosen_ear_variant": "A",
+ "ear_choice_note": "Owner fixed variant A (ears on top of the lid) on 2026-11-02; B kept only as a reference.",
+ "scope_note": "Visual approval of the CAD look only. Physical fit (FK1-FK5 test prints, real board, magnets, hinge, tip test) is still UNVERIFIED and is a separate gate.",
+ "approved_print_sha256": {
+  "_note": "SHA-256 of the oriented print STLs in print/02_final at approved_commit. make_print_package.py keeps a plate in 02_final only while every part matches; a changed part moves its plate to 02_final_PENDING_owner_approval until the owner approves again (appearance/record_approval.py).",
+  "lid_lavender": "9a93431c807dd71130f531214d91299fdc0258a1b0a67a51037cebd4da54bff2",
+  "lower_shell_ivory": "a96c3da2243c884b55d055458c7a47e52e3af8ce07ed7ac3ae602e01cd215b5f",
+  "belt_black": "8823830bb6554bd77e99687ad20d131d32e65f353eda63364710f3dc1b4813a0",
+  "stop_block_black": "6d94391c88d22f179ee03a4bba60c8b421063f54c84fb403443828a2718dd5d6",
+  "ear_left_pink": "b3223815bd57bcd90408ef8934002b4c7dce5e164555a9b3cfc4cc9162405b5e",
+  "ear_right_pink": "49b8c23c2c81ed56f6e3018937615236ddec22ef049444c87943f7a85df62caf",
+  "button_white": "6aaef5890818e4cd99ac4b2f4503860f2b7e41ce32fcb380b46ccc4a5337a392",
+  "inner_cover_lavender": "233b009fbb7964862aa09bb4ba6f2df59307bdfb28c09823049f7e18acd0d410",
+  "rim_ring_lavender": "9a69ecd856df1e4557969fd33ab36729c736c2f163810be7ca5d8c86b4cf614d",
+  "lid_liner_lavender": "11aaf5dfc8ec3efb5d672d4c55dd61b148786e31d8f2afaf48bdc18cd73f0b5c",
+  "display_bezel_plum": "cd3efa7d9d107b51c6c30f47548d86de86639a653ac6e5bd4d738c52f256d5ef",
+  "display_cradle_plum": "99dfdd865c96e9c424e46545eaa726ae8f08f27a2c18919d356e617caed13116",
+  "button_ring_plum": "7800f7e6679d49b058f2143ef2a06da98b943421ac2dba8bd92504ebbb2f0ef1"
+ },
+ "internal_parts_no_appearance_approval": [
+  "sound_bracket_black"
+ ]
+}

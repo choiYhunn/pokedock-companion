@@ -1,0 +1,406 @@
+{
+ "checks": {
+  "1_mesh_validity": {
+   "belt_black": {
+    "watertight": true,
+    "volume_mm3": 35737.2
+   },
+   "button_ring_plum": {
+    "watertight": true,
+    "volume_mm3": 1784.3
+   },
+   "button_white": {
+    "watertight": true,
+    "volume_mm3": 1862.0
+   },
+   "display_bezel_plum": {
+    "watertight": true,
+    "volume_mm3": 16371.6
+   },
+   "display_cradle_plum": {
+    "watertight": true,
+    "volume_mm3": 18800.7
+   },
+   "ear_left_pink": {
+    "watertight": true,
+    "volume_mm3": 5344.7
+   },
+   "ear_right_pink": {
+    "watertight": true,
+    "volume_mm3": 5344.7
+   },
+   "inner_cover_lavender": {
+    "watertight": true,
+    "volume_mm3": 43540.0
+   },
+   "lid_lavender": {
+    "watertight": true,
+    "volume_mm3": 58216.6
+   },
+   "lid_liner_lavender": {
+    "watertight": true,
+    "volume_mm3": 11512.8
+   },
+   "lower_shell_ivory": {
+    "watertight": true,
+    "volume_mm3": 86623.1
+   },
+   "rim_ring_lavender": {
+    "watertight": true,
+    "volume_mm3": 1865.9
+   },
+   "sound_bracket_black": {
+    "watertight": true,
+    "volume_mm3": 2146.0
+   },
+   "stop_block_black": {
+    "watertight": true,
+    "volume_mm3": 684.1
+   }
+  },
+  "1_step_valid": {
+   "lid_lavender": true,
+   "lid_liner_lavender": true,
+   "ear_left_pink": true,
+   "ear_right_pink": true,
+   "belt_black": true,
+   "lower_shell_ivory": true,
+   "inner_cover_lavender": true,
+   "display_bezel_plum": true,
+   "display_cradle_plum": true,
+   "stop_block_black": true,
+   "rim_ring_lavender": true,
+   "button_ring_plum": true,
+   "button_white": true,
+   "sound_bracket_black": true
+  },
+  "2_closed_interference_mm3": {
+   "belt_black x button_ring_plum": 0.076,
+   "belt_black x button_white": 0.0,
+   "belt_black x dowel_pin_3x30": 6.925,
+   "belt_black x lid_lavender": -0.0,
+   "belt_black x rim_ring_lavender": -0.0,
+   "belt_black x stop_block_black": -0.0,
+   "board_012 x j10_sh_plug": 0.665,
+   "board_279 x usb_right_angle_adapter": 0.0,
+   "board_280 x j10_sh_plug": 0.659,
+   "board_285 x j1_socket_m50": 58.199,
+   "board_286 x j1_socket_m50": 58.199,
+   "button_ring_plum x lower_shell_ivory": 0.223,
+   "button_white x lower_shell_ivory": 0.002,
+   "dfr0534_gravity_plug x dfr0534_module": 0.0,
+   "display_bezel_plum x display_cradle_plum": 0.0,
+   "display_cradle_plum x inner_cover_lavender": 0.0,
+   "ear_left_pink x lid_lavender": 0.0,
+   "ear_right_pink x lid_lavender": 0.0,
+   "inner_cover_lavender x lower_shell_ivory": -0.0,
+   "lid_lavender x lid_liner_lavender": 0.0,
+   "lid_lavender x rim_ring_lavender": 0.0,
+   "lower_shell_ivory x sound_bracket_black": 0.0
+  },
+  "3_sweep_hits": {},
+  "3_lid_group_lowest_z_mm": 4.6,
+  "3_sweep_angles": [
+   0.0,
+   110.0,
+   111
+  ],
+  "4_stop_lid_vs_belt_mm3": {
+   "109": 0.0,
+   "110": 0.0,
+   "111": 2.249,
+   "112": 4.499
+  },
+  "5_stability": {
+   "0": {
+    "mass_g": 662.9,
+    "cog": [
+     -1.5,
+     -0.2,
+     -19.6
+    ],
+    "margin_to_foot_edge_mm": 29.0
+   },
+   "60": {
+    "mass_g": 662.9,
+    "cog": [
+     -1.5,
+     8.9,
+     -12.7
+    ],
+    "margin_to_foot_edge_mm": 21.7
+   },
+   "90": {
+    "mass_g": 662.9,
+    "cog": [
+     -1.5,
+     14.7,
+     -13.4
+    ],
+    "margin_to_foot_edge_mm": 16.3
+   },
+   "110": {
+    "mass_g": 662.9,
+    "cog": [
+     -1.5,
+     18.1,
+     -15.5
+    ],
+    "margin_to_foot_edge_mm": 13.2
+   },
+   "open_worst_lid+10%_base-10%": {
+    "cog": [
+     -1.6,
+     21.2,
+     -12.9
+    ],
+    "margin_mm": 10.3
+   },
+   "finger_push_limit_N": {
+    "nominal": 2.67,
+    "worst": 1.96,
+    "required": 1.5
+   },
+   "slide_at_1.5N_needed_mu": 0.167,
+   "lid_mass_g": 96.1,
+   "lid_over_centre_deg": 67.7,
+   "lid_hold_open_torque_Nmm": 50.0,
+   "stop_force_N_from_lid_weight": 10.31,
+   "estimated_masses_g": {
+    "board": 20.0,
+    "speaker_as02808": 5.0,
+    "dfr0534_module": 5.0,
+    "sound_cables": 4.0,
+    "usb_right_angle_adapter": 4.0,
+    "usb_extension_cable_4218": 25.0,
+    "screws_feet_wire": 8.0,
+    "reed_sensor_59155": 1.5,
+    "reed_actuator_57155": 1.5
+   }
+  },
+  "6_visible_active_area_fraction": {
+   "el15_az-30": 1.0,
+   "el15_az0": 1.0,
+   "el15_az30": 1.0,
+   "el25_az-30": 1.0,
+   "el25_az0": 1.0,
+   "el25_az30": 1.0,
+   "el35_az-30": 1.0,
+   "el35_az0": 1.0,
+   "el35_az30": 1.0,
+   "el45_az-30": 1.0,
+   "el45_az0": 1.0,
+   "el45_az30": 1.0,
+   "el60_az-30": 1.0,
+   "el60_az0": 1.0,
+   "el60_az30": 1.0
+  },
+  "6_readability": {
+   "clock digits (pd_digits_120, cap ~84 px)": {
+    "height_mm": 6.62,
+    "arcmin_at_450mm": 50.6
+   },
+   "timer digits (pd_ui_48)": {
+    "height_mm": 2.68,
+    "arcmin_at_450mm": 20.5
+   },
+   "partner sprite (Gengar home 222 x 189 px)": {
+    "height_mm": 14.91,
+    "arcmin_at_450mm": 113.8
+   },
+   "small label (pd_ui_40)": {
+    "height_mm": 2.21,
+    "arcmin_at_450mm": 16.9
+   }
+  },
+  "6_active_area": {
+   "diameter_mm": 36.75,
+   "note": "drawn at true size; ISO 9241-303 asks >= 16 arcmin for text"
+  },
+  "6b_seated_eye_visible_fraction": {
+   "lat-150_d450_h350 (el 32)": 1.0,
+   "lat-150_d450_h420 (el 38)": 1.0,
+   "lat-150_d450_h500 (el 43)": 1.0,
+   "lat-150_d550_h350 (el 27)": 1.0,
+   "lat-150_d550_h420 (el 32)": 1.0,
+   "lat-150_d550_h500 (el 38)": 1.0,
+   "lat-150_d700_h350 (el 22)": 1.0,
+   "lat-150_d700_h420 (el 26)": 1.0,
+   "lat-150_d700_h500 (el 31)": 1.0,
+   "lat+0_d450_h350 (el 32)": 1.0,
+   "lat+0_d450_h420 (el 38)": 1.0,
+   "lat+0_d450_h500 (el 43)": 1.0,
+   "lat+0_d550_h350 (el 27)": 1.0,
+   "lat+0_d550_h420 (el 32)": 1.0,
+   "lat+0_d550_h500 (el 38)": 1.0,
+   "lat+0_d700_h350 (el 22)": 1.0,
+   "lat+0_d700_h420 (el 26)": 1.0,
+   "lat+0_d700_h500 (el 31)": 1.0,
+   "lat+150_d450_h350 (el 32)": 1.0,
+   "lat+150_d450_h420 (el 38)": 1.0,
+   "lat+150_d450_h500 (el 43)": 1.0,
+   "lat+150_d550_h350 (el 27)": 1.0,
+   "lat+150_d550_h420 (el 32)": 1.0,
+   "lat+150_d550_h500 (el 38)": 1.0,
+   "lat+150_d700_h350 (el 22)": 1.0,
+   "lat+150_d700_h420 (el 26)": 1.0,
+   "lat+150_d700_h500 (el 31)": 1.0
+  },
+  "6b_lowest_full_view_eye_height_mm_at_550": 170,
+  "6b_closed_min_gap_pod_to_lid_mm": 3.75,
+  "8_lid_sensor": {
+   "closed_gap_mm": 1.7,
+   "operate_mm_datasheet_approx": 4.0,
+   "opens_at_lid_deg": 3.9,
+   "nearest_latch_magnet_mm": 58.5,
+   "speaker_magnet_mm": 38.9
+  },
+  "9_sound_unit": {
+   "grille_visible_from_seated_eyes": "0/27",
+   "speaker_seat_overlap_mm3": 0.0,
+   "j10_plug_vs_bezel_mm3": 0.0,
+   "j10_plug_vs_cradle_mm3": 0.0,
+   "sound_unit_top_z_mm": -14.9,
+   "clearance_to_inner_cover_floor_mm": 3.9,
+   "speaker_inside_outer_sphere": true
+  },
+  "7_print": {
+   "belt_black": {
+    "extent_mm": [
+     137.9,
+     144.5,
+     22.5
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 2024.0
+   },
+   "button_ring_plum": {
+    "extent_mm": [
+     34.0,
+     34.0,
+     7.7
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 0.0
+   },
+   "button_white": {
+    "extent_mm": [
+     23.6,
+     23.6,
+     8.1
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 389.0
+   },
+   "display_bezel_plum": {
+    "extent_mm": [
+     62.0,
+     62.0,
+     13.8
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 148.0
+   },
+   "display_cradle_plum": {
+    "extent_mm": [
+     76.8,
+     63.9,
+     42.5
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 473.0
+   },
+   "ear_left_pink": {
+    "extent_mm": [
+     23.8,
+     27.2,
+     17.6
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 12.0
+   },
+   "ear_right_pink": {
+    "extent_mm": [
+     23.8,
+     27.2,
+     17.6
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 12.0
+   },
+   "inner_cover_lavender": {
+    "extent_mm": [
+     122.8,
+     122.8,
+     18.7
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 10257.0
+   },
+   "lid_lavender": {
+    "extent_mm": [
+     137.6,
+     142.8,
+     63.8
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 8213.0,
+    "overhang_hidden_above_liner_mm2": 8189.0,
+    "overhang_at_hinge_mm2": 24.0,
+    "overhang_visible_when_open_mm2": 0.0
+   },
+   "lid_liner_lavender": {
+    "extent_mm": [
+     96.2,
+     96.2,
+     1.6
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 0.0
+   },
+   "lower_shell_ivory": {
+    "extent_mm": [
+     137.6,
+     137.6,
+     54.8
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 2306.0
+   },
+   "rim_ring_lavender": {
+    "extent_mm": [
+     131.2,
+     131.1,
+     1.2
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 0.0
+   },
+   "sound_bracket_black": {
+    "extent_mm": [
+     38.9,
+     39.0,
+     10.0
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 0.0
+   },
+   "stop_block_black": {
+    "extent_mm": [
+     13.2,
+     6.9,
+     9.2
+    ],
+    "fits_180_cube": true,
+    "overhang_gt45_area_mm2": 5.0
+   }
+  },
+  "7_print_notes": {
+   "lid_lavender": "inside dome above the liner (z > 46) and the knuckle underside only",
+   "display_cradle_plum": "plate back face 40 deg from vertical (no support)",
+   "belt_black": "3.5 mm ledge ring under the band (sits on the lower shell, hidden)"
+  }
+ },
+ "fail": [],
+ "result": "PASS"
+}

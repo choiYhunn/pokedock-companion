@@ -21,8 +21,12 @@ namespace ui {
 namespace {
 
 constexpr lv_coord_t kSize = PD_LCD_RES;
-const lv_color_t kIvory = lv_color_hex(0xFBF8F1), kInk = lv_color_hex(0x4A356D), kMuted = lv_color_hex(0x7D6C94),
-                 kTrack = lv_color_hex(0xE8DFEF), kAccent = lv_color_hex(0x7E5BB2), kPill = lv_color_hex(0xF1E6F7);
+// Night theme (m7-0.5.1, matches the owner's concept photo; dark pixels also cost the AMOLED almost no power).
+// WCAG contrast on kBg: kInk 14.6:1, kMuted 6.5:1, kAccent 6.8:1 (ink on pill 12.3:1). Sprites keep their transparency;
+// a mid-purple partner (e.g. Gengar ~#705898) is only ~2.8:1 on kBg: judge it on the real AMOLED.
+const lv_color_t kBg = lv_color_hex(0x1F1A3A), kInk = lv_color_hex(0xF3EEFF), kMuted = lv_color_hex(0xA99BCB),
+                 kTrack = lv_color_hex(0x3A3160), kAccent = lv_color_hex(0xB794F6), kPill = lv_color_hex(0x2D2650),
+                 kMsgBg = lv_color_hex(0x332B5A);
 
 Actions g_act{};
 lv_obj_t *scr, *stage, *clock_lbl, *sprite, *placeholder, *ring, *big_lbl, *unit_lbl, *status_lbl;
@@ -114,7 +118,7 @@ void menu_event(lv_event_t *e) {
   switch (id) {
     case 0: g_act.menu_timer(lp); break;
     case 1: g_act.menu_alarm(lp); break;
-    case 2: if (!lp) g_act.menu_brightness(); break;
+    case 2: g_act.menu_brightness(lp); break;
     case 3: if (!lp) g_act.menu_partner(); break;
     case 4: if (!lp) g_act.menu_pairing(); break;
     case 5: if (!lp) g_act.menu_time(); break;
@@ -321,7 +325,7 @@ void sprite_tick(lv_timer_t *) {
 void init(const Actions &a) {
   g_act = a;
   scr = lv_scr_act();
-  lv_obj_set_style_bg_color(scr, kIvory, 0);
+  lv_obj_set_style_bg_color(scr, kBg, 0);
   lv_obj_set_style_bg_opa(scr, LV_OPA_COVER, 0);
   lv_obj_clear_flag(scr, LV_OBJ_FLAG_SCROLLABLE);
   lv_obj_add_event_cb(scr, screen_event, LV_EVENT_ALL, nullptr);
@@ -391,7 +395,7 @@ void init(const Actions &a) {
   menu = lv_obj_create(scr);
   lv_obj_remove_style_all(menu);
   lv_obj_set_size(menu, kSize, kSize);
-  lv_obj_set_style_bg_color(menu, kIvory, 0);
+  lv_obj_set_style_bg_color(menu, kBg, 0);
   lv_obj_set_style_bg_opa(menu, LV_OPA_COVER, 0);
   lv_obj_add_flag(menu, LV_OBJ_FLAG_EVENT_BUBBLE);
   menu_btn[0] = menu_button(menu, 0, -92, -70, 170, 120);
@@ -406,7 +410,7 @@ void init(const Actions &a) {
   edit_box = lv_obj_create(scr);  // above the menu, below pairing and the message
   lv_obj_remove_style_all(edit_box);
   lv_obj_set_size(edit_box, kSize, kSize);
-  lv_obj_set_style_bg_color(edit_box, kIvory, 0);
+  lv_obj_set_style_bg_color(edit_box, kBg, 0);
   lv_obj_set_style_bg_opa(edit_box, LV_OPA_COVER, 0);
   lv_obj_clear_flag(edit_box, LV_OBJ_FLAG_SCROLLABLE);
   edit_title = label(edit_box, &pd_ui_40, kMuted);
@@ -432,7 +436,7 @@ void init(const Actions &a) {
   pair_box = lv_obj_create(scr);
   lv_obj_remove_style_all(pair_box);
   lv_obj_set_size(pair_box, kSize, kSize);
-  lv_obj_set_style_bg_color(pair_box, kIvory, 0);
+  lv_obj_set_style_bg_color(pair_box, kBg, 0);
   lv_obj_set_style_bg_opa(pair_box, LV_OPA_COVER, 0);
   lv_obj_t *pt = label(pair_box, &pd_ui_48, kAccent);
   lv_label_set_text(pt, "페어링");
@@ -448,7 +452,7 @@ void init(const Actions &a) {
   lv_obj_set_size(msg_box, 360, LV_SIZE_CONTENT);
   lv_obj_center(msg_box);
   lv_obj_set_style_radius(msg_box, 28, 0);
-  lv_obj_set_style_bg_color(msg_box, lv_color_hex(0xFAF1E7), 0);
+  lv_obj_set_style_bg_color(msg_box, kMsgBg, 0);
   lv_obj_set_style_border_width(msg_box, 0, 0);
   lv_obj_clear_flag(msg_box, LV_OBJ_FLAG_CLICKABLE);
   msg_lbl = label(msg_box, &pd_msg_30, kInk);

@@ -1,0 +1,1 @@
+{"harness_pins": true, "every_part_connected": true, "ptc_in_5v_path": true, "diode_cathode_to_5v": true, "gate_pulldown": true}

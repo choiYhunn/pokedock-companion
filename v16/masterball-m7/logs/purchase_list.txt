@@ -1,0 +1,50 @@
+PASS every line has a known status
+PASS line ids unique
+PASS DigiKey cart = KRW 83,435 (Markdown states the same and it is >= 60,000 = free shipping)
+PASS D1: total = unit x order, spare = order - used
+PASS D1: link is a product page or an exact DigiKey part-number lookup (never a keyword search)
+PASS D1: link matches the DigiKey part number
+PASS D1: listed in the Markdown table
+PASS D2: total = unit x order, spare = order - used
+PASS D2: link is a product page or an exact DigiKey part-number lookup (never a keyword search)
+PASS D2: link matches the DigiKey part number
+PASS D2: listed in the Markdown table
+PASS D3: total = unit x order, spare = order - used
+PASS D3: link is a product page or an exact DigiKey part-number lookup (never a keyword search)
+PASS D3: link matches the DigiKey part number
+PASS D3: listed in the Markdown table
+PASS D4: total = unit x order, spare = order - used
+PASS D4: link is a product page or an exact DigiKey part-number lookup (never a keyword search)
+PASS D4: link matches the DigiKey part number
+PASS D4: listed in the Markdown table
+PASS D5: total = unit x order, spare = order - used
+PASS D5: link is a product page or an exact DigiKey part-number lookup (never a keyword search)
+PASS D5: link matches the DigiKey part number
+PASS D5: listed in the Markdown table
+PASS D6: total = unit x order, spare = order - used
+PASS D6: link is a product page or an exact DigiKey part-number lookup (never a keyword search)
+PASS D6: link matches the DigiKey part number
+PASS D6: listed in the Markdown table
+PASS D7: total = unit x order, spare = order - used
+PASS D7: link is a product page or an exact DigiKey part-number lookup (never a keyword search)
+PASS D7: link matches the DigiKey part number
+PASS D7: listed in the Markdown table
+PASS D8: total = unit x order, spare = order - used
+PASS D8: link is a product page or an exact DigiKey part-number lookup (never a keyword search)
+PASS D8: link matches the DigiKey part number
+PASS D8: listed in the Markdown table
+PASS D9: total = unit x order, spare = order - used
+PASS D9: link is a product page or an exact DigiKey part-number lookup (never a keyword search)
+PASS D9: link matches the DigiKey part number
+PASS D9: listed in the Markdown table
+PASS every harness part is on the BUY list
+PASS DFR0534 on the BUY list
+PASS 57155-000 on the BUY list
+PASS SKU 30106 on the BUY list
+PASS no v0.5 buzzer/driver part on any BUY line
+PASS BLOCKED lines: 0 (and the Markdown says so)
+PASS every BUY_AFTER_MEASUREMENT line says what to measure
+PASS sound bracket screws (M2 PT) and module screws (M3 PT, hole d3.1) on the list
+PASS speaker on the list matches the CAD seat (d28, <= 6 mm)
+PASS v0.5 BOM files are archived with a do-not-use note
+PASS: 49/49 purchase list checks

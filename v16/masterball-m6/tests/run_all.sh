@@ -48,6 +48,8 @@ run anim_director bash -c "g++ -std=c++17 -O2 -Wall -Wextra -Werror -Icore tests
 run anim_parity bash -c "g++ -std=c++17 -O2 -Wall -Wextra -Werror tests/anim_dump.cpp -o build/anim_dump && node tests/anim_parity_test.mjs build/anim_dump"
 run protocol bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror tests/protocol_test.cpp -o build/proto && ./build/proto"
 run ble_e2e_bridge bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror tests/ble_bridge_host.cpp -o build/ble_bridge && node tests/ble_e2e_bridge_test.mjs build/ble_bridge"
+run lid_sensor bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror -I. tests/lid_sensor_test.cpp -o build/lid_sensor_test && build/lid_sensor_test"
+run audio_director bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror -I. tests/audio_director_test.cpp -o build/audio_director_test && build/audio_director_test"
 run harness_check "$PY" -X utf8 tests/harness_check.py
 run buzzer_consistency "$PY" -X utf8 tests/buzzer_consistency_check.py
 run doc_consistency "$PY" -X utf8 tests/doc_consistency_check.py

@@ -37,4 +37,16 @@ PASS RestoreNvs: settings back exactly
 PASS RestoreNvs with a wrong file: refused
 PASS UpdateAssets: pack written, manufacturing app untouched
 PASS InstallGift without -PrivateOut: refused
-PASS: 38/38 flash tool checks (mock esptool, not a real ball)
+PASS FirstInstall on a factory board: succeeds
+PASS FirstInstall: exact argv (merged at 0x0 + pack + slot)
+PASS FirstInstall: chip check and full factory backup first
+PASS FirstInstall: backup holds the factory firmware
+PASS FirstInstall: gift app at 0x10000
+PASS FirstInstall: table on the ball equals firmware/partitions.csv
+PASS after FirstInstall: Check identifies the gift app
+PASS FirstInstall on a PokeDock-layout ball: refused, nothing written
+PASS RestoreFull with the factory backup: whole 16 MiB back to factory
+PASS FirstInstall without -PrivateOut: merged written, assets erased
+PASS FirstInstall -Rotate180: rotate180 merged image
+PASS FirstInstall with a modified merged image: refused, nothing sent
+PASS: 50/50 flash tool checks (mock esptool, not a real ball)
