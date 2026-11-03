@@ -247,12 +247,13 @@
    "lat+150_d700_h500 (el 31)": 1.0
   },
   "6b_lowest_full_view_eye_height_mm_at_550": 170,
-  "6b_closed_min_gap_pod_to_lid_mm": 3.63,
+  "6b_closed_min_gap_pod_to_lid_mm": 3.66,
   "8_lid_sensor": {
    "closed_gap_mm": 1.7,
    "operate_mm_datasheet_approx": 4.0,
    "opens_at_lid_deg": 3.9,
-   "nearest_latch_magnet_mm": 58.5
+   "nearest_latch_magnet_mm": 58.5,
+   "speaker_magnet_mm": 38.9
   },
   "9_sound_unit": {
    "grille_visible_from_seated_eyes": "0/27",

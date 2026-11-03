@@ -4,6 +4,7 @@ PASS vendor ZIP SHA-256 == MFG_PIN
 PASS git diff vs PR #23 head readable
 PASS no M6 CAD / circuit / BOM / SOP / vendor file changed on the M7 branch
 M6 files this branch changes (firmware + flash tool only):
+    v16/masterball-m6/core/audio_director.hpp
     v16/masterball-m6/core/lid_sensor.hpp
     v16/masterball-m6/core/pokedock_core.hpp
     v16/masterball-m6/core/protocol.hpp
@@ -11,9 +12,11 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/firmware/main/Kconfig.projbuild
     v16/masterball-m6/firmware/main/app_main.cpp
     v16/masterball-m6/firmware/main/board.h
+    v16/masterball-m6/firmware/main/board_audio.c
     v16/masterball-m6/firmware/main/board_io.c
     v16/masterball-m6/firmware/main/ui.cpp
     v16/masterball-m6/firmware/main/ui.hpp
+    v16/masterball-m6/tests/audio_director_test.cpp
     v16/masterball-m6/tests/ble_e2e_bridge_test.mjs
     v16/masterball-m6/tests/check_manifest.py
     v16/masterball-m6/tests/flash_gift_test.ps1
@@ -21,6 +24,7 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/tests/gift_image_check_test.py
     v16/masterball-m6/tests/lid_sensor_test.cpp
     v16/masterball-m6/tests/logs/RUN_MANIFEST.json
+    v16/masterball-m6/tests/logs/audio_director.txt
     v16/masterball-m6/tests/logs/driver_board_check.txt
     v16/masterball-m6/tests/logs/firmware_build.txt
     v16/masterball-m6/tests/logs/flash_cli_compat.txt
@@ -54,7 +58,6 @@ M6 files this branch changes (firmware + flash tool only):
     v16/masterball-m6/tests/logs/ui/m6_clock_edit_minute.png
     v16/masterball-m6/tests/logs/ui/m6_clock_edit_month.png
     v16/masterball-m6/tests/logs/ui/m6_clock_edit_year.png
-    v16/masterball-m6/tests/logs/ui/m6_focus_done.png
     v16/masterball-m6/tests/logs/ui/m6_focus_minutes.png
     v16/masterball-m6/tests/logs/ui/m6_focus_mmss.png
     v16/masterball-m6/tests/logs/ui/m6_home.png

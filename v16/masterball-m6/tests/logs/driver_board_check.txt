@@ -3,19 +3,19 @@ C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\3fe2777c-12dd-
 {
  "clearance_mm": {
   "lower_shell_ivory": 0.8,
-  "upper_shell_purple": 24.49,
-  "bezel_black": 68.09,
-  "display_plate_petg": 65.6,
-  "buzzer": 9.83,
+  "upper_shell_purple": 24.48,
+  "bezel_black": 68.1,
+  "display_plate_petg": 65.63,
+  "buzzer": 9.84,
   "usb_breakout": 33.76,
   "steel_disc": 29.81,
   "socket_left": 65.53,
-  "socket_right": 84.04,
-  "m3x50_0": 34.95,
+  "socket_right": 83.94,
+  "m3x50_0": 34.88,
   "m3x50_1": 26.08,
-  "m3x50_2": 66.6,
-  "usb_screw_l": 38.62,
-  "usb_screw_r": 50.63
+  "m3x50_2": 66.62,
+  "usb_screw_l": 38.51,
+  "usb_screw_r": 50.6
  },
  "insertion_path_hits": [],
  "display_subassembly_xy_overlap": false,

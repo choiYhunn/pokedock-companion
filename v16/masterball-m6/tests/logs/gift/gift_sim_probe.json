@@ -53,7 +53,7 @@
  "fail": [],
  "private": false,
  "browser_fps": 64.0,
- "browser_decode_ms_avg": 0.037,
+ "browser_decode_ms_avg": 0.041,
  "home_rects": {
   "94": {
    "x": -110,
