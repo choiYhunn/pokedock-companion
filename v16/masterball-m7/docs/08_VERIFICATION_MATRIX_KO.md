@@ -26,7 +26,7 @@
 | 화면 시야: 앉은 눈 27곳 100 %, 닫힘 간극 | HOST PASS | 6, 6b |
 | 소리 유닛: 그릴이 앉은 눈 0/27에서 보임, 스피커 자리 간섭 0, J10 플러그와 베젤·크래들 간섭 0, 내부 커버 바닥까지 3.9 mm | HOST PASS | 9 |
 | 출력 체적 180 mm 이하, 열었을 때 보이는 서포트 0 mm² | HOST PASS | 7 |
-| 실제 부품 외형과 CAD | DFR0534(공식 치수도), PUI 스피커(데이터시트), 59155/57155(데이터시트), Waveshare(공식 STEP)는 HOST PASS. 실물 끼움은 **HARDWARE UNVERIFIED** (FK1–FK6) | `fitkit/FIT_MEASUREMENT_FORM.csv` |
+| 실제 부품 외형과 CAD | DFR0534(공식 치수도), PUI 스피커(데이터시트), 59155/57155(데이터시트), Waveshare(공식 STEP)는 HOST PASS. 실물 끼움은 **HARDWARE UNVERIFIED** (FK1–FK7) | `fitkit/FIT_MEASUREMENT_FORM.csv` |
 | 조립·분해 경로 | HOST PASS (문서 + CAD 순서) / **HARDWARE UNVERIFIED** | `docs/07` |
 | 힌지 반복 개폐, 실물 전도 | **HARDWARE UNVERIFIED** | FK2, S18 |
 
@@ -64,6 +64,9 @@
 
 | 항목 | 결과 | 근거 |
 |---|---|---|
-| 단일 목록, 하네스·CAD와 일치, 링크 = 제품 페이지 또는 DigiKey 품번 조회, DigiKey 합계 ₩94,849 (무료 배송), 기본 합계 ₩182,768, 미확정 판매처는 BUY NOW 아님, BLOCKED 0 | HOST PASS 61/61 | `logs/purchase_list.txt` |
+| 단일 목록, 하네스·CAD와 일치, 링크 = 제품 페이지 또는 DigiKey 품번 조회, DigiKey 권장 ₩82,126 (최소 ₩65,695 / 전체 예비 ₩104,869, 모두 무료 배송), 기본 합계 ₩168,285, 범퍼 D12 높이 2.5–3 안, 와셔 M1 실측 후 구매·A1 대안 미주문, 미확정 판매처는 BUY NOW 아님, 바로/실측 후/미확정 구분, BLOCKED 0 | HOST PASS 76/76 | `logs/purchase_list.txt` |
+| 무게추 대안 안정성 (Bossard 8028672 ×4 = 238.4 g, 12·13.2 mm; DIN 9021 4.6×3 = 13.8 mm) | HOST PASS (110° 여유 최악 10.4–10.5 mm, 손가락 누름 최악 1.98–2.01 N). 실물 무게추 **HARDWARE UNVERIFIED** | `logs/ballast_*.json` |
+| H1 A안 배선 그림 (모듈 실크 기준 최종 위치, T 비움, GPIO43 절연, 타이 2곳, P1–P3) | HOST PASS (그림 규칙 4/4). 재배열 실물 **HARDWARE UNVERIFIED** | `img/h1_option_a_wiring.png`, `logs/h1_option_a_drawing.txt` |
+| FK7 검정 M3×10 기계나사 시험편 (기둥 + 내부 커버 조각) | 출력 파일 생성 HOST PASS. 균열·체결력·머리 높이(F17–F20) **HARDWARE UNVERIFIED** | `print/01_fitkit_first/FK7_pillar_screw*` |
 | 가격·재고 (2026-11-08) | 판매 페이지에서 확인. 결제 직전 다시 확인 | `bom/M7_FINAL_PURCHASE_KO.md` |
 | 고정 M6 원본·제조 패키지 | HOST PASS (m6_frozen) | `logs/m6_frozen.txt` |

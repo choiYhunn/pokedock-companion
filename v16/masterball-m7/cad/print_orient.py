@@ -32,6 +32,7 @@ ROT = {
     "fit5_ear_right": ("ear", 1), "fit5_button_patch_lower": None,
     "sound_bracket_black": ("spk", None),   # ring face (toward the speaker) on the bed, standoffs up
     "fit7_sound_bracket": ("spk", None), "fit7_speaker_seat_lower": None,
+    "fit8_pillar_lower": None, "fit8_tray_patch": ("x", 180),   # cut face on the bed / floor top on the bed
 }
 MATERIAL = {
     "lid_lavender": "PLA matte lavender", "lid_liner_lavender": "PLA matte lavender",

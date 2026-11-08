@@ -261,6 +261,41 @@
   "fits_A1mini_180": true,
   "fits_256": true
  },
+ "fit8_pillar_lower": {
+  "plate": "FK7_pillar_screw",
+  "extent_mm": [
+   9.0,
+   9.0,
+   14.0
+  ],
+  "watertight": true,
+  "volume_cm3": 0.8,
+  "part_mass_g_100pct": 1.0,
+  "overhang_gt45_mm2": 0.0,
+  "fits_A1mini_180": true
+ },
+ "fit8_tray_patch": {
+  "plate": "FK7_pillar_screw",
+  "extent_mm": [
+   20.0,
+   20.0,
+   3.0
+  ],
+  "watertight": true,
+  "volume_cm3": 0.6,
+  "part_mass_g_100pct": 0.8,
+  "overhang_gt45_mm2": 252.0,
+  "fits_A1mini_180": true
+ },
+ "PLATE FK7_pillar_screw": {
+  "plate_extent_mm": [
+   37.0,
+   20.0,
+   14.0
+  ],
+  "fits_A1mini_180": true,
+  "fits_256": true
+ },
  "lid_lavender": {
   "plate": "C1_purple_lid",
   "extent_mm": [

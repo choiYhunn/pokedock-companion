@@ -21,3 +21,7 @@ F15,FK6 bracket,clamp ring on the seat with 2 x M2 PT x 6; speaker held; leads n
 F16,FK6 bracket + DFR0534,module holes over both standoffs (15 mm apart); M3 PT x 8 bites,caliper + screw,15.0 / pilot 2.5 / hole d3.1?,both start by hand,,,DFR_HOLES_B / DFR_HOLE_D / M3_PT_PILOT
 B5,real DFR0534,mounting hole diameter,drill-bit gauge,3.1 (assumed),>= 3.0 -> M3 PT; < 3.0 -> M2.5 PT,,,DFR_HOLE_D (BOM M8 / M12)
 B6,real board,which 2x7 header is silk-marked J1 (USB-C side to the left: left or right header),look at the silk,either,record,,,cable route (both deck holes exist)
+F17,FK7 pillar + tray patch,black M3 x 10 countersunk machine screw (N5) through the patch into the d2.5 pilot: drive slowly by hand with a #1 driver,count turns + feel,pilot 2.5 / boss d9,goes in by hand without a power tool; no squeak-and-stop,,,M3_PT_PILOT (2.5 -> 2.6 if too tight)
+F18,FK7 pillar,after tightening: no crack or white stress mark on the boss (10x loupe / phone macro),look,boss d9 wall 3.25,no crack,,,M3_PT_PILOT / pillar d9
+F19,FK7 patch,head seats flush in the countersink (straightedge across),straightedge + feeler,flush,0 to -0.3 mm (never proud),,,countersink in build_tray (Cone 1.7 -> 3.2)
+F20,FK7,remove and re-insert 3 times; still pulls down tight; hang 2 kg from the patch for 10 s,by hand + bag of 2 kg,-,holds 3 cycles + 2 kg,,,M3_PT_PILOT; if it fails use the white tapping screw goodsNo 5736

@@ -112,7 +112,25 @@
     "why": "locking plugs at both ends, no loose pin joint in the middle",
     "why_not_as_bought": "a straight cable cannot match: J10 numbers its pins RXD, TXD, 3V3, GND and the Gravity socket is T, R, -, +; in either orientation 3V3 / GND would land on the wrong module pins",
     "rework": "the helper releases the 4 PH crimp contacts (needle on the housing lance, or the JST EJ-PH extraction tool) and re-inserts them so that GND -> '-', 3V3 -> '+', GPIO44 -> 'R'; the GPIO43 wire's contact stays out of the housing, insulated with 1.5 mm heat-shrink; the 'T' cavity stays empty. No solder, no crimp tool.",
-    "mapping_from": "multimeter, not wire colours (docs/07 S3a-S3b)"
+    "mapping_from": "multimeter, not wire colours (docs/07 S3a-S3b)",
+    "pin1_note": "J10 and the DFR0534 Gravity socket have no published pin-1 position: the SH end is identified by measurement (docs/07 S3a), the PH end by the module silk letters T, R, -, + (official dimension drawing V1.0, top to bottom on the left edge).",
+    "final_ph_positions": {
+     "T": "empty",
+     "R": "GPIO44 (J10-1)",
+     "-": "GND (J10-4)",
+     "+": "3V3 (J10-3)"
+    },
+    "gpio43": "contact removed from the housing, covered by 1.5 mm heat-shrink reaching 5 mm past the contact, folded back along the cable and held by 3 mm heat-shrink or a tie",
+    "strain_relief": [
+     "tie 1: 20 mm behind the PH plug to an adhesive mount on the lower shell next to the module",
+     "tie 2: 40 mm from J10, under the deck cable hole"
+    ],
+    "pre_power_checks": [
+     "P1 cable alone: 4 wires end-to-end continuity; all 6 pairs of PH contacts open (no adjacent short)",
+     "P2 SH plugged into J10, board powered, PH end NOT on the module: '+' cavity minus '-' cavity = +3.25..3.35 V; a negative reading means reverse 3V3/GND - power off and re-pin",
+     "P2 'R' cavity 3.3 V idle and 0 V during the 60 s wiring test; 'T' cavity empty",
+     "P3 power off, plug onto the module: VCC-GND pads > 100 ohm; power on: VCC +3.3 V; TX pad connected to nothing"
+    ]
    },
    "option_b_hardening": [
     "push every male pin fully home (housings touching)",

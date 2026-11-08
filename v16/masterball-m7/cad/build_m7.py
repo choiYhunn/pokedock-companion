@@ -674,6 +674,12 @@ fit["fit5_button_patch_lower"] = lower & box(-22, 22, -BIG, -55, -28, 0)
 # FK6 (new, v0.6): speaker seat + grille patch of the lower shell and the real sound bracket
 fit["fit7_speaker_seat_lower"] = lower & spk_box(-24, 24, -24, 24, P.SPK_BOSS_S0 - 3.0, P.R + 1.0)
 fit["fit7_sound_bracket"] = sound_bracket
+# FK7 (2026-11-08): front deck pillar (top 14 mm, the full screw depth) + the matching inner-cover floor patch
+# with its countersink - tests the black M3 x 10 machine screw (N5) in the d2.5 pilot before the real shell
+_px, _py = polar_xy(P.DECK_SCREW_R, 270.0)
+_zt = P.DECK_TOP_Z - P.DECK_T
+fit["fit8_pillar_lower"] = lower & cyl_z(6.0, _zt - 14.0, _zt + 0.01, _px, _py)
+fit["fit8_tray_patch"] = deck & cyl_z(10.0, _zt - 4.0, P.DECK_TOP_Z + 1.0, _px, _py)
 for k, v in fit.items():
     export_fit(k, v)
 

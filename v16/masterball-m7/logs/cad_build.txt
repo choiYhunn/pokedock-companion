@@ -28,4 +28,6 @@ fit fit5_ear_right {'valid': True, 'volume_mm3': 5384.8, 'stl': 'repaired', 'bbo
 fit fit5_button_patch_lower {'valid': True, 'volume_mm3': 2908.7, 'stl': 'ok', 'bbox': [-22.0, -68.8, -28.0, 22.0, -55.81, -5.25]}
 fit fit7_speaker_seat_lower {'valid': True, 'volume_mm3': 8511.1, 'stl': 'ok', 'bbox': [-67.09, -29.42, -56.59, -31.7, 20.95, -12.03]}
 fit fit7_sound_bracket {'valid': True, 'volume_mm3': 2147.3, 'stl': 'ok', 'bbox': [-60.63, -23.79, -49.69, -36.55, 15.25, -16.32]}
+fit fit8_pillar_lower {'valid': True, 'volume_mm3': 821.9, 'stl': 'ok', 'bbox': [-4.5, -52.5, -25.0, 4.5, -43.5, -11.0]}
+fit fit8_tray_patch {'valid': True, 'volume_mm3': 622.2, 'stl': 'ok', 'bbox': [-10.0, -58.0, -11.0, 10.0, -38.0, -8.0]}
 done

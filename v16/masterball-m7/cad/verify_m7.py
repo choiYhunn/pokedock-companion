@@ -221,6 +221,13 @@ for k, m in printed.items():
 STEEL = 7.85e-3
 washer_hole = math.pi * 10.5 ** 2 * P.WEIGHT_H          # ISO 7093 M20: d1 = 21 mm
 mass["steel_weight"] = (STEEL * (float(purch["steel_weight"].volume) - washer_hole), purch["steel_weight"].center_mass)
+# optional ballast alternative (e.g. 4 x Bossard BN 84525 d60 x 3 = 238.4 g): M7_WEIGHT_G total mass,
+# M7_WEIGHT_STACK_H stack height from the pocket floor (CoG at half of it); unset = the design default
+if os.environ.get("M7_WEIGHT_G"):
+    _h = float(os.environ.get("M7_WEIGHT_STACK_H", P.WEIGHT_H))
+    _c = np.array([0.0, 0.0, P.BASE_Z + P.FLOOR_T + _h / 2])
+    mass["steel_weight"] = (float(os.environ["M7_WEIGHT_G"]), _c)
+    rep["checks"]["5_ballast_override"] = {"mass_g": float(os.environ["M7_WEIGHT_G"]), "stack_h_mm": _h}
 mass["dowel_pin_3x30"] = (STEEL * float(purch["dowel_pin_3x30"].volume), purch["dowel_pin_3x30"].center_mass)
 for k in ("magnet_lid_0", "magnet_lid_1", "magnet_belt_0", "magnet_belt_1"):
     mass[k] = (7.5e-3 * float(purch[k].volume), purch[k].center_mass)

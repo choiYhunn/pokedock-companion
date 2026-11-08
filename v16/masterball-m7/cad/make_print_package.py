@@ -28,6 +28,7 @@ PLATES = {
         "FK4_lid_sensor": ["fit6_sensor_belt", "fit6_sensor_lid"],
         "FK5_ear_button": ["fit5_ear_seat_lid", "fit5_ear_right", "fit5_button_patch_lower"],
         "FK6_sound_seat_bracket": ["fit7_speaker_seat_lower", "fit7_sound_bracket"],   # v0.6 speaker + DFR0534
+        "FK7_pillar_screw": ["fit8_pillar_lower", "fit8_tray_patch"],                    # black M3 x 10 into PLA
     },
     "02_final": {            # one plate per colour: no AMS needed
         "C1_purple_lid": ["lid_lavender"],

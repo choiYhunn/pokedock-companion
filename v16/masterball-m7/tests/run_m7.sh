@@ -27,6 +27,7 @@ run appearance_gate_metrics "$PY" -X utf8 cad/appearance_gate.py cad/out img app
 # its last verified files stay in cad/out_variant_B and appearance/variant_B; rebuild with M7_EAR_VARIANT=B
 run electrical "$PY" -X utf8 tests/m7_electrical_check.py "$M6/vendor_cache/schematic.pdf" electronics/harness_m7.json
 run wiring_pinmap "$PY" -X utf8 electronics/m7_wiring_v06.py img electronics/M7_PINMAP_KO.md
+run h1_option_a_drawing "$PY" -X utf8 electronics/h1_option_a_drawing.py img
 mkdir -p "$M6/build"
 run lid_sensor_firmware bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror -I $M6 $M6/tests/lid_sensor_test.cpp -o $M6/build/lid_sensor_test && $M6/build/lid_sensor_test"
 run audio_firmware bash -c "g++ -std=c++17 -O1 -Wall -Wextra -Werror -I $M6 $M6/tests/audio_director_test.cpp -o $M6/build/audio_director_test && $M6/build/audio_director_test"
