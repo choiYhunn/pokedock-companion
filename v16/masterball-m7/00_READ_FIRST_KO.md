@@ -37,7 +37,7 @@
 | 전자 | 배선도, 핀맵, 하네스 3개, 회로도 대조 32/32 | `docs/04`, `electronics/`, `img/m7_wiring_v06.png` |
 | 소리 팩 | 공개 TEST 음 생성, 비공개 선물 팩 빌더, 안전한 복사 도구 | `audio/README_KO.md` |
 | 펌웨어 | m7-0.6.0-gift 일반·180° 빌드, 소리 시험 36/36 | `../masterball-m6/core/audio_director.hpp`, `docs/05` |
-| 구매 | 단일 목록 49/49 검사 | `bom/M7_FINAL_PURCHASE_KO.md` |
+| 구매 | 단일 목록 61/61 검사 (구매처별, 2026-11-08 재확인) | `bom/M7_FINAL_PURCHASE_KO.md` |
 | 조립 | 무납땜 SOP, 도우미 작업지시서 | `docs/07`, `electronics/HELPER_BUILD_KO.md` |
 
 전체 검사 다시 돌리기: `PY=<python> bash tests/run_m7.sh` (결과 `logs/RUN_MANIFEST.json`).
@@ -45,8 +45,8 @@
 ## 2. 가장 먼저 할 일
 
 1. 외관은 모두 승인되었습니다(2026-11-04: 그릴, 베젤 J10 구멍).
-2. **주문**: `bom/M7_FINAL_PURCHASE_KO.md` §6 순서대로 합니다.
-   - DigiKey 장바구니 D1–D9(₩83,435, 무료 배송), Waveshare SKU 30106, 국내 규격품
+2. **주문**: `bom/M7_FINAL_PURCHASE_KO.md` §8 순서대로 합니다.
+   - DigiKey 장바구니 D1–D11(₩94,849, 무료 배송), Waveshare SKU 30106, 나사코리아 나사, 나비엠알오 힌지 핀, 판매처 미확정 규격품(M20 대와셔 등)
    - 결제는 직접 합니다.
 3. **도우미에게 전달**: `electronics/HELPER_BUILD_KO.md` (납땜 4점).
 4. **시험편 출력**: `print/01_fitkit_first/` FK1–FK6. 결과는 `fitkit/FIT_MEASUREMENT_FORM.csv`에 적습니다.
@@ -63,7 +63,7 @@
 | 열었을 때 넘어지지 않나? | **계산상 넘어지지 않음.** 110°에서 무게중심이 발 안쪽 13.2 mm(최악 10.3 mm). 화면 중앙 수직 누름 2.67 N(최악 1.96 N, 목표 1.5 N). 총질량 약 663 g. **실물 전도 시험 필요** | 같은 파일 5 |
 | 스피커 구멍이 보이나? | 앉은 눈높이 27곳에서는 안 보입니다(0/27). 옆이나 아래에서는 보입니다. 의뢰인 승인(2026-11-04) | 같은 파일 9 |
 | 바로 다 살 수 있나? | **BLOCKED 0건.** 예외는 M2.5 나사 하나(BUY AFTER MEASUREMENT)로, 모듈 구멍이 3 mm보다 작을 때만 필요합니다. | `bom/M7_FINAL_PURCHASE_KO.md` |
-| 제작비는? | 약 ₩150,000 + 보드 배송비. 공구와 충전기가 있으면 약 ₩120,000입니다. 필라멘트는 학교 제공을 가정합니다. | 같은 파일 §4 |
+| 제작비는? | 기본 합계 약 ₩186,068(나사코리아 배송비 포함) + Waveshare·나비엠알오 배송비. 멀티미터·충전기가 없으면 +약 ₩30,000(기본 합계에 넣지 않음). 필라멘트는 학교 제공을 가정합니다. | 같은 파일 §1 |
 
 ## 4. 핵심 치수
 

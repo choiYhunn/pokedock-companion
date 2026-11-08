@@ -23,7 +23,8 @@ def check(name, cond, detail=""):
         fails.append(name)
 
 
-STATUS = {"BUY_NOW", "BUY_NOW (if not owned)", "BUY_AFTER_MEASUREMENT", "BLOCKED", "OPTIONAL", "ALTERNATIVE_NOT_ORDERED", "REMOVED"}
+STATUS = {"BUY_NOW", "BUY_AFTER_MEASUREMENT", "BLOCKED", "OPTIONAL", "ALTERNATIVE_NOT_ORDERED", "REMOVED",
+          "SPEC_SELLER_NOT_CONFIRMED", "TOOL_IF_NOT_OWNED"}
 check("every line has a known status", all(r["status"] in STATUS for r in rows), [r["line"] for r in rows if r["status"] not in STATUS])
 check("line ids unique", len({r["line"] for r in rows}) == len(rows))
 buy = [r for r in rows if r["status"].startswith("BUY_NOW")]
@@ -33,9 +34,9 @@ check(f"DigiKey cart = KRW {total:,} (Markdown states the same and it is >= 60,0
       total >= 60000 and f"₩{total:,}" in md, total)
 for r in dk:
     q, spare = int(r["qty_order"]), int(r["qty_spare"])
-    unit = int(re.sub(r"\D", "", r["unit_price"]))
+    unit = float(re.search(r"[0-9.]+", r["unit_price"].replace(",", "")).group())
     check(f"{r['line']}: total = unit x order, spare = order - used",
-          int(r["line_total_krw"]) == unit * q and spare == q - int(r["qty_used"]), r)
+          int(r["line_total_krw"]) == round(unit * q) and spare == q - int(r["qty_used"]), r)
     link = r["link"]
     ok = link.startswith("https://www.digikey.kr/ko/products/detail/") or re.fullmatch(
         r"https://www\.digikey\.kr/ko/products/result\?keywords=[0-9A-Z-]+-ND", link) is not None
@@ -43,6 +44,18 @@ for r in dk:
     pn = re.search(r"\(DigiKey ([0-9A-Z-]+-ND)", r["mpn_sku"])
     check(f"{r['line']}: link matches the DigiKey part number", pn is not None and (pn.group(1) in link or "/detail/" in link), r["mpn_sku"])
     check(f"{r['line']}: listed in the Markdown table", r["mpn_sku"].split(" (")[0].split(" ")[-1] in md or r["mpn_sku"].split(" ")[0] in md)
+other = [r for r in buy if r["supplier"] != "DigiKey Korea"]
+check("every non-DigiKey BUY_NOW line links a product page (not a search page)",
+      all(re.match(r"https://www\.(waveshare\.com/esp32|nasakorea\.com/goods/goods_view\.php\?goodsNo=\d+|navimro\.com/g/\d+/)", r["link"])
+          for r in other), [(r["line"], r["link"]) for r in other])
+check("unconfirmed sellers are never BUY_NOW (U lines say SPEC_SELLER_NOT_CONFIRMED)",
+      all(r["status"] == "SPEC_SELLER_NOT_CONFIRMED" for r in rows if r["line"].startswith("U")))
+check("tools and the charger are outside the basic total (TOOL_IF_NOT_OWNED)", all(r["status"] == "TOOL_IF_NOT_OWNED" for r in rows if r["line"].startswith("T")))
+w1 = 39000                                   # USD 26.99 board, converted (Waveshare freight separate)
+basic_md = sum(int(r["line_total_krw"]) for r in rows if r["status"] in ("BUY_NOW", "SPEC_SELLER_NOT_CONFIRMED")
+               and r["line_total_krw"].isdigit()) + w1
+check(f"basic total = KRW {basic_md:,} (DigiKey + Waveshare + nasakorea + NAVIMRO + unconfirmed specs) is stated in the Markdown",
+      f"약 ₩{basic_md:,}" in md, basic_md)
 parts = {p["mpn"] for h in harness["harnesses"] for p in h["parts"]}
 bom_text = " ".join(r["mpn_sku"] for r in buy)
 check("every harness part is on the BUY list", all(p in bom_text for p in parts), sorted(p for p in parts if p not in bom_text))

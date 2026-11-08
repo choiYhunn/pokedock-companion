@@ -39,7 +39,7 @@
 | SPI flash·USB 다운로드 간섭 없음 (콘솔 USB-Serial-JTAG, 다운로드는 보드 USB, J10과 무관) | HOST PASS (설정 + 회로도) | `docs/04` §3 |
 | 전원 예산: 3V3 최대 0.74 A ≤ MP1605 2 A의 80 %, USB 입력 약 0.63 A | HOST PASS (계산) | `logs/electrical.txt` |
 | 3.3 V 신호 호환 (모듈 전원 = 같은 3V3, 모듈 출력 미연결), 공통 GND | HOST PASS (회로 논리) | `docs/04` §4 |
-| 하네스 규칙 (교차 TX→RX, 5 V 없음, J10-2 비움, H1 무납땜, 납땜 4점) | HOST PASS | `logs/wiring_pinmap.txt` |
+| 하네스 규칙 (교차 TX→RX, 5 V 없음, J10-2 비움, H1 무납땜, 납땜 4점) + H1 A안(4424 재배열)·B안 합격 기준 | HOST PASS (실물 합격 기준 1–5는 HARDWARE UNVERIFIED) | `logs/wiring_pinmap.txt` |
 | 3V3 실제 흔들림, 리셋 여부, 단락 시 동작 | **HARDWARE UNVERIFIED** (G-A3) | |
 | J10 실제 핀 순서, 플러그 끼움 | **HARDWARE UNVERIFIED** (G-A1, `docs/07` S3a) | |
 | 센서 실제 동작 (닫힘·열림) | **HARDWARE UNVERIFIED** (FK4, S3d) | |
@@ -64,6 +64,6 @@
 
 | 항목 | 결과 | 근거 |
 |---|---|---|
-| 단일 목록, 하네스·CAD와 일치, 링크 = 제품 페이지 또는 DigiKey 품번 조회, DigiKey 합계 ₩83,435 (무료 배송), BLOCKED 0 | HOST PASS 49/49 | `logs/purchase_list.txt` |
-| 가격·재고 (2026-11-04) | 판매 페이지에서 확인. 결제 직전 다시 확인 | `bom/M7_FINAL_PURCHASE_KO.md` |
+| 단일 목록, 하네스·CAD와 일치, 링크 = 제품 페이지 또는 DigiKey 품번 조회, DigiKey 합계 ₩94,849 (무료 배송), 기본 합계 ₩182,768, 미확정 판매처는 BUY NOW 아님, BLOCKED 0 | HOST PASS 61/61 | `logs/purchase_list.txt` |
+| 가격·재고 (2026-11-08) | 판매 페이지에서 확인. 결제 직전 다시 확인 | `bom/M7_FINAL_PURCHASE_KO.md` |
 | 고정 M6 원본·제조 패키지 | HOST PASS (m6_frozen) | `logs/m6_frozen.txt` |
