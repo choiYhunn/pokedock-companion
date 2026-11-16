@@ -54,8 +54,10 @@
 | 소리 팩 도구 (TEST 팩, 선물 팩 길이 검사, MP3 길이, PS 5.1 문법, 저장소에 소리 파일 없음) | HOST PASS 10/10 | `logs/sound_pack_tools.txt` |
 | BLE `audio` / `audio_test`, 상태 `vol`/`cls` (MTU 안) | HOST PASS (프로토콜 41/41, BLE 다리 16/16) | M6 strict |
 | 뚜껑 센서 디바운스·고장 대비 | HOST PASS 14/14 | `logs/lid_sensor_firmware.txt` |
-| 일반 / 180° 빌드 m7-0.6.1-gift | HOST PASS (ESP-IDF 5.3.2) | M6 strict `firmware_build`, `idf_build_wsl.sh rotate180` |
+| 일반 / 180° 빌드 m7-0.6.6-gift | HOST PASS (ESP-IDF 5.3.2) | M6 strict `firmware_build`, `idf_build_wsl.sh rotate180` |
 | 보드 단독 실기 (2026-11-16): 인식, 공장 백업 2회 해시 일치, FirstInstall + 0.6.1 InstallGift, 화면·터치·시계·알람·타이머·파트너·밝기, BLE 광고, DFR0534에 시험음 16개 순서대로 저장 | **HARDWARE PASS (보드·모듈 각각 단독)**. 소리 재생·뚜껑 센서·BLE 페어링은 NOT TESTED | `logs/HW_BRINGUP_20261116_KO.md` |
+| 폰 연결 시 LVGL 멈춤 수정(0.6.5) + PC BLE 반복 40분: 2,108 명령 ACK, 상태 불일치 0, 멈춤·재시작 0 | **HARDWARE PASS (약 1시간)**. 24시간 시험은 미실시 | `logs/HW_BRINGUP_20261116_KO.md` §3 |
+| 출력 시간·재료 (Bambu Studio CLI 실제 슬라이스, X1C·H2S) | 추정 PASS: 시험편 2시간 48분 / 77 g, 본 출력 11시간 8분 / 355 g | `logs/print_estimate/`, `docs/11` |
 | M6 부저 빌드 옵션 (`PD_AUDIO_BUZZER`) | HOST PASS (빌드) | 이 문서 작성 시 별도 빌드 |
 | M6 회귀 전체 (타이머, 알람, 팬텀 애니메이션, BLE, UI 시뮬레이터, 플래시 도구) | HOST PASS (M6 strict) | `../masterball-m6/tests/logs/RUN_MANIFEST.json` |
 | 모듈이 없을 때 정상 동작 | HOST PASS (송신 전용 설계 + 시험: 응답을 기다리는 코드 없음) / 실보드 **HARDWARE UNVERIFIED** | |
