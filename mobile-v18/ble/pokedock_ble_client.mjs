@@ -37,6 +37,9 @@ export class PokeDockClient {
       throw new Error(`MTU ${mtu} < ${MIN_MTU}: phone/OS refused a large enough MTU`);
     }
     this.connected = true;
+    // The ball may have restarted while we were away (power cut, firmware update): its revision counter
+    // starts again at 1, so the old revision must not mark every new state as stale (2026-11-16, real board).
+    this.state = null;
     await this.refresh();
     // No RTC backup cell: after any power cut the ball's clock is untrusted until a phone syncs it.
     const c = this.state.clock;

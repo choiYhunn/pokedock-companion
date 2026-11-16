@@ -153,6 +153,23 @@ await test('unauthenticated link → auth NACK with a readable Korean hint', asy
   link.authenticated = true;
 });
 
+// 2026-11-16 real board: after the ball restarted (power cut / firmware update) the app kept the old,
+// higher state revision and ignored every new state as "stale" - the brightness slider stopped moving.
+await test('ball restart (revision counter starts again) → app shows the new state after reconnecting', async () => {
+  for (let i = 0; i < 3; i++) await app.setBrightness(30 + i);
+  const before = app.state.rev;
+  const dev2 = new Device();                     // a freshly booted engine: rev starts at 1 again
+  await dev2.cmd('', (l) => l.startsWith('READY'));
+  link.drop();
+  await wait(20);
+  link.dev = dev2;
+  await app.setBrightness(77);                   // reconnects to the restarted ball
+  await wait(30);
+  assert.ok(app.state.rev < before, `new revision ${app.state.rev} should restart below ${before}`);
+  assert.equal(app.state.brightness, 77);
+  dev2.close();
+});
+
 dev.close();
 for (const r of results) console.log(r.join('  '));
 const failed = results.filter((r) => r[0] === 'FAIL').length;
