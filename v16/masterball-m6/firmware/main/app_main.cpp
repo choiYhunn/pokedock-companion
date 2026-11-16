@@ -461,7 +461,6 @@ void main_loop(void *) {
 
     const bool busy = v.ringing || v.phase == FocusPhase::kRunning || v.passkey;
     if (g_screen_on && !busy && now - g_last_touch_ms > kScreenOffMs) g_screen_on = false;
-    const bool night = v.clock_trusted && (v.hh >= 23 || v.hh < 7);
     if (board_lvgl_lock(100)) {
       // lid sensor: closing turns only the display off; the core (clock, alarm, focus timer) keeps running
       g_lid.set_enabled(g_core.lid_sensor());
@@ -483,7 +482,9 @@ void main_loop(void *) {
       ui::update(v);
       const bool want = g_screen_on && g_lid.screen_allowed(now);
       if (g_display_shown != want) ui::set_screen_on(g_display_shown = want);
-      board_display_brightness(uint8_t(night && !v.ringing ? (v.brightness < 15 ? v.brightness : 15) : v.brightness));
+      // 0.6.6 (owner, 2026-11-16): no night cap - the chosen brightness applies at every hour (the night
+      // theme still changes only the colours)
+      board_display_brightness(uint8_t(v.brightness));
       if (g_persist_req.exchange(false)) {
         board_display_wait_idle(200);
         Lock l;
