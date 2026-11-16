@@ -74,14 +74,27 @@ static uint8_t read_panel_id(void) {
   return v;
 }
 
+static volatile uint32_t s_flush_calls, s_flush_done, s_param_calls, s_param_done;
+void board_display_wait_idle(int timeout_ms) {
+  const int64_t until = esp_timer_get_time() + (int64_t)timeout_ms * 1000;
+  while (s_flush_done != s_flush_calls && esp_timer_get_time() < until) vTaskDelay(1);
+}
+
+void board_display_diag_print(void) {
+  ESP_LOGE(TAG, "diag flush calls=%lu done=%lu, param calls=%lu done=%lu", (unsigned long)s_flush_calls,
+           (unsigned long)s_flush_done, (unsigned long)s_param_calls, (unsigned long)s_param_done);
+}
+
 static bool on_flush_done(esp_lcd_panel_io_handle_t io, esp_lcd_panel_io_event_data_t *e, void *ctx) {
   (void)io;
   (void)e;
+  s_flush_done++;
   lv_disp_flush_ready((lv_disp_drv_t *)ctx);
   return false;
 }
 
 static void flush_cb(lv_disp_drv_t *drv, const lv_area_t *a, lv_color_t *px) {
+  s_flush_calls++;
   const int off = (s_id == PD_PANEL_CO5300) ? 6 : 0;
   esp_lcd_panel_draw_bitmap((esp_lcd_panel_handle_t)drv->user_data, a->x1 + off, a->y1, a->x2 + off + 1, a->y2 + 1, px);
 }
@@ -132,11 +145,16 @@ void board_lvgl_unlock(void) { xSemaphoreGiveRecursive(s_lvgl_mux); }
 
 void board_display_brightness(uint8_t percent) {
   if (percent > 100) percent = 100;
+  static int s_last = -1;  // 0.6.4: send only on change (the main loop used to send it every 250 ms)
+  if (percent == s_last) return;
+  s_last = percent;
   uint8_t v = (uint8_t)((percent * 255 + 50) / 100);
   // QSPI panels need the write-command opcode (0x02) and the command in bits 8-15, as the
   // esp_lcd_sh8601 driver's own tx_param() does. A raw 0x51 never reaches the panel, which then keeps
   // the 0x51 = 0x00 from the init table: black screen on real hardware (found 2026-11-16, m7-0.6.1).
+  s_param_calls++;
   esp_lcd_panel_io_tx_param(s_io, (int)((0x02u << 24) | (0x51u << 8)), &v, 1);
+  s_param_done++;
 }
 
 void board_display_power(bool on) { esp_lcd_panel_disp_on_off(s_panel, on); }
@@ -146,8 +164,12 @@ pd_panel_t board_display_init(lv_disp_t **out_disp) {
   s_id = (id == PD_PANEL_SH8601) ? PD_PANEL_SH8601 : PD_PANEL_CO5300;
   ESP_LOGI(TAG, "panel RDID=0x%02x -> %s", id, s_id == PD_PANEL_SH8601 ? "SH8601" : "CO5300");
 
-  const spi_bus_config_t bus = SH8601_PANEL_BUS_QSPI_CONFIG(PD_PIN_LCD_CLK, PD_PIN_LCD_D0, PD_PIN_LCD_D1, PD_PIN_LCD_D2,
-                                                            PD_PIN_LCD_D3, PD_LCD_RES * 80 * sizeof(lv_color_t));
+  spi_bus_config_t bus = SH8601_PANEL_BUS_QSPI_CONFIG(PD_PIN_LCD_CLK, PD_PIN_LCD_D0, PD_PIN_LCD_D1, PD_PIN_LCD_D2,
+                                                      PD_PIN_LCD_D3, PD_LCD_RES * 80 * sizeof(lv_color_t));
+  // 0.6.5: the transfer-done interrupt runs on core 1 with the LVGL task, away from the BLE controller on
+  // core 0. On the real board (2026-11-16) a color transfer's completion was lost while a phone was
+  // connected (flush calls = done + 1) and LVGL then waited forever for the SPI bus.
+  bus.isr_cpu_id = ESP_INTR_CPU_AFFINITY_1;
   ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST, &bus, SPI_DMA_CH_AUTO));
   const esp_lcd_panel_io_spi_config_t io_cfg = SH8601_PANEL_IO_QSPI_CONFIG(PD_PIN_LCD_CS, on_flush_done, &s_drv);
   ESP_ERROR_CHECK(esp_lcd_new_panel_io_spi((esp_lcd_spi_bus_handle_t)SPI2_HOST, &io_cfg, &s_io));

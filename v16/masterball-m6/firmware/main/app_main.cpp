@@ -12,7 +12,9 @@
 #include "clock_set.hpp"
 #include "lid_sensor.hpp"
 #include "board.h"
+#include "esp_debug_helpers.h"
 #include "esp_log.h"
+#include "esp_system.h"
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
@@ -53,6 +55,8 @@ std::atomic<uint32_t> g_passkey{0};
 std::atomic<bool> g_ble_connected{false};
 std::atomic<int> g_vcc_mv{5000};
 int64_t g_last_touch_ms = 0;
+int64_t g_lvgl_ok_ms = 0;               // last time the main loop got the LVGL lock (stall watchdog)
+constexpr int64_t kLvglStallMs = 8000;  // the UI never holds the lock this long (decode < 1 ms, flush < 50 ms)
 bool g_screen_on = true;       // wanted by the UI (idle timeout, manual screen-off, wake on touch)
 bool g_display_shown = true;   // what the panel actually shows (g_screen_on AND the lid allows it)
 LidSensor g_lid;
@@ -96,7 +100,15 @@ Env g_env;
 ProtocolEngine g_engine(g_core, g_env);
 
 // ---- NVS persistence ----------------------------------------------------------------------------
-void Env::persist() {
+// 0.6.4: NVS writes disable the flash cache on both cores. Done from the BLE host task (core 0) they
+// could land in the middle of an LVGL display transfer on core 1, and on the real board (2026-11-16) the
+// LVGL task then waited forever in spi_device_acquire_bus (screen frozen, only with a phone connected).
+// Env::persist() therefore only raises a request; the main loop writes while it holds the LVGL lock and
+// the panel's SPI DMA is idle (persist_now).
+std::atomic<bool> g_persist_req{false};
+void Env::persist() { g_persist_req = true; }
+
+void persist_now() {  // g_mux held, LVGL lock held, display SPI idle
   nvs_handle_t h;
   if (nvs_open("pd", NVS_READWRITE, &h) != ESP_OK) return;
   nvs_set_i32(h, "partner", g_core.partner());
@@ -392,6 +404,7 @@ void main_loop(void *) {
   int vcc_hist[6] = {5000, 5000, 5000, 5000, 5000, 5000};
   int vcc_i = 0;
   bool usb_low = false;
+  g_lvgl_ok_ms = mono_ms();
   for (;;) {
     const int64_t now = mono_ms();
     if (now - last_vcc > 5000) {  // 6 samples x 5 s = 30 s moving average, with hysteresis
@@ -409,7 +422,7 @@ void main_loop(void *) {
     {
       Lock l;
       ev = g_core.tick(now, g_env.local_abs_minute());
-      if (g_core.take_persist_dirty()) g_env.persist();
+      if (g_core.take_persist_dirty()) g_persist_req = true;
       if (ev) g_engine.bump();
       v.clock_trusted = g_clock_trusted;
       if (v.clock_trusted) {
@@ -471,7 +484,22 @@ void main_loop(void *) {
       const bool want = g_screen_on && g_lid.screen_allowed(now);
       if (g_display_shown != want) ui::set_screen_on(g_display_shown = want);
       board_display_brightness(uint8_t(night && !v.ringing ? (v.brightness < 15 ? v.brightness : 15) : v.brightness));
+      if (g_persist_req.exchange(false)) {
+        board_display_wait_idle(200);
+        Lock l;
+        persist_now();
+      }
       board_lvgl_unlock();
+      g_lvgl_ok_ms = now;
+    } else if (now - g_lvgl_ok_ms > kLvglStallMs) {
+      // 2026-11-16 real board: the LVGL task stopped for good minutes after a phone connected (sprite and
+      // touch logs stop, this loop keeps running). Print every task's backtrace for the root cause, then
+      // restart so the ball recovers by itself (the RTC keeps the time across a software restart).
+      ESP_LOGE(TAG, "LVGL stalled for %lld ms: backtraces of all tasks follow, then restart", (long long)(now - g_lvgl_ok_ms));
+      board_display_diag_print();
+      esp_backtrace_print_all_tasks(24);
+      vTaskDelay(pdMS_TO_TICKS(300));
+      esp_restart();
     }
     {
       Lock l;

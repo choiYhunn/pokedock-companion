@@ -47,6 +47,8 @@ void board_i2c_init(void);
 pd_panel_t board_display_init(lv_disp_t **out_disp);
 void board_display_brightness(uint8_t percent);  // 0..100 via DCS 0x51
 void board_display_power(bool on);
+void board_display_diag_print(void);    // flush / done / param counters (printed by the stall watchdog)
+void board_display_wait_idle(int timeout_ms);  // returns when every queued panel transfer has completed
 bool board_lvgl_lock(int timeout_ms);
 void board_lvgl_unlock(void);
 
