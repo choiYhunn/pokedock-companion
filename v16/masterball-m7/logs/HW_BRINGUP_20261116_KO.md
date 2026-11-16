@@ -13,7 +13,7 @@
 | M7 설치 | **PASS (2회차)** | 1회차 FirstInstall m7-0.6.0: 쓰기·검증·테이블 확인은 통과했지만 화면이 까맸습니다. 2회차 InstallGift m7-0.6.1(밝기 명령 수정): 쓰기·검증 통과, 부트로더·테이블·NVS 변경 없음 |
 | 화면 및 터치 | **PASS** | 0.6.1에서 의뢰인이 육안으로 확인. 로그: panel RDID=0xff → CO5300, touch FT(chip 0x64), 애니메이션 27 Hz |
 | 시계·타이머·알람 | **PASS** | 의뢰인 확인: 기기에서 시계 설정, 2분 뒤 알람(탭 = 5분 뒤, 길게 = 끄기), 집중 타이머 시작·정지, 파트너·밝기 변경 |
-| BLE 연동 | **부분** | 광고 PASS: `PokeDock-MB`, 서비스 UUID `edc00001-8148-4b41-9a3e-7bd93d2ab771`, RSSI −38. 페어링(화면 6자리 번호)과 명령은 휴대폰 앱이 필요해 NOT TESTED |
+| BLE 연동 | **부분** | 광고 PASS: `PokeDock-MB`, 서비스 UUID `edc00001-8148-4b41-9a3e-7bd93d2ab771`, RSSI −38. 페어링(화면 6자리 번호)과 명령은 휴대폰 앱이 필요해 NOT TESTED<br>추가(같은 날): V18 앱 BLE 코드가 화면 버튼까지 연결돼 있음을 확인했고, 실제 M7 0.6.1 엔진과의 브리지 시험 9/9 PASS. APK 1.8.1 빌드. **Android 기기가 PC에 연결되지 않아 무선 실기는 NOT TESTED** (`docs/10_PHONE_BLE_TEST_KO.md`). iPhone 웹앱은 BLE 불가로 평가 |
 | MP3 파일 저장 | **PASS** | DFR0534 micro-USB → E:(USB 이름 "JQ8400 uart mp3 player", FAT 8 MB, 이동식). 공장 샘플 16개(01–08.mp3, 09–16.wav, 1,059,712 B)를 비공개 폴더에 백업(해시 일치) → `copy_sounds_windows.ps1 -ClearDrive` → `PASS: 16 tracks copied in order`(338,064 B). 디렉터리 순서 01–16, 16개 내용 해시 일치 → 안전하게 꺼냄. **재생 확인은 아님**(트랙 번호 = 복사 순서는 실제 재생으로 확인해야 함) |
 | 실제 소리 출력 | **NOT TESTED** | 안전 조건: 멀티미터 없이 J10과 DFR0534를 연결하지 않음. 로그상 UART1 TX(GPIO44, 9600) 준비 완료 |
 | 개폐 센서 | **NOT TESTED** | 리드 센서 미연결(납땜 안 함). 센서가 없으면 "열림"으로 읽혀 화면 유지(설계대로) |
