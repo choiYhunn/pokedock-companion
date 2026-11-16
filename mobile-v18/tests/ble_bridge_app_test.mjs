@@ -78,7 +78,7 @@ const app = new PokeDockClient(link, { ...fast, random: () => 0.31, now: () => w
 await test('connect: reads state and auto time_syncs the untrusted clock (no RTC cell)', async () => {
   const s = await app.connect();
   assert.equal(s.clock.trusted, true);
-  assert.equal(s.firmware, 'm6-0.2.0');
+  assert.match(s.firmware, /^m[67]-\d+\.\d+\.\d+/); // M6 mfg (m6-0.x) or M7 gift (m7-0.6.x): same protocol v2
 });
 
 await test('app partner change reaches the device; non-partner is refused before sending', async () => {
