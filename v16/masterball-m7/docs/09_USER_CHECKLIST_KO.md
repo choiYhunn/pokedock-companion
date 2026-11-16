@@ -12,7 +12,7 @@
 
 ## 도착 후
 
-- [ ] 보드를 USB-C로 PC에 연결해 공장 데모가 뜨는지 봅니다. `docs/05` FirstInstall(공장 백업은 비공개 폴더에 보관).
+- [x] 보드를 USB-C로 PC에 연결해 공장 데모가 뜨는지 봅니다. `docs/05` FirstInstall(공장 백업은 비공개 폴더에 보관). — 2026-11-16 m7-0.6.1-gift 설치, 화면·터치·시계·알람·타이머 확인(`logs/HW_BRINGUP_20261116_KO.md`)
 - [ ] `fitkit/FIT_MEASUREMENT_FORM.csv`를 측정합니다.
   - B1–B4: 보드
   - B5: DFR0534 구멍 지름 → 3 mm보다 작으면 M2.5 나사를 삽니다.

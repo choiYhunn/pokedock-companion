@@ -133,7 +133,10 @@ void board_lvgl_unlock(void) { xSemaphoreGiveRecursive(s_lvgl_mux); }
 void board_display_brightness(uint8_t percent) {
   if (percent > 100) percent = 100;
   uint8_t v = (uint8_t)((percent * 255 + 50) / 100);
-  esp_lcd_panel_io_tx_param(s_io, 0x51, &v, 1);
+  // QSPI panels need the write-command opcode (0x02) and the command in bits 8-15, as the
+  // esp_lcd_sh8601 driver's own tx_param() does. A raw 0x51 never reaches the panel, which then keeps
+  // the 0x51 = 0x00 from the init table: black screen on real hardware (found 2026-11-16, m7-0.6.1).
+  esp_lcd_panel_io_tx_param(s_io, (int)((0x02u << 24) | (0x51u << 8)), &v, 1);
 }
 
 void board_display_power(bool on) { esp_lcd_panel_disp_on_off(s_panel, on); }

@@ -54,7 +54,8 @@
 | 소리 팩 도구 (TEST 팩, 선물 팩 길이 검사, MP3 길이, PS 5.1 문법, 저장소에 소리 파일 없음) | HOST PASS 10/10 | `logs/sound_pack_tools.txt` |
 | BLE `audio` / `audio_test`, 상태 `vol`/`cls` (MTU 안) | HOST PASS (프로토콜 41/41, BLE 다리 16/16) | M6 strict |
 | 뚜껑 센서 디바운스·고장 대비 | HOST PASS 14/14 | `logs/lid_sensor_firmware.txt` |
-| 일반 / 180° 빌드 m7-0.6.0-gift | HOST PASS (ESP-IDF 5.3.2) | M6 strict `firmware_build`, `idf_build_wsl.sh rotate180` |
+| 일반 / 180° 빌드 m7-0.6.1-gift | HOST PASS (ESP-IDF 5.3.2) | M6 strict `firmware_build`, `idf_build_wsl.sh rotate180` |
+| 보드 단독 실기 (2026-11-16): 인식, 공장 백업 2회 해시 일치, FirstInstall + 0.6.1 InstallGift, 화면·터치·시계·알람·타이머·파트너·밝기, BLE 광고 | **HARDWARE PASS (보드만)**. 소리·뚜껑 센서·BLE 페어링은 NOT TESTED | `logs/HW_BRINGUP_20261116_KO.md` |
 | M6 부저 빌드 옵션 (`PD_AUDIO_BUZZER`) | HOST PASS (빌드) | 이 문서 작성 시 별도 빌드 |
 | M6 회귀 전체 (타이머, 알람, 팬텀 애니메이션, BLE, UI 시뮬레이터, 플래시 도구) | HOST PASS (M6 strict) | `../masterball-m6/tests/logs/RUN_MANIFEST.json` |
 | 모듈이 없을 때 정상 동작 | HOST PASS (송신 전용 설계 + 시험: 응답을 기다리는 코드 없음) / 실보드 **HARDWARE UNVERIFIED** | |
