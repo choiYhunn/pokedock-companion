@@ -1,0 +1,5 @@
+PASS option A part is Adafruit 4424
+PASS mapping GND -> '-', 3V3 -> '+', GPIO44 -> 'R'
+PASS 'T' cavity stays empty and GPIO43 stays out of the housing
+PASS pre-power checks listed (reverse 3V3/GND, adjacent shorts)
+PASS: H1 option A drawing written (0 rule failures)

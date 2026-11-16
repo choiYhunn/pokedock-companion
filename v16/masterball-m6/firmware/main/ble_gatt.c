@@ -99,6 +99,7 @@ static int gap_cb(struct ble_gap_event *ev, void *arg) {
         return 0;
       }
       s_conn = ev->connect.conn_handle;
+      ESP_LOGI(TAG, "link: connect");
       s_subscribed = false;
       ble_gap_security_initiate(s_conn);  // bonded phones re-encrypt silently; new ones must pair
       pd_app_link_changed(true);
@@ -106,6 +107,7 @@ static int gap_cb(struct ble_gap_event *ev, void *arg) {
     case BLE_GAP_EVENT_DISCONNECT:
       s_conn = BLE_HS_CONN_HANDLE_NONE;
       s_subscribed = false;
+      ESP_LOGI(TAG, "link: disconnect reason=%d", ev->disconnect.reason);
       pd_app_show_passkey(0);
       pd_app_link_changed(false);
       advertise();
@@ -126,6 +128,7 @@ static int gap_cb(struct ble_gap_event *ev, void *arg) {
     }
     case BLE_GAP_EVENT_ENC_CHANGE:
       pd_app_show_passkey(0);
+      ESP_LOGI(TAG, "link: encryption status=%d", ev->enc_change.status);
       if (ev->enc_change.status == 0 && link_authenticated(ev->enc_change.conn_handle)) s_pair_until_us = 0;
       return 0;
     case BLE_GAP_EVENT_REPEAT_PAIRING: {

@@ -14,6 +14,10 @@ are never written), then verified, then NVS / bootloader / table are re-read and
   -Action RestoreMfgApp   manufacturing app m6-0.3.0 back at 0x10000 (settings kept)
   -Action RestoreNvs      write a settings backup (exactly 0x6000 B) back to 0x9000         needs -From
   -Action RestoreFull     write a full 16 MiB backup back to 0x0 (everything as it was)     needs -From
+  -Action FirstInstall    ONLY for a board that still has the Waveshare factory layout (M7 self-build):
+                          merged gift image at 0x0 (bootloader + table + app) [+ pack + slot, else the
+                          assets partition is erased]. Refused when the ball already has the PokeDock
+                          table (use InstallGift there: it keeps the settings).
   -Rotate180              the ball was built with the 180-degree image (the tool refuses a mismatch)
 
 Example:  .\flash_gift_windows.ps1 -Port COM5 -Action InstallGift -PrivateOut C:\...\PokeDock_Private_Assets\out
@@ -22,7 +26,7 @@ Example:  .\flash_gift_windows.ps1 -Port COM5 -Action InstallGift -PrivateOut C:
 param(
   [Parameter(Mandatory = $true)][ValidatePattern('^COM\d+$')][string]$Port,
   [Parameter(Mandatory = $true)]
-  [ValidateSet('Check', 'Backup', 'InstallGift', 'UpdateAssets', 'RemoveAssets', 'RestoreMfgApp', 'RestoreNvs', 'RestoreFull')]
+  [ValidateSet('Check', 'Backup', 'InstallGift', 'UpdateAssets', 'RemoveAssets', 'RestoreMfgApp', 'RestoreNvs', 'RestoreFull', 'FirstInstall')]
   [string]$Action,
   [switch]$Rotate180,
   [string]$PrivateOut,
@@ -141,8 +145,17 @@ switch ($Action) {
     [void](Invoke-Check -CheckArgs @('full', $fullFile))
     $writes += @{ Addr = '0x0'; File = $fullFile; What = 'FULL 16 MiB backup' }
   }
+  'FirstInstall' {
+    $merged = Require-File (Join-Path $OutDir "pokedock_m6_gift$suffix.bin") 'merged gift image (tools\idf_build_wsl.sh)'
+    $mchk = Invoke-Check -CheckArgs @('merged', $merged, '--sums', $sums)
+    if ($mchk.app_name -ne "pokedock_m6_gift_app$suffix.bin") {
+      throw "the merged image carries $($mchk.app_name), expected pokedock_m6_gift_app$suffix.bin (check -Rotate180)"
+    }
+    $writes += @{ Addr = '0x0'; File = $merged; What = "gift firmware m6-0.4.0-gift$suffix, merged (bootloader + table + app)" }
+  }
 }
-if ($Action -eq 'InstallGift' -or $Action -eq 'UpdateAssets') {
+$eraseAssets = $Action -eq 'RemoveAssets' -or ($Action -eq 'FirstInstall' -and -not $PrivateOut)
+if ($Action -eq 'InstallGift' -or $Action -eq 'UpdateAssets' -or ($Action -eq 'FirstInstall' -and $PrivateOut)) {
   if (-not $PrivateOut) { throw "-PrivateOut <folder with assets_pack.bin> is required for $Action" }
   $pack = Require-File (Join-Path $PrivateOut 'assets_pack.bin') 'sprite pack'
   [void](Invoke-Check -CheckArgs @('pack', $pack))
@@ -173,10 +186,16 @@ Save-Slice $full 0x8000 $A.TableLen $tableFile
 Save-Slice $full 0x9000 $A.NvsLen $nvsBackup
 Save-Slice $full 0x0 $A.BootLen $bootFile
 Save-Slice $full 0x10000 0x1000 $appHead
-if ($Action -eq 'RestoreFull') {
-  try { [void](Invoke-Check -CheckArgs @('ptable', $tableFile)) } catch { Write-Host "  note: $($_.Exception.Message) - RestoreFull rewrites it" }
-} else {
-  [void](Invoke-Check -CheckArgs @('ptable', $tableFile))
+$sameLayout = $true
+$layoutMsg = ''
+try { [void](Invoke-Check -CheckArgs @('ptable', $tableFile)) } catch { $sameLayout = $false; $layoutMsg = $_.Exception.Message }
+if ($Action -eq 'FirstInstall') {
+  if ($sameLayout) { throw 'this ball already has the PokeDock partition table: use -Action InstallGift (it keeps the settings); FirstInstall would erase them' }
+  Write-Host '  factory (non-PokeDock) layout found: FirstInstall replaces bootloader, table and app; the backup keeps the factory firmware'
+} elseif ($Action -eq 'RestoreFull') {
+  if (-not $sameLayout) { Write-Host "  note: $layoutMsg - RestoreFull rewrites it" }
+} elseif (-not $sameLayout) {
+  throw $layoutMsg
 }
 $current = Invoke-Check -CheckArgs @('identify', $full, '--sums', $sums)
 $manifest = @{ created = $stamp; port = $Port; action = $Action; full = (Split-Path -Leaf $full); full_sha256 = (Get-Sha $full)
@@ -204,7 +223,8 @@ if ($touchesApp) {
 # ---------------------------------------------------------------- 4. confirm and write
 Write-Host '[3/5] planned writes:'
 foreach ($w in $writes) { Write-Host ('  {0,-9} <- {1} ({2})' -f $w.Addr, $w.What, (Split-Path -Leaf $w.File)) }
-if ($Action -eq 'RemoveAssets') { Write-Host ('  erase {0} + 0x{1:X} (pack and message)' -f $A.Assets, $A.AssetsLen) }
+if ($eraseAssets) { Write-Host ('  erase {0} + 0x{1:X} (pack and message)' -f $A.Assets, $A.AssetsLen) }
+if ($Action -eq 'FirstInstall') { Write-Host '  note: settings NVS 0x9000-0xEFFF is reset (a factory board has no PokeDock settings)' }
 if ($Action -eq 'UpdateAssets') { Write-Host '  note: without the gift app (m6-0.4.0-gift) moods, sleep, alarm partner and the message are NOT active' }
 if (-not $Yes) {
   $answer = Read-Host 'type YES to write'
@@ -214,11 +234,12 @@ $pairs = @()
 foreach ($w in $writes) { $pairs += @($w.Addr, $w.File) }
 Write-Host '[4/5] writing (keep the cable connected)'
 try {
-  if ($Action -eq 'RemoveAssets') {
-    [void](Invoke-Esp -EspArgs @('erase_region', $A.Assets, ('0x{0:X}' -f $A.AssetsLen)))
-  } else {
+  if ($pairs.Count -gt 0) {
     [void](Invoke-Esp -EspArgs (@('write_flash') + $pairs))
     [void](Invoke-Esp -EspArgs (@('verify_flash') + $pairs))
+  }
+  if ($eraseAssets) {
+    [void](Invoke-Esp -EspArgs @('erase_region', $A.Assets, ('0x{0:X}' -f $A.AssetsLen)))
   }
 } catch {
   Write-Host ''
@@ -228,7 +249,8 @@ try {
   } else {
     Write-Host 'WRITE DID NOT FINISH. Nothing is lost: the full backup was taken first.'
     Write-Host "  put everything back as it was:  .\flash_gift_windows.ps1 -Port $Port -Action RestoreFull -From `"$full`""
-    if ($touchesApp) { Write-Host '  (the same command again will refuse: the half-written app counts as broken)' }
+    if ($Action -eq 'FirstInstall') { Write-Host '  (restore first: the new table may already be written, so FirstInstall would refuse a second time)' }
+    elseif ($touchesApp) { Write-Host '  (the same command again will refuse: the half-written app counts as broken)' }
     else { Write-Host '  or run the SAME command again (the app was not touched)' }
   }
   Write-Host '  If the PC no longer finds the port, unplug/replug the cable and try again (the ROM download mode does not need the app).'
@@ -239,7 +261,12 @@ try {
 Write-Host '[5/5] checking that bootloader, partition table and settings are unchanged'
 $afterDir = Join-Path $BackupDir "after_$stamp"
 New-Item -ItemType Directory -Force -Path $afterDir | Out-Null
-if ($Action -ne 'RestoreFull') {
+if ($Action -eq 'FirstInstall') {
+  $f = Join-Path $afterDir 'table.bin'
+  [void](Invoke-Esp -EspArgs @('read_flash', $A.Table, ('0x{0:X}' -f $A.TableLen), $f))
+  [void](Invoke-Check -CheckArgs @('ptable', $f))
+  Write-Host '  partition table is now the PokeDock layout (next time use InstallGift / UpdateAssets)'
+} elseif ($Action -ne 'RestoreFull') {
   $chk = @(@('boot', '0x0', $A.BootLen, $bootFile), @('table', $A.Table, $A.TableLen, $tableFile))
   if ($Action -ne 'RestoreNvs') { $chk += , @('nvs', $A.Nvs, $A.NvsLen, $nvsBackup) }
   foreach ($c in $chk) {

@@ -1,0 +1,15 @@
+PASS starts open: screen allowed with no sensor reading yet
+PASS no sensor (pull-up = open) for 10 min: no event, screen allowed
+PASS lid closes: exactly one kClosed after debounce
+PASS closed: screen not allowed
+PASS lid opens: exactly one kOpened
+PASS open: screen allowed
+PASS chatter faster than 120 ms: no event
+PASS one 1 ms sample loop at 10 ms: closes after >= 120 ms
+PASS touch while 'closed': screen on for 60 s
+PASS 3 touches while 'closed': sensor ignored (stuck closed / wrong magnet)
+PASS ignored sensor: closing again gives no event
+PASS a real opening re-arms the sensor
+PASS re-armed: next close is reported
+PASS disabled (setting off): closing gives no event and screen stays allowed
+PASS: 14/14 lid sensor checks

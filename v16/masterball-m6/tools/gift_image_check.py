@@ -12,9 +12,13 @@ usage: python tools/gift_image_check.py <kind> <file> [options]
   pack <file>                          PDK1 sprite pack that fits below the message slot
   slot <file>                          4 KiB PDM1 private message slot
   nvs <file>                           NVS backup: exactly 0x6000 bytes, from a PokéDock layout
-  full <file>                          16 MiB full-flash backup with a valid table and app
+  full <file>                          16 MiB full-flash backup: bootloader magic + a valid ESP-IDF table
+                                       (the app may be foreign, e.g. the Waveshare factory demo)
+  merged <file> --sums <SHA256SUMS.txt>  merged image for FirstInstall at 0x0: bootloader, table equal to
+                                       firmware/partitions.csv, nothing in NVS/phy, listed app at 0x10000
   extract-app <merged> <out>           cut the app out of a merged image (0x10000..end), validated
-  make-ptable <out> | make-test-app <out> <version>   synthetic files for tests
+  make-ptable <out> [factory] | make-test-app <out> <version> [project] | make-merged <out> <app>
+                                       synthetic files for tests
 Exit code 0 = OK (one JSON line on stdout), 1 = refused (reason on stdout), 2 = usage.
 """
 import csv
@@ -76,9 +80,13 @@ def parse_ptable(b):
     raise Refused("partition table has no MD5 entry (not a valid ESP-IDF table)")
 
 
-def make_ptable():
+FACTORY_LIKE = [("nvs", 1, 2, 0x9000, 0x6000), ("phy_init", 1, 1, 0xF000, 0x1000),
+                ("factory", 0, 0, 0x10000, 0x400000), ("storage", 1, 0x82, 0x410000, 0xBF0000)]   # tests only
+
+
+def make_ptable(rows=None):
     entries = b""
-    for name, t, s, off, size in expected_partitions():
+    for name, t, s, off, size in (rows or expected_partitions()):
         entries += b"\xaa\x50" + bytes((t, s)) + struct.pack("<II", off, size) + name.encode().ljust(16, b"\0") + b"\0" * 4
     table = entries + b"\xeb\xeb" + b"\xff" * 14 + hashlib.md5(entries).digest()
     return table + b"\xff" * (0xC00 - len(table))
@@ -134,8 +142,9 @@ def walk_app(b):
     return pos
 
 
-def check_app(path, sums=None):
-    b = pathlib.Path(path).read_bytes()
+def check_app(path, sums=None, data=None):
+    b = pathlib.Path(path).read_bytes() if data is None else data
+    name = pathlib.Path(path).name
     desc = check_header(b, "app image")
     end = walk_app(b)
     if b[end:].strip(b"\xff"):
@@ -152,12 +161,16 @@ def check_app(path, sums=None):
             m = re.match(r"([0-9a-f]{64})\s+\*?(\S+)", line.strip())
             if m:
                 table[m.group(2)] = m.group(1)
-        listed = table.get(pathlib.Path(path).name)
+        if data is not None:   # app cut from a merged image: find it by content
+            name = next((n for n, h in table.items() if h == digest), None)
+            if name is None:
+                raise Refused(f"the app inside the merged image is not listed in {sums}")
+        listed = table.get(name)
         if listed is None:
-            raise Refused(f"{pathlib.Path(path).name} is not listed in {sums}")
+            raise Refused(f"{name} is not listed in {sums}")
         if listed != digest:
             raise Refused(f"SHA-256 differs from {sums} (file changed or corrupt)")
-    return {"kind": "app", "bytes": len(b), "image_end": end, "sha256": digest, **desc, "listed": bool(listed)}
+    return {"kind": "app", "name": name, "bytes": len(b), "image_end": end, "sha256": digest, **desc, "listed": bool(listed)}
 
 
 def main(argv):
@@ -232,9 +245,32 @@ def main(argv):
             b = pathlib.Path(f).read_bytes()
             if len(b) != FLASH_BYTES:
                 raise Refused(f"full backup must be exactly 16 MiB, got {len(b)}")
-            parse_ptable(b[0x8000:0x8C00])
-            desc = check_header(b[APP_OFFSET:APP_OFFSET + 0x1000], "app in the backup")
-            out = {"kind": "full", "sha256": hashlib.sha256(b).hexdigest(), **desc}
+            if b[0] != 0xE9 or struct.unpack("<H", b[12:14])[0] != CHIP_ID_ESP32S3:
+                raise Refused("full backup does not start with an ESP32-S3 bootloader")
+            rows = parse_ptable(b[0x8000:0x8C00])
+            try:   # a factory-demo backup (taken before FirstInstall) is a valid thing to restore
+                desc = check_header(b[APP_OFFSET:APP_OFFSET + 0x1000], "app in the backup")
+            except Refused as e:
+                desc = {"project": "foreign", "note": str(e)[:80]}
+            out = {"kind": "full", "sha256": hashlib.sha256(b).hexdigest(), "pokedock_layout": rows == expected_partitions(), **desc}
+        elif kind == "merged":
+            b = pathlib.Path(f).read_bytes()
+            if "--sums" not in argv:
+                raise Refused("merged needs --sums")
+            sums = argv[argv.index("--sums") + 1]
+            if len(b) < APP_OFFSET + 0x200 or b[0] != 0xE9 or struct.unpack("<H", b[12:14])[0] != CHIP_ID_ESP32S3:
+                raise Refused("not a merged ESP32-S3 image (no bootloader at 0x0)")
+            if (b[3] >> 4) != 4:
+                raise Refused("bootloader header flash size is not 16 MB")
+            if walk_app(b[:0x8000]) > 0x8000:
+                raise Refused("bootloader runs into the partition table")
+            if parse_ptable(b[0x8000:0x8C00]) != expected_partitions():
+                raise Refused("merged image table differs from firmware/partitions.csv")
+            if b[NVS_OFFSET:APP_OFFSET].strip(b"\xff"):
+                raise Refused("merged image carries data in NVS/phy (0x9000-0xFFFF)")
+            app = check_app(f, sums, data=b[APP_OFFSET:])
+            out = {"kind": "merged", "bytes": len(b), "sha256": hashlib.sha256(b).hexdigest(), "app_name": app["name"],
+                   "app_sha256": app["sha256"], "version": app["version"], "idf": app["idf"]}
         elif kind == "extract-app":
             b = pathlib.Path(f).read_bytes()
             got = parse_ptable(b[0x8000:0x8C00])
@@ -245,11 +281,17 @@ def main(argv):
             out = check_app(argv[2])
             out["from_merged_sha256"] = hashlib.sha256(b).hexdigest()
         elif kind == "make-ptable":
-            pathlib.Path(f).write_bytes(make_ptable())
+            pathlib.Path(f).write_bytes(make_ptable(FACTORY_LIKE if "factory" in argv[2:] else None))
             out = {"kind": "make-ptable"}
+        elif kind == "make-merged":
+            app = pathlib.Path(argv[2]).read_bytes()   # any walkable ESP32-S3 image stands in for the bootloader
+            img = app.ljust(0x8000, b"\xff") + make_ptable() + b"\xff" * (APP_OFFSET - 0x8C00) + app
+            pathlib.Path(f).write_bytes(img)
+            out = {"kind": "make-merged", "bytes": len(img)}
         elif kind == "make-test-app":
             ver = argv[2] if len(argv) > 2 else "test"
-            desc = struct.pack("<II8x", APP_DESC_MAGIC, 0) + ver.encode().ljust(32, b"\0") + PROJECT.encode().ljust(32, b"\0")
+            proj = argv[3] if len(argv) > 3 else PROJECT
+            desc = struct.pack("<II8x", APP_DESC_MAGIC, 0) + ver.encode().ljust(32, b"\0") + proj.encode().ljust(32, b"\0")
             desc += b"00:00:00".ljust(16, b"\0") + b"Nov  1 2026".ljust(16, b"\0") + IDF.encode().ljust(32, b"\0")
             seg = desc.ljust(0x400, b"\0") + hashlib.sha256(ver.encode()).digest() * 64  # deterministic filler
             hdr = bytes((0xE9, 1, 2, 0x4F)) + struct.pack("<I", 0x40370000) + bytes((0xEE, 0, 0, 0)) + struct.pack("<H", CHIP_ID_ESP32S3) + bytes((0, 0, 0, 0xFF, 0xFF, 0, 0, 0, 0, 1))
@@ -260,7 +302,7 @@ def main(argv):
             body += b"\0" * (15 - len(body) % 16) + bytes((cks,))
             body += hashlib.sha256(body).digest()
             pathlib.Path(f).write_bytes(body)
-            out = check_app(f)
+            out = check_app(f) if proj == PROJECT else {"kind": "make-test-app", "project": proj}
         else:
             print(__doc__)
             return 2

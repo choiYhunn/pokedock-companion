@@ -57,6 +57,13 @@ for merged, app in pairs:
     heads[merged] = (a.read_bytes()[2:4], json.loads(out)["idf"] if code == 0 else None)
     code, out = run("app", m)
     check(f"{merged} refused as an app (merged)", code == 1 and "MERGED" in out, out)
+for merged, app in pairs:      # FirstInstall input: whole merged image, app identified by content
+    m = OUT / merged
+    if m.exists():
+        code, out = run("merged", m, "--sums", sums)
+        check(f"{merged}: valid merged image carrying {app}", code == 0 and json.loads(out)["app_name"] == app, out)
+code, out = run("merged", OUT / "pokedock_m6_gift_app.bin", "--sums", sums)
+check("app-only image refused as a merged image", code == 1, out)
 tp = OUT / "_ptable_check.bin"
 for merged, t in tables.items():
     tp.write_bytes(t)

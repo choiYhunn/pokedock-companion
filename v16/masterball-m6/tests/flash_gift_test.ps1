@@ -22,20 +22,25 @@ Write-Host "PowerShell $($PSVersionTable.PSVersion) ($($PSVersionTable.PSEdition
 
 # ---- synthetic images (real formats, made by the same checker the tool uses)
 foreach ($n in @('mfg', 'mfg_rot', 'gift', 'gift_rot', 'other')) { Py @($Check, 'make-test-app', (Join-Path $W "$n.bin"), $n) | Out-Null }
+Py @($Check, 'make-test-app', (Join-Path $W 'factory.bin'), 'demo', 'waveshare_demo') | Out-Null   # foreign factory app
 Copy-Item (Join-Path $W 'mfg.bin') (Join-Path $Out 'pokedock_m6_mfg_app.bin')
 Copy-Item (Join-Path $W 'mfg_rot.bin') (Join-Path $Out 'pokedock_m6_mfg_app_rotate180.bin')
 Copy-Item (Join-Path $W 'gift.bin') (Join-Path $Out 'pokedock_m6_gift_app.bin')
 Copy-Item (Join-Path $W 'gift_rot.bin') (Join-Path $Out 'pokedock_m6_gift_app_rotate180.bin')
 $lines = foreach ($f in Get-ChildItem $Out -Filter '*.bin') { '{0}  {1}' -f (Get-FileHash -Algorithm SHA256 $f.FullName).Hash.ToLower(), $f.Name }
 Set-Content -Path (Join-Path $Out 'SHA256SUMS.txt') -Value $lines -Encoding ASCII
+Py @($Check, 'make-merged', (Join-Path $Out 'pokedock_m6_gift.bin'), (Join-Path $Out 'pokedock_m6_gift_app.bin')) | Out-Null
+Py @($Check, 'make-merged', (Join-Path $Out 'pokedock_m6_gift_rotate180.bin'), (Join-Path $Out 'pokedock_m6_gift_app_rotate180.bin')) | Out-Null
 Py @((Join-Path $Tests 'make_test_pack.py'), $Priv) | Out-Null
 Move-Item (Join-Path $Priv 'test_pack.bin') (Join-Path $Priv 'assets_pack.bin')
 Move-Item (Join-Path $Priv 'test_message_slot.bin') (Join-Path $Priv 'message_slot.bin')
 $Dev = Join-Path $W 'device.bin'; $Log = Join-Path $W 'esptool.log'
 $env:MOCK_FLASH = $Dev; $env:MOCK_LOG = $Log
 
-function New-Ball([string]$app) {
-  Py @($Util, 'make-device', $Dev, (Join-Path $W "$app.bin")) | Out-Null
+function New-Ball([string]$app, [string]$layout = '') {
+  $a = @($Util, 'make-device', $Dev, (Join-Path $W "$app.bin"))
+  if ($layout) { $a += $layout }
+  Py $a | Out-Null
   if (Test-Path $Log) { Remove-Item $Log }
   Remove-Item Env:\MOCK_CHIP, Env:\MOCK_FAIL_WRITE_AFTER -ErrorAction SilentlyContinue
 }
@@ -170,6 +175,43 @@ $r = Run-Tool @{ Action = 'UpdateAssets'; PrivateOut = $Priv }
 Ok 'UpdateAssets: pack written, manufacturing app untouched' (($r -eq 'ok') -and (Same '0x610000' (Join-Path $Priv 'assets_pack.bin')) -and (Same '0x10000' (Join-Path $W 'mfg.bin'))) $r
 $r = Run-Tool @{ Action = 'InstallGift' }
 Ok 'InstallGift without -PrivateOut: refused' ($r -like '*-PrivateOut*') $r
+
+# 8. FirstInstall (M7 self-build: a new board still has the Waveshare factory layout)
+New-Ball 'factory' 'factory'
+$orig = Sha '0x0' '0x1000000'
+$r = Run-Tool @{ Action = 'FirstInstall'; PrivateOut = $Priv }
+Ok 'FirstInstall on a factory board: succeeds' ($r -eq 'ok') $r
+$wr = @(Writes)
+$expect = @('write_flash', '0x0', (Join-Path $Out 'pokedock_m6_gift.bin'), '0x610000', (Join-Path $Priv 'assets_pack.bin'), '0xFFF000', (Join-Path $Priv 'message_slot.bin'))
+Copy-Item $Log (Join-Path $ArgvDump 'flash_argv_firstinstall.log') -Force
+Ok 'FirstInstall: exact argv (merged at 0x0 + pack + slot)' (($wr.Count -eq 1) -and ($wr[0] -eq ($expect -join '|'))) ($wr -join ' || ')
+$first = (@(Cmds) | Select-Object -First 2 | ForEach-Object { ($_ -split '\|')[0] }) -join ','
+Ok 'FirstInstall: chip check and full factory backup first' ($first -eq 'flash_id,read_flash') $first
+$fbk = Latest 'pokedock_full_*.bin'
+Ok 'FirstInstall: backup holds the factory firmware' ((Py @($Util, 'sha', $fbk, '0x0', '0x1000000')) -eq $orig)
+Ok 'FirstInstall: gift app at 0x10000' (Same '0x10000' (Join-Path $Out 'pokedock_m6_gift_app.bin'))
+[IO.File]::WriteAllBytes((Join-Path $W 'tbl.bin'), [IO.File]::ReadAllBytes($Dev)[0x8000..0x8BFF])
+$tchk = & python -X utf8 $Check 'ptable' (Join-Path $W 'tbl.bin'); $tcode = $LASTEXITCODE
+Ok 'FirstInstall: table on the ball equals firmware/partitions.csv' ($tcode -eq 0) "$tchk"
+$r = Run-Tool @{ Action = 'Check' }
+Ok 'after FirstInstall: Check identifies the gift app' ($r -eq 'ok') $r
+Remove-Item $Log
+$r = Run-Tool @{ Action = 'FirstInstall'; PrivateOut = $Priv }
+Ok 'FirstInstall on a PokeDock-layout ball: refused, nothing written' (($r -like '*InstallGift*') -and (Writes).Count -eq 0) $r
+$r = Run-Tool @{ Action = 'RestoreFull'; From = $fbk }
+Ok 'RestoreFull with the factory backup: whole 16 MiB back to factory' (($r -eq 'ok') -and ((Sha '0x0' '0x1000000') -eq $orig)) $r
+New-Ball 'factory' 'factory'
+$r = Run-Tool @{ Action = 'FirstInstall' }
+Ok 'FirstInstall without -PrivateOut: merged written, assets erased' (($r -eq 'ok') -and (@(Writes)[1] -eq 'erase_region|0x610000|0x9F0000') -and ((Py @($Util, 'allff', $Dev, '0x610000', '0x9F0000')) -eq 'OK')) ((@(Writes)) -join ' || ')
+New-Ball 'factory' 'factory'
+$r = Run-Tool @{ Action = 'FirstInstall'; PrivateOut = $Priv; Rotate180 = $true }
+Ok 'FirstInstall -Rotate180: rotate180 merged image' (($r -eq 'ok') -and (Same '0x10000' (Join-Path $Out 'pokedock_m6_gift_app_rotate180.bin'))) $r
+New-Ball 'factory' 'factory'
+Copy-Item (Join-Path $Out 'pokedock_m6_gift.bin') (Join-Path $W 'merged_keep.bin')
+Py @($Util, 'poke', (Join-Path $Out 'pokedock_m6_gift.bin'), '0x10500', 'deadbeef') | Out-Null
+$r = Run-Tool @{ Action = 'FirstInstall'; PrivateOut = $Priv }
+Ok 'FirstInstall with a modified merged image: refused, nothing sent' (($r -like '*refused*') -and ((Cmds).Count -eq 0)) $r
+Copy-Item (Join-Path $W 'merged_keep.bin') (Join-Path $Out 'pokedock_m6_gift.bin') -Force
 
 Remove-Item -Recurse -Force $W
 $failed = @($results | Where-Object { -not $_.Pass }).Count

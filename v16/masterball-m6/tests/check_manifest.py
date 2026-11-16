@@ -15,7 +15,7 @@ from source_fingerprint import ROOT, fingerprint  # noqa: E402
 REQUIRED = ["core_regression", "clock_set", "anim_director", "anim_parity", "protocol", "ble_e2e_bridge", "harness_check", "buzzer_consistency",
             "schematic_netlist", "adafruit4090_netlist", "tolerance_stack", "pdk_roundtrip", "doc_consistency", "vendor_package_check", "private_asset_guard",
             "cad_build", "cad_fitkit", "cad_verify", "driver_board_check", "ui_sim_probe", "gift_sim_probe", "firmware_build",
-            "gift_image_check", "flash_tool", "flash_cli_compat"]
+            "gift_image_check", "flash_tool", "flash_cli_compat", "lid_sensor", "audio_director"]
 fail = []
 fp = fingerprint()
 man_p = ROOT / "tests" / "logs" / "RUN_MANIFEST.json"

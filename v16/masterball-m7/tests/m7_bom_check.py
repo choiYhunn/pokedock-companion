@@ -1,0 +1,116 @@
+"""The single M7 purchase list agrees with the harness, the CAD and itself (CSV = Markdown).
+
+usage: python m7_bom_check.py
+"""
+import csv
+import json
+import pathlib
+import re
+import sys
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+rows = list(csv.DictReader(open(ROOT / "bom" / "M7_FINAL_PURCHASE.csv", encoding="utf8")))
+md = (ROOT / "bom" / "M7_FINAL_PURCHASE_KO.md").read_text(encoding="utf8")
+harness = json.loads((ROOT / "electronics" / "harness_m7.json").read_text(encoding="utf8"))
+fails, n = [], 0
+
+
+def check(name, cond, detail=""):
+    global n
+    n += 1
+    print(("PASS " if cond else "FAIL ") + name + ("" if cond else f"  {detail}"))
+    if not cond:
+        fails.append(name)
+
+
+STATUS = {"BUY_NOW", "BUY_AFTER_MEASUREMENT", "BLOCKED", "OPTIONAL", "ALTERNATIVE_NOT_ORDERED", "REMOVED",
+          "SPEC_SELLER_NOT_CONFIRMED", "TOOL_IF_NOT_OWNED"}
+check("every line has a known status", all(r["status"] in STATUS for r in rows), [r["line"] for r in rows if r["status"] not in STATUS])
+check("line ids unique", len({r["line"] for r in rows}) == len(rows))
+buy = [r for r in rows if r["status"].startswith("BUY_NOW")]
+dk = [r for r in buy if r["supplier"] == "DigiKey Korea"]
+total = sum(int(r["line_total_krw"]) for r in dk)
+check(f"DigiKey cart = KRW {total:,} (Markdown states the same and it is >= 60,000 = free shipping)",
+      total >= 60000 and f"₩{total:,}" in md, total)
+for r in dk:
+    q, spare = int(r["qty_order"]), int(r["qty_spare"])
+    unit = float(re.search(r"[0-9.]+", r["unit_price"].replace(",", "")).group())
+    pack = re.search(r"pack of (\d+)", r["unit_price"])
+    units = q / int(pack.group(1)) if pack else q          # a pack price is paid per pack
+    check(f"{r['line']}: total = unit x order, spare = order - used",
+          int(r["line_total_krw"]) == round(unit * units) and spare == q - int(r["qty_used"]), r)
+    link = r["link"]
+    ok = link.startswith("https://www.digikey.kr/ko/products/detail/") or re.fullmatch(
+        r"https://www\.digikey\.kr/ko/products/result\?keywords=[0-9A-Z-]+-ND", link) is not None
+    check(f"{r['line']}: link is a product page or an exact DigiKey part-number lookup (never a keyword search)", ok, link)
+    pn = re.search(r"\(DigiKey ([0-9A-Z-]+-ND)", r["mpn_sku"])
+    check(f"{r['line']}: link matches the DigiKey part number", pn is not None and (pn.group(1) in link or "/detail/" in link), r["mpn_sku"])
+    check(f"{r['line']}: listed in the Markdown table", r["mpn_sku"].split(" (")[0].split(" ")[-1] in md or r["mpn_sku"].split(" ")[0] in md)
+other = [r for r in buy if r["supplier"] != "DigiKey Korea"]
+check("every non-DigiKey BUY_NOW line links a product page (not a search page)",
+      all(re.match(r"https://www\.(waveshare\.com/esp32|nasakorea\.com/goods/goods_view\.php\?goodsNo=\d+|navimro\.com/g/\d+/)", r["link"])
+          for r in other), [(r["line"], r["link"]) for r in other])
+check("unconfirmed sellers are never BUY_NOW (U lines say SPEC_SELLER_NOT_CONFIRMED)",
+      all(r["status"] == "SPEC_SELLER_NOT_CONFIRMED" for r in rows if r["line"].startswith("U")))
+check("tools and the charger are outside the basic total (TOOL_IF_NOT_OWNED)", all(r["status"] == "TOOL_IF_NOT_OWNED" for r in rows if r["line"].startswith("T")))
+# DigiKey plan comparison (2026-11-08): minimal = used quantities only (magnets at the 5-piece break KRW 925.4,
+# H1 option B not bought, one bumper pack); full spares = the morning list (D1-D7, D10 x 2, magnets 10) + bumpers
+dkd = {r["line"]: r for r in dk}
+unit_of = {k: float(re.search(r"[0-9.]+", r["unit_price"].replace(",", "")).group()) for k, r in dkd.items()}
+minimal = sum(round(unit_of[k] * int(r["qty_used"])) for k, r in dkd.items() if k not in ("D11", "D12"))     + round(925.4 * 5) + int(dkd["D12"]["line_total_krw"])
+full = sum(round(unit_of[k] * (2 if k in ("D1", "D2", "D3", "D4", "D5", "D6", "D7", "D10") else 1))
+           for k in dkd if k not in ("D11", "D12")) + round(unit_of["D11"] * 10) + int(dkd["D12"]["line_total_krw"])
+check(f"DigiKey plans stated: minimal KRW {minimal:,} (>= 60,000 free shipping), recommended {total:,}, full spares {full:,}",
+      minimal >= 60000 and minimal < total < full and f"₩{minimal:,}" in md and f"₩{full:,}" in md, (minimal, full))
+check("H1 option B parts are fallback only (used 0) and option A 4424 is the used cable",
+      int(dkd["D6"]["qty_used"]) == 0 and int(dkd["D7"]["qty_used"]) == 0 and int(dkd["D10"]["qty_used"]) == 1)
+d12 = dkd.get("D12", {})
+hgt = re.search(r"d([0-9.]+) x ([0-9.]+) mm", d12.get("item", ""))
+check("bumper D12 on the DigiKey cart: diameter = CAD FEET_D, height inside the 2.5-3.0 design window, 8 used",
+      hgt is not None and abs(float(hgt.group(1)) - 8.0) < 0.1 and 2.5 <= float(hgt.group(2)) <= 3.0 and d12["qty_used"] == "8", d12)
+check("no unconfirmed bumper line remains (U2 removed) and no PVC tape duplicate (U4 removed)",
+      not any(r["line"] in ("U2", "U4") for r in rows))
+# ballast: measure-then-buy washer + a stocked alternative that is never BUY_NOW while its freight is unknown
+m1 = next((r for r in rows if r["line"] == "M1"), None)
+check("M1 washer is BUY_AFTER_MEASUREMENT with caliper limits (OD 59.5-60.3, thickness, mass)",
+      m1 is not None and m1["status"] == "BUY_AFTER_MEASUREMENT" and "59.5-60.3" in m1["verification_needed"]
+      and "225 g" in m1["verification_needed"])
+a1 = next((r for r in rows if r["line"] == "A1"), None)
+check("A1 Bossard 8028672 x 4 is ALTERNATIVE_NOT_ORDERED (freight unverified) and not in any total",
+      a1 is not None and a1["status"] == "ALTERNATIVE_NOT_ORDERED" and "8028672" in a1["mpn_sku"] and a1["line_total_krw"] == "0"
+      and a1["qty_used"] == "4")
+for log in ("ballast_bn84525_4x3_nominal", "ballast_bn84525_4x3_tall", "ballast_din9021_3x4_tall"):
+    f = ROOT / "logs" / f"{log}.json"
+    ok = f.exists() and json.loads(f.read_text(encoding="utf8")).get("result") == "PASS"
+    check(f"ballast stability recomputed: logs/{log}.json PASS", ok)
+check("N9 white countersunk tapping M3 x 10 is bought as the FK7 fallback for N5",
+      any(r["line"] == "N9" and r["status"] == "BUY_NOW" and "goodsNo=5736" in r["link"] for r in rows))
+# report sections: ready to order / after measurement / seller not confirmed, kept apart from BLOCKED 0
+sec = {k: md.find(f"### {k}") for k in ("바로 주문", "실측 후 주문", "구매처 미확정")}
+check("Markdown separates 바로 주문 / 실측 후 주문 / 구매처 미확정", all(v > 0 for v in sec.values())
+      and sec["바로 주문"] < sec["실측 후 주문"] < sec["구매처 미확정"])
+w1 = 39000                                   # USD 26.99 board, converted (Waveshare freight separate)
+basic_md = sum(int(r["line_total_krw"]) for r in rows if r["status"] in ("BUY_NOW", "SPEC_SELLER_NOT_CONFIRMED", "BUY_AFTER_MEASUREMENT")
+               and r["line_total_krw"].isdigit()) + w1
+check(f"basic total = KRW {basic_md:,} (DigiKey + Waveshare + nasakorea + NAVIMRO + measured washer + unconfirmed specs) is stated in the Markdown",
+      f"약 ₩{basic_md:,}" in md, basic_md)
+parts = {p["mpn"] for h in harness["harnesses"] for p in h["parts"]}
+bom_text = " ".join(r["mpn_sku"] for r in buy)
+check("every harness part is on the BUY list", all(p in bom_text for p in parts), sorted(p for p in parts if p not in bom_text))
+for p in ("DFR0534", "57155-000", "SKU 30106"):
+    check(f"{p} on the BUY list", p in bom_text)
+removed = ("WT-1205", "AO3400A", "MF-R075", "1935161", "1N4148", "CFR-25")
+check("no v0.5 buzzer/driver part on any BUY line", not any(x in " ".join(r["item"] + r["mpn_sku"] for r in buy) for x in removed))
+check("BLOCKED lines: 0 (and the Markdown says so)", not [r for r in rows if r["status"] == "BLOCKED"] and "| **BLOCKED** | **0**" in md)
+aft = [r for r in rows if r["status"] == "BUY_AFTER_MEASUREMENT"]
+check("every BUY_AFTER_MEASUREMENT line says what to measure", all(r["verification_needed"] for r in aft))
+# CAD: the screws the CAD expects are bought
+sys.path.insert(0, str(ROOT / "cad"))
+import m7_params as P  # noqa: E402
+check("sound bracket screws (M2 PT) and module screws (M3 PT, hole d3.1) on the list",
+      any("2x6" in r["mpn_sku"] for r in buy) and any("3x8" in r["mpn_sku"] for r in buy) and P.DFR_HOLE_D >= 3.0)
+check("speaker on the list matches the CAD seat (d28, <= 6 mm)", "AS02808MR" in bom_text and P.SPK_D == 28.0 and P.SPK_H <= 6.0)
+check("v0.5 BOM files are archived with a do-not-use note", (ROOT / "bom" / "archive_v0.5" / "README_구버전_KO.md").exists()
+      and not (ROOT / "bom" / "BOM_M7.csv").exists())
+print(f"{'FAIL' if fails else 'PASS'}: {n - len(fails)}/{n} purchase list checks")
+sys.exit(1 if fails else 0)

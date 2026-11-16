@@ -1,0 +1,245 @@
+{
+ "gate": "APPROVED",
+ "metrics_pass": "19/19",
+ "metrics": [
+  {
+   "metric": "glass_over_D",
+   "cad": 0.333,
+   "photo_target": 0.34,
+   "tol": 0.02,
+   "unit": "",
+   "pass": true,
+   "how": "photo glass ring ~233 px / ball 652 px (real board: 0.333)"
+  },
+  {
+   "metric": "active_over_D",
+   "cad": 0.266,
+   "photo_target": 0.27,
+   "tol": 0.02,
+   "unit": "",
+   "pass": true,
+   "how": "true size kept (official STEP); photo ~0.27"
+  },
+  {
+   "metric": "bezel_over_D",
+   "cad": 0.449,
+   "photo_target": 0.45,
+   "tol": 0.04,
+   "unit": "",
+   "pass": true,
+   "how": "dark surround around the glass ~62 mm"
+  },
+  {
+   "metric": "pod_width_over_D",
+   "cad": 0.557,
+   "photo_target": 0.51,
+   "tol": 0.06,
+   "unit": "",
+   "pass": true,
+   "how": "cradle incl. side brackets ~70 mm"
+  },
+  {
+   "metric": "band_height_over_D",
+   "cad": 0.076,
+   "photo_target": 0.076,
+   "tol": 0.012,
+   "unit": "",
+   "pass": true,
+   "how": "dark band ~47 px at the front, perspective-corrected ~10.5 mm"
+  },
+  {
+   "metric": "button_over_D",
+   "cad": 0.171,
+   "photo_target": 0.171,
+   "tol": 0.02,
+   "unit": "",
+   "pass": true,
+   "how": "white button ~112 px"
+  },
+  {
+   "metric": "ring_over_D",
+   "cad": 0.246,
+   "photo_target": 0.246,
+   "tol": 0.025,
+   "unit": "",
+   "pass": true,
+   "how": "dark ring ~160 px"
+  },
+  {
+   "metric": "ring_top_to_band_top_mm",
+   "cad": 0.1,
+   "photo_target": 0.0,
+   "tol": 1.5,
+   "unit": "mm",
+   "pass": true,
+   "how": "ring top meets the band top / rim"
+  },
+  {
+   "metric": "button_proud_mm",
+   "cad": 5.0,
+   "photo_target": 5.0,
+   "tol": 1.5,
+   "unit": "mm",
+   "pass": true,
+   "how": "button clearly 3D, domed"
+  },
+  {
+   "metric": "ear_base_over_D",
+   "cad": 0.203,
+   "photo_target": 0.2,
+   "tol": 0.03,
+   "unit": "",
+   "pass": true,
+   "how": "ear base ~125 px on the (smaller-scale) lid"
+  },
+  {
+   "metric": "ear_height_over_base",
+   "cad": 0.643,
+   "photo_target": 0.7,
+   "tol": 0.15,
+   "unit": "",
+   "pass": true,
+   "how": "ear ~0.6-0.85 of its base (foreshortened)"
+  },
+  {
+   "metric": "ear_tip_radius_over_base_radius",
+   "cad": 0.577,
+   "photo_target": 0.45,
+   "tol": 0.15,
+   "unit": "",
+   "pass": true,
+   "how": "round gumdrop tip, not a point"
+  },
+  {
+   "metric": "ear_above_ball_top_mm",
+   "cad": 3.844,
+   "photo_target": 4.0,
+   "tol": 3.0,
+   "unit": "mm",
+   "pass": true,
+   "how": "ears rise above the silhouette"
+  },
+  {
+   "metric": "screen_centre_above_rim_mm",
+   "cad": 8.75,
+   "photo_target": 11.0,
+   "tol": 4.0,
+   "unit": "mm",
+   "pass": true,
+   "how": "screen centre clearly above the rim"
+  },
+  {
+   "metric": "screen_tilt_deg",
+   "cad": 55.0,
+   "photo_target": 60.0,
+   "tol": 6.0,
+   "unit": "deg",
+   "pass": true,
+   "how": "photo reads ~60-65 from a low camera; owner spec caps it at 55"
+  },
+  {
+   "metric": "lid_over_lower_height",
+   "cad": 0.977,
+   "photo_target": 1.0,
+   "tol": 0.08,
+   "unit": "",
+   "pass": true,
+   "how": "two near-equal halves"
+  },
+  {
+   "metric": "lavender_inner_wall_mm",
+   "cad": 13.65,
+   "photo_target": 12.0,
+   "tol": 4.0,
+   "unit": "mm",
+   "pass": true,
+   "how": "lavender interior wall visible when open"
+  },
+  {
+   "metric": "black_band_top_visible_mm",
+   "cad": 3.4,
+   "photo_target": 3.0,
+   "tol": 2.0,
+   "unit": "mm",
+   "pass": true,
+   "how": "photo: light rim above a dark band"
+  },
+  {
+   "metric": "black_glass_ring_shown_over_D",
+   "cad": 0.325,
+   "photo_target": 0.33,
+   "tol": 0.03,
+   "unit": "",
+   "pass": true,
+   "how": "photo shows the glass's black ring (~0.33 D disc)"
+  }
+ ],
+ "structural_deviations": [
+  {
+   "item": "힌지",
+   "detail": "사진은 안쪽에 보이는 브래킷 힌지. 그 구조로는 110°가 나오지 않고 화면과 겹침 → 뒷면 바깥 축(앞에서 안 보임)",
+   "class": "구조상 불가"
+  },
+  {
+   "item": "바닥",
+   "detail": "사진은 완전한 구. 열린 뚜껑에서 넘어지지 않으려면 평면 Ø75 + 발 8개 필요",
+   "class": "구조상 불가"
+  },
+  {
+   "item": "띠 윗면",
+   "detail": "사진은 띠 위가 밝은 테두리. 뚜껑 테두리가 앉는 바깥 3.4 mm는 검정으로 남고, 안쪽 4 mm는 라벤더 림 링으로 바꿈",
+   "class": "대부분 일치"
+  },
+  {
+   "item": "화면 각도",
+   "detail": "사진은 낮은 카메라라 화면이 60–65°처럼 보임. 사용자 지정 50° 유지",
+   "class": "사양 우선"
+  },
+  {
+   "item": "귀 위치",
+   "detail": "의뢰인이 A(뚜껑 위, 고양이 머리) 확정. 열린 사진처럼 뚜껑 위로 귀가 보이지는 않음 → 열린 상태는 라벤더 림 링, 각인 라이너, 넓은 화면 창, 보라 버튼 링으로 보완",
+   "class": "의뢰인 선택"
+  },
+  {
+   "item": "배선",
+   "detail": "사진에는 전선과 보드가 보임. 요구사항(배선 숨김)에 따라 모두 덕 아래로",
+   "class": "의도적 차이"
+  },
+  {
+   "item": "화면 크기",
+   "detail": "사진의 유리 비율 0.34 ≈ 실제 0.333. 사진이 커 보이는 건 카메라가 가깝고 받침대가 크기 때문 → 받침대 Ø62 + 측면 브래킷으로 반영",
+   "class": "일치"
+  }
+ ],
+ "owner_approval": {
+  "approved": true,
+  "approved_by": "owner (choiYhunn)",
+  "date": "2026-11-04",
+  "approved_revision": "v0.6 sound revision: left-low speaker grille (C2 lower shell) + bezel cup opening for the J10 plug (C7), on top of the 2026-11-02 approval (variant A + night theme)",
+  "approved_commit": "6242433",
+  "how_to_approve": "Look at review_sheet.png and img/*.png. If the look is accepted, set approved=true with your name/date and commit.",
+  "chosen_ear_variant": "A",
+  "ear_choice_note": "Owner fixed variant A (ears on top of the lid) on 2026-11-02; B kept only as a reference.",
+  "scope_note": "Visual approval of the CAD look only. Physical fit (FK1-FK5 test prints, real board, magnets, hinge, tip test) is still UNVERIFIED and is a separate gate.",
+  "approved_print_sha256": {
+   "_note": "SHA-256 of the oriented print STLs in print/02_final at approved_commit. make_print_package.py keeps a plate in 02_final only while every part matches; a changed part moves its plate to 02_final_PENDING_owner_approval until the owner approves again (appearance/record_approval.py).",
+   "lid_lavender": "9a93431c807dd71130f531214d91299fdc0258a1b0a67a51037cebd4da54bff2",
+   "lower_shell_ivory": "a96c3da2243c884b55d055458c7a47e52e3af8ce07ed7ac3ae602e01cd215b5f",
+   "belt_black": "8823830bb6554bd77e99687ad20d131d32e65f353eda63364710f3dc1b4813a0",
+   "stop_block_black": "6d94391c88d22f179ee03a4bba60c8b421063f54c84fb403443828a2718dd5d6",
+   "ear_left_pink": "b3223815bd57bcd90408ef8934002b4c7dce5e164555a9b3cfc4cc9162405b5e",
+   "ear_right_pink": "49b8c23c2c81ed56f6e3018937615236ddec22ef049444c87943f7a85df62caf",
+   "button_white": "6aaef5890818e4cd99ac4b2f4503860f2b7e41ce32fcb380b46ccc4a5337a392",
+   "inner_cover_lavender": "233b009fbb7964862aa09bb4ba6f2df59307bdfb28c09823049f7e18acd0d410",
+   "rim_ring_lavender": "9a69ecd856df1e4557969fd33ab36729c736c2f163810be7ca5d8c86b4cf614d",
+   "lid_liner_lavender": "11aaf5dfc8ec3efb5d672d4c55dd61b148786e31d8f2afaf48bdc18cd73f0b5c",
+   "display_bezel_plum": "cd3efa7d9d107b51c6c30f47548d86de86639a653ac6e5bd4d738c52f256d5ef",
+   "display_cradle_plum": "99dfdd865c96e9c424e46545eaa726ae8f08f27a2c18919d356e617caed13116",
+   "button_ring_plum": "7800f7e6679d49b058f2143ef2a06da98b943421ac2dba8bd92504ebbb2f0ef1"
+  },
+  "internal_parts_no_appearance_approval": [
+   "sound_bracket_black"
+  ]
+ },
+ "final_print_unlocked": true
+}

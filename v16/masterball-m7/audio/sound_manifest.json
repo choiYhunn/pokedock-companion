@@ -1,0 +1,23 @@
+{
+ "_source": "Track order for the DFR0534 flash drive. Must match kCueTracks in v16/masterball-m6/core/audio_director.hpp (checked by audio/check_sound_manifest.py). The module numbers files in COPY ORDER, so audio/copy_sounds_windows.ps1 copies them one by one in this order onto an empty drive.",
+ "module": {"part": "DFRobot DFR0534", "storage_bytes": 8388608, "formats": ["mp3", "wav"], "uart": "9600 8N1, TX only"},
+ "tracks": [
+  {"track": 1, "cue": "boot", "max_ms": 2500, "test_sound": "rising two-note chime"},
+  {"track": 2, "cue": "lid_open", "max_ms": 1500, "test_sound": "soft rising sweep"},
+  {"track": 3, "cue": "lid_close", "max_ms": 1500, "test_sound": "soft falling sweep"},
+  {"track": 4, "cue": "tap", "max_ms": 600, "test_sound": "short blip"},
+  {"track": 5, "cue": "confirm", "max_ms": 1000, "test_sound": "two quick blips"},
+  {"track": 6, "cue": "pair", "max_ms": 1500, "test_sound": "three-note arpeggio"},
+  {"track": 7, "cue": "timer_done", "max_ms": 4000, "test_sound": "four-note fanfare"},
+  {"track": 8, "cue": "alarm", "max_ms": 3000, "loop": true, "test_sound": "beep pattern (repeats until dismissed)"},
+  {"track": 9, "cue": "cry", "partner": 94, "name_ko": "팬텀", "max_ms": 3000},
+  {"track": 10, "cue": "cry", "partner": 393, "name_ko": "팽도리", "max_ms": 3000},
+  {"track": 11, "cue": "cry", "partner": 468, "name_ko": "토게키스", "max_ms": 3000},
+  {"track": 12, "cue": "cry", "partner": 448, "name_ko": "루카리오", "max_ms": 3000},
+  {"track": 13, "cue": "cry", "partner": 195, "name_ko": "누오", "max_ms": 3000},
+  {"track": 14, "cue": "cry", "partner": 175, "name_ko": "토게피", "max_ms": 3000},
+  {"track": 15, "cue": "cry", "partner": 417, "name_ko": "파치리스", "max_ms": 3000},
+  {"track": 16, "cue": "cry", "partner": 385, "name_ko": "지라치", "max_ms": 3000}
+ ],
+ "policy": "The public repository holds only this manifest and the generator of synthetic TEST tones. Real Pokémon cries are never downloaded or committed: the owner puts their own files in Documents\\프로젝트\\PokeDock_Private_Assets\\audio\\src and builds the gift pack with audio/make_gift_pack.py."
+}

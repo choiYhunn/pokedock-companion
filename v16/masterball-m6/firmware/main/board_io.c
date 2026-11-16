@@ -139,6 +139,14 @@ static void step(void *arg) {
   esp_timer_start_once(s_timer, (uint64_t)n->ms * 1000);
 }
 
+void board_lid_init(void) {
+  const gpio_config_t c = {.pin_bit_mask = 1ULL << PD_PIN_LID, .mode = GPIO_MODE_INPUT, .pull_up_en = GPIO_PULLUP_ENABLE,
+                           .pull_down_en = GPIO_PULLDOWN_DISABLE, .intr_type = GPIO_INTR_DISABLE};
+  gpio_config(&c);
+}
+
+bool board_lid_closed(void) { return gpio_get_level(PD_PIN_LID) == 0; }
+
 void buzzer_init(void) {
   // Hold the MOSFET gate low before LEDC takes the pin (external 100k gate pull-down also fitted).
   gpio_set_direction(PD_PIN_BUZZER, GPIO_MODE_OUTPUT);

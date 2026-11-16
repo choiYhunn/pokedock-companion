@@ -1,0 +1,93 @@
+{
+ "4_stop_lid_vs_belt_mm3": {
+  "109": 0.0,
+  "110": 0.0,
+  "111": 2.249,
+  "112": 4.499
+ },
+ "5_stability": {
+  "0": {
+   "mass_g": 662.9,
+   "cog": [
+    -1.5,
+    -0.2,
+    -19.6
+   ],
+   "margin_to_foot_edge_mm": 29.0
+  },
+  "60": {
+   "mass_g": 662.9,
+   "cog": [
+    -1.5,
+    8.9,
+    -12.7
+   ],
+   "margin_to_foot_edge_mm": 21.7
+  },
+  "90": {
+   "mass_g": 662.9,
+   "cog": [
+    -1.5,
+    14.7,
+    -13.4
+   ],
+   "margin_to_foot_edge_mm": 16.3
+  },
+  "110": {
+   "mass_g": 662.9,
+   "cog": [
+    -1.5,
+    18.1,
+    -15.5
+   ],
+   "margin_to_foot_edge_mm": 13.2
+  },
+  "open_worst_lid+10%_base-10%": {
+   "cog": [
+    -1.6,
+    21.2,
+    -12.9
+   ],
+   "margin_mm": 10.3
+  },
+  "finger_push_limit_N": {
+   "nominal": 2.67,
+   "worst": 1.96,
+   "required": 1.5
+  },
+  "slide_at_1.5N_needed_mu": 0.167,
+  "lid_mass_g": 96.1,
+  "lid_over_centre_deg": 67.7,
+  "lid_hold_open_torque_Nmm": 50.0,
+  "stop_force_N_from_lid_weight": 10.31,
+  "estimated_masses_g": {
+   "board": 20.0,
+   "speaker_as02808": 5.0,
+   "dfr0534_module": 5.0,
+   "sound_cables": 4.0,
+   "usb_right_angle_adapter": 4.0,
+   "usb_extension_cable_4218": 25.0,
+   "screws_feet_wire": 8.0,
+   "reed_sensor_59155": 1.5,
+   "reed_actuator_57155": 1.5
+  }
+ },
+ "6_visible_active_area_fraction": {
+  "el15_az-30": 1.0,
+  "el15_az0": 1.0,
+  "el15_az30": 1.0,
+  "el25_az-30": 1.0,
+  "el25_az0": 1.0,
+  "el25_az30": 1.0,
+  "el35_az-30": 1.0,
+  "el35_az0": 1.0,
+  "el35_az30": 1.0,
+  "el45_az-30": 1.0,
+  "el45_az0": 1.0,
+  "el45_az30": 1.0,
+  "el60_az-30": 1.0,
+  "el60_az0": 1.0,
+  "el60_az30": 1.0
+ }
+}
+RESULT PASS 0 fail(s)

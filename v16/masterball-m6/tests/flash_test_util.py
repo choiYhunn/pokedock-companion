@@ -1,6 +1,7 @@
 """Helpers for tests/flash_gift_test.ps1 (synthetic device images and region checks; no real ball).
 
-  make-device <img> <app.bin>       16 MiB: random bootloader 0x0-0x7FFF, real-format partition table 0x8000,
+  make-device <img> <app.bin> [factory]   16 MiB: random bootloader 0x0-0x7FFF, real-format partition table 0x8000
+                                    (the PokeDock one, or a different valid "factory" layout),
                                     random "settings" NVS 0x9000-0xEFFF and phy 0xF000, app at 0x10000
   sha <img> <off> <len>             SHA-256 of a region
   same <img> <off> <file>           region equals file (prints OK / DIFF)
@@ -28,7 +29,8 @@ def main(a):
         b[0:24] = bytes.fromhex("e904024f30893c40ee000000090000000063000000000001")  # real ESP32-S3 bootloader header (from the m6 image)
         table = ROOT / "build" / "_test_ptable.bin"
         table.parent.mkdir(exist_ok=True)
-        subprocess.run([sys.executable, str(ROOT / "tools/gift_image_check.py"), "make-ptable", str(table)], check=True, capture_output=True)
+        extra = ["factory"] if a[3:4] == ["factory"] else []
+        subprocess.run([sys.executable, str(ROOT / "tools/gift_image_check.py"), "make-ptable", str(table)] + extra, check=True, capture_output=True)
         b[0x8000:0x8C00] = table.read_bytes()
         b[0x9000:0xF000] = bytes(rnd.randrange(256) for _ in range(0x6000))
         b[0xF000:0x10000] = bytes(rnd.randrange(256) for _ in range(0x1000))

@@ -1,0 +1,45 @@
+PASS: 16 files, 338064 bytes (4.0 % of 8 MB) -> build\audio_tool_test\test
+PASS test pack: 16 files in track order
+PASS test pack: every file below its max_ms
+PASS mp3 duration 1044.9 ms = 1044.9 ms (ID3 skipped)
+01_boot.wav               1000 ms  owner
+02_lid_open.wav            420 ms  TEST tone
+03_lid_close.wav           380 ms  TEST tone
+04_tap.wav                  70 ms  TEST tone
+05_confirm.wav             240 ms  TEST tone
+06_pair.wav                460 ms  TEST tone
+07_timer_done.wav         1000 ms  TEST tone
+08_alarm.wav              1500 ms  TEST tone
+09_cry_94.mp3             1045 ms  owner
+10_cry_393.wav             380 ms  TEST tone
+11_cry_468.wav             380 ms  TEST tone
+12_cry_448.wav             380 ms  TEST tone
+13_cry_195.wav             380 ms  TEST tone
+14_cry_175.wav             380 ms  TEST tone
+15_cry_417.wav             380 ms  TEST tone
+16_cry_385.wav             380 ms  TEST tone
+PASS 16 files, 330143 bytes -> build\audio_tool_test\out
+PASS gift pack builds
+PASS owner boot + Gengar cry used
+PASS missing cues fall back to TEST tones
+01_boot.wav               1000 ms  owner
+02_lid_open.wav            420 ms  TEST tone
+03_lid_close.wav           380 ms  TEST tone
+05_confirm.wav             240 ms  TEST tone
+06_pair.wav                460 ms  TEST tone
+07_timer_done.wav         1000 ms  TEST tone
+08_alarm.wav              1500 ms  TEST tone
+09_cry_94.mp3             1045 ms  owner
+10_cry_393.wav             380 ms  TEST tone
+11_cry_468.wav             380 ms  TEST tone
+12_cry_448.wav             380 ms  TEST tone
+13_cry_195.wav             380 ms  TEST tone
+14_cry_175.wav             380 ms  TEST tone
+15_cry_417.wav             380 ms  TEST tone
+16_cry_385.wav             380 ms  TEST tone
+FAIL ['track 4 (tap): 1000 ms, must be under 500 ms - trim it']
+PASS too-long owner file refused
+PASS copy tool saved with a UTF-8 BOM (PowerShell 5.1 reads Korean correctly)
+PASS copy tool parses (PS 5.1)
+PASS no audio file tracked or untracked-unignored under v16/
+PASS: 10/10 audio tool checks

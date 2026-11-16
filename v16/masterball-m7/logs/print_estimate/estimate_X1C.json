@@ -1,0 +1,146 @@
+[
+ {
+  "plate": "FK1_display_cradle",
+  "printer": "X1C",
+  "layer": "0.20",
+  "support": false,
+  "rc": 0,
+  "minutes": 45,
+  "grams": 24.19
+ },
+ {
+  "plate": "FK2_hinge_stop",
+  "printer": "X1C",
+  "layer": "0.20",
+  "support": true,
+  "rc": 0,
+  "minutes": 23,
+  "grams": 9.44
+ },
+ {
+  "plate": "FK3_closing_magnet_joint",
+  "printer": "X1C",
+  "layer": "0.20",
+  "support": true,
+  "rc": 0,
+  "minutes": 20,
+  "grams": 10.61
+ },
+ {
+  "plate": "FK4_lid_sensor",
+  "printer": "X1C",
+  "layer": "0.20",
+  "support": false,
+  "rc": 0,
+  "minutes": 10,
+  "grams": 4.87
+ },
+ {
+  "plate": "FK5_ear_button",
+  "printer": "X1C",
+  "layer": "0.20",
+  "support": false,
+  "rc": 0,
+  "minutes": 26,
+  "grams": 11.92
+ },
+ {
+  "plate": "FK6_sound_seat_bracket",
+  "printer": "X1C",
+  "layer": "0.20",
+  "support": false,
+  "rc": 0,
+  "minutes": 37,
+  "grams": 13.66
+ },
+ {
+  "plate": "FK7_pillar_screw",
+  "printer": "X1C",
+  "layer": "0.20",
+  "support": false,
+  "rc": 0,
+  "minutes": 7,
+  "grams": 1.93
+ },
+ {
+  "plate": "C1_purple_lid",
+  "printer": "X1C",
+  "layer": "0.16",
+  "support": true,
+  "rc": 0,
+  "minutes": 214,
+  "grams": 90.87
+ },
+ {
+  "plate": "C2_ivory_lower_shell",
+  "printer": "X1C",
+  "layer": "0.16",
+  "support": false,
+  "rc": 0,
+  "minutes": 175,
+  "grams": 104.28
+ },
+ {
+  "plate": "C3_black_belt_stop",
+  "printer": "X1C",
+  "layer": "0.16",
+  "support": true,
+  "rc": 0,
+  "minutes": 79,
+  "grams": 39.5
+ },
+ {
+  "plate": "C4_pink_ears",
+  "printer": "X1C",
+  "layer": "0.16",
+  "support": false,
+  "rc": 0,
+  "minutes": 15,
+  "grams": 7.6
+ },
+ {
+  "plate": "C5_white_button",
+  "printer": "X1C",
+  "layer": "0.16",
+  "support": false,
+  "rc": 0,
+  "minutes": 7,
+  "grams": 1.92
+ },
+ {
+  "plate": "C6_inner_cover_lavender",
+  "printer": "X1C",
+  "layer": "0.16",
+  "support": false,
+  "rc": 0,
+  "minutes": 78,
+  "grams": 50.1
+ },
+ {
+  "plate": "C6b_lavender_rim_ring_liner",
+  "printer": "X1C",
+  "layer": "0.16",
+  "support": false,
+  "rc": 0,
+  "minutes": 23,
+  "grams": 17.66
+ },
+ {
+  "plate": "C7_plum_display_button_ring",
+  "printer": "X1C",
+  "layer": "0.20",
+  "support": true,
+  "rc": 0,
+  "minutes": 69,
+  "grams": 40.02
+ },
+ {
+  "plate": "C8_internal_sound_bracket",
+  "printer": "X1C",
+  "layer": "0.20",
+  "support": false,
+  "rc": 0,
+  "minutes": 8,
+  "grams": 2.84
+ }
+]

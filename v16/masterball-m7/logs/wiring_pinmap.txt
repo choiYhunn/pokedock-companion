@@ -1,0 +1,6 @@
+PASS H1 crossed: GPIO44 (our TX) -> module R
+PASS H1 module powered from 3V3, never 5 V
+PASS H1 leaves J10-2 (GPIO43) open
+PASS H1 needs no solder
+PASS H2 + H3 = 4 helper solder joints in total
+PASS: wiring drawing + pin map written (0 rule failures)

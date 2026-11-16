@@ -1,0 +1,36 @@
+C:\Users\yhch0\AppData\Local\Temp\claude\C--Users-yhch0-Documents\3fe2777c-12dd-4bb0-a404-1b7806b6387c\scratchpad\m6venv\Lib\site-packages\fitz\__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  warnings.warn(
+PASS J4 VBUS (A4/B9) is net USB_5V
+PASS J4 VBUS (A9/B4) on the same net
+PASS D2 anode on USB_5V
+PASS D2 cathode = VCC (board power path after the Schottky)
+PASS J4 D+ (A6/B6) = U_P
+PASS J4 D- (A7/B7) = U_N
+PASS R4 R5 5.1K next to J4 CC1/CC2 (sink Rd: any USB-C charger gives 5 V)
+PASS J10-1 = RXD / UART0RXD, wired to ESP32-S3 pin 50 (U0RXD = GPIO44)
+PASS J10-2 = TXD / UART0TXD (GPIO43, ROM boot log)
+PASS J10-3 = 3V3
+PASS J10-4 = GND
+PASS J10-3 is the same net as J8-3 / J3-1 (board 3V3 rail)
+PASS 3V3 buck is U3 MP1605 (MPS: 2 A out, 2.3-5.5 V in)
+PASS J1 pin 06 = GND
+PASS J1 pin 010 = IO17
+PASS J1-10 goes to ESP32-S3 pin 23 (GPIO17)
+PASS J1-4 = USB_5V (no longer tapped in v0.6)
+PASS harness file is v0.6
+PASS lid GPIO17 and sound GPIO44 differ and avoid display/I2C/SD/USB/strapping pins
+PASS H1: J10-1 (GPIO44) -> module R (crossed: our TX to its RX)
+PASS H1: J10-3 3V3 -> module +, J10-4 GND -> module -
+PASS H1: J10-2 (GPIO43 = ROM log) and module T are not wired
+PASS H1: no solder, commercial parts only
+PASS H1: wire colours explicitly not trusted (Qwiic order differs from J10)
+PASS H2: reed on J1-10 (IO17) and J1-6 (GND) only
+PASS H3: speaker on SP+ / SP-
+PASS v0.5 buzzer parts are gone from the harness
+PASS 3V3 peak 742 mA <= 80 % of the MP1605 2 A
+PASS speaker power at full 3V3 swing 0.68 W < 1 W rating
+PASS USB input at peak 634 mA < 1 A (KC 5 V adapter >= 1 A required; a PC port may only give 500 mA)
+INFO firmware volume cap 24/30: USB input peak ~563 mA
+PASS signal levels: module powered from the same 3V3 that drives GPIO44 (no level shifter, nothing fed back)
+PASS lid input: internal pull-up ~73 uA through the reed (rated 10 VA, 0.25 A)
+PASS: 32/32 electrical checks

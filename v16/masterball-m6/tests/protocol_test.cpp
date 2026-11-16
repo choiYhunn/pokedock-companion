@@ -29,6 +29,12 @@ struct MockEnv : DeviceEnv {
   int usb_mv() override { return 4850; }
   void persist() override { ++persists; }
   void reaction() override { ++reactions; }
+  int previews = 0, last_cue = -1;
+  bool audio_preview(int cue) override {
+    ++previews;
+    last_cue = cue;
+    return true;
+  }
 };
 
 static bool has(const std::string &s, const char *frag) { return s.find(frag) != std::string::npos; }
@@ -81,9 +87,19 @@ int main() {
   CHECK("invalid utf8 rejected", has(cmd("\"c\":\"message\",\"txt\":\"\xC3\x28\"", 32), "\"e\":\"json\""));
   CHECK("sound bool", has(cmd("\"c\":\"sound\",\"on\":false", 33), "\"ok\":1") && !core.sound());
   CHECK("reaction", has(cmd("\"c\":\"reaction\"", 34), "\"ok\":1") && env.reactions == 1);
+  // M7 sound module settings
+  CHECK("audio volume", has(cmd("\"c\":\"audio\",\"vol\":12", 35), "\"ok\":1") && core.volume() == 12);
+  CHECK("audio volume range", has(cmd("\"c\":\"audio\",\"vol\":31", 36), "\"e\":\"range\"") && core.volume() == 12);
+  CHECK("audio volume type", has(cmd("\"c\":\"audio\",\"vol\":true", 37), "\"e\":\"args\""));
+  CHECK("audio needs an argument", has(cmd("\"c\":\"audio\"", 38), "\"e\":\"args\""));
+  CHECK("audio bad close leaves volume", has(cmd("\"c\":\"audio\",\"vol\":5,\"close\":1", 39), "\"e\":\"args\"") && core.volume() == 12);
+  CHECK("audio close off", has(cmd("\"c\":\"audio\",\"close\":false", 41), "\"ok\":1") && !core.close_sound());
+  CHECK("audio_test plays a cue", has(cmd("\"c\":\"audio_test\",\"cue\":8", 42), "\"ok\":1") && env.last_cue == 8);
+  CHECK("audio_test range", has(cmd("\"c\":\"audio_test\",\"cue\":9", 43), "\"e\":\"range\"") && env.previews == 1);
   std::string st = pe.state_json();
   CHECK("state compact for MTU 185", st.size() <= 182);
-  CHECK("state fields", has(st, "\"p\":393") && has(st, "\"snd\":0") && has(st, "\"clk\":[1,0]") && has(st, "\"pwr\":[4850,1]"));
+  CHECK("state fields", has(st, "\"p\":393") && has(st, "\"snd\":0") && has(st, "\"clk\":[1,0]") && has(st, "\"pwr\":[4850,1]") &&
+                            has(st, "\"vol\":12") && has(st, "\"cls\":0"));
   JsonObject parsed;
   CHECK("ack is valid json", JsonReader::parse(cmd("\"c\":\"get_state\"", 40), parsed) && parsed["ok"].i == 1);
   CHECK("persist called on changes", env.persists >= 8);
